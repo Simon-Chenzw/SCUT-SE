@@ -1,4 +1,7 @@
-// @problem:12.14
+/**
+ *  @brief:code of 12.14
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -15,7 +18,7 @@ class Account {
     double Balance;
 };
 
-class SavingsAccount : public Account {
+class SavingsAccount: public Account {
   public:
     SavingsAccount(double, double);
     virtual double calculateInterest() const override;
@@ -24,7 +27,7 @@ class SavingsAccount : public Account {
     double InterestRate;
 };
 
-class CheckingAccount : public Account {
+class CheckingAccount: public Account {
   public:
     CheckingAccount(double, double);
     virtual void credit(double) override;
@@ -34,14 +37,16 @@ class CheckingAccount : public Account {
     double CostPerDeal;
 };
 
-Account::Account(double _Balance) : Balance(_Balance) {
+Account::Account(double _Balance): Balance(_Balance) {
     if (Balance < 0) {
         Balance = 0;
         cerr << "balance can't be negative";
     }
 }
 
-void Account::credit(double value) { Balance += value; }
+void Account::credit(double value) {
+    Balance += value;
+}
 
 bool Account::debit(double value) {
     if (value <= Balance) {
@@ -54,17 +59,21 @@ bool Account::debit(double value) {
     }
 }
 
-double Account::calculateInterest() const { return 0; }
+double Account::calculateInterest() const {
+    return 0;
+}
 
-double Account::getBalance() const { return Balance; }
+double Account::getBalance() const {
+    return Balance;
+}
 
-SavingsAccount::SavingsAccount(double _Balance, double _InterestRate)
-      : Account(_Balance), InterestRate(_InterestRate) {}
+SavingsAccount::SavingsAccount(double _Balance, double _InterestRate): Account(_Balance), InterestRate(_InterestRate) {}
 
-double SavingsAccount::calculateInterest() const { return getBalance() * InterestRate; }
+double SavingsAccount::calculateInterest() const {
+    return getBalance() * InterestRate;
+}
 
-CheckingAccount::CheckingAccount(double _Balance, double _CostPerDeal)
-      : Account(_Balance), CostPerDeal(_CostPerDeal) {}
+CheckingAccount::CheckingAccount(double _Balance, double _CostPerDeal): Account(_Balance), CostPerDeal(_CostPerDeal) {}
 
 void CheckingAccount::credit(double value) {
     if (value >= CostPerDeal)

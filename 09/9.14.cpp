@@ -1,5 +1,7 @@
-// @author chenzhuowen
-// @problem 9.14
+/**
+ *  @brief:code of 9.14
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -50,12 +52,10 @@ HugeInteger::HugeInteger(int val) {
 }
 
 HugeInteger::HugeInteger(string str) {
-    if (str.length() - (str[0] == '-' ? 1 : 0) > 40)
-        throw range_error("to large for HugeInteger");
+    if (str.length() - (str[0] == '-' ? 1 : 0) > 40) throw range_error("to large for HugeInteger");
     negative = str[0] == '-';
     for (int i = 0; i < str.length() - (str[0] == '-' ? 1 : 0); i++)
-        if (str[str.length() - i - 1] >= '0' &&
-            str[str.length() - i - 1] <= '9')
+        if (str[str.length() - i - 1] >= '0' && str[str.length() - i - 1] <= '9')
             a[i] = str[str.length() - i - 1] - '0';
         else
             throw invalid_argument("it's not integer");
@@ -65,8 +65,7 @@ void HugeInteger::input() {
     string str;
     cin >> str;
     if (str.length() > 40) throw range_error("to large for HugeInteger");
-    for (int i = 0; i < str.length(); i++)
-        a[i] = str[str.length() - i - 1] - '0';
+    for (int i = 0; i < str.length(); i++) a[i] = str[str.length() - i - 1] - '0';
 }
 
 void HugeInteger::output() const {
@@ -95,8 +94,7 @@ HugeInteger& HugeInteger::add(HugeInteger val) {
 
 HugeInteger& HugeInteger::substract(HugeInteger val) {
     if (negative != val.negative) add(val.opposite());
-    if (val.isGreaterThan(*this))
-        return *this = val.substract(*this).opposite();
+    if (val.isGreaterThan(*this)) return *this = val.substract(*this).opposite();
     for (int i = 0; i < 40; i++) {
         a[i] -= val[i];
         if (a[i] < 0) {
@@ -143,7 +141,9 @@ bool HugeInteger::isZero() const {
     return true;
 }
 
-int& HugeInteger::operator[](const int& i) { return a[i]; }
+int& HugeInteger::operator[](const int& i) {
+    return a[i];
+}
 
 HugeInteger& HugeInteger::opposite() {
     negative ^= true;

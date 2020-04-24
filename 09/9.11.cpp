@@ -1,5 +1,7 @@
-// @author chenzhuowen
-// @problem 9.11
+/**
+ *  @brief:code of 9.11
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -44,10 +46,18 @@ void Rectangle::setWidth(double w) {
         throw invalid_argument("invalid width");
 }
 
-double Rectangle::getLenth() const { return length; }
+double Rectangle::getLenth() const {
+    return length;
+}
 
-double Rectangle::getWidth() const { return width; }
+double Rectangle::getWidth() const {
+    return width;
+}
 
-double Rectangle::perimeter() const { return (length + width) * 2; }
+double Rectangle::perimeter() const {
+    return (length + width) * 2;
+}
 
-double Rectangle::area() const { return length * width; }
+double Rectangle::area() const {
+    return length * width;
+}

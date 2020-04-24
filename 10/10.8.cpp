@@ -1,5 +1,7 @@
-// @author chenzhuowen
-// @problem 10.8
+/**
+ *  @brief:code of 10.8
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -20,9 +22,7 @@ class Complex {
     double imaginary;
 };
 
-Complex::Complex(double realPart, double imaginaryPart)
-    : real(realPart)
-    , imaginary(imaginaryPart) {}
+Complex::Complex(double realPart, double imaginaryPart): real(realPart), imaginary(imaginaryPart) {}
 
 Complex Complex::operator+(const Complex& val) const {
     return Complex(real + val.real, imaginary + val.imaginary);
@@ -33,8 +33,7 @@ Complex Complex::operator-(const Complex& val) const {
 }
 
 Complex Complex::operator*(const Complex& val) const {
-    return Complex(real * val.real + imaginary * val.imaginary,
-                   real * val.imaginary + imaginary * val.real);
+    return Complex(real * val.real + imaginary * val.imaginary, real * val.imaginary + imaginary * val.real);
 }
 
 bool Complex::operator==(const Complex& right) const {

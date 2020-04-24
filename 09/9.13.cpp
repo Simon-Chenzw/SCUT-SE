@@ -1,19 +1,14 @@
-// @author chenzhuowen
-// @problem 9.13
+/**
+ *  @brief:code of 9.13
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
 
 class Rectangle {
   public:
-    explicit Rectangle(double,
-                       double,
-                       double,
-                       double,
-                       double,
-                       double,
-                       double,
-                       double);
+    explicit Rectangle(double, double, double, double, double, double, double, double);
 
     // calc func
     double length() const;
@@ -43,25 +38,18 @@ class Rectangle {
         }
     };
 
-    pnt a, b, c, d;  // note: a is opposite to c
+    pnt a, b, c, d;    // note: a is opposite to c
     char fill, peri;
     double len, wid;
 
     // intermediate functions
     void calc();
-    static double dis(pnt, pnt);  // calc |AB|
+    static double dis(pnt, pnt);    // calc |AB|
     bool inside_Rectangle(double, double) const;
-    static double cross_product(pnt, pnt, pnt);  // calc (AB)x(AC)
+    static double cross_product(pnt, pnt, pnt);    // calc (AB)x(AC)
 };
 
-Rectangle::Rectangle(double x1,
-                     double y1,
-                     double x2,
-                     double y2,
-                     double x3,
-                     double y3,
-                     double x4,
-                     double y4) {
+Rectangle::Rectangle(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
     a.set(x1, y1);
     b.set(x2, y2);
     c.set(x3, y3);
@@ -69,11 +57,21 @@ Rectangle::Rectangle(double x1,
     calc();
 }
 
-double Rectangle::length() const { return len; }
-double Rectangle::width() const { return wid; }
-double Rectangle::perimeter() const { return (len + wid) * 2; }
-double Rectangle::area() const { return len * wid; }
-bool Rectangle::square() const { return (len - wid) < 1e-9; }
+double Rectangle::length() const {
+    return len;
+}
+double Rectangle::width() const {
+    return wid;
+}
+double Rectangle::perimeter() const {
+    return (len + wid) * 2;
+}
+double Rectangle::area() const {
+    return len * wid;
+}
+bool Rectangle::square() const {
+    return (len - wid) < 1e-9;
+}
 
 void Rectangle::draw() const {
     bool inside[30][30] = {};
@@ -102,12 +100,15 @@ void Rectangle::draw() const {
     cout.flush();
 }
 
-void Rectangle::setFillCharacter(char _fill) { fill = _fill; }
-void Rectangle::setPerimeterCharacter(char _peri) { peri = _peri; }
+void Rectangle::setFillCharacter(char _fill) {
+    fill = _fill;
+}
+void Rectangle::setPerimeterCharacter(char _peri) {
+    peri = _peri;
+}
 
 void Rectangle::calc() {
-    double distance[6] = {dis(a, b), dis(a, c), dis(a, d),
-                          dis(b, c), dis(b, d), dis(c, d)};
+    double distance[6] = {dis(a, b), dis(a, c), dis(a, d), dis(b, c), dis(b, d), dis(c, d)};
     sort(distance, distance + 6);
     int tot = unique(distance, distance + 6) - distance;
     double diagonal;
@@ -132,8 +133,8 @@ double Rectangle::dis(pnt a, pnt b) {
 
 bool Rectangle::inside_Rectangle(double x, double y) const {
     pnt tmp = {x, y};
-    return (cross_product(a, b, tmp) * cross_product(c, d, tmp) >= 0 &&
-            cross_product(a, d, tmp) * cross_product(c, b, tmp) >= 0);
+    return (cross_product(a, b, tmp) * cross_product(c, d, tmp) >= 0
+            && cross_product(a, d, tmp) * cross_product(c, b, tmp) >= 0);
 }
 
 double Rectangle::cross_product(pnt a, pnt b, pnt c) {

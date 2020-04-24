@@ -1,4 +1,7 @@
-// @file: CommissionEmployee.cpp
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #include "CommissionEmployee.h"
 #include <iostream>
@@ -12,8 +15,8 @@ CommissionEmployee::CommissionEmployee(const string& first,
                                        int day,
                                        int year,
                                        double sales,
-                                       double rate)
-      : Employee(first, last, ssn, month, day, year) {
+                                       double rate):
+      Employee(first, last, ssn, month, day, year) {
     setGrossSales(sales);
     setCommissionRate(rate);
 }
@@ -25,7 +28,9 @@ void CommissionEmployee::setGrossSales(double sales) {
         throw invalid_argument("Gross sales must bu >=0.0");
 }
 
-double CommissionEmployee::getGrossSales() const { return grossSales; }
+double CommissionEmployee::getGrossSales() const {
+    return grossSales;
+}
 
 void CommissionEmployee::setCommissionRate(double rate) {
     if (rate > 0.0 && rate < 1.0)
@@ -34,9 +39,13 @@ void CommissionEmployee::setCommissionRate(double rate) {
         throw invalid_argument("Commission rate must be > 0.0 and < 1.0");
 }
 
-double CommissionEmployee::getCommissionRate() const { return commissionRate; }
+double CommissionEmployee::getCommissionRate() const {
+    return commissionRate;
+}
 
-double CommissionEmployee::earnings() const { return getCommissionRate() * getGrossSales(); }
+double CommissionEmployee::earnings() const {
+    return getCommissionRate() * getGrossSales();
+}
 
 void CommissionEmployee::print() const {
     cout << "commission employee: ";

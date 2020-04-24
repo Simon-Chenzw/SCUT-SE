@@ -1,4 +1,8 @@
-// @problem:14.12
+/**
+ *  @brief:code of 14.12
+ *  @author:Simon_Chen
+ */
+
 #include <bits/stdc++.h>
 using namespace std;
 

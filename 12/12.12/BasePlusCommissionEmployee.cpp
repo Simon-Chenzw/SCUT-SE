@@ -1,4 +1,7 @@
-// @file: BasePlusCommissionEmployee.cpp
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #include "BasePlusCommissionEmployee.h"
 #include <iostream>
@@ -13,8 +16,8 @@ BasePlusCommissionEmployee::BasePlusCommissionEmployee(const string& first,
                                                        int year,
                                                        double sales,
                                                        double rate,
-                                                       double salary)
-      : CommissionEmployee(first, last, ssn, month, day, year, sales, rate) {
+                                                       double salary):
+      CommissionEmployee(first, last, ssn, month, day, year, sales, rate) {
     setBaseSalary(salary);
 }
 
@@ -25,7 +28,9 @@ void BasePlusCommissionEmployee::setBaseSalary(double salary) {
         throw invalid_argument("Salary must be >= 0.0");
 }
 
-double BasePlusCommissionEmployee::getBaseSalary() const { return baseSalary; }
+double BasePlusCommissionEmployee::getBaseSalary() const {
+    return baseSalary;
+}
 
 double BasePlusCommissionEmployee::earnings() const {
     return getBaseSalary() + CommissionEmployee::earnings();

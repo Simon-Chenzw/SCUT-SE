@@ -1,4 +1,7 @@
-// @file: Date.h
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #ifndef DATE_H
 #define DATE_H

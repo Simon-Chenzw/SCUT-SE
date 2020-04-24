@@ -1,12 +1,15 @@
-// @file: CommissionEmployee.h
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #ifndef COMMISSION_H
 #define COMMISSION_H
 
-#include "Employee.h"
 #include <string>
+#include "Employee.h"
 
-class CommissionEmployee : public Employee {
+class CommissionEmployee: public Employee {
   public:
     CommissionEmployee(const std::string&,
                        const std::string&,

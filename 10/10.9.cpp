@@ -1,12 +1,14 @@
-// @author chenzhuowen
-// @problem 10.9
+/**
+ *  @brief:code of 10.9
+ *  @author:Simon_Chen
+ */
 
 #include <bits/stdc++.h>
 using namespace std;
 
 class HugeInt {
   public:
-    static const int digits = 30;  // maximum digits in a HugeInt
+    static const int digits = 30;    // maximum digits in a HugeInt
 
     HugeInt(long long = 0);
     HugeInt(const string&);
@@ -16,7 +18,7 @@ class HugeInt {
     HugeInt operator*(const HugeInt&)const;
     HugeInt operator/(const HugeInt&) const;
 
-    int cmp(const HugeInt&) const;  // <=> operator
+    int cmp(const HugeInt&) const;    // <=> operator
     bool operator==(const HugeInt&) const;
     bool operator!=(const HugeInt&) const;
     bool operator<(const HugeInt&) const;
@@ -115,12 +117,24 @@ int HugeInt::cmp(const HugeInt& val) const {
     return 0;
 }
 
-bool HugeInt::operator==(const HugeInt& val) const { return cmp(val) == 0; }
-bool HugeInt::operator!=(const HugeInt& val) const { return cmp(val) != 0; }
-bool HugeInt::operator<(const HugeInt& val) const { return cmp(val) == -1; }
-bool HugeInt::operator<=(const HugeInt& val) const { return cmp(val) != 1; }
-bool HugeInt::operator>(const HugeInt& val) const { return cmp(val) == 1; }
-bool HugeInt::operator>=(const HugeInt& val) const { return cmp(val) != -1; }
+bool HugeInt::operator==(const HugeInt& val) const {
+    return cmp(val) == 0;
+}
+bool HugeInt::operator!=(const HugeInt& val) const {
+    return cmp(val) != 0;
+}
+bool HugeInt::operator<(const HugeInt& val) const {
+    return cmp(val) == -1;
+}
+bool HugeInt::operator<=(const HugeInt& val) const {
+    return cmp(val) != 1;
+}
+bool HugeInt::operator>(const HugeInt& val) const {
+    return cmp(val) == 1;
+}
+bool HugeInt::operator>=(const HugeInt& val) const {
+    return cmp(val) != -1;
+}
 
 ostream& operator<<(ostream& cout, const HugeInt& val) {
     int p = 0;

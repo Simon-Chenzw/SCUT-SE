@@ -1,4 +1,7 @@
-// @file: Date.cpp
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #include "Date.h"
 #include <iostream>
@@ -7,7 +10,9 @@ using namespace std;
 
 const std::array<unsigned int, 13> Date::days = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-Date::Date(int month, int day, int year) { setDate(month, day, year); }
+Date::Date(int month, int day, int year) {
+    setDate(month, day, year);
+}
 
 void Date::setDate(int mm, int dd, int yy) {
     if (mm >= 1 && mm <= 12)
@@ -47,7 +52,9 @@ bool Date::leapYear(int testYear) {
         return false;
 }
 
-int Date::getMonth() const { return month; }
+int Date::getMonth() const {
+    return month;
+}
 
 bool Date::endOfMonth(int testDay) const {
     if (month == 2 && leapYear(year))
@@ -71,9 +78,19 @@ void Date::helpIncrement() {
 }
 
 ostream& operator<<(ostream& output, const Date& d) {
-    static string monthName[13] = {"",        "January",  "February", "March",  "April",
-                                   "May",     "June",     "July",     "August", "September",
-                                   "October", "November", "December"};
+    static string monthName[13] = {"",
+                                   "January",
+                                   "February",
+                                   "March",
+                                   "April",
+                                   "May",
+                                   "June",
+                                   "July",
+                                   "August",
+                                   "September",
+                                   "October",
+                                   "November",
+                                   "December"};
     output << monthName[d.month] << ' ' << d.day << ", " << d.year;
     return output;
 }

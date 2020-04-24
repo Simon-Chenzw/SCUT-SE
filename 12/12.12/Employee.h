@@ -1,9 +1,12 @@
-// @file: Employee.h
+/**
+ *  @brief:code of 12.12
+ *  @author:Simon_Chen
+ */
 
 #ifndef EMPLOYEE_H
 #define EMPLOYEE_H
-#include "Date.h"
 #include <string>
+#include "Date.h"
 
 class Employee {
   public:
