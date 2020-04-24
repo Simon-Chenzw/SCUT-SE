@@ -1,0 +1,65 @@
+Task: Simulation of a virtual zoo. 
+For this task you should submit zoo.cpp and zoo.h, it being your choice what you include in each.
+You need to give consistent and appropriate definitions for a class hierarchy, in accordance with the scenario described below. You also need a simple main function to run the simulation, as well as functions in the classes defined.
+
+Overview
+This is a simulation of a very small zoo. The zoo only has 3 types of animals: 1 elephant, 2 giraffes and 3 monkeys. Each type of animal is housed in its own animal enclosure and each animal likes to be fed a certain type of food; peanuts for the elephant; carrots for the giraffes; bananas for the monkeys.
+The zoo has 1 zoo keeper and 1 animal food seller. Visitors visit the zoo everyday. Visitors consist of adults and children. Adults can buy animal food, which the children can use to feed the animals. When the animals are fed, they will dirty their respective enclosure and the zoo keeper will have to close the enclosure in order to clean it.
+
+Classes
+The following classes and members must be defined. You are to write whatever functions and data members you require to support the simulation. If not stated, the design of the program is up to you. However, note that your design must reflect the three important principles of object-oriented design:encapsulation, inheritance and polymorphism.
+	Zoo: Implement a function that simulates 1 day and another that runs the entire simulation.
+	Money: For recording monetary amounts in dollars and cents (you can use a float to represent this).Implement overloaded operators (e.g. operator+, operator-, etc.) for this class.
+	AnimalFood: For recording the type and amount of food.
+	AnimalEnclosure: For housing the animal(s). This should record the dirt level and current status(i.e. open/close to visitors).
+	Animal: An abstract class containing weight and amount of food eaten.
+	Elephant: Derived from Animal. Contains trunk length.
+	Giraffe: Derived from Animal. Contains neck length.
+	Monkey: Derived from Animal. Contains arm length.
+	Person: An abstract class containing name and age.
+	ZooKeeper: Derived from Person. Contains number of days spent cleaning enclosures.
+	FoodSeller: Derived from Person. Contains animal food, money from food sold and a static food price list.
+	Visitor: Derived from Person. Contains a visitor pass ID number.
+	Child: Derived from Visitor. Contains animal food that the child has.
+	Adult: Derived from Visitor. Contains money owned.
+Note that some of the members in the above classes have to be present in your class definition, but may not have to be used in the simulation.
+
+Simulation rules
+	The zoo is visited by a random number of adults (between 20 to 40) everyday.
+	Each adult may be accompanied by a random number of children (between 1 to 3).
+	Only adults can buy animal food from the animal food seller. Each adult starts with a random amount of money (between 10 to 20 dollars). Each adult will have to buy a pass for himself/herself and a pass for each of the children accompanying him/her. An adult's visitor pass costs 1 dollar,while a child's visitor pass costs 40 cents. The remainder of the adult's money will be divided evenly to buy the 3 types of animal food. The adult will then distribute the animal food evenly to the children accompanying him/her.
+	The animal food seller makes money from selling animal food. The seller starts with no money, but has a certain amount of each type of animal food, as listed below. The selling price of each type of animal food is also listed:
+ 
+	Only children can feed the animals. Each child feeds each type of animal with the appropriate type of animal food that they have. If the animal enclosure is closed on a particular day, the child cannot feed the animal(s) in that particular enclosure for that day.
+	The animals will dirty their respective enclosures once they have been fed a certain amount of food.
+	The food capacity that the difierent animal types can be fed before making a mess is as follows:
+ 
+	Each unit of food equals to a unit of dirt. Once the animal has made a mess, its amount of food eaten should be reset to zero.
+	At the end of each day, the zoo keeper checks the dirt level of each animal enclosure. If the dirt level is above 2,000 units, the zoo keeper will have to close that respective enclosure (for 1 day) in order to clean it. Once an animal enclosure has been cleaned, its dirt level should be reset to zero. Note that there is only 1 zoo keeper; therefore, only 1 enclosure can be closed for cleaning at any one time. The other animal enclosures must remain open. The zoo keeper will quit after 10 days of cleaning.
+
+You will need to write a basic main function to run the simulation. Your simulation must simulate each day that the zoo is opened. The zoo closes either when the animal food seller runs out of a certain type of animal food or when the zoo keeper has had it with cleaning and quits his job.
+At the end of your simulation, you need to display the following information:
+	The number of days the zoo was opened for.
+	The reason why the zoo closed (either one of the following reasons):
+The zoo closed because the zoo keeper had enough of cleaning and quit!
+The zoo closed because the seller ran out of peanuts.
+The zoo closed because the seller ran out of carrots.
+The zoo closed because the seller ran out of bananas.
+	The total number of adult visitors and the total number of children who visited the zoo over its entire lifetime.
+	The total amount of money made by the seller and the number of days the zoo keeper spent cleaning.
+	The number of days each animal enclosure was closed for.
+
+Notes on submission:
+1. Late assignments will NOT be accepted without a granted Student Academic Consideration.
+2. Late submissions will not be marked and receive zero, unless an extension has been granted.
+3. Plagiarism is treated seriously. If we suspect work is copied, the students involved are likely to receive zero.
+
+Notes on marking:
+1. One aim of this subject is to encourage good programming practices. One way of doing this is to discourage bad ones. You will lose marks for such things as:
+(a) Memory leaks.
+(b) Leaving out indentation.
+(c) Leaving out comments.
+(d) Using inappropriate names for variables or functions.
+(e) Inappropriate access modifiers.
+(f) Inappropriate placement of the declaration and/or implementation (for example all in Main.cpp).
+2. Since you will receive zero if your code fails to compile, if you are having trouble you can always submit something with the problem areas commented out. We will at least look at the code then.
