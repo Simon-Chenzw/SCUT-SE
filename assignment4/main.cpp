@@ -11,9 +11,6 @@ using namespace std;
 int main() {
     srand(clock());
     Zoo zoo;
-    while (!zoo.is_close()) {
-        zoo.run_one_day();
-        cout << endl;
-    }
+    while (!zoo.is_close()) zoo.run_one_day();
     zoo.print_close_info();
 }
