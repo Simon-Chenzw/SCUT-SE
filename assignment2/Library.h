@@ -1,4 +1,8 @@
-//!  @file:Library.h
+/**
+ *  @brief:code of assignment2
+ *  @file:Library.h
+ *  @author:Simon_Chen
+ */
 
 #pragma once
 #include <string>

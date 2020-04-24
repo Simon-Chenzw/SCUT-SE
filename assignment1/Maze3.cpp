@@ -1,22 +1,25 @@
-/****************************************************
-*   Functions to solve mazes.                       *
-*                                                   *
-*   Datafile must still contain size as first data. *
-*                                                   *
-*   Four functions are only stubs.                  * 
-****************************************************/
+/**
+ *  @brief:code of assignment1
+ *  @version:3
+ *  @author:Simon_Chen
+ */
 
-#include "Maze.h"
+/****************************************************
+ *   Functions to solve mazes.                       *
+ *                                                   *
+ *   Datafile must still contain size as first data. *
+ *                                                   *
+ *   Four functions are only stubs.                  *
+ ****************************************************/
+
 #include <fstream>
 #include <iostream>
+#include "Maze.h"
 using namespace std;
 
 //	The following enumerated type indicates directions within the maze
 
-enum Direction { DOWN,
-                 LEFT,
-                 UP,
-                 RIGHT };
+enum Direction { DOWN, LEFT, UP, RIGHT };
 
 //	This struct is used for locations within the maze
 
@@ -59,8 +62,7 @@ bool LoadMaze(const char fname[]) {
         maze = new char[mazeWidth * mazeHeight];
         posi = new int[mazeWidth * mazeHeight];
         for (int i = 0; i < mazeHeight; i++)
-            for (int j = 0; j < mazeWidth; j++)
-                ifs >> maze[i * mazeWidth + j];
+            for (int j = 0; j < mazeWidth; j++) ifs >> maze[i * mazeWidth + j];
         ifs.close();
         return true;
     }
@@ -109,8 +111,7 @@ void SolveMaze() {
     }
     int counter = 0;
     for (int j = 0; j < i; j++) {
-        if (posi[j] < 0)
-            continue;
+        if (posi[j] < 0) continue;
         cout << "Current position: (" << posi[j] / mazeWidth << ',' << posi[j] % mazeWidth << ')' << endl;
         counter++;
     }
@@ -140,7 +141,7 @@ bool AtExit(int pos) {
 
 /*void ReportPosition(int pos)
 {
-	cout << "Current position: (" << pos/mazeWidth << ',' << pos%mazeWidth << ')' << endl;
+    cout << "Current position: (" << pos/mazeWidth << ',' << pos%mazeWidth << ')' << endl;
 }*/
 
 //	This function takes a maze position and a heading and determines

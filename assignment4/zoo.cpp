@@ -1,3 +1,9 @@
+/**
+ *  @brief:code of assignment4
+ *  @file:zoo.cpp
+ *  @author:Simon_Chen
+ */
+
 #include "zoo.h"
 
 Zoo::Zoo():

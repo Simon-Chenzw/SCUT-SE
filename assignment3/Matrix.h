@@ -1,4 +1,8 @@
-//! @file:Matrix.h
+/**
+ *  @brief:code of assignment3
+ *  @file:Matrix.h
+ *  @author:Simon_Chen
+ */
 
 #pragma once
 #include <iostream>

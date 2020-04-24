@@ -1,3 +1,9 @@
+/**
+ *  @brief:code of assignment4
+ *  @file:main.cpp
+ *  @author:Simon_Chen
+ */
+
 #include <bits/stdc++.h>
 #include "zoo.h"
 using namespace std;

@@ -1,7 +1,11 @@
-//! @file:MatrixMain.cpp
+/**
+ *  @brief:code of assignment3
+ *  @file:MatrixMain.cpp
+ *  @author:Simon_Chen
+ */
 
-#include "Matrix.h"
 #include <bits/stdc++.h>
+#include "Matrix.h"
 using namespace std;
 
 int main() {

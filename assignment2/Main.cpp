@@ -1,7 +1,11 @@
-//!  @file:Main.cpp
+/**
+ *  @brief:code of assignment2
+ *  @file:Main.cpp
+ *  @author:Simon_Chen
+ */
 
-#include "Library.h"
 #include <iostream>
+#include "Library.h"
 
 int main() {
     // You are to write a Library class that, during initialization, reads data
