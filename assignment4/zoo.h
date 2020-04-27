@@ -120,7 +120,7 @@ class FoodSeller: public Person {
     FoodSeller();
     Money get_income() const;
     bool check_empty() const;
-    string close_reason() const;
+    string get_close_reason() const;
     AnimalFood buy_elephant_food(Money&, Money);
     AnimalFood buy_giraffe_food(Money&, Money);
     AnimalFood buy_monkey_food(Money&, Money);
@@ -131,6 +131,7 @@ class FoodSeller: public Person {
     AnimalFood elephant_food;
     AnimalFood giraffe_food;
     AnimalFood monkey_food;
+    string close_reason;
 };
 
 class Visitor: public Person {

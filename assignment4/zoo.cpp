@@ -40,7 +40,7 @@ void Zoo::run_one_day() {
     for (auto& animal : list_animal) animal->check_ate();
     // end check
     for (auto& animal : list_animal) animal->open_enclosure();
-    if (foodseller.check_empty()) close_reason = foodseller.close_reason();
+    if (foodseller.check_empty()) close_reason = foodseller.get_close_reason();
     if (zookeeper.clean_enough())
         close_reason = zookeeper.close_reason();
     else {
@@ -243,11 +243,9 @@ bool FoodSeller::check_empty() const {
     return elephant_food.get_num() == 0 || giraffe_food.get_num() == 0 || monkey_food.get_num() == 0;
 }
 
-string FoodSeller::close_reason() const {
-    if (elephant_food.get_num() == 0) return "The zoo closed because the seller ran out of peanuts.";
-    if (giraffe_food.get_num() == 0) return "The zoo closed because the seller ran out of carrots.";
-    if (monkey_food.get_num() == 0) return "The zoo closed because the seller ran out of bananas.";
-    throw logic_error("none is empty while get reason");
+string FoodSeller::get_close_reason() const {
+    if (close_reason == "") throw logic_error("none is empty while get reason");
+    return close_reason;
 }
 
 AnimalFood FoodSeller::buy_elephant_food(Money& money, Money max_spend) {
@@ -255,6 +253,7 @@ AnimalFood FoodSeller::buy_elephant_food(Money& money, Money max_spend) {
     money = money - Money(0, price[0] * cnt);
     income = income + Money(0, price[0] * cnt);
     elephant_food.sub(cnt);
+    if (elephant_food.get_num() == 0) close_reason += "\nThe zoo closed because the seller ran out of peanuts.";
     return AnimalFood(peanuts, cnt);
 }
 
@@ -263,6 +262,7 @@ AnimalFood FoodSeller::buy_giraffe_food(Money& money, Money max_spend) {
     money = money - Money(0, price[1] * cnt);
     income = income + Money(0, price[1] * cnt);
     giraffe_food.sub(cnt);
+    if (giraffe_food.get_num() == 0) close_reason += "\nThe zoo closed because the seller ran out of carrots.";
     return AnimalFood(carrots, cnt);
 }
 
@@ -271,6 +271,7 @@ AnimalFood FoodSeller::buy_monkey_food(Money& money, Money max_spend) {
     money = money - Money(0, price[2] * cnt);
     income = income + Money(0, price[2] * cnt);
     monkey_food.sub(cnt);
+    if (monkey_food.get_num() == 0) close_reason += "\nThe zoo closed because the seller ran out of bananas.";
     return AnimalFood(bananas, cnt);
 }
 
@@ -303,6 +304,7 @@ void Adult::spend_money(Money spend) {
 
 void Adult::buy_food(FoodSeller* foodseller) {
     int tmp = money.get_in_cents();
+    if (foodseller->check_empty()) return;
     give_food(foodseller->buy_elephant_food(money, Money(0, tmp / 3)));
     give_food(foodseller->buy_giraffe_food(money, Money(0, (tmp + 1) / 3)));
     give_food(foodseller->buy_monkey_food(money, Money(0, (tmp + 2) / 3)));
