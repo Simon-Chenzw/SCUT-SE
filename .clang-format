@@ -1,0 +1,235 @@
+#guide:https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+---
+Language: Cpp
+BasedOnStyle: google
+
+#访问修饰符偏移
+AccessModifierOffset: -2
+
+#括号参数对齐 Align DontAlign AlwaysBreak
+AlignAfterOpenBracket: Align
+
+#对齐连续的声明赋值 等号 变量名
+AlignConsecutiveAssignments: false
+AlignConsecutiveDeclarations: false
+
+#对齐连续的预处理宏
+#AlignConsecutiveMacros: true
+
+#续行符对齐 DontAlign Left Right 
+AlignEscapedNewlines: Right
+
+#对齐表达式的参数
+AlignOperands: true
+
+#对齐连续的尾随注释
+AlignTrailingComments: true
+ 
+#允许 函数调用 构造函数的初始化列表 函数声明 的参数全部放在下一行
+AllowAllArgumentsOnNextLine : false
+AllowAllConstructorInitializersOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
+
+#允许短的块放在同一行
+AllowShortBlocksOnASingleLine: false
+
+#允许短的case标签放在同一行
+AllowShortCaseLabelsOnASingleLine: false
+
+#允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
+AllowShortFunctionsOnASingleLine: Empty
+
+#允许短的if语句保持在同一行 Never WithoutElse Always
+AllowShortIfStatementsOnASingleLine: WithoutElse
+
+#允许短的lambda保持在同一行 None Empty Inline(是一个参数) All
+AllowShortLambdasOnASingleLine: All
+
+#允许短的循环保持在同一行
+AllowShortLoopsOnASingleLine: true
+ 
+#总是在定义返回类型后换行(deprecated)
+AlwaysBreakAfterDefinitionReturnType: None
+
+#总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数), 
+#AllDefinitions(函数定义的返回类型), TopLevelDefinitions(所有的顶级函数的返回类型)
+AlwaysBreakAfterReturnType: None
+
+#总是在多行string字面量前换行
+AlwaysBreakBeforeMultilineStrings: false
+
+#总是在template声明后换行 No MultiLine Yes
+AlwaysBreakTemplateDeclarations: Yes
+
+#false表示函数调用时所有参数要么都在同一行，要么都各自一行
+BinPackArguments: false
+#false表示函数声明时所有参数要么都在同一行，要么都各自一行
+BinPackParameters: false
+
+#大括号换行要求，只有当BreakBeforeBraces设置为Custom时才有效
+BraceWrapping:
+  AfterCaseLabel: false
+  AfterClass: false
+  AfterControlStatement: false
+  AfterEnum: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterStruct: false
+  AfterUnion: false
+  AfterExternBlock: false
+  BeforeCatch: true
+  BeforeElse: true
+
+  #缩进大括号
+  IndentBraces: false
+  #仅当开头的左大括号已经被换行 右括号也换行
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
+ 
+#在二元运算符前换行: None(在操作符后换行), NonAssignment(在非赋值的操作符前换行), All(在操作符前换行)
+BreakBeforeBinaryOperators: All
+
+#在大括号前换行: Attach Linux Mozilla Stroustrup Allman GNU WebKit Custom
+BreakBeforeBraces: Custom
+
+#在三元运算符前换行 不然就在后面换行
+BreakBeforeTernaryOperators: true
+
+#构造函数的初始化列表 类的继承列表 的对齐方式 BeforeColon BeforeComma AfterColon
+BreakConstructorInitializers: AfterColon
+BreakInheritanceList: AfterColon
+
+#格式化时允许断开字符串
+BreakStringLiterals: false
+
+#每行字符的限制，0表示没有限制
+ColumnLimit: 80
+
+#描述具有特殊意义的注释的正则表达式，它不应该被分割为多行或以其它方式改变
+CommentPragmas: '^ IWYU pragma:'
+
+#如果为true ，则连续的名称空间声明将在同一行上。 如果为false ，则每个命名空间都在新行上声明。
+CompactNamespaces: false
+
+#构造函数的初始化列表要么都在同一行，要么都各自一行
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+
+#构造函数的初始化列表 类的继承列表 的缩进宽度
+ConstructorInitializerIndentWidth: 6
+
+#延续的行的缩进宽度
+ContinuationIndentWidth: 4
+
+#去除C++11的列表初始化的大括号{后和}前的空格
+Cpp11BracedListStyle: true
+
+#指针*和引用&将根据最常见的对齐格式
+DerivePointerAlignment: false
+
+#关闭格式化
+DisableFormat: false
+
+#添加缺少的名称空间结尾注释并修复无效的现有注释
+FixNamespaceComments: true
+
+#需要被解读为foreach的宏而不是函数调用
+ForEachMacros: [ foreach, Q_FOREACH, BOOST_FOREACH ]
+
+#合并include块 Preserve Merge Regroup
+IncludeBlocks: Merge
+
+#对#include进行排序，匹配了某正则表达式的#include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX(优先级越小排序越靠前)，
+#可以定义负数优先级从而保证某些#include永远在最前面
+IncludeCategories: 
+  - Regex: '<[a-z]+\.h>'
+    Priority: 1
+  - Regex: '<[a-z]+>'
+    Priority: 2
+  - Regex: '<.*>'
+    Priority: 3
+  - Regex: '".*"'
+    Priority: 4
+
+#缩进case标签
+IndentCaseLabels: true
+
+#预处理器指令缩进样式 None AfterHash BeforeHash
+IndentPPDirectives:  AfterHash
+
+#缩进宽度
+IndentWidth: 4
+
+#函数返回类型换行时，缩进函数声明或函数定义的函数名
+IndentWrappedFunctionNames: true
+
+#保留在块开始处的空行
+KeepEmptyLinesAtTheStartOfBlocks: false
+
+#连续空行的最大数量
+MaxEmptyLinesToKeep: 1
+
+#命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
+NamespaceIndentation: All
+ 
+#指针和引用的对齐: Left, Right, Middle
+PointerAlignment: Left
+
+#允许重新排版注释
+ReflowComments: true
+#允许排序include
+SortIncludes: true
+#允许排序using
+SortUsingDeclarations: true
+ 
+#在C风格类型转换后添加空格
+SpaceAfterCStyleCast: false
+
+#template之后插入一个空格
+SpaceAfterTemplateKeyword: true
+ 
+#在赋值运算符之前添加空格
+SpaceBeforeAssignmentOperators: true
+
+#列表初始化前添加空格
+SpaceBeforeCpp11BracedList: true
+
+#构造函数初始化列表前添加空格
+SpaceBeforeCtorInitializerColon: false
+
+#继承的冒号前添加空格
+SpaceBeforeInheritanceColon: false
+
+#括号之前添加一个空格: Never ControlStatements NonEmptyParentheses Always
+SpaceBeforeParens: ControlStatements
+
+#范围循环的括号前添加空格
+SpaceBeforeRangeBasedForLoopColon: true
+
+#在空的圆括号中添加空格
+SpaceInEmptyParentheses: false
+
+#在尾随的注释前添加的空格数(只适用于//)
+SpacesBeforeTrailingComments: 4
+
+#在尖括号的<后和>前添加空格
+SpacesInAngles: false
+
+#在C风格类型转换的括号中添加空格
+SpacesInCStyleCastParentheses: false
+
+#在圆括号的(后和)前添加空格
+SpacesInParentheses: false
+
+#在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
+SpacesInSquareBrackets: false
+
+#标准: Cpp03, Cpp11, Auto
+Standard: Cpp11
+
+#tab宽度
+TabWidth: 4
+
+#使用tab字符: Never, ForIndentation, ForContinuationAndIndentation, Always
+UseTab: Never
