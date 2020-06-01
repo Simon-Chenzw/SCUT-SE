@@ -4,6 +4,12 @@
 #define MOVE_L 3
 #define MOVE_R 4
 
+// 4x4 棋盘
+class Board {
+  public:
+};
+
+// 游戏核心 负责基本操作
 class Gamecore {
   public:
     Gamecore();
@@ -12,5 +18,5 @@ class Gamecore {
     void moving(const int&);
 
   private:
-    int state[4][4];
+    Board board;
 };
