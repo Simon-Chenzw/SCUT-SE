@@ -28,4 +28,32 @@
 //     exit(0);
 // }
 
-// int main() {}
+// board test
+#include <iostream>
+#include <dbg_func>
+#include "gamecore.h"
+using namespace std;
+
+int main() {
+    Board board;
+    board.num[0][0] = 1;
+    board.num[3][2] = 3;
+    board.num[1][1] = 2;
+    board.num[1][2] = 1;
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++) cout << board.num[i][j] << " \n"[j == 3];
+    while (true) {
+        int dire;
+        cin >> dire;
+        board.moving(dire);
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++) cout << board.num[i][j] << " \n"[j == 3];
+    }
+    // while (true) {
+    //     int a, b, c, d;
+    //     cin >> a >> b >> c >> d;
+    //     int num = a << 15 | b << 10 | c << 5 | d;
+    //     auto tmp = Board::mem[num];
+    //     dbg(a, b, c, d, num, tmp.after, tmp.moved, tmp.point);
+    // }
+}

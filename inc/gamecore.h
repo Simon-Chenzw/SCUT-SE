@@ -7,6 +7,7 @@
 #define MOVE_R 4
 
 // 4x4 棋盘
+// number[i][j] 第i行第j个 左上角为源点
 class Board {
   public:
     class line_change {
@@ -19,10 +20,12 @@ class Board {
     // 预处理打表 向前移动
     static std::vector<line_change> mem;
 
+    Board();
+    int get_point(const int&) const;
     bool can_move(const int&) const;
     Board get_move(const int&) const;
-    void moving(const int&) const;
-    int number[4][4];
+    void moving(const int&);
+    int num[4][4];
 };
 
 // 游戏核心 负责基本操作
@@ -30,11 +33,12 @@ class Gamecore {
   public:
     Gamecore();
     void start_game();
-    void add_a_number();
-    void moving(const int&);
-    void can_move(const int&);
+    bool have_empty() const;
+    bool add_a_number();
+    bool can_move(const int&) const;
+    bool moving(const int&);
 
-    int point;
     int step;
+    int point;
     Board board;
 };

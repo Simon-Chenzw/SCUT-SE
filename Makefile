@@ -24,6 +24,5 @@ $(OBJ)/%o: $(SRC)/%cpp
 
 .PHONY: clean
 clean:
-	rm -f $(OBJS) $(BIN)
-	rmdir $(OBJ)
-	rmdir $(BIN)
+	if [ -e $(BIN) ]; then rm -rf $(BIN); fi;
+	if [ -e $(OBJ) ]; then rm -rf $(OBJ); fi;
