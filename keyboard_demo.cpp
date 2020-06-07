@@ -1,4 +1,4 @@
-// keyboard_demo
+// keyboard_demo in linux
 
 #include <fcntl.h>
 #include <stdio.h>
