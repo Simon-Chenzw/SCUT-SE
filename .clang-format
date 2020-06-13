@@ -156,7 +156,7 @@ IncludeCategories:
 IndentCaseLabels: true
 
 #预处理器指令缩进样式 None AfterHash BeforeHash
-IndentPPDirectives:  AfterHash
+IndentPPDirectives:  None
 
 #缩进宽度
 IndentWidth: 4
