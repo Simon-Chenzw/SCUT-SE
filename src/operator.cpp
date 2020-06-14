@@ -9,7 +9,7 @@ void Keyboard_oper::clean_buffer() {
     clean_keyboard_buffer();
 }
 
-int Keyboard_oper::get_moved(Board* = nullptr) {
+int Keyboard_oper::get_moved(Board*) {
     int input;
     while (true) {
         input = get_keyboard();
