@@ -1,8 +1,8 @@
 // 移动方向
 #define MOVE_U 1
 #define MOVE_D 2
-#define MOVE_L 3
-#define MOVE_R 4
+#define MOVE_L 4
+#define MOVE_R 3
 
 // 4x4 棋盘
 // number[i][j] 第i行第j个 左上角为源点

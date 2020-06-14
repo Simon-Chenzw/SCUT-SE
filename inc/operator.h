@@ -3,6 +3,11 @@
 // 非交互式自动输入
 #define NON_INTERACTIVE_OPER 2
 
+#define ARROW_U 301
+#define ARROW_D 302
+#define ARROW_L 304
+#define ARROW_R 303
+
 #include "gamecore.h"
 
 class Operator {
@@ -10,16 +15,14 @@ class Operator {
     int oper_type;
 
     Operator(int);
-    virtual int get_input(Board*) = 0;
+    virtual int get_moved(Board*) = 0;
 };
-
-#define filter_none 0
 
 // 键盘输入
 class Keyboard_oper: Operator {
   public:
-    int filter_type;
-
     Keyboard_oper();
-    int get_input(Board* = nullptr) override;
+    void clean_buffer();
+    int get_moved(Board* = nullptr) override;
+    int get_keyboard();
 };

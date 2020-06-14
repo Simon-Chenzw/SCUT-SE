@@ -23,9 +23,10 @@ void terminal_init();
 
 void terminal_uninit();
 
+#define NO_INPUT -1
+
 void clean_keyboard_buffer();
 
-// -1代表没输入
 int keyboard_input();
 
 void get_screen_size(int& row, int& col);
