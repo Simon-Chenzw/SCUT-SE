@@ -1,36 +1,41 @@
 #include "gamecore.h"
 #include <cstdlib>
+#include <vector>
 
 using namespace std;
 
-vector<Board::line_change> Board::mem = []() {
-    vector<Board::line_change> ans;
-    for (int num = 0; num < (1 << 20); num++) {
-        Board::line_change val;
-        val.after[0] = num >> 15 & 0b11111;
-        val.after[1] = num >> 10 & 0b11111;
-        val.after[2] = num >> 5 & 0b11111;
-        val.after[3] = num & 0b11111;
-        val.moved = false;
-        val.point = 0;
+class line_change {
+  public:
+    int after[4];
+    bool moved;
+    int point;
+} mem[1 << 20];
+
+auto mem_init = []() {
+    for (int i = 0; i < (1 << 20); i++) {
+        mem[i].after[0] = i >> 15 & 0b11111;
+        mem[i].after[1] = i >> 10 & 0b11111;
+        mem[i].after[2] = i >> 5 & 0b11111;
+        mem[i].after[3] = i & 0b11111;
+        mem[i].moved = false;
+        mem[i].point = 0;
         for (int i = 1; i < 4; i++) {
-            if (val.after[i] == 0) continue;
+            if (mem[i].after[i] == 0) continue;
             int pos = i;
-            while (pos && val.after[pos - 1] == 0) {
-                swap(val.after[pos], val.after[pos - 1]);
+            while (pos && mem[i].after[pos - 1] == 0) {
+                swap(mem[i].after[pos], mem[i].after[pos - 1]);
                 pos--;
-                val.moved = true;
+                mem[i].moved = true;
             }
-            if (pos && val.after[pos - 1] == val.after[pos]) {
-                val.after[pos - 1]++;
-                val.after[pos] = 0;
-                val.moved = true;
-                val.point += val.after[pos - 1];
+            if (pos && mem[i].after[pos - 1] == mem[i].after[pos]) {
+                mem[i].after[pos - 1]++;
+                mem[i].after[pos] = 0;
+                mem[i].moved = true;
+                mem[i].point += mem[i].after[pos - 1];
             }
         }
-        ans.push_back(val);
     }
-    return ans;
+    return 0;
 }();
 
 inline bool rand_chance(int n) {

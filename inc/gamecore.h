@@ -1,5 +1,3 @@
-#include <vector>
-
 // 移动方向
 #define MOVE_U 1
 #define MOVE_D 2
@@ -10,16 +8,6 @@
 // number[i][j] 第i行第j个 左上角为源点
 class Board {
   public:
-    class line_change {
-      public:
-        int after[4];
-        bool moved;
-        int point;
-    };
-
-    // 预处理打表 向前移动
-    static std::vector<line_change> mem;
-
     Board();
     int get_point(const int&) const;
     bool can_move(const int&) const;
