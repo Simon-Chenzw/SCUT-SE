@@ -1,3 +1,5 @@
+#pragma once
+
 // 交互式输入
 #define INTERACTIVE_OPER 1
 // 非交互式自动输入
@@ -13,13 +15,14 @@
 class Operator {
   public:
     int oper_type;
+    char name[20];
 
-    Operator(int);
+    Operator(int, char*);
     virtual int get_moved(Board*) = 0;
 };
 
 // 键盘输入
-class Keyboard_oper: Operator {
+class Keyboard_oper: public Operator {
   public:
     Keyboard_oper();
     void clean_buffer();

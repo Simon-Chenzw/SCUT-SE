@@ -1,3 +1,5 @@
+#pragma once
+
 // 移动方向
 #define MOVE_U 1
 #define MOVE_D 2
@@ -25,6 +27,7 @@ class Gamecore {
     bool add_a_number();
     bool can_move(const int&) const;
     bool moving(const int&);
+    bool is_ending();
 
     int step;
     int point;

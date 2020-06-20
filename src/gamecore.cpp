@@ -19,9 +19,9 @@ auto mem_init = []() {
         mem[i].after[3] = i & 0b11111;
         mem[i].moved = false;
         mem[i].point = 0;
-        for (int i = 1; i < 4; i++) {
-            if (mem[i].after[i] == 0) continue;
-            int pos = i;
+        for (int j = 1; j < 4; j++) {
+            if (mem[i].after[j] == 0) continue;
+            int pos = j;
             while (pos && mem[i].after[pos - 1] == 0) {
                 swap(mem[i].after[pos], mem[i].after[pos - 1]);
                 pos--;
@@ -112,7 +112,7 @@ void Board::moving(const int& dire) {
     else if (dire == MOVE_R)
         for (int i = 0; i < 4; i++) {
             int ord = line_r(i);
-            for (int j = 0; j < 4; j++) num[3 - j][i] = mem[ord].after[j];
+            for (int j = 0; j < 4; j++) num[i][3 - j] = mem[ord].after[j];
         }
 }
 
@@ -160,4 +160,8 @@ bool Gamecore::moving(const int& dire) {
     }
     else
         return false;
+}
+
+bool Gamecore::is_ending() {
+    return !can_move(MOVE_U) && !can_move(MOVE_D) && !can_move(MOVE_L) && !can_move(MOVE_R);
 }

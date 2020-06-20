@@ -1,3 +1,5 @@
+#pragma once
+
 // windows macro
 #ifdef _WIN32
 #define IN_WINDOWS

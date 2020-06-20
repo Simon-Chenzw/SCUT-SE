@@ -18,7 +18,7 @@ void terminal_init() {
     tcgetattr(0, &setting);
     initial_setting = setting;
     // 更改 local mode (关闭模式)
-    setting.c_lflag &= ~ISIG;      // 当输入INTR、QUIT、SUSP或DSUSP时，产生相应的信号
+    // setting.c_lflag &= ~ISIG;      // 当输入INTR、QUIT、SUSP或DSUSP时，产生相应的信号
     setting.c_lflag &= ~ICANON;    // 使用标准输入模式
     setting.c_lflag &= ~ECHO;      // 显示输入字符
     // 更改 control characters
