@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+#include <vector>
 #include "gamecore.h"
 
 /*
@@ -28,14 +30,14 @@ void print_symbol();
 
 void press_anykey();
 
-int select_option(int option_size, char* options);
+int select_option(const std::vector<std::string>&);
 
 void print_state(const Gamecore&, int = 1);    //注意多线程
 
 void print_ending(const Gamecore&);
 
 // class loading {
-//     loading(char*);
+//     loading(string);
 //     void start();
 //     void end();
 // };

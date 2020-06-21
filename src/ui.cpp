@@ -23,7 +23,7 @@ void press_anykey() {
     return;
 }
 
-int select_option(int option_size, char* options) {
+int select_option(const std::vector<std::string>& vec) {
     return 0;
 }
 

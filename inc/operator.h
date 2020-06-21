@@ -10,14 +10,15 @@
 #define ARROW_L 304
 #define ARROW_R 303
 
+#include <string>
 #include "gamecore.h"
 
 class Operator {
   public:
     int oper_type;
-    char name[20];
+    std::string name;
 
-    Operator(int, char*);
+    Operator(int, std::string);
     virtual int get_moved(Board*) = 0;
 };
 

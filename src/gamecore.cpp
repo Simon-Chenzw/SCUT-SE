@@ -116,6 +116,16 @@ void Board::moving(const int& dire) {
         }
 }
 
+int Board::max_element() const {
+    int ans = 0;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (num[i][j] > ans) ans = num[i][j];
+        }
+    }
+    return ans;
+}
+
 #define board_num(i) (*(&board.num[0][0] + i))
 
 Gamecore::Gamecore(): step(0), point(0), board() {}

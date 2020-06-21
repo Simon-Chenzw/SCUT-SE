@@ -15,6 +15,7 @@ class Board {
     bool can_move(const int&) const;
     Board get_move(const int&) const;
     void moving(const int&);
+    int max_element() const;
     int num[4][4];
 };
 

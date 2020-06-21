@@ -2,11 +2,11 @@
 #include <cstdlib>    //for rand()
 #include "platform.h"
 
-Operator::Operator(int _oper_type, char* _name): oper_type(_oper_type) {
-    for (int i = 0; i < 20; i++) name[i] = _name[i];
-}
+using namespace std;
 
-Keyboard_oper::Keyboard_oper(): Operator(INTERACTIVE_OPER, (char*)"Keyboard") {}
+Operator::Operator(int _oper_type, string _name): oper_type(_oper_type), name(_name) {}
+
+Keyboard_oper::Keyboard_oper(): Operator(INTERACTIVE_OPER, "Keyboard") {}
 
 void Keyboard_oper::clean_buffer() {
     clean_keyboard_buffer();
@@ -35,7 +35,7 @@ int Keyboard_oper::get_keyboard() {
     return input;
 }
 
-Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, (char*)"Random") {}
+Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, "Random") {}
 
 int Random_oper::get_moved(Board* board) {
     return rand() % 4 + 1;
