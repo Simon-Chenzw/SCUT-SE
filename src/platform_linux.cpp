@@ -53,4 +53,17 @@ void set_cursor_position(int row, int col) {
     printf("\033[%d;%df", row, col);
 }
 
+int clr_code[] = {0, 30, 31, 32, 33, 34, 35, 36, 37, 40, 41, 42, 43, 44, 45, 46, 47};
+
+void setcolor(const int& color) {
+    if (color == CLR_RESET)
+        resetcolor();
+    else
+        printf("\033[%dm", clr_code[color]);
+}
+
+void resetcolor() {
+    printf("\033[m");
+}
+
 #endif    // IN_LINUX

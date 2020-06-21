@@ -35,3 +35,28 @@ void get_screen_size(int& row, int& col);
 
 // origin row = 1 col = 1
 void set_cursor_position(int row, int col);
+
+// color macro
+#define CLR_RESET 0
+
+#define CLR_BLACK 1
+#define CLR_RED 2
+#define CLR_GREEN 3
+#define CLR_YELLOW 4
+#define CLR_BLUE 5
+#define CLR_MAGENTA 6
+#define CLR_CYAN 7
+#define CLR_WHITE 8
+
+#define CLR_ON_BLACK 9
+#define CLR_ON_RED 10
+#define CLR_ON_GREEN 11
+#define CLR_ON_YELLOW 12
+#define CLR_ON_BLUE 13
+#define CLR_ON_MAGENTA 14
+#define CLR_ON_CYAN 15
+#define CLR_ON_WHITE 16
+
+void setcolor(const int&);
+
+void resetcolor();
