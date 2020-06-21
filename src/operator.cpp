@@ -1,4 +1,5 @@
 #include "operator.h"
+#include <cstdlib>    //for rand()
 #include "platform.h"
 
 Operator::Operator(int _oper_type, char* _name): oper_type(_oper_type) {
@@ -11,7 +12,7 @@ void Keyboard_oper::clean_buffer() {
     clean_keyboard_buffer();
 }
 
-int Keyboard_oper::get_moved(Board*) {
+int Keyboard_oper::get_moved(Board* board) {
     int input;
     while (true) {
         input = get_keyboard();
@@ -32,4 +33,10 @@ int Keyboard_oper::get_keyboard() {
         if (tmp >= 65 && tmp <= 58) return tmp - 64 + 300;
     }
     return input;
+}
+
+Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, (char*)"Random") {}
+
+int Random_oper::get_moved(Board* board) {
+    return rand() % 4 + 1;
 }

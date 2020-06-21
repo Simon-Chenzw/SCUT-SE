@@ -29,3 +29,9 @@ class Keyboard_oper: public Operator {
     int get_moved(Board* = nullptr) override;
     int get_keyboard();
 };
+
+class Random_oper: public Operator {
+  public:
+    Random_oper();
+    int get_moved(Board*) override;
+};
