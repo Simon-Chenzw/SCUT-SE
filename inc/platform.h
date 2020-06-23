@@ -18,23 +18,29 @@
 #if defined(IN_LINUX) && defined(IN_WINDOWS)
 #error Detected on two different platforms
 #endif
-
 // platform determine end
-
-void terminal_init();
-
-void terminal_uninit();
-
-#define NO_INPUT -1
-
-void clean_keyboard_buffer();
-
-int keyboard_input();
 
 void get_screen_size(int& row, int& col);
 
 // origin row = 1 col = 1
 void set_cursor_position(int row, int col);
+
+// key macro
+#define NO_INPUT -1
+#define ESC 27
+#define ARROW_U 301
+#define ARROW_D 302
+#define ARROW_L 304
+#define ARROW_R 303
+
+class Keyboard {
+  public:
+    Keyboard();
+    ~Keyboard();
+    int get();
+    int get_blocking();
+    void clean_buffer();
+};
 
 // color macro
 #define CLR_RESET 0

@@ -1,9 +1,0 @@
-src/ui.cpp:5:2: warning: #warning UI not done yet [-Wcpp]
- #warning UI not done yet
-  ^~~~~~~
-obj/game.o: In function `game_main(Operator&, int)':
-game.cpp:(.text+0xaa): undefined reference to `result(Gamecore const&, Operator const&)'
-obj/game.o: In function `starting()':
-game.cpp:(.text+0x194): undefined reference to `result(Gamecore const&, Operator const&)'
-collect2: error: ld returned 1 exit status
-make: *** [bin/2048] Error 1

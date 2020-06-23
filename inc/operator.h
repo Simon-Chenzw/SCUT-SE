@@ -5,13 +5,9 @@
 // 非交互式自动输入
 #define NON_INTERACTIVE_OPER 2
 
-#define ARROW_U 301
-#define ARROW_D 302
-#define ARROW_L 304
-#define ARROW_R 303
-
 #include <string>
 #include "gamecore.h"
+#include "platform.h"
 
 class Operator {
   public:
@@ -24,11 +20,12 @@ class Operator {
 
 // 键盘输入
 class Keyboard_oper: public Operator {
+  private:
+    Keyboard& keyboard;
+
   public:
-    Keyboard_oper();
-    void clean_buffer();
+    Keyboard_oper(Keyboard&);
     int get_moved(Board* = nullptr) override;
-    int get_keyboard();
 };
 
 class Random_oper: public Operator {
