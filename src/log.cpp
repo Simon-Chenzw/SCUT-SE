@@ -28,6 +28,6 @@ void print_result(const Gamecore& core, const Operator& oper) {
     lock_guard<mutex> result_guard(result_mutex);
     result_file.open("result.csv", ios::app | ios::out);
     // max_element, step, point, oper.name
-    result_file << core.board.max_element() << ',' << core.step << ',' << core.point << ',' << oper.name << '\n';
+    result_file << core.board.max_element() << ',' << core.step << ',' << core.score << ',' << oper.name << '\n';
     result_file.close();
 }

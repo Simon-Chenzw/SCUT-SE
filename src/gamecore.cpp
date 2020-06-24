@@ -8,9 +8,11 @@ class line_change {
   public:
     int after[4];
     bool moved;
-    int point;
+    int score;
 } mem[1 << 20];
 
+#warning "1 1 2 2" get "3 2 0 0"
+#warning wrong score
 auto mem_init = []() {
     for (int i = 0; i < (1 << 20); i++) {
         mem[i].after[0] = i >> 15 & 0b11111;
@@ -18,7 +20,7 @@ auto mem_init = []() {
         mem[i].after[2] = i >> 5 & 0b11111;
         mem[i].after[3] = i & 0b11111;
         mem[i].moved = false;
-        mem[i].point = 0;
+        mem[i].score = 0;
         for (int j = 1; j < 4; j++) {
             if (mem[i].after[j] == 0) continue;
             int pos = j;
@@ -31,7 +33,7 @@ auto mem_init = []() {
                 mem[i].after[pos - 1]++;
                 mem[i].after[pos] = 0;
                 mem[i].moved = true;
-                mem[i].point += mem[i].after[pos - 1];
+                mem[i].score += mem[i].after[pos - 1];
             }
         }
     }
@@ -60,17 +62,17 @@ Board::Board() {
     for (int i = 0; i < 16; i++) *(&num[0][0] + i) = 0;
 }
 
-int Board::get_point(const int& dire) const {
-    bool point = 0;
+int Board::get_score(const int& dire) const {
+    bool score = 0;
     if (dire == MOVE_U)
-        for (int i = 0; i < 4; i++) point += mem[line_u(i)].point;
+        for (int i = 0; i < 4; i++) score += mem[line_u(i)].score;
     else if (dire == MOVE_D)
-        for (int i = 0; i < 4; i++) point += mem[line_d(i)].point;
+        for (int i = 0; i < 4; i++) score += mem[line_d(i)].score;
     else if (dire == MOVE_L)
-        for (int i = 0; i < 4; i++) point += mem[line_l(i)].point;
+        for (int i = 0; i < 4; i++) score += mem[line_l(i)].score;
     else if (dire == MOVE_R)
-        for (int i = 0; i < 4; i++) point += mem[line_r(i)].point;
-    return point;
+        for (int i = 0; i < 4; i++) score += mem[line_r(i)].score;
+    return score;
 }
 
 bool Board::can_move(const int& dire) const {
@@ -93,7 +95,7 @@ Board Board::get_move(const int& dire) const {
 }
 
 void Board::moving(const int& dire) {
-    int point = 0;
+    int score = 0;
     if (dire == MOVE_U)
         for (int i = 0; i < 4; i++) {
             int ord = line_u(i);
@@ -128,11 +130,11 @@ int Board::max_element() const {
 
 #define board_num(i) (*(&board.num[0][0] + i))
 
-Gamecore::Gamecore(): step(0), point(0), board() {}
+Gamecore::Gamecore(): step(0), score(0), board() {}
 
 void Gamecore::start_game() {
     step = 0;
-    point = 0;
+    score = 0;
     board = Board();
     add_a_number();
     add_a_number();
@@ -164,7 +166,7 @@ bool Gamecore::can_move(const int& dire) const {
 bool Gamecore::moving(const int& dire) {
     if (board.can_move(dire)) {
         step++;
-        point += board.get_point(dire);
+        score += board.get_score(dire);
         board.moving(dire);
         return true;
     }

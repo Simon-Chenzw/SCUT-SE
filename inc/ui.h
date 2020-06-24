@@ -22,22 +22,16 @@
     loading:    左下角加载 "loading..." 视最终版本时加载耗时决定是否添加
 */
 
-void clean_board();
-
-void print_frame();
-
 void print_symbol();
 
-void press_anykey();
+void print_greeting();
 
 int select_option(const std::vector<std::string>&);
+
+void print_state_frame(bool multithread = false);
 
 void print_state(const Gamecore&, int = 1);    //注意多线程
 
 void print_ending(const Gamecore&);
 
-// class loading {
-//     loading(string);
-//     void start();
-//     void end();
-// };
+void print_goodbye();

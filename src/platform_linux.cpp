@@ -9,6 +9,10 @@
 // termios https://blog.csdn.net/leumber/article/details/80105295
 // 窗口大小 https://www.cnblogs.com/sinpo828/p/10678945.html
 
+void clean_screen() {
+    printf("\033[2J");
+}
+
 void get_screen_size(int& row, int& col) {
     struct winsize info;
     ioctl(0, TIOCGWINSZ, &info);
@@ -21,6 +25,8 @@ void set_cursor_position(int row, int col) {
 }
 
 // keyboard
+Keyboard keyboard;
+bool end_flag = false;
 
 Keyboard::Keyboard() {
     // 获取并保存设定
@@ -46,6 +52,7 @@ Keyboard::~Keyboard() {
     setting.c_cc[VMIN] = 1;
     setting.c_cc[VTIME] = 1;
     tcsetattr(0, TCSANOW, &setting);
+    printf("\33[0m");
 }
 
 int Keyboard::get() {
@@ -61,12 +68,13 @@ int Keyboard::get_blocking() {
         int tmp = get();
         if (tmp >= 65 && tmp <= 68) return tmp - 64 + 300;
     }
+    if (IS_QUIT(input)) end_flag = true;
     return input;
 }
 
 void Keyboard::clean_buffer() {
-    while (getchar() != NO_INPUT)
-        ;
+    int input = get();
+    while (input == NO_INPUT) input = get();
 }
 
 // color
@@ -80,7 +88,7 @@ void setcolor(const int& color) {
 }
 
 void resetcolor() {
-    printf("\033[m");
+    printf("\033[0m");
 }
 
 #endif    // IN_LINUX

@@ -22,7 +22,10 @@ $(OBJ)/%o: $(SRC)/%cpp
 	@if [ ! -e $(OBJ) ]; then mkdir $(OBJ); fi;
 	g++ -c -o $@ $^ $(INCLUDE) $(FLAGS) 
 
-.PHONY: clean
+.PHONY: clean run
 clean:
 	if [ -e $(BIN) ]; then rm -rf $(BIN); fi;
 	if [ -e $(OBJ) ]; then rm -rf $(OBJ); fi;
+
+run: $(BIN)/$(TARGET)
+	bin/2048

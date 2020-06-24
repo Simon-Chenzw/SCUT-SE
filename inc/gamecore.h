@@ -11,7 +11,7 @@
 class Board {
   public:
     Board();
-    int get_point(const int&) const;
+    int get_score(const int&) const;
     bool can_move(const int&) const;
     Board get_move(const int&) const;
     void moving(const int&);
@@ -31,6 +31,6 @@ class Gamecore {
     bool is_ending();
 
     int step;
-    int point;
+    int score;
     Board board;
 };
