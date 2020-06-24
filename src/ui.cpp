@@ -1,8 +1,8 @@
 #include "ui.h"
-// #include <cstdio>
 #include <iostream>
 #include <mutex>
 #include <string>
+#include <dbg_func>
 #include "platform.h"
 
 using namespace std;
@@ -26,6 +26,16 @@ class coloful_string {
         resetcolor();
     }
 };
+
+string int2str(int val, int width = 0) {
+    string ans = "";
+    while (val) {
+        ans = char(val % 10 + '0') + ans;
+        val /= 10;
+    }
+    while ((int)ans.length() < width) ans = ' ' + ans;
+    return ans;
+}
 
 const string heading[9] = {R"(      /\\\\\\\\\          /\\\\\\\                /\\\         /\\\\\\\\\             )",
                            R"(     /\\\///////\\\      /\\\/////\\\            /\\\\\       /\\\///////\\\          )",
@@ -58,9 +68,9 @@ int select_option(const vector<string>& vec) {
     print_symbol();
     keyboard.clean_buffer();
     int selected = 0;
-    while (true) {
+    while (!end_flag) {
         for (int i = 0; i < (int)vec.size(); i++) {
-            set_cursor_position(15 + i, 50 - vec[i].length() / 2);
+            set_cursor_position(15 + i, col / 2 - vec[i].length() / 2);
             if (i == selected)
                 cout << coloful_string(vec[i], CLR_BLACK, CLR_ON_WHITE);
             else
@@ -75,6 +85,23 @@ int select_option(const vector<string>& vec) {
         if (IS_D(input) && selected != (int)vec.size() - 1) selected++;
     }
     return 0;
+}
+
+int get_number(const std::string& message) {
+    print_symbol();
+    int num = 0;
+    set_cursor_position(21, col / 2 - message.length() / 2);
+    cout << message;
+    while (!end_flag) {
+        string line = num ? int2str(num) : "";
+        while (line.length() < 10) line = line.length() % 2 ? line + '_' : '_' + line;
+        set_cursor_position(23, col / 2 - line.length() / 2);
+        cout << line;
+        int input = keyboard.get_blocking();
+        if (input >= '0' && input <= '9') num = num * 10 + input - '0';
+        if (input == BACKSPACE) num /= 10;
+        if (input == ENTER) return num;
+    }
 }
 
 // ┌┬┐├┼┤└┴┘─│      131072
@@ -92,20 +119,20 @@ bool multi;
 mutex print_state_mutex;
 
 const int frame_row = 17, frame_col = 17;
+const string frame[] = {"┌───────┬───────┬───────┬───────┐",
+                        "│       ‬│       │       │       │",
+                        "│───────┼───────┼───────┼───────┤",
+                        "│       ‬│       │       │       │",
+                        "│───────┼───────┼───────┼───────┤",
+                        "│       ‬│       │       │       │",
+                        "│───────┼───────┼───────┼───────┤",
+                        "│       ‬│       │       │       │",
+                        "└───────┴───────┴───────┴───────┘"};
 
-void print_state_frame(bool multithread) {
+void print_state_frame(const string& oper_name, bool multithread) {
     print_symbol();
     multi = multithread;
     if (!multi) {
-        const string frame[] = {"┌───────┬───────┬───────┬───────┐",
-                                "│       ‬│       │       │       │",
-                                "│───────┼───────┼───────┼───────┤",
-                                "│       ‬│       │       │       │",
-                                "│───────┼───────┼───────┼───────┤",
-                                "│       ‬│       │       │       │",
-                                "│───────┼───────┼───────┼───────┤",
-                                "│       ‬│       │       │       │",
-                                "└───────┴───────┴───────┴───────┘"};
         for (int i = 0; i < 9; i++) {
             set_cursor_position(frame_row + i, frame_col);
             cout << frame[i];
@@ -117,16 +144,6 @@ void print_state_frame(bool multithread) {
     }
     else {
     }
-}
-
-string int2str(int val, int width = 0) {
-    string ans = "";
-    while (val) {
-        ans = char(val % 10 + '0') + ans;
-        val /= 10;
-    }
-    while ((int)ans.length() < width) ans = ' ' + ans;
-    return ans;
 }
 
 //注意多线程
@@ -150,13 +167,10 @@ void print_state(const Gamecore& core, int thread_num) {
     else {
         lock_guard<mutex> guard(print_state_mutex);
     }
-    // cout << "state start" << ' ' << thread_num << ' ' << core.step << ' ' << core.point << '\n';
-    // for (int i = 0; i < 4; i++)
-    //     for (int j = 0; j < 4; j++) cout << core.board.num[i][j] << " \n"[j == 3];
-    // cout << '\n';
 }
 
-void print_ending(const Gamecore&) {
+//注意多线程
+void print_ending(int thread_num) {
     if (!multi) {
         set_cursor_position(28, 27);
         cout << coloful_string("Sorry, it seems you can't move anymore", CLR_RED);
@@ -168,6 +182,8 @@ void print_ending(const Gamecore&) {
     else {
     }
 }
+
+void clean_ending(int thread_num) {}
 
 void print_goodbye() {
     print_symbol();

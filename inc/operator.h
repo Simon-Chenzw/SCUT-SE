@@ -7,7 +7,6 @@
 
 #include <string>
 #include "gamecore.h"
-#include "platform.h"
 
 class Operator {
   public:
@@ -20,11 +19,8 @@ class Operator {
 
 // 键盘输入
 class Keyboard_oper: public Operator {
-  private:
-    Keyboard& keyboard;
-
   public:
-    Keyboard_oper(Keyboard&);
+    Keyboard_oper();
     int get_moved(Board* = nullptr) override;
 };
 

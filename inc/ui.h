@@ -28,10 +28,14 @@ void print_greeting();
 
 int select_option(const std::vector<std::string>&);
 
-void print_state_frame(bool multithread = false);
+int get_number(const std::string& message);
 
-void print_state(const Gamecore&, int = 1);    //注意多线程
+void print_state_frame(const std::string& oper_name, bool multithread = false);
 
-void print_ending(const Gamecore&);
+void print_state(const Gamecore&, int thread_num = 1);    //注意多线程
+
+void print_ending(int thread_num);    //注意多线程
+
+void clean_ending(int thread_num);    //注意多线程
 
 void print_goodbye();

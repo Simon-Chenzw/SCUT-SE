@@ -7,7 +7,7 @@ using namespace std;
 
 Operator::Operator(int _oper_type, string _name): oper_type(_oper_type), name(_name) {}
 
-Keyboard_oper::Keyboard_oper(Keyboard& _keyboard): Operator(INTERACTIVE_OPER, "Keyboard"), keyboard(_keyboard) {}
+Keyboard_oper::Keyboard_oper(): Operator(INTERACTIVE_OPER, "Keyboard") {}
 
 int Keyboard_oper::get_moved(Board* board) {
     while (!end_flag) {

@@ -74,7 +74,10 @@ int Keyboard::get_blocking() {
 
 void Keyboard::clean_buffer() {
     int input = get();
-    while (input == NO_INPUT) input = get();
+    while (input != NO_INPUT) {
+        if (IS_QUIT(input)) end_flag = true;
+        input = get();
+    }
 }
 
 // color

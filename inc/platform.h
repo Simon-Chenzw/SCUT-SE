@@ -41,6 +41,7 @@ void set_cursor_position(int row = 1, int col = 1);
 #define CHAR_D 's'
 #define CHAR_L 'a'
 #define CHAR_R 'd'
+#define BACKSPACE 127
 #define ARROW_U 301
 #define ARROW_D 302
 #define ARROW_L 304

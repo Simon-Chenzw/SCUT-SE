@@ -15,7 +15,7 @@ FLAGS = -W -O3 -std=c++17
 # 链接时候指定库文件目录及库文件名
 $(BIN)/$(TARGET): $(OBJS)
 	@if [ ! -e $(BIN) ]; then mkdir $(BIN); fi;
-	g++ -o $@ $^ 
+	g++ -o $@ $^ -lpthread
  
 # 编译时候指定头文件目录
 $(OBJ)/%o: $(SRC)/%cpp
