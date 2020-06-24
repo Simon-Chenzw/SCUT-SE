@@ -11,10 +11,9 @@ class line_change {
     int score;
 } mem[1 << 20];
 
-#warning "1 1 2 2" get "3 2 0 0"
-#warning wrong score
 auto mem_init = []() {
     for (int i = 0; i < (1 << 20); i++) {
+        bool is_new[4] = {false, false, false, false};
         mem[i].after[0] = i >> 15 & 0b11111;
         mem[i].after[1] = i >> 10 & 0b11111;
         mem[i].after[2] = i >> 5 & 0b11111;
@@ -29,11 +28,12 @@ auto mem_init = []() {
                 pos--;
                 mem[i].moved = true;
             }
-            if (pos && mem[i].after[pos - 1] == mem[i].after[pos]) {
+            if (pos && mem[i].after[pos - 1] == mem[i].after[pos] && !is_new[pos - 1]) {
+                is_new[pos - 1] = true;
                 mem[i].after[pos - 1]++;
                 mem[i].after[pos] = 0;
                 mem[i].moved = true;
-                mem[i].score += mem[i].after[pos - 1];
+                mem[i].score += 1 << mem[i].after[pos - 1];
             }
         }
     }
@@ -63,7 +63,7 @@ Board::Board() {
 }
 
 int Board::get_score(const int& dire) const {
-    bool score = 0;
+    int score = 0;
     if (dire == MOVE_U)
         for (int i = 0; i < 4; i++) score += mem[line_u(i)].score;
     else if (dire == MOVE_D)

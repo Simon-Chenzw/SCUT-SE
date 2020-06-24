@@ -4,7 +4,6 @@
 #include <mutex>
 #include <string>
 #include "platform.h"
-#warning UI not done yet
 
 using namespace std;
 

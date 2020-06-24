@@ -26,7 +26,7 @@ void game_main(Operator& input, int thread_num) {
     print_result(core, input);
 }
 
-void starting() {
+void game() {
     Keyboard_oper keyboard_oper(keyboard);
 
     print_symbol();
@@ -34,9 +34,11 @@ void starting() {
     keyboard.get_blocking();    // press any key to continue
 
     game_main(keyboard_oper, 1);
+    print_goodbye();
 }
 
 void keyboard_test() {
+    dbg("keyboard input test");
     while (!end_flag) {
         int input = keyboard.get_blocking();
         dbg(input, (char)input);
@@ -44,23 +46,24 @@ void keyboard_test() {
 }
 
 void board_move_test() {
+    dbg("board move test");
     keyboard.~Keyboard();
     while (!end_flag) {
-        int a, b, c, d;
-        cin >> a >> b >> c >> d;
         Board board;
-        board.num[0][0] = a;
-        board.num[0][1] = b;
-        board.num[0][2] = c;
-        board.num[0][3] = d;
+        int& a = board.num[0][0];
+        int& b = board.num[0][1];
+        int& c = board.num[0][2];
+        int& d = board.num[0][3];
+        cin >> a >> b >> c >> d;
+        int step = board.can_move(MOVE_L);
+        int score = board.get_score(MOVE_L);
         board.moving(MOVE_L);
-        cout << board.num[0][0] << ' ' << board.num[0][1] << ' ' << board.num[0][2] << ' ' << board.num[0][3] << "\n\n";
+        dbg(a, b, c, d, step, score);
     }
 }
 
 int main() {
-    starting();
-    print_goodbye();
+    game();
     // keyboard_test();
     // board_move_test();
 }
