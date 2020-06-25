@@ -56,7 +56,13 @@ Keyboard::~Keyboard() {
 }
 
 int Keyboard::get() {
-    return getchar();
+    int input = getchar();
+    if (input == 27 && getchar() == 91) {
+        int tmp = getchar();
+        if (tmp >= 65 && tmp <= 68) input = tmp - 64 + 300;
+    }
+    if (IS_QUIT(input)) end_flag = true;
+    return input;
 }
 
 int Keyboard::get_blocking() {
@@ -64,20 +70,14 @@ int Keyboard::get_blocking() {
     do {
         input = get();
     } while (input == NO_INPUT);
-    if (input == 27 && get() == 91) {
-        int tmp = get();
-        if (tmp >= 65 && tmp <= 68) return tmp - 64 + 300;
-    }
-    if (IS_QUIT(input)) end_flag = true;
     return input;
 }
 
 void Keyboard::clean_buffer() {
-    int input = get();
-    while (input != NO_INPUT) {
-        if (IS_QUIT(input)) end_flag = true;
+    int input;
+    do {
         input = get();
-    }
+    } while (input != NO_INPUT);
 }
 
 // color

@@ -118,16 +118,16 @@ int get_number(const std::string& message) {
 // │    16 ‬│     8 │     4 │     2 │
 // └───────┴───────┴───────┴───────┘
 
-const int frame_row = 20, frame_col = 20;
-const string frame[] = {"┌───────┬───────┬───────┬───────┐",
-                        "│       ‬│       │       │       │",
-                        "│───────┼───────┼───────┼───────┤",
-                        "│       ‬│       │       │       │",
-                        "│───────┼───────┼───────┼───────┤",
-                        "│       ‬│       │       │       │",
-                        "│───────┼───────┼───────┼───────┤",
-                        "│       ‬│       │       │       │",
-                        "└───────┴───────┴───────┴───────┘"};
+const int frame_row = 20, frame_col = 15;
+const string frame[9] = {"┌───────┬───────┬───────┬───────┐",
+                         "│       ‬│       │       │       │",
+                         "│───────┼───────┼───────┼───────┤",
+                         "│       ‬│       │       │       │",
+                         "│───────┼───────┼───────┼───────┤",
+                         "│       ‬│       │       │       │",
+                         "│───────┼───────┼───────┼───────┤",
+                         "│       ‬│       │       │       │",
+                         "└───────┴───────┴───────┴───────┘"};
 bool multi;
 void print_state_frame(const string& oper_name, bool multithread) {
     print_symbol();
@@ -196,9 +196,9 @@ void print_state(const Gamecore& core, int thread_num) {
 //注意多线程
 void print_ending(int thread_num) {
     if (!multi) {
-        middle_print(colorful_string("Sorry, it seems you can't move anymore", CLR_RED), 28);
-        middle_print(colorful_string("Press any key to try again", CLR_CYAN), 31);
-        middle_print(colorful_string("Press esc to exit", CLR_MAGENTA), 34);
+        middle_print(colorful_string("Sorry, it seems you can't move anymore", CLR_RED), frame_row + 10);
+        middle_print(colorful_string("Press any key to try again", CLR_CYAN), frame_row + 12);
+        middle_print(colorful_string("Press esc to exit", CLR_MAGENTA), frame_row + 14);
     }
     else {
         lock_guard<mutex> guard(print_mutex);
@@ -213,9 +213,9 @@ void print_ending(int thread_num) {
 //注意多线程
 void clean_ending(int thread_num) {
     if (!multi) {
-        middle_print("                                      ", 28);
-        middle_print("                          ", 31);
-        middle_print("                 ", 34);
+        middle_print("                                      ", frame_row + 10);
+        middle_print("                          ", frame_row + 12);
+        middle_print("                 ", frame_row + 14);
     }
     else {
         lock_guard<mutex> guard(print_mutex);
