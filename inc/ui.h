@@ -26,7 +26,7 @@ void print_symbol();
 
 void print_greeting();
 
-int select_option(const std::vector<std::string>&);
+int select_option(const std::vector<std::string>&, const std::string& message = "");
 
 int get_number(const std::string& message);
 
