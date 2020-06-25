@@ -26,3 +26,5 @@ $(OBJ)/%o: $(SRC)/%cpp
 clean:
 	if [ -e $(BIN) ]; then rm -rf $(BIN); fi;
 	if [ -e $(OBJ) ]; then rm -rf $(OBJ); fi;
+	if [ -e "result.csv" ]; then rm result.csv; fi;
+	if [ -e "log.txt" ]; then rm log.txt; fi;

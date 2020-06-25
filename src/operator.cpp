@@ -1,5 +1,7 @@
 #include "operator.h"
+#include <chrono>
 #include <cstdlib>    //for rand()
+#include <thread>
 #include <dbg_func>
 #include "platform.h"
 
@@ -22,5 +24,6 @@ int Keyboard_oper::get_moved(Board* board) {
 Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, "Random") {}
 
 int Random_oper::get_moved(Board* board) {
+    this_thread::sleep_for(chrono::microseconds(100));
     return rand() % 4 + 1;
 }

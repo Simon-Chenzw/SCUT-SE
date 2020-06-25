@@ -118,10 +118,7 @@ int get_number(const std::string& message) {
 // │    16 ‬│     8 │     4 │     2 │
 // └───────┴───────┴───────┴───────┘
 
-bool multi;
-mutex print_state_mutex;
-
-const int frame_row = 19, frame_col = 20;
+const int frame_row = 20, frame_col = 20;
 const string frame[] = {"┌───────┬───────┬───────┬───────┐",
                         "│       ‬│       │       │       │",
                         "│───────┼───────┼───────┼───────┤",
@@ -131,7 +128,7 @@ const string frame[] = {"┌───────┬───────┬─�
                         "│───────┼───────┼───────┼───────┤",
                         "│       ‬│       │       │       │",
                         "└───────┴───────┴───────┴───────┘"};
-
+bool multi;
 void print_state_frame(const string& oper_name, bool multithread) {
     print_symbol();
     multi = multithread;
@@ -150,10 +147,16 @@ void print_state_frame(const string& oper_name, bool multithread) {
         cout << "score:";
     }
     else {
+        if (oper_name != "") {
+            set_cursor_position(frame_row - 4, frame_col - 2);
+            cout << "algorithm: " << oper_name;
+        }
     }
 }
 
 //注意多线程
+mutex print_mutex;
+int running_time = 0, max_num = 1;
 void print_state(const Gamecore& core, int thread_num) {
     if (!multi) {
         const string pow[] = {
@@ -172,7 +175,21 @@ void print_state(const Gamecore& core, int thread_num) {
         cout << int2str(core.score, 4);
     }
     else {
-        lock_guard<mutex> guard(print_state_mutex);
+        lock_guard<mutex> guard(print_mutex);
+        int cnt[25] = {};
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++) cnt[core.board.num[i][j]]++;
+        if (cnt[max_num + 1]) {
+            max_num++;
+            set_cursor_position(frame_row - 3, frame_col - 2);
+            cout << "maximum number: " << (1 << max_num);
+        }
+        set_cursor_position(frame_row + thread_num, frame_col);
+        for (int i = 20; i > 0; i--) {
+            const char ch[20] = "0123456789ABCDEFGHI";
+            cout << ch[cnt[i]];
+            if (i % 5 == 1) cout.put(' ');
+        }
     }
 }
 
@@ -184,16 +201,26 @@ void print_ending(int thread_num) {
         middle_print(colorful_string("Press esc to exit", CLR_MAGENTA), 34);
     }
     else {
+        lock_guard<mutex> guard(print_mutex);
+        running_time++;
+        set_cursor_position(frame_row - 2, frame_col - 2);
+        cout << "running times: " << running_time;
+        set_cursor_position(frame_row + thread_num, frame_col + 40);
+        cout << colorful_string("Dead", CLR_RED);
     }
 }
 
+//注意多线程
 void clean_ending(int thread_num) {
     if (!multi) {
-        middle_print(colorful_string("                                      ", CLR_RED), 28);
-        middle_print(colorful_string("                          ", CLR_CYAN), 31);
-        middle_print(colorful_string("                 ", CLR_MAGENTA), 34);
+        middle_print("                                      ", 28);
+        middle_print("                          ", 31);
+        middle_print("                 ", 34);
     }
     else {
+        lock_guard<mutex> guard(print_mutex);
+        set_cursor_position(frame_row + thread_num, frame_col + 40);
+        cout << "    ";
     }
 }
 

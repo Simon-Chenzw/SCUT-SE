@@ -18,6 +18,7 @@ void game_loop(Operator& oper, int thread_num) {
         clean_ending(thread_num);
         print_state(core, thread_num);
         while (!core.is_ending() && !end_flag) {
+            keyboard.clean_buffer();
             int move_dire = oper.get_moved(&core.board);
             if (!end_flag && core.can_move(move_dire)) {
                 core.moving(move_dire);
@@ -28,8 +29,7 @@ void game_loop(Operator& oper, int thread_num) {
         print_ending(thread_num);
         print_result(core, oper);
         if (oper.oper_type == NON_INTERACTIVE_OPER) {
-            this_thread::sleep_for(chrono::seconds(3));
-            keyboard.clean_buffer();
+            this_thread::sleep_for(chrono::seconds(1));
         }
         else if (!end_flag)
             keyboard.get_blocking();
@@ -42,7 +42,7 @@ void game() {
     print_greeting();
     keyboard.get_blocking();    // press any key to continue
 
-    int game_form = 1, thread_num = 1;
+    int game_form = 0, thread_num = 1;
     string oper_name = "keyboard";
     // 游戏形式选择
     game_form = select_option({"Start Game", "Automatic", "Multi-threaded Automatic"});
