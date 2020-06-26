@@ -6,31 +6,27 @@
 #define MOVE_L 4
 #define MOVE_R 3
 
-// 4x4 棋盘
-// number[i][j] 第i行第j个 左上角为源点
-class Board {
+// 打表记录移动
+class line_change {
   public:
-    Board();
-    int get_score(const int&) const;
-    bool can_move(const int&) const;
-    Board get_move(const int&) const;
-    void moving(const int&);
-    int max_element() const;
-    int num[4][4];
+    int after[4];
+    bool moved;
+    int score;
 };
+extern line_change mem[1 << 20];
 
 // 游戏核心 负责基本操作
 class Gamecore {
   public:
     Gamecore();
     void start_game();
-    bool have_empty() const;
     bool add_a_number();
     bool can_move(const int&) const;
-    bool moving(const int&);
-    bool is_ending();
+    void moving(const int&);
+    bool is_ending() const;
+    int max_element() const;
 
     int step;
     int score;
-    Board board;
+    int num[4][4];
 };

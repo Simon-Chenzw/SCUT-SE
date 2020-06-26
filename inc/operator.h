@@ -14,18 +14,21 @@ class Operator {
     std::string name;
 
     Operator(int, std::string);
-    virtual int get_moved(Board*) = 0;
+    virtual ~Operator() = 0;
+    virtual int get_moved(Gamecore*) = 0;
 };
 
 // 键盘输入
 class Keyboard_oper: public Operator {
   public:
     Keyboard_oper();
-    int get_moved(Board* = nullptr) override;
+    ~Keyboard_oper() = default;
+    int get_moved(Gamecore*) override;
 };
 
 class Random_oper: public Operator {
   public:
     Random_oper();
-    int get_moved(Board*) override;
+    ~Random_oper() = default;
+    int get_moved(Gamecore*) override;
 };

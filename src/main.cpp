@@ -19,7 +19,7 @@ void game_loop(Operator& oper, int thread_num) {
         print_state(core, thread_num);
         while (!core.is_ending() && !end_flag) {
             keyboard.clean_buffer();
-            int move_dire = oper.get_moved(&core.board);
+            int move_dire = oper.get_moved(&core);
             if (!end_flag && core.can_move(move_dire)) {
                 core.moving(move_dire);
                 core.add_a_number();
@@ -27,7 +27,7 @@ void game_loop(Operator& oper, int thread_num) {
             }
         }
         print_ending(thread_num);
-        print_result(core, oper);
+        save_result(core.max_element(), core.step, core.score, oper.name);
         if (oper.oper_type == NON_INTERACTIVE_OPER) {
             this_thread::sleep_for(chrono::seconds(1));
         }
@@ -82,17 +82,22 @@ void board_move_test() {
     dbg("board move test");
     keyboard.~Keyboard();
     while (!end_flag) {
-        Board board;
-        int& a = board.num[0][0];
-        int& b = board.num[0][1];
-        int& c = board.num[0][2];
-        int& d = board.num[0][3];
+        Gamecore core;
+        int& a = core.num[0][0];
+        int& b = core.num[0][1];
+        int& c = core.num[0][2];
+        int& d = core.num[0][3];
         cin >> a >> b >> c >> d;
-        int step = board.can_move(MOVE_L);
-        int score = board.get_score(MOVE_L);
-        board.moving(MOVE_L);
+        core.moving(MOVE_L);
+        int step = core.step;
+        int score = core.score;
         dbg(a, b, c, d, step, score);
     }
+}
+
+void log_test() {
+    dbg("log test");
+    log("log test");
 }
 
 int main() {

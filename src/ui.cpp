@@ -167,7 +167,7 @@ void print_state(const Gamecore& core, int thread_num) {
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++) {
                 set_cursor_position(frame_row + 2 * i + 1, frame_col + 8 * j + 1);
-                cout << pow[core.board.num[i][j]];
+                cout << pow[core.num[i][j]];
             }
         set_cursor_position(frame_row + 3, frame_col + 46);
         cout << int2str(core.step, 4);
@@ -178,7 +178,7 @@ void print_state(const Gamecore& core, int thread_num) {
         lock_guard<mutex> guard(print_mutex);
         int cnt[25] = {};
         for (int i = 0; i < 4; i++)
-            for (int j = 0; j < 4; j++) cnt[core.board.num[i][j]]++;
+            for (int j = 0; j < 4; j++) cnt[core.num[i][j]]++;
         if (cnt[max_num + 1]) {
             max_num++;
             set_cursor_position(frame_row - 3, frame_col - 2);

@@ -4,13 +4,7 @@
 
 using namespace std;
 
-class line_change {
-  public:
-    int after[4];
-    bool moved;
-    int score;
-} mem[1 << 20];
-
+line_change mem[1 << 20];
 auto mem_init = []() {
     for (int i = 0; i < (1 << 20); i++) {
         bool is_new[4] = {false, false, false, false};
@@ -58,92 +52,21 @@ inline bool rand_chance(int n) {
 #define line_l(i) four2one(num[i][0], num[i][1], num[i][2], num[i][3])    //向左移动
 #define line_r(i) four2one(num[i][3], num[i][2], num[i][1], num[i][0])    //向右移动
 
-Board::Board() {
-    for (int i = 0; i < 16; i++) *(&num[0][0] + i) = 0;
+// 判断是否移动
+#define can_move_u (mem[line_u(0)].moved || mem[line_u(1)].moved || mem[line_u(2)].moved || mem[line_u(3)].moved)
+#define can_move_d (mem[line_d(0)].moved || mem[line_d(1)].moved || mem[line_d(2)].moved || mem[line_d(3)].moved)
+#define can_move_l (mem[line_l(0)].moved || mem[line_l(1)].moved || mem[line_l(2)].moved || mem[line_l(3)].moved)
+#define can_move_r (mem[line_r(0)].moved || mem[line_r(1)].moved || mem[line_r(2)].moved || mem[line_r(3)].moved)
+
+#define board_num(i) (*(&num[0][0] + i))
+
+Gamecore::Gamecore(): step(0), score(0) {
+    for (int i = 0; i < 16; i++) board_num(i) = 0;
 }
-
-int Board::get_score(const int& dire) const {
-    int score = 0;
-    if (dire == MOVE_U)
-        for (int i = 0; i < 4; i++) score += mem[line_u(i)].score;
-    else if (dire == MOVE_D)
-        for (int i = 0; i < 4; i++) score += mem[line_d(i)].score;
-    else if (dire == MOVE_L)
-        for (int i = 0; i < 4; i++) score += mem[line_l(i)].score;
-    else if (dire == MOVE_R)
-        for (int i = 0; i < 4; i++) score += mem[line_r(i)].score;
-    return score;
-}
-
-bool Board::can_move(const int& dire) const {
-    bool can_move = false;
-    if (dire == MOVE_U)
-        for (int i = 0; i < 4; i++) can_move |= mem[line_u(i)].moved;
-    else if (dire == MOVE_D)
-        for (int i = 0; i < 4; i++) can_move |= mem[line_d(i)].moved;
-    else if (dire == MOVE_L)
-        for (int i = 0; i < 4; i++) can_move |= mem[line_l(i)].moved;
-    else if (dire == MOVE_R)
-        for (int i = 0; i < 4; i++) can_move |= mem[line_r(i)].moved;
-    return can_move;
-}
-
-Board Board::get_move(const int& dire) const {
-    Board ans(*this);
-    ans.moving(dire);
-    return ans;
-}
-
-void Board::moving(const int& dire) {
-    int score = 0;
-    if (dire == MOVE_U)
-        for (int i = 0; i < 4; i++) {
-            int ord = line_u(i);
-            for (int j = 0; j < 4; j++) num[j][i] = mem[ord].after[j];
-        }
-    else if (dire == MOVE_D)
-        for (int i = 0; i < 4; i++) {
-            int ord = line_d(i);
-            for (int j = 0; j < 4; j++) num[3 - j][i] = mem[ord].after[j];
-        }
-    else if (dire == MOVE_L)
-        for (int i = 0; i < 4; i++) {
-            int ord = line_l(i);
-            for (int j = 0; j < 4; j++) num[i][j] = mem[ord].after[j];
-        }
-    else if (dire == MOVE_R)
-        for (int i = 0; i < 4; i++) {
-            int ord = line_r(i);
-            for (int j = 0; j < 4; j++) num[i][3 - j] = mem[ord].after[j];
-        }
-}
-
-int Board::max_element() const {
-    int ans = 0;
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++) {
-            if (num[i][j] > ans) ans = num[i][j];
-        }
-    }
-    return ans;
-}
-
-#define board_num(i) (*(&board.num[0][0] + i))
-
-Gamecore::Gamecore(): step(0), score(0), board() {}
 
 void Gamecore::start_game() {
-    step = 0;
-    score = 0;
-    board = Board();
     add_a_number();
     add_a_number();
-}
-
-bool Gamecore::have_empty() const {
-    for (int i = 0; i < 16; i++)
-        if (board_num(i) == 0) return true;
-    return false;
 }
 
 bool Gamecore::add_a_number() {
@@ -160,20 +83,66 @@ bool Gamecore::add_a_number() {
 }
 
 bool Gamecore::can_move(const int& dire) const {
-    return board.can_move(dire);
+    if (dire == MOVE_U)
+        return can_move_u;
+    else if (dire == MOVE_D)
+        return can_move_d;
+    else if (dire == MOVE_L)
+        return can_move_l;
+    else if (dire == MOVE_R)
+        return can_move_r;
 }
 
-bool Gamecore::moving(const int& dire) {
-    if (board.can_move(dire)) {
-        step++;
-        score += board.get_score(dire);
-        board.moving(dire);
-        return true;
+void Gamecore::moving(const int& dire) {
+    if (dire == MOVE_U) {
+        if (can_move_u) {
+            step++;
+            score += mem[line_u(0)].score + mem[line_u(1)].score + mem[line_u(2)].score + mem[line_u(3)].score;
+            for (int i = 0; i < 4; i++) {
+                int ord = line_u(i);
+                for (int j = 0; j < 4; j++) num[j][i] = mem[ord].after[j];
+            }
+        }
     }
-    else
-        return false;
+    else if (dire == MOVE_D) {
+        if (can_move_d) {
+            step++;
+            score += mem[line_d(0)].score + mem[line_d(1)].score + mem[line_d(2)].score + mem[line_d(3)].score;
+            for (int i = 0; i < 4; i++) {
+                int ord = line_d(i);
+                for (int j = 0; j < 4; j++) num[3 - j][i] = mem[ord].after[j];
+            }
+        }
+    }
+    else if (dire == MOVE_L) {
+        if (can_move_l) {
+            step++;
+            score += mem[line_l(0)].score + mem[line_l(1)].score + mem[line_l(2)].score + mem[line_l(3)].score;
+            for (int i = 0; i < 4; i++) {
+                int ord = line_l(i);
+                for (int j = 0; j < 4; j++) num[i][j] = mem[ord].after[j];
+            }
+        }
+    }
+    else if (dire == MOVE_R) {
+        if (can_move_r) {
+            step++;
+            score += mem[line_r(0)].score + mem[line_r(1)].score + mem[line_r(2)].score + mem[line_r(3)].score;
+            for (int i = 0; i < 4; i++) {
+                int ord = line_r(i);
+                for (int j = 0; j < 4; j++) num[i][3 - j] = mem[ord].after[j];
+            }
+        }
+    }
 }
 
-bool Gamecore::is_ending() {
+bool Gamecore::is_ending() const {
     return !can_move(MOVE_U) && !can_move(MOVE_D) && !can_move(MOVE_L) && !can_move(MOVE_R);
+}
+
+int Gamecore::max_element() const {
+    int ans = 0;
+    for (int i = 0; i < 16; i++)
+        if (board_num(i) > ans) ans = board_num(i);
+    return ans;
 }
