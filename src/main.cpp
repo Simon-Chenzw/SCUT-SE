@@ -13,8 +13,9 @@ using namespace std;
 
 // 单个游戏的核心循环 多线程主体
 void game_loop(Operator& oper, int thread_num) {
+    int running_cnt = 0;
+    log("thread ", thread_num, " start.");
     while (!end_flag) {
-        log("game start. opername: ", oper.name, " thread_num: ", thread_num);
         Gamecore core;
         core.start_game();
         print_state(core, thread_num);
@@ -28,15 +29,16 @@ void game_loop(Operator& oper, int thread_num) {
             }
         }
         print_ending(thread_num);
-        log("game end. opername: ", oper.name, " thread_num: ", thread_num);
         save_result(core.max_element(), core.step, core.score, oper.name);
         if (oper.oper_type == INTERACTIVE_OPER)    //依据OPER是否是交互式 采取不同的行动
             keyboard.get_blocking();
         else
             this_thread::sleep_for(chrono::seconds(1));
         clean_ending(thread_num);
+        running_cnt++;
+        log("thread ", thread_num, " run ", running_cnt, " times.");
     }
-    log("game loop end. thread_num: ", thread_num);
+    log("thread ", thread_num, " end.");
 }
 
 void game() {
@@ -53,11 +55,15 @@ void game() {
     log("game form selected: ", game_form);
     // AI选择
     const vector<string> ai_list = {"random"};
-    if (game_form != 0) oper_name = ai_list[select_option(ai_list, "Choose an algorithm")];
-    log("operator name selected: ", oper_name);
+    if (game_form != 0) {
+        oper_name = ai_list[select_option(ai_list, "Choose an algorithm")];
+        log("operator name selected: ", oper_name);
+    }
     // 线程数量选择
-    if (game_form == 2) thread_num = get_number("Please enter the number of threads");
-    log("threads number get: ", thread_num);
+    if (game_form == 2) {
+        thread_num = get_number("Please enter the number of threads");
+        log("threads number get: ", thread_num);
+    }
 
     // 启动游戏
     print_state_frame(oper_name == "keyboard" ? "" : oper_name, thread_num != 1);
@@ -66,13 +72,13 @@ void game() {
     for (int i = 0; i < thread_num; i++) {
         if (oper_name == "keyboard") opers.push_back(new Keyboard_oper);
         if (oper_name == "random") opers.push_back(new Random_oper);
-        log(oper_name, " operator created. NO.", i);
+        log("operator ", i, " created.");
     }
     // 开启多线程
     vector<thread> threads;
     for (int i = 0; i < thread_num; i++) {
         threads.push_back(thread(game_loop, ref(*opers[i]), i));
-        log("thread started. No.", i);
+        log("thread ", i, " start.");
     }
     // join多线程 即等待游戏结束
     for (int i = 0; i < thread_num; i++) threads[i].join();

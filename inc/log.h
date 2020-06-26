@@ -15,12 +15,12 @@ extern std::mutex log_mutex;
 // 内联函数 处理输出格式
 inline std::string log_head(const std::string& file, const int& line, const std::string& func) {
     std::stringstream ss;
-    ss << '[' << file << ':' << line << ' ' << '(' << func << ')' << ']';
+    ss << '[' << file << ':' << line << ' ' << '(' << func << ')' << ']' << ' ';
     return ss.str();
 }
 
 // 不定长函数递归终点
-void log_print(std::fstream& fout) {
+inline void log_print(std::fstream& fout) {
     fout << '\n';
 }
 
@@ -36,7 +36,7 @@ template <typename... Args>
 void save_log(Args... arg) {
     std::lock_guard<std::mutex> result_guard(log_mutex);
     log_file.open("log.txt", std::ios::app | std::ios::out);
-    file_print(log_file, arg...);
+    log_print(log_file, arg...);
     log_file.close();
 }
 
@@ -62,6 +62,6 @@ template <typename... Args>
 void save_result(Args... arg) {
     std::lock_guard<std::mutex> result_guard(result_mutex);
     result_file.open("result.csv", std::ios::app | std::ios::out);
-    file_print(result_file, arg...);
+    result_print(result_file, arg...);
     result_file.close();
 }
