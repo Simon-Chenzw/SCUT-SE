@@ -8,12 +8,13 @@
 #include <string>
 #include "gamecore.h"
 
+// 纯虚基类 Operator的接口
 class Operator {
   public:
     int oper_type;
     std::string name;
 
-    Operator(int, std::string);
+    Operator(int oper_type, std::string oper_name);
     virtual ~Operator() = 0;
     virtual int get_moved(Gamecore*) = 0;
 };
@@ -22,13 +23,13 @@ class Operator {
 class Keyboard_oper: public Operator {
   public:
     Keyboard_oper();
-    ~Keyboard_oper() = default;
+    ~Keyboard_oper();
     int get_moved(Gamecore*) override;
 };
 
 class Random_oper: public Operator {
   public:
     Random_oper();
-    ~Random_oper() = default;
+    ~Random_oper();
     int get_moved(Gamecore*) override;
 };

@@ -1,18 +1,18 @@
 #include "log.h"
 #include <fstream>
 #include <mutex>
-#include <string>
 using namespace std;
 
 fstream log_file;
 mutex log_mutex;
 
-void save_log(const string& str) {
-    lock_guard<mutex> log_guard(log_mutex);
-    log_file.open("log.txt", ios::app | ios::out);
-    log_file << str;
-    log_file.close();
-}
+// "save_log" old version
+// void save_log(const string& str) {
+//     lock_guard<mutex> log_guard(log_mutex);
+//     log_file.open("log.txt", ios::app | ios::out);
+//     log_file << str;
+//     log_file.close();
+// }
 
 fstream result_file;
 mutex result_mutex;

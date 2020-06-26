@@ -47,6 +47,7 @@ void set_cursor_position(int row = 1, int col = 1);
 #define ARROW_L 304
 #define ARROW_R 303
 
+// key judgment
 #define IS_QUIT(i) (i == ESC || i == CTRL_C || i == CTRL_D)
 #define IS_U(i) (i == CHAR_U || i == CHAR_U_CAP || i == ARROW_U)
 #define IS_D(i) (i == CHAR_D || i == CHAR_D_CAP || i == ARROW_D)
@@ -55,13 +56,14 @@ void set_cursor_position(int row = 1, int col = 1);
 
 class Keyboard {
   public:
-    Keyboard();
-    ~Keyboard();
-    int get();    // Keyboard::get() 不处理end_flag 仅供内部调用
-    int get_blocking();
-    void clean_buffer();
+    Keyboard();             // 构造 更改终端设定
+    ~Keyboard();            // 析构 恢复终端设定
+    int get();              // 非阻塞式获取 无输出为NO_INPUT 处理方向键 处理QUIT信号
+    int get_blocking();     // 阻塞式获取
+    void clean_buffer();    // 清除buffer 即get()直至为NO_INPUT
 };
 extern Keyboard keyboard;
+
 // 为true时退出程序 按esc ctrl^c ctrl^d时触发
 extern bool end_flag;
 

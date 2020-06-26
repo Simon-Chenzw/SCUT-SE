@@ -2,7 +2,6 @@
 #include <iostream>
 #include <mutex>
 #include <string>
-#include <dbg_func>
 #include "platform.h"
 
 using namespace std;
@@ -10,6 +9,7 @@ using namespace std;
 const int row = 50;
 const int col = 83;
 
+// 彩色字符串 operator<< 时会自动处理颜色设定
 class colorful_string {
   public:
     int clr_front, clr_back;
@@ -89,7 +89,7 @@ int select_option(const vector<string>& vec, const std::string& message) {
             return selected;
         }
     }
-    return 0;
+    return 0;    //触发了end_flag
 }
 
 int get_number(const std::string& message) {
@@ -98,13 +98,14 @@ int get_number(const std::string& message) {
     middle_print(message, 21);
     while (!end_flag) {
         string line = num ? int2str(num) : "";
-        while (line.length() < 10) line = line.length() % 2 ? line + '_' : '_' + line;
+        while (line.length() < 10) line = line + '_';
         middle_print(line, 23);
         int input = keyboard.get_blocking();
         if (input >= '0' && input <= '9') num = num * 10 + input - '0';
         if (input == BACKSPACE) num /= 10;
         if (input == ENTER) return num;
     }
+    return 0;    //触发了end_flag
 }
 
 // ┌┬┐├┼┤└┴┘─│      131072
@@ -154,8 +155,9 @@ void print_state_frame(const string& oper_name, bool multithread) {
     }
 }
 
-//注意多线程
+// print时共用的锁 防止多线程冲突
 mutex print_mutex;
+
 int running_time = 0, max_num = 1;
 void print_state(const Gamecore& core, int thread_num) {
     if (!multi) {
@@ -196,7 +198,7 @@ void print_state(const Gamecore& core, int thread_num) {
 //注意多线程
 void print_ending(int thread_num) {
     if (!multi) {
-        middle_print(colorful_string("Sorry, it seems you can't move anymore", CLR_RED), frame_row + 10);
+        middle_print(colorful_string("Sorry, it seems it can't move anymore", CLR_RED), frame_row + 10);
         middle_print(colorful_string("Press any key to try again", CLR_CYAN), frame_row + 12);
         middle_print(colorful_string("Press esc to exit", CLR_MAGENTA), frame_row + 14);
     }
@@ -213,7 +215,7 @@ void print_ending(int thread_num) {
 //注意多线程
 void clean_ending(int thread_num) {
     if (!multi) {
-        middle_print("                                      ", frame_row + 10);
+        middle_print("                                     ", frame_row + 10);
         middle_print("                          ", frame_row + 12);
         middle_print("                 ", frame_row + 14);
     }

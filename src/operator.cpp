@@ -1,10 +1,8 @@
 #include "operator.h"
-#include <chrono>
-#include <cstdlib>    //for rand()
-#include <thread>
-#include <dbg_func>
-#include "platform.h"
-
+#include <chrono>        // for sleep
+#include <cstdlib>       // for rand()
+#include <thread>        // for sleep
+#include "platform.h"    // for keyboard
 using namespace std;
 
 Operator::Operator(int _oper_type, string _name): oper_type(_oper_type), name(_name) {}
@@ -12,6 +10,8 @@ Operator::Operator(int _oper_type, string _name): oper_type(_oper_type), name(_n
 Operator::~Operator() = default;
 
 Keyboard_oper::Keyboard_oper(): Operator(INTERACTIVE_OPER, "Keyboard") {}
+
+Keyboard_oper::~Keyboard_oper() = default;
 
 int Keyboard_oper::get_moved(Gamecore* board) {
     while (!end_flag) {
@@ -24,6 +24,8 @@ int Keyboard_oper::get_moved(Gamecore* board) {
 }
 
 Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, "Random") {}
+
+Random_oper::~Random_oper() = default;
 
 int Random_oper::get_moved(Gamecore* board) {
     this_thread::sleep_for(chrono::microseconds(100));

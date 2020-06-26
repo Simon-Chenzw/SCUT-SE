@@ -26,6 +26,7 @@ void set_cursor_position(int row, int col) {
 
 // keyboard
 Keyboard keyboard;
+
 bool end_flag = false;
 
 Keyboard::Keyboard() {
@@ -52,7 +53,7 @@ Keyboard::~Keyboard() {
     setting.c_cc[VMIN] = 1;
     setting.c_cc[VTIME] = 1;
     tcsetattr(0, TCSANOW, &setting);
-    printf("\33[0m");
+    printf("\033[0m");
 }
 
 int Keyboard::get() {
