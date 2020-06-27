@@ -44,7 +44,7 @@ string int2str(int val, int width = 0) {
         ans = char(val % 10 + '0') + ans;
         val /= 10;
     }
-    while ((int)ans.length() < width) ans = ' ' + ans;
+    if ((int)ans.length() < width) ans = string(width - ans.length(), ' ') + ans;
     return ans;
 }
 
@@ -106,8 +106,7 @@ int get_number(const std::string& message) {
     middle_print(message, 21);
     while (!end_flag) {
         string line = num ? int2str(num) : "";
-        line = "input: " + line;
-        while (line.length() < 10) line = line + '_';
+        line = "input: " + line + (line.length() < 10 ? string(10 - line.length(), '_') : "");
         middle_print(line, 23);
         int input = keyboard.get_blocking();
         if (input >= '0' && input <= '9') num = num * 10 + input - '0';
