@@ -103,7 +103,7 @@ int get_number(const std::string& message) {
         int input = keyboard.get_blocking();
         if (input >= '0' && input <= '9') num = num * 10 + input - '0';
         if (input == BACKSPACE) num /= 10;
-        if (input == ENTER) return num;
+        if (input == ENTER && num != 0) return num;
     }
     return 0;    //触发了end_flag
 }
