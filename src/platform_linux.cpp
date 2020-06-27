@@ -67,10 +67,10 @@ int Keyboard::get() {
 }
 
 int Keyboard::get_blocking() {
-    int input;
-    do {
+    int input = get();
+    while (input == NO_INPUT && !end_flag) {
         input = get();
-    } while (input == NO_INPUT);
+    }
     return input;
 }
 
