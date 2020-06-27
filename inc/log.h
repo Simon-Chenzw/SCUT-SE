@@ -23,15 +23,15 @@ inline std::string log_head(const std::string& file, const int& line, const std:
 }
 
 // 不定长函数递归终点
-inline void log_print(std::fstream& fout) {
-    fout << '\n';
+inline void log_print() {
+    log_file << '\n';
 }
 
 // 不定长函数递归过程
 template <typename T, typename... Arg>
-void log_print(std::fstream& fout, T&& a, Arg&&... arg) {
-    fout << a;
-    log_print(fout, arg...);
+void log_print(T&& a, Arg&&... arg) {
+    log_file << a;
+    log_print(arg...);
 }
 
 // 通过不定长函数 保存参数至log.txt
@@ -39,7 +39,7 @@ template <typename... Arg>
 void save_log(Arg&&... arg) {
     std::lock_guard<std::mutex> result_guard(log_mutex);
     log_file.open("log.txt", std::ios::app | std::ios::out);
-    log_print(log_file, arg...);
+    log_print(arg...);
     log_file.close();
 }
 
@@ -49,15 +49,15 @@ extern std::mutex result_mutex;
 
 // 不定长函数递归终点
 template <typename T>
-void result_print(std::fstream& fout, T&& a) {
-    fout << a << '\n';
+void result_print(T&& a) {
+    result_file << a << '\n';
 }
 
 // 不定长函数递归过程
 template <typename T, typename... Arg>
-void result_print(std::fstream& fout, T&& a, Arg&&... arg) {
-    fout << a << ',';
-    result_print(fout, arg...);
+void result_print(T&& a, Arg&&... arg) {
+    result_file << a << ',';
+    result_print(arg...);
 }
 
 // 通过不定长函数 保存参数为csv格式
@@ -65,6 +65,6 @@ template <typename... Arg>
 void save_result(Arg&&... arg) {
     std::lock_guard<std::mutex> result_guard(result_mutex);
     result_file.open("result.csv", std::ios::app | std::ios::out);
-    result_print(result_file, arg...);
+    result_print(arg...);
     result_file.close();
 }
