@@ -1,7 +1,10 @@
+# For vsc at Linux
 /.vscode
-
 /bin
 /obj
-
 log.txt
 result.csv
+
+# For vs2019 at Windows
+/.vs
+/vsproject

@@ -68,9 +68,7 @@ inline bool rand_chance(int n) {
 #define can_move_l move_bool(line_l(0), line_l(1), line_l(2), line_l(3))    //向左移动
 #define can_move_r move_bool(line_r(0), line_r(1), line_r(2), line_r(3))    //向右移动
 
-Gamecore::Gamecore(): step(0), score(0) {
-    for (int i = 0; i < 16; i++) board_num(i) = 0;
-}
+Gamecore::Gamecore(): step(0), score(0), num{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} {}
 
 void Gamecore::start_game() {
     add_a_number();
