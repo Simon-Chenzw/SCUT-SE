@@ -87,6 +87,11 @@ void game() {
     log("game ended");
 }
 
+void init() {
+    gamecore_init();
+    operator_init();
+}
+
 // 测试keyboard是否正常工作
 void keyboard_test() {
     dbg("keyboard input test, press ESC to exit.");
@@ -123,6 +128,7 @@ void log_test() {
 int main() {
     clean_file();
     log("program started.");
+    init();
     game();
     // keyboard_test();
     // board_move_test();

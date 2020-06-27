@@ -34,12 +34,13 @@ void make_generator(vector<unique_ptr<generator_base>>& vec, T a, Arg... arg) {
 
 // 储存了每个Oper类的名字(Keyboard除外)
 vector<string> oper_name_list = {operator_list};
+
 // 储存了每个Oper类的generator(Keyboard除外) 通过成员函数get便可返回一个unique_ptr<Operator>
-vector<unique_ptr<generator_base>> oper_generator_list = []() {
-    vector<unique_ptr<generator_base>> list;
-    make_generator(list, operator_list);
-    return list;
-}();
+vector<unique_ptr<generator_base>> oper_generator_list;
+
+void operator_init() {
+    make_generator(oper_generator_list, operator_list);
+}
 
 vector<unique_ptr<Operator>> oper_generator(int type, int number) {
     vector<unique_ptr<Operator>> list;

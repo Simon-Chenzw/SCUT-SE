@@ -12,7 +12,6 @@ extern std::fstream log_file;
 extern std::mutex log_mutex;
 
 // 记录log 包含file line func等信息
-// [bug] log()不要用于lambda和template中 也不要空参调用
 #define log(arg...) save_log(log_head(__FILE__, __LINE__, __func__), ##arg)
 
 // 内联函数 处理输出格式

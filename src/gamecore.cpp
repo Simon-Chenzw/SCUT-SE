@@ -1,11 +1,12 @@
 #include "gamecore.h"
 #include <cstdlib>
+#include "log.h"
 using namespace std;
 
 line_change move_chart[1 << 20];
 
 // 自动初始化move_chart
-auto memory_init = []() {
+void gamecore_init() {
     for (int i = 0; i < (1 << 20); i++) {
         bool is_new[4] = {false, false, false, false};
         move_chart[i].after[0] = i >> 15 & 0b11111;
@@ -32,8 +33,8 @@ auto memory_init = []() {
             }
         }
     }
-    return 0;
-}();
+    log("gamecore_init");
+};
 
 // 1/n的概率返回true
 inline bool rand_chance(int n) {

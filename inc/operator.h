@@ -52,8 +52,11 @@ class Operator {
 
 // 除keyboard外所有operator的名字
 extern std::vector<std::string> oper_name_list;    // "Keyboard" not included
+
 // 构造指定个数的Operator keyboard的type为-1
 std::vector<std::unique_ptr<Operator>> oper_generator(int type, int number);
+
+void operator_init();
 
 // 键盘输入
 class Keyboard_oper: public Operator {
