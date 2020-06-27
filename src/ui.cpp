@@ -184,7 +184,7 @@ void print_state(const Gamecore& core, int thread_num) {
         if (cnt[max_num + 1]) {
             max_num++;
             set_cursor_position(frame_row - 3, frame_col - 2);
-            cout << "maximum number: " << (1 << max_num);
+            cout << "maximum: " << (1 << max_num);
         }
         set_cursor_position(frame_row + thread_num, frame_col);
         for (int i = 20; i > 0; i--) {
@@ -196,7 +196,7 @@ void print_state(const Gamecore& core, int thread_num) {
 }
 
 //注意多线程
-void print_ending(int thread_num) {
+void print_ending(const int& thread_num) {
     if (!multi) {
         middle_print(colorful_string("Sorry, it seems it can't move anymore", CLR_RED), frame_row + 10);
         middle_print(colorful_string("Press any key to try again", CLR_CYAN), frame_row + 12);
@@ -213,7 +213,7 @@ void print_ending(int thread_num) {
 }
 
 //注意多线程
-void clean_ending(int thread_num) {
+void clean_ending(const int& thread_num) {
     if (!multi) {
         middle_print("                                     ", frame_row + 10);
         middle_print("                          ", frame_row + 12);

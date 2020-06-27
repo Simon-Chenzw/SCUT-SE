@@ -37,10 +37,10 @@ void print_state_frame(const std::string& oper_name, bool multithread = false);
 void print_state(const Gamecore&, int thread_num = 1);    //注意多线程
 
 // 打印死亡时的结束语 依据是否是多线程 有不同的形式
-void print_ending(int thread_num);    //注意多线程
+void print_ending(const int& thread_num);    //注意多线程
 
 // 清除死亡时的结束语 依据是否是多线程 有不同的形式
-void clean_ending(int thread_num);    //注意多线程
+void clean_ending(const int& thread_num);    //注意多线程
 
 // 打印触发QUIT时的结束语 并且设定光标至一个合理的位置 防止结束后终端乱码
 void print_goodbye();

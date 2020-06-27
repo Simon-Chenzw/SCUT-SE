@@ -6,6 +6,7 @@
 #define MOVE_L 4
 #define MOVE_R 3
 
+// 移动后的结果，初始状态由move_chart的编号决定
 class line_change {
   public:
     int after[4];
@@ -32,5 +33,3 @@ class Gamecore {
     int score;
     int num[4][4];
 };
-
-using Board = int[4][4];

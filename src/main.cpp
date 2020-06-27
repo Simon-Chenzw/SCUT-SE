@@ -12,8 +12,8 @@
 
 using namespace std;
 
-// 单个游戏的核心循环 多线程主体
-void game_loop(Operator& oper, int thread_num) {
+// 单个游戏的核心循环 多线程主体 注意检查调用的函数是否会出意外
+void game_loop(Operator& oper, const int& thread_num) {
     int running_cnt = 0;
     log("thread ", thread_num, " start.");
     while (!end_flag) {
@@ -22,7 +22,7 @@ void game_loop(Operator& oper, int thread_num) {
         print_state(core, thread_num);
         while (!end_flag && !core.is_ending()) {
             keyboard.clean_buffer();    //防止非交互式OPER时 无法触发QUIT 无法更新end_flag
-            int move_dire = oper.get_moved(&core);
+            int move_dire = oper.get_moved(core.num);
             if (!end_flag && core.can_move(move_dire)) {
                 core.moving(move_dire);
                 core.add_a_number();
@@ -31,7 +31,7 @@ void game_loop(Operator& oper, int thread_num) {
         }
         print_ending(thread_num);
         save_result(core.max_element(), core.step, core.score, oper.name);
-        if (oper.oper_type == INTERACTIVE_OPER)    //依据OPER是否是交互式 采取不同的行动
+        if (oper.type == INTERACTIVE_OPER)    //依据OPER是否是交互式 采取不同的行动
             keyboard.get_blocking();
         else
             this_thread::sleep_for(chrono::seconds(1));
@@ -87,9 +87,9 @@ void game() {
     log("game ended");
 }
 
-// 测试keyboard
+// 测试keyboard是否正常工作
 void keyboard_test() {
-    dbg("keyboard input test");
+    dbg("keyboard input test, press ESC to exit.");
     while (!end_flag) {
         int input = keyboard.get_blocking();
         dbg(input, (char)input);

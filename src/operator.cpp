@@ -4,6 +4,7 @@
 #include <string>
 #include <thread>    // for sleep
 #include <vector>
+#include "gamecore.h"
 #include "platform.h"    // for keyboard
 using namespace std;
 
@@ -31,7 +32,9 @@ void make_generator(vector<unique_ptr<generator_base>>& vec, T a, Arg... arg) {
     make_generator(vec, arg...);
 }
 
+// 储存了每个Oper类的名字(Keyboard除外)
 vector<string> oper_name_list = {operator_list};
+// 储存了每个Oper类的generator(Keyboard除外) 通过成员函数get便可返回一个unique_ptr<Operator>
 vector<unique_ptr<generator_base>> oper_generator_list = []() {
     vector<unique_ptr<generator_base>> list;
     make_generator(list, operator_list);
@@ -49,7 +52,7 @@ vector<unique_ptr<Operator>> oper_generator(int type, int number) {
     return list;
 }
 
-Operator::Operator(int _oper_type, string _name): oper_type(_oper_type), name(_name) {}
+Operator::Operator(const std::string& oper_name, const int& oper_type): name(oper_name), type(oper_type) {}
 
 Operator::~Operator() = default;
 
@@ -57,11 +60,11 @@ Operator::operator std::string() {
     return name;
 }
 
-Keyboard_oper::Keyboard_oper(): Operator(INTERACTIVE_OPER, "Keyboard") {}
+Keyboard_oper::Keyboard_oper(): Operator("Keyboard", INTERACTIVE_OPER) {}
 
-Keyboard_oper::~Keyboard_oper() = default;
+// Keyboard_oper::~Keyboard_oper() = default;
 
-int Keyboard_oper::get_moved(Gamecore* board) {
+int Keyboard_oper::get_moved(const Board& board) {
     while (!end_flag) {
         int input = keyboard.get_blocking();
         if (IS_U(input)) return MOVE_U;
@@ -71,11 +74,11 @@ int Keyboard_oper::get_moved(Gamecore* board) {
     }
 }
 
-Random_oper::Random_oper(): Operator(NON_INTERACTIVE_OPER, "Random") {}
+Random_oper::Random_oper(): Operator("Random") {}
 
-Random_oper::~Random_oper() = default;
+// Random_oper::~Random_oper() = default;
 
-int Random_oper::get_moved(Gamecore* board) {
+int Random_oper::get_moved(const Board& board) {
     this_thread::sleep_for(chrono::microseconds(100));
     return rand() % 4 + 1;
 }

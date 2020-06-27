@@ -20,7 +20,7 @@ void get_screen_size(int& row, int& col) {
     col = info.ws_col;
 }
 
-void set_cursor_position(int row, int col) {
+void set_cursor_position(const int& row, const int& col) {
     printf("\033[%d;%df", row, col);
 }
 

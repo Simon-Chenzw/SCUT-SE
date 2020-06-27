@@ -25,7 +25,7 @@ void clean_screen();
 void get_screen_size(int& row, int& col);
 
 // origin row = 1 col = 1
-void set_cursor_position(int row = 1, int col = 1);
+void set_cursor_position(const int& row = 1, const int& col = 1);
 
 // key macro
 #define NO_INPUT -1
@@ -54,6 +54,7 @@ void set_cursor_position(int row = 1, int col = 1);
 #define IS_L(i) (i == CHAR_L || i == CHAR_L_CAP || i == ARROW_L)
 #define IS_R(i) (i == CHAR_R || i == CHAR_R_CAP || i == ARROW_R)
 
+// 不要建立新的Keyboard，不然可能会影响终端设定
 class Keyboard {
   public:
     Keyboard();             // 构造 更改终端设定
