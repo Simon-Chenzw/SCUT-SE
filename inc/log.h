@@ -11,8 +11,13 @@ void clean_file();
 extern std::fstream log_file;
 extern std::mutex log_mutex;
 
+// need to given when compiling
+#ifndef __MY__FILE__
+#define __MY__FILE__ __FILE__
+#endif
+
 // 记录log 包含file line func等信息
-#define log(arg...) save_log(log_head(__FILE__, __LINE__, __func__), ##arg)
+#define log(arg...) save_log(log_head(__MY__FILE__, __LINE__, __func__), ##arg)
 
 // 内联函数 处理输出格式
 inline std::string log_head(const std::string& file, const int& line, const std::string& func) {
