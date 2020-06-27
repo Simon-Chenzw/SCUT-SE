@@ -5,6 +5,7 @@
 #include <thread>    // for sleep
 #include <vector>
 #include "gamecore.h"
+#include "log.h"
 #include "platform.h"    // for keyboard
 using namespace std;
 
@@ -39,7 +40,9 @@ vector<string> oper_name_list = {operator_list};
 vector<unique_ptr<generator_base>> oper_generator_list;
 
 void operator_init() {
+    // 初始化oper_generator_list
     make_generator(oper_generator_list, operator_list);
+    log("oper_generator_list initialization done");
 }
 
 vector<unique_ptr<Operator>> oper_generator(int type, int number) {
@@ -50,6 +53,7 @@ vector<unique_ptr<Operator>> oper_generator(int type, int number) {
     else {
         for (int i = 0; i < number; i++) list.push_back(unique_ptr<Operator>(oper_generator_list[type]->get()));
     }
+    log(number, " operator(s) created.");
     return list;
 }
 

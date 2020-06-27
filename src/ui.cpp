@@ -2,8 +2,8 @@
 #include <iostream>
 #include <mutex>
 #include <string>
+#include "log.h"
 #include "platform.h"
-
 using namespace std;
 
 const int row = 50;
@@ -64,17 +64,22 @@ void print_symbol() {
         set_cursor_position(4 + i);
         cout << heading[i];
     }
+    log("symbol printed");
 }
 
 void print_greeting() {
     print_symbol();
     middle_print(colorful_string("press any key to continue", CLR_CYAN), 21);
     middle_print(colorful_string("Tips: Press esc to exit at any time", CLR_MAGENTA), 26);
+    log("greeting printed");
 }
 
 int select_option(const vector<string>& vec, const std::string& message) {
     const int srow = 21;
-    if (vec.size() == 0) return 0;
+    if (vec.size() == 0) {
+        log("select option return 0. Because vec is empty");
+        return 0;
+    }
     print_symbol();
     keyboard.clean_buffer();
     int selected = 0;
@@ -87,9 +92,11 @@ int select_option(const vector<string>& vec, const std::string& message) {
         if (IS_D(input) && selected != (int)vec.size() - 1) selected++;
         if (input == ENTER) {
             print_symbol();
+            log("select option return ", selected, ". ", message);
             return selected;
         }
     }
+    log("select option return 0. Because of end_flag");
     return 0;    //触发了end_flag
 }
 
@@ -99,13 +106,18 @@ int get_number(const std::string& message) {
     middle_print(message, 21);
     while (!end_flag) {
         string line = num ? int2str(num) : "";
+        line = "input: " + line;
         while (line.length() < 10) line = line + '_';
         middle_print(line, 23);
         int input = keyboard.get_blocking();
         if (input >= '0' && input <= '9') num = num * 10 + input - '0';
         if (input == BACKSPACE) num /= 10;
-        if (input == ENTER && num != 0) return num;
+        if (input == ENTER && num != 0) {
+            log("get number return ", num, ". ", message);
+            return num;
+        }
     }
+    log("get number return 0. Because of end_flag");
     return 0;    //触发了end_flag
 }
 
@@ -154,6 +166,7 @@ void print_state_frame(const string& oper_name, bool multithread) {
             cout << "algorithm: " << oper_name;
         }
     }
+    log("state frame printed. multithread: ", multithread ? "True" : "False");
 }
 
 // print时共用的锁 防止多线程冲突
@@ -232,4 +245,5 @@ void print_goodbye() {
     middle_print(colorful_string("Have a great day!", CLR_BLUE), 18);
     // set cursor when program ending
     set_cursor_position(22);
+    log("goodbye message printed");
 }

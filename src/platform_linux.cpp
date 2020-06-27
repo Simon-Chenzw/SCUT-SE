@@ -4,6 +4,7 @@
 #include <termios.h>
 #include <cstdio>
 #include <sys/ioctl.h>
+#include "log.h"
 // guide:
 // termios https://blog.csdn.net/liuqz2009/article/details/51967763
 // termios https://blog.csdn.net/leumber/article/details/80105295
@@ -62,7 +63,10 @@ int Keyboard::get() {
         int tmp = getchar();
         if (tmp >= 65 && tmp <= 68) input = tmp - 64 + 300;
     }
-    if (IS_QUIT(input)) end_flag = true;
+    if (IS_QUIT(input)) {
+        log("Triggered QUIT. end_flag set to True");
+        end_flag = true;
+    }
     return input;
 }
 

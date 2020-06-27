@@ -14,10 +14,10 @@ class line_change {
     int score;
 };
 
-// 打表记录移动： a, b, c, d 向左移动的结果为 move_chart[mem_num(a,b,c,d)]
+// 打表记录移动： a, b, c, d 向左移动的结果为 move_chart[chart_num(a,b,c,d)]
 extern line_change move_chart[1 << 20];
 
-#define mem_num(a, b, c, d) (a << 15 | b << 10 | c << 5 | d)    // 获取move_chart的序号
+#define chart_num(a, b, c, d) (a << 15 | b << 10 | c << 5 | d)    // 获取move_chart的序号
 
 void gamecore_init();
 

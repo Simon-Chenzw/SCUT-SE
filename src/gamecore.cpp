@@ -5,8 +5,8 @@ using namespace std;
 
 line_change move_chart[1 << 20];
 
-// 自动初始化move_chart
 void gamecore_init() {
+    // 初始化move_chart
     for (int i = 0; i < (1 << 20); i++) {
         bool is_new[4] = {false, false, false, false};
         move_chart[i].after[0] = i >> 15 & 0b11111;
@@ -33,7 +33,7 @@ void gamecore_init() {
             }
         }
     }
-    log("gamecore_init");
+    log("move_chart initialization done");
 };
 
 // 1/n的概率返回true
@@ -51,11 +51,11 @@ inline bool rand_chance(int n) {
 // 通过 i=0~15 访问 num[i/4][i%4]
 #define board_num(i) (*(&num[0][0] + i))
 
-//获取mem的序号
-#define line_u(i) mem_num(num[0][i], num[1][i], num[2][i], num[3][i])    //向上移动
-#define line_d(i) mem_num(num[3][i], num[2][i], num[1][i], num[0][i])    //向下移动
-#define line_l(i) mem_num(num[i][0], num[i][1], num[i][2], num[i][3])    //向左移动
-#define line_r(i) mem_num(num[i][3], num[i][2], num[i][1], num[i][0])    //向右移动
+//获取chart的序号
+#define line_u(i) chart_num(num[0][i], num[1][i], num[2][i], num[3][i])    //向上移动
+#define line_d(i) chart_num(num[3][i], num[2][i], num[1][i], num[0][i])    //向下移动
+#define line_l(i) chart_num(num[i][0], num[i][1], num[i][2], num[i][3])    //向左移动
+#define line_r(i) chart_num(num[i][3], num[i][2], num[i][1], num[i][0])    //向右移动
 
 // 判断是否移动
 #define move_bool(a, b, c, d) (move_chart[a].moved || move_chart[b].moved || move_chart[c].moved || move_chart[d].moved)
