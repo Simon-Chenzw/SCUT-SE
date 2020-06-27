@@ -34,7 +34,7 @@ void gamecore_init() {
         }
     }
     log("move_chart initialization done");
-};
+}
 
 // 1/n的概率返回true
 inline bool rand_chance(int n) {
@@ -99,6 +99,7 @@ bool Gamecore::can_move(const int& dire) const {
         return can_move_l;
     else if (dire == MOVE_R)
         return can_move_r;
+    return false;
 }
 
 void Gamecore::moving(const int& dire) {

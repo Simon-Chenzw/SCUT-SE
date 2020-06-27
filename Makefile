@@ -9,7 +9,7 @@ SRCS = $(wildcard $(SRC)/*.cpp)
 OBJS = $(patsubst $(SRC)/%cpp, $(OBJ)/%o, $(SRCS))
 
 INCLUDE = -I $(INC)
-FLAGS = -W -O3 -std=c++17 
+FLAGS = -Wall -O3 -std=c++17 -pedantic
 # log的文件名去掉前缀
 FLAGS += -D__MY__FILE__='"$(basename $(notdir $<))"'
 

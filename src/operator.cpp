@@ -77,6 +77,7 @@ int Keyboard_oper::get_moved(const Board& board) {
         if (IS_L(input)) return MOVE_L;
         if (IS_R(input)) return MOVE_R;
     }
+    return 0;
 }
 
 Random_oper::Random_oper(): Operator("Random") {}

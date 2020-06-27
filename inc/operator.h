@@ -41,8 +41,8 @@ using Board = int[4][4];
 // 纯虚基类 Operator的接口
 class Operator {
   public:
-    const int type;
     const std::string name;
+    const int type;
 
     Operator(const std::string& oper_name, const int& oper_type = NON_INTERACTIVE_OPER);
     virtual ~Operator() = 0;
