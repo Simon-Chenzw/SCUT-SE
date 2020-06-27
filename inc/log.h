@@ -5,12 +5,15 @@
 #include <sstream>
 #include <string>
 
+void clean_file();
+
 // log part
 extern std::fstream log_file;
 extern std::mutex log_mutex;
 
 // 记录log 包含file line func等信息
-#define log(args...) save_log(log_head(__FILE__, __LINE__, __func__), args)
+// [bug] log()不要用于lambda和template中 也不要空参调用
+#define log(args...) save_log(log_head(__FILE__, __LINE__, __func__), ##args)
 
 // 内联函数 处理输出格式
 inline std::string log_head(const std::string& file, const int& line, const std::string& func) {

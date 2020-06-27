@@ -1,5 +1,6 @@
 #include <chrono>
 #include <functional>
+#include <memory>
 #include <mutex>
 #include <thread>
 #include <dbg_func>
@@ -43,37 +44,36 @@ void game_loop(Operator& oper, int thread_num) {
 
 void game() {
     // greeting
-    log("program start");
+    log("game started");
     print_symbol();
     print_greeting();
     keyboard.get_blocking();    // press any key to continue
 
-    int game_form = 0, thread_num = 1;
-    string oper_name = "keyboard";
+    int game_form = 0, oper_num = -1 /* -1 means keyboard */, thread_num = 1;
     // 游戏形式选择
     game_form = select_option({"Start Game", "Automatic", "Multi-threaded Automatic"});
     log("game form selected: ", game_form);
     // AI选择
-    const vector<string> ai_list = {"random"};
     if (game_form != 0) {
-        oper_name = ai_list[select_option(ai_list, "Choose an algorithm")];
-        log("operator name selected: ", oper_name);
+        oper_num = select_option(oper_name_list, "Choose an algorithm");
+        log("operator selected: ", oper_name_list[oper_num]);
     }
     // 线程数量选择
     if (game_form == 2) {
         thread_num = get_number("Please enter the number of threads");
         log("threads number get: ", thread_num);
     }
+    if (end_flag) {
+        log("Triggered end_flag");
+        print_goodbye();
+        return;
+    }
 
     // 启动游戏
-    print_state_frame(oper_name == "keyboard" ? "" : oper_name, thread_num != 1);
+    print_state_frame(oper_num == -1 ? "" : oper_name_list[oper_num], thread_num != 1);
     // 创建oper
-    vector<Operator*> opers;
-    for (int i = 0; i < thread_num; i++) {
-        if (oper_name == "keyboard") opers.push_back(new Keyboard_oper);
-        if (oper_name == "random") opers.push_back(new Random_oper);
-        log("operator ", i, " created.");
-    }
+    vector<unique_ptr<Operator>> opers = oper_generator(oper_num, thread_num);
+    log(thread_num, " operator(s) created.");
     // 开启多线程
     vector<thread> threads;
     for (int i = 0; i < thread_num; i++) {
@@ -83,11 +83,8 @@ void game() {
     // join多线程 即等待游戏结束
     for (int i = 0; i < thread_num; i++) threads[i].join();
     log("all threads ended");
-    // 销毁oper
-    for (int i = 0; i < thread_num; i++) delete opers[i];
-    log("all operators deleted");
     print_goodbye();
-    log("goodbye message printed");
+    log("game ended");
 }
 
 // 测试keyboard
@@ -124,6 +121,8 @@ void log_test() {
 }
 
 int main() {
+    clean_file();
+    log("program started.");
     game();
     // keyboard_test();
     // board_move_test();

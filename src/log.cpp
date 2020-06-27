@@ -25,3 +25,10 @@ mutex result_mutex;
 //     result_file << core.board.max_element() << ',' << core.step << ',' << core.score << ',' << oper.name << '\n';
 //     result_file.close();
 // }
+
+void clean_file() {
+    log_file.open("log.txt", ios::trunc | ios::out);
+    result_file.open("result.csv", ios::trunc | ios::out);
+    log_file.close();
+    result_file.close();
+}
