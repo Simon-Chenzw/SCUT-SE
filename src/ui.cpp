@@ -24,6 +24,7 @@ class colorful_string {
         if (rhs.clr_back != CLR_RESET) setcolor(rhs.clr_back);
         out << rhs.str;
         resetcolor();
+        return out;
     }
 };
 
