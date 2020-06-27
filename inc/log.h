@@ -16,8 +16,9 @@ extern std::mutex log_mutex;
 #define __MY__FILE__ __FILE__
 #endif
 
+#define LOG_HEAD log_head(__MY__FILE__, __LINE__, __func__)
 // 记录log 包含file line func等信息
-#define log(arg...) save_log(log_head(__MY__FILE__, __LINE__, __func__), ##arg)
+#define log(...) save_log(LOG_HEAD, ##__VA_ARGS__)
 
 // 内联函数 处理输出格式
 inline std::string log_head(const std::string& file, const int& line, const std::string& func) {
