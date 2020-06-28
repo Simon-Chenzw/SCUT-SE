@@ -3,7 +3,7 @@
 
 // guide:
 // _kbhit https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/kbhit?view=vs-2019
-
+// 控制台函数 https://www.cnblogs.com/lanhaicode/p/10498497.html
 #include <conio.h>
 #include <windows.h>
 #include <cstdlib>
