@@ -133,13 +133,13 @@ int get_number(const std::string& message) {
 
 const int frame_row = 20, frame_col = 15;
 const string frame[9] = {"┌───────┬───────┬───────┬───────┐",
-                         "│       ‬│       │       │       │",
+                         "│       │       │       │       │",
                          "│───────┼───────┼───────┼───────┤",
-                         "│       ‬│       │       │       │",
+                         "│       │       │       │       │",
                          "│───────┼───────┼───────┼───────┤",
-                         "│       ‬│       │       │       │",
+                         "│       │       │       │       │",
                          "│───────┼───────┼───────┼───────┤",
-                         "│       ‬│       │       │       │",
+                         "│       │       │       │       │",
                          "└───────┴───────┴───────┴───────┘"};
 bool multi;
 void print_state_frame(const string& oper_name, bool multithread) {
