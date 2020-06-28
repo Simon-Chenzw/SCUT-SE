@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // windows macro
 #ifdef _WIN32

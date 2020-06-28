@@ -1,4 +1,4 @@
-#include "gamecore.h"
+﻿#include "gamecore.h"
 #include <cstdlib>
 #include "log.h"
 using namespace std;

@@ -1,4 +1,4 @@
-#include "platform.h"
+﻿#include "platform.h"
 #ifdef IN_WINDOWS
 
 // guide:

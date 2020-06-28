@@ -1,4 +1,4 @@
-#include "log.h"
+﻿#include "log.h"
 #include <fstream>
 #include <mutex>
 using namespace std;

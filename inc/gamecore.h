@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // 移动方向
 #define MOVE_U 1

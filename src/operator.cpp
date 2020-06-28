@@ -1,4 +1,4 @@
-#include "operator.h"
+﻿#include "operator.h"
 #include <chrono>     // for sleep
 #include <cstdlib>    // for rand()
 #include <string>
