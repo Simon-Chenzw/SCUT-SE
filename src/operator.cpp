@@ -19,7 +19,7 @@ class generator: public generator_base {
   public:
     generator() {}
     unique_ptr<Operator> get() override {
-        return make_unique<T>();
+        return unique_ptr<T>(new T);
     }
 };
 

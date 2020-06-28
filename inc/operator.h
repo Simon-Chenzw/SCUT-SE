@@ -5,7 +5,7 @@
 #include <vector>
 
 // 只需在此添加新增的operator。oper_name_list和oper_generator会自动生成新版本
-#define operator_list Random_oper(), minmax_oper()
+#define operator_list Random_oper(), upmove_oper(), blinkered_oper(), minmax_oper()
 
 /** 添加自定义Operator派生类教程：
  *
@@ -78,5 +78,17 @@ class Random_oper: public Operator {
 class minmax_oper: public Operator {
   public:
     minmax_oper();
+    int get_moved(const Board&) override;
+};
+
+class upmove_oper: public Operator {
+  public:
+    upmove_oper();
+    int get_moved(const Board&) override;
+};
+
+class blinkered_oper: public Operator {
+  public:
+    blinkered_oper();
     int get_moved(const Board&) override;
 };

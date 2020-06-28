@@ -154,6 +154,38 @@ int Gamecore::max_element() const {
     return ans;
 }
 
+bool can_move(const Board& num, const int& dire) {
+    if (dire == MOVE_U) {
+        return can_move_u;
+    }
+    else if (dire == MOVE_D) {
+        return can_move_d;
+    }
+    else if (dire == MOVE_L) {
+        return can_move_l;
+    }
+    else if (dire == MOVE_R) {
+        return can_move_r;
+    }
+    return false;
+}
+
+int move_score(const Board& num, const int& dire) {
+    if (dire == MOVE_U) {
+        return score_get(line_u(0), line_u(1), line_u(2), line_u(3));
+    }
+    else if (dire == MOVE_D) {
+        return score_get(line_d(0), line_d(1), line_d(2), line_d(3));
+    }
+    else if (dire == MOVE_L) {
+        return score_get(line_l(0), line_l(1), line_l(2), line_l(3));
+    }
+    else if (dire == MOVE_R) {
+        return score_get(line_r(0), line_r(1), line_r(2), line_r(3));
+    }
+    return 0;
+}
+
 bool fast_move(Board& num, const int& dire) {
     if (dire == MOVE_U) {
         if (can_move_u) {

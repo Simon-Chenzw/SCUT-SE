@@ -23,7 +23,7 @@ void game_loop(Operator& oper, const int& thread_num) {
             keyboard.clean_buffer();    //防止非交互式OPER时 无法触发QUIT 无法更新end_flag
             int move_dire = oper.get_moved(core.num);
             if (!end_flag && core.can_move(move_dire)) {
-                log("thread: ", thread_num, " move ", move_dire);
+                // log("thread: ", thread_num, " move ", move_dire);
                 core.moving(move_dire);
                 core.add_a_number();
                 print_state(core, thread_num);
@@ -37,7 +37,7 @@ void game_loop(Operator& oper, const int& thread_num) {
         clean_ending(thread_num);
         running_cnt++;
         log("thread ", thread_num, " run ", running_cnt, " times.");
-        save_result(core.max_element(), core.step, core.score, oper.name);
+        save_result(1 << core.max_element(), core.step, core.score, oper.name);
     }
     log("thread ", thread_num, " end.");
 }

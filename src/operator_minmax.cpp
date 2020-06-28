@@ -18,7 +18,7 @@ using namespace std;
 // 12 13 14 15
 #define board_num(i) (*(&num[0][0] + i))
 
-const int maxdep = 5;
+const int maxdep = 4;
 const int INF = 0x7FFFFFFF;
 
 int get_point(const Board& num) {
@@ -30,24 +30,34 @@ int get_point(const Board& num) {
         cnt[board_num(i)]++;
     }
     // 最大值大小
-    point += (1 << max_val);
+    point += (20 << max_val);
     // 最大值位于角落
-    if (board_num(0) == max_val || board_num(3) == max_val || board_num(12) == max_val || board_num(15) == max_val)
-        point += 2000000;
-    // 大值都位于同一条边
+    // if (board_num(0) == max_val || board_num(3) == max_val || board_num(12) == max_val || board_num(15) == max_val)
+    if (board_num(0) == max_val) point += 20000;
+    // 行列向角落单调
+    auto num_check = [&](int x0, int y0, int dx, int dy) {
+        int tmp = 0;
+        for (int i = 0; i < 4; i++)
+            for (int j = 0; j < 4; j++) {
+                int x = x0 + i * dx;
+                int y = y0 + j * dy;
+                if (x + dx >= 0 && x + dx < 4) tmp += (1 << num[x][y]) - (1 << num[x + dx][y]);
+                if (y + dy >= 0 && y + dy < 4) tmp += (1 << num[x][y]) - (1 << num[x][y + dy]);
+                if (x + dx >= 0 && x + dx < 4 && y + dy >= 0 && y + dy < 4)
+                    tmp += ((1 << num[x][y]) - (1 << num[x + dx][y + dy])) / 10;
+            }
+        return tmp;
+    };
+    // point += max(max(num_check(0, 0, 1, 1), num_check(0, 3, 1, -1)),
+    //              max(num_check(3, 0, -1, 1), num_check(3, 3, -1, -1)));
 
-    // 行列单调
-    for (int i = 0; i < 4; i++) {
-        if (num[0][i] < num[1][i] && num[1][i] < num[2][i] && num[2][i] < num[3][i]) point += 200;
-        if (num[3][i] < num[2][i] && num[2][i] < num[1][i] && num[1][i] < num[0][i]) point += 200;
-        if (num[i][0] < num[i][1] && num[i][1] < num[i][2] && num[i][2] < num[i][3]) point += 200;
-        if (num[i][3] < num[i][2] && num[i][2] < num[i][1] && num[i][1] < num[i][0]) point += 200;
-    }
+    point += num_check(0, 0, 1, 1);
     // 空余数量
-    point += 50 * cnt[0];
+    point += 100 * cnt[0];
+
     // 大数字每个只有一个
     for (int i = 4; i <= max_val; i++)
-        if (cnt[i] <= 1) point += 2000;
+        if (cnt[i] <= 1) point += 10 * (10 << max_val);
     return point;
 }
 
