@@ -31,7 +31,6 @@ void set_cursor_position(const int& row = 1, const int& col = 1);
 #define NO_INPUT -1
 #define CTRL_C 3
 #define CTRL_D 4
-#define ENTER 10
 #define ESC 27
 #define CHAR_U_CAP 'W'
 #define CHAR_D_CAP 'S'
@@ -41,11 +40,19 @@ void set_cursor_position(const int& row = 1, const int& col = 1);
 #define CHAR_D 's'
 #define CHAR_L 'a'
 #define CHAR_R 'd'
-#define BACKSPACE 127
 #define ARROW_U 301
 #define ARROW_D 302
 #define ARROW_L 304
 #define ARROW_R 303
+
+// Different key codes on the two platforms
+#if defined(IN_LINUX)
+#define ENTER 10
+#define BACKSPACE 127
+#elif defined(IN_WINDOWS)
+#define ENTER 13
+#define BACKSPACE 8
+#endif
 
 // key judgment
 #define IS_QUIT(i) (i == ESC || i == CTRL_C || i == CTRL_D)
