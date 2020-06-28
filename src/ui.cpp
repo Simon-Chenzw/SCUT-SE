@@ -213,6 +213,10 @@ void print_state(const Gamecore& core, int thread_num) {
             cout << ch[cnt[i]];
             if (i % 5 == 1) cout.put(' ');
         }
+        int unempty_place = 0;
+        for (int i = 0; i < 16; i++)
+            if (*(&core.num[0][0] + i)) unempty_place++;
+        cout << (unempty_place >= 10 ? "[" : "[ ") << unempty_place << "/16]";
     }
 }
 

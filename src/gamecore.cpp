@@ -68,7 +68,7 @@ inline bool rand_chance(int n) {
 #define can_move_l move_bool(line_l(0), line_l(1), line_l(2), line_l(3))    //向左移动
 #define can_move_r move_bool(line_r(0), line_r(1), line_r(2), line_r(3))    //向右移动
 
-Gamecore::Gamecore(): step(0), score(0), num{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} {}
+Gamecore::Gamecore(): step(0), score(0), num {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} {}
 
 void Gamecore::start_game() {
     add_a_number();
@@ -152,4 +152,44 @@ int Gamecore::max_element() const {
     for (int i = 0; i < 16; i++)
         if (board_num(i) > ans) ans = board_num(i);
     return ans;
+}
+
+bool fast_move(Board& num, const int& dire) {
+    if (dire == MOVE_U) {
+        if (can_move_u) {
+            for (int i = 0; i < 4; i++) {
+                int ord = line_u(i);
+                for (int j = 0; j < 4; j++) num[j][i] = move_chart[ord].after[j];
+            }
+            return true;
+        }
+    }
+    else if (dire == MOVE_D) {
+        if (can_move_d) {
+            for (int i = 0; i < 4; i++) {
+                int ord = line_d(i);
+                for (int j = 0; j < 4; j++) num[3 - j][i] = move_chart[ord].after[j];
+            }
+            return true;
+        }
+    }
+    else if (dire == MOVE_L) {
+        if (can_move_l) {
+            for (int i = 0; i < 4; i++) {
+                int ord = line_l(i);
+                for (int j = 0; j < 4; j++) num[i][j] = move_chart[ord].after[j];
+            }
+            return true;
+        }
+    }
+    else if (dire == MOVE_R) {
+        if (can_move_r) {
+            for (int i = 0; i < 4; i++) {
+                int ord = line_r(i);
+                for (int j = 0; j < 4; j++) num[i][3 - j] = move_chart[ord].after[j];
+            }
+            return true;
+        }
+    }
+    return false;
 }

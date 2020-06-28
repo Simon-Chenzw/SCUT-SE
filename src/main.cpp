@@ -23,6 +23,7 @@ void game_loop(Operator& oper, const int& thread_num) {
             keyboard.clean_buffer();    //防止非交互式OPER时 无法触发QUIT 无法更新end_flag
             int move_dire = oper.get_moved(core.num);
             if (!end_flag && core.can_move(move_dire)) {
+                log("thread: ", thread_num, " move ", move_dire);
                 core.moving(move_dire);
                 core.add_a_number();
                 print_state(core, thread_num);
@@ -109,8 +110,8 @@ void board_move_test() {
         int a, b, c, d;
         cin >> a >> b >> c >> d;
         line_change tmp = move_chart[chart_num(a, b, c, d)];
-        cout << a << ' ' << b << ' ' << c << ' ' << d << ' ' << (tmp.moved ? "moved" : "unmoved") << ' '
-             << "score:" << tmp.score << '\n';
+        cout << tmp.after[0] << ' ' << tmp.after[1] << ' ' << tmp.after[2] << ' ' << tmp.after[3] << ' '
+             << (tmp.moved ? "moved" : "unmoved") << ' ' << "score:" << tmp.score << '\n';
     }
 }
 

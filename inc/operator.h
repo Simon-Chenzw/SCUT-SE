@@ -5,13 +5,13 @@
 #include <vector>
 
 // 只需在此添加新增的operator。oper_name_list和oper_generator会自动生成新版本
-#define operator_list Random_oper()
+#define operator_list Random_oper(), minmax_oper()
 
 /** 添加自定义Operator派生类教程：
  *
  *  文件：
- *    新增AI时建议另起额外的cpp文件，
- *    再在本头文件的末尾include你新建的cpp文件，
+ *    新增AI时在本头文件的末尾添加声明，
+ *    再另起额外的cpp文件实现，
  *    然后修改本头文件中define的operator_list，
  *    在其后面添加新增派生类的默认构造函数。
  *
@@ -26,6 +26,7 @@
  *      2)int get_moved(const Board&);
  *          board为int[4][4]
  *          返回值为MOVE_U MOVE_D MOVE_L MOVE_R define于gamecore.h
+ *          gamecore.h也含有bool fast_move(Board&,const int& dire);函数 供快速移动Board所用
  *
  *    *** 注意Operator类会存在多个实例，且也会被include进多个文件 ***
  *
@@ -72,3 +73,10 @@ class Random_oper: public Operator {
     // ~Random_oper() override;
     int get_moved(const Board&) override;
 };    // number 0
+
+// Customize Operator:
+class minmax_oper: public Operator {
+  public:
+    minmax_oper();
+    int get_moved(const Board&) override;
+};

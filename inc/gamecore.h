@@ -21,6 +21,9 @@ extern line_change move_chart[1 << 20];
 
 void gamecore_init();
 
+using Board = int[4][4];
+bool fast_move(Board&, const int& dire);
+
 // 游戏核心 负责基本操作
 class Gamecore {
   public:
