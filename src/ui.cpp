@@ -174,10 +174,18 @@ mutex print_mutex;
 int running_time = 0, max_num = 1;
 void print_state(const Gamecore& core, int thread_num) {
     if (!multi) {
-        const string pow[] = {
-            "       ", "     2 ", "     4 ", "     8 ", "    16 ", "    32 ", "    64 ",
-            "   128 ", "   256 ", "   512 ", "  1024 ", "  2048 ", "  4096 ", "  8192 ",
-            " 16384 ", " 32768 ", " 65536 ", "131072 ", "262144 ", "524288 ", "1048576",
+        const colorful_string pow[] = {
+            colorful_string("       ", CLR_RESET),  colorful_string("     2 ", CLR_CYAN),
+            colorful_string("     4 ", CLR_BLUE),   colorful_string("     8 ", CLR_GREEN),
+            colorful_string("    16 ", CLR_YELLOW), colorful_string("    32 ", CLR_MAGENTA),
+            colorful_string("    64 ", CLR_RED),    colorful_string("   128 ", CLR_WHITE),
+            colorful_string("   256 ", CLR_RESET),  colorful_string("   512 ", CLR_RESET),
+            colorful_string("  1024 ", CLR_RESET),  colorful_string("  2048 ", CLR_RESET),
+            colorful_string("  4096 ", CLR_RESET),  colorful_string("  8192 ", CLR_RESET),
+            colorful_string(" 16384 ", CLR_RESET),  colorful_string(" 32768 ", CLR_RESET),
+            colorful_string(" 65536 ", CLR_RESET),  colorful_string("131072 ", CLR_RESET),
+            colorful_string("262144 ", CLR_RESET),  colorful_string("524288 ", CLR_RESET),
+            colorful_string("1048576", CLR_RESET),
         };
         for (int i = 0; i < 4; i++)
             for (int j = 0; j < 4; j++) {
