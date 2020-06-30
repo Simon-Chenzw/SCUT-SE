@@ -1,4 +1,5 @@
 ﻿#include <chrono>
+#include <cstdlib>
 #include <functional>
 #include <iostream>
 #include <memory>
@@ -86,6 +87,7 @@ void game() {
 }
 
 void init() {
+    srand(time(0));
     gamecore_init();
     operator_init();
     log("initialization done");
