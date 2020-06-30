@@ -6,6 +6,7 @@
 + `<termios.h>` `<sys/ioctl.h>` (at linux)
 
 是本人`SCUT`课程`高级语言程序设计C++(下)`的大作业  
+所有代码储存于 https://github.com/Simon-Chenzw/2048
 
 ## Explanation
 + 特点：
