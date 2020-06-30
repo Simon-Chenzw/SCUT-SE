@@ -13,7 +13,8 @@
 using namespace std;
 
 // 单个游戏的核心循环 多线程主体 注意检查调用的函数是否会出意外
-void game_loop(Operator& oper, const int& thread_num) {
+void game_loop(Operator& oper, const int& thread_num, const int& rand_seed) {
+    srand(rand_seed);
     int running_cnt = 0;
     log("thread ", thread_num, " start.");
     while (!end_flag) {
@@ -76,7 +77,7 @@ void game() {
     // 开启多线程
     vector<thread> threads;
     for (int i = 0; i < thread_num; i++) {
-        threads.push_back(thread(game_loop, ref(*opers[i]), i));
+        threads.push_back(thread(game_loop, ref(*opers[i]), i, rand()));
         log("thread ", i, " start.");
     }
     // join多线程 即等待游戏结束
