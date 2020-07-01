@@ -1,6 +1,6 @@
 # Introduction
 一个运行于命令行的2048，带有一定程度的智能算法  
-支持 `Linux(非虚拟化)` 与 `Windows` ，**不支持WSL**。  
+支持 `Linux` 与 `Windows` ，**不支持WSL**。  
 除去以下库外，均为c++标准库
 + `<conio.h>` `<windows.h>` (at windows)
 + `<termios.h>` `<sys/ioctl.h>` (at linux)
