@@ -1,0 +1,117 @@
+Assignment TWO
+NOTE: This should not be a difficult assignment. If you struggle, you probably need to put more time into this subject.
+You are to produce a piece of code spread across three files, Library.cpp, Library.h and Main.cpp.It should contain appropriately placed declarations and implementations associated with the specified classes; and a main() function. These classes and functions should be developed according to the details provided in this document.
+You are to write a Library class that, during initialization, reads data from the keyboard, and has the format below:
+3
+N123;Object-Oriented Programming;Dave Smith;2009;3
+A251;UML Modelling and Design;Barry Arthur;2005;1
+Z001;Practical Guide to STL;John Johnson;2000;5
+The first line indicates the number of book records to follow. The general format for the other lines is:
+book_id;book_title;first_name last_name;year_published;number_of_copies Where book_id is the book's ID, this must start with an uppercase letter, book title is the book's title, this is followed by the author's first name, a space, last name (first name last name), then comes the year in which the book was published (year_published) and finally the number of copies held in the library (number_of_copies).
+
+Then you should reads data from the keyboard, and has the following format:
+3
+12345;Joe Bloggs;3;N123;A251;Z001
+20498;Ales Alexis;1;Z001
+19090;Mike Mike;2;N123;Z001
+The first line indicates the number of borrower records to follow. The general format for the other lines is:
+borrower_id;first_name last_name;number_of_books_on_loan;book_ids
+
+Where borrower_id is the borrower's ID number, this must be five digits, first name last name is the borrower's first name and last name, separated by a space. Number_of_books_on_loan is the number of books currently loaned by the borrower, and finally, the line finishes with the book IDs of all the books currently loaned. A borrower can only borrow a maximum of 5 books.
+Any line that does not conform to the format described should simply be rejected, with an appropriate message to standard error.
+
+Details regarding the data and functionality of the classes required by the program are as follow. It is fine to write other supporting functions or to add additional data fields if you want to.
+The Library class should have:
+1. A total number of books on loan field.
+2. A total number of borrowers field.
+3. A Catalogue object (described below). This should be populated during initialization by the constructor.
+4. An array of Borrower objects (described below). This should be populated during initialization by the constructor.
+5. A constructor that accepts the input data.
+6. An appropriate destructor.
+7. A function that displays the total number of books on loan, the total number of book records and displays the individual book records.
+8. A function that displays the total number of borrowers and the individual borrower records.
+
+The BookRecord class should have:
+1. A book ID field.
+2. A book title field.
+3. An author's first name field.
+4. An author's last name field.
+5. A year of publication field.
+6. A total number of book copies field.
+7. A number of copies still available for loan field.
+8. An appropriate constructor and destructor.
+9. A function that returns the book's ID.
+10. A function that displays the data.
+NOTE: In the function that enters a book record, the function should check that the book ID starts with an uppercase letter, and that the year of publication has 4 digits and starts with a 1 or a 2. Otherwise an error message should be displayed and the program should terminate.
+
+The Borrower class should have:
+1. An ID field.
+2. A first name field.
+3. A last name field.
+4. A number of books loaned by the borrower field.
+5. An array of the book IDs currently loaned by the borrower.
+6. An appropriate constructor and destructor.
+7. A function that displays the data.
+NOTE: In the function that enters a borrower's record, the function should check that the borrower's ID consists of 5 digits. Otherwise an error message should be displayed and the program should terminate.
+
+The Catalogue class should have:
+1. A total number of book records field.
+2. An array of BookRecords
+3. An appropriate constructor and destructor.
+4. A function that displays the total number of books in the catalogue and the individual book records.
+NOTE: The program should update the total number of books on loan and the individual book numbers available for loan, based on the borrowers data.
+
+Finally, write a main() function that displays the total number of books on loan, the total number of books in the catalogue, the individual book records, the total number of borrowers and the individual borrower records. An example output, given the provided input is as follows:
+Total number of books on loan: 6
+Total number of books in catalogue: 3
+Book Record 0
+=============
+Book ID: N123
+Title: Object-Oriented Programming
+Author: Dave Smith
+Year published: 2009
+Total number of copies: 3
+Number available for loan: 1
+Book Record 1
+=============
+Book ID: A251
+Title: UML Modelling and Design
+Author: Barry Arthurs
+Year published: 2005
+Total number of copies: 1
+Number available for loan: 0
+3
+Book Record 2
+=============
+Book ID: Z001
+Title: Practical Guide to STL
+Author: John Johnson
+Year published: 2000
+Total number of copies: 5
+Number available for loan: 2
+Total number of borrowers: 3
+Borrower 0
+===========
+Borrower ID: 12345
+Name: Joe Bloggs
+Number of loaned books: 3
+IDs of books on loan: N123 A251 Z001
+Borrower 1
+===========
+Borrower ID: 20498
+Name: Alex Alexis
+Number of loaned books: 1
+IDs of books on loan: Z001
+Borrower 2
+===========
+Borrower ID: 19090
+Name: Mike Mike
+Number of loaned books: 2
+IDs of books on loan: N123 Z001
+
+The display functions do not need to follow exact formats, but should be clear.
+IMPORTANT NOTE: Besides the two input data, the program should not depend on any input from the user when it runs. If it does you will lose marks.
+In addition to the code you need to provide a class diagram. This will be submitted eletronically in a file Diagram.pdf.
+Notes and submission details:
+Your submitted code must have the file names: Library.cpp, Library.h and Main.cpp.
+Failure to compile will result in a mark of zero for the code.

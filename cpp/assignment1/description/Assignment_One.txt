@@ -1,0 +1,48 @@
+Assignment 1 
+Aim: To investigate the use of pointers and dynamic memory allocation.
+
+Requirements:
+This assignment involves writing (or at least modifying) a program to traverse mazes. A maze can be represented by an array of characters thus:
+      # # # # # # # # # # # # # . # # #
+      # . . . . . . . . . . . # . # . #
+      # # # # # . # # # # # # # . # . #
+      # . . . . . # . . . . . . . # . #
+      # . # # # # # . # # # # # # # . #
+      # . # . . . . . # . . . # . . . #
+      # . # . # # # # # . # . # . # . #
+      # . # . . . . . . . # . # . # . #
+      # . # # # # # # # . # # # . # . #
+      # . . . # . . . # . . . . . # . #
+      # . # . # . # . # # # # # . # . #
+      # . # . . . # . # . # . . . # . #
+      # # # # # # # . # . # . # . # # #
+      # . . . . . # . # . . . # . . . #
+      # . # # # . # . # . # # # . # . #
+      # . . . # . . . . . # . . . # . #
+      # # # # # # # # # # # # # # # . #
+
+The # represents a wall while the . represents a pathway although, in this assignment, anything other than # is considered not to be a wall. The entrance is assumed to be at the top (the gap in the wall) and the exit is at the bottom.
+
+This is a very special sort of maze where there are no freestanding walls, so that a very traditional maze traversal algorithm can be used:
+"Put your hand on the right wall and begin moving forward. As long as you keep your hand on the wall you will reach the exit."
+
+This can be described as follows. Suppose you are currently headed in a certain direction and you are at a particular position in the maze. If there is no wall on your right, turn right and go forward one step. Otherwise, go forward if possible, else turn left.
+
+A solution for this problem for mazes of the size above, namely 17 x 17, can be found in the three files main.cpp, Maze.h and Maze.cpp. Although only capable of handling that size, the dimensions of the maze appear throughout the code as unchanged variables (once read in as part of the data file). The files main.cpp and Maze.h should not be changed.
+
+Step 1:
+Four of the functions in Maze.cpp are only stubs. By looking at the comments before each function and the implementation of other functions, write the four functions. Test the program using the sample maze in maze1.txt.
+
+Step 2:
+Let's now remove the backtracking from the recorded path. Every time an addition is to be made to the path, avoid putting a duplicate of the current position (we're turning around). Also if the position to be added is the next-to-last one, take the last one of the path instead (we're backtracking). This means the final path presented is the direct route. 
+
+Step 3:
+We will now modify the program to handle arbitrary sized mazes.
+a) Modify the declaration of the maze so that it is a pointer to a char.
+b) Modify LoadMaze() so that the space for the maze is dynamically allocated.
+c) Also make the path array dynamic of suitable size.
+c) Delete any memory allocated at the end of SolveMaze().
+Test with maze2.txt and then try maze3.txt.
+
+Submit:
+The file Maze.cpp（All three steps finished） should be submitted before the due time.

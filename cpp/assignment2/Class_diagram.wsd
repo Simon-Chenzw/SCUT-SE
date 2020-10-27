@@ -1,0 +1,64 @@
+@startuml Library
+skinparam classAttributeIconSize 0
+
+class Library {
+    -loan_books_cnt : int
+    -borrowers_cnt : int 
+    -catalogue : Catalogue
+    -borrowers : vector<Borrower>
+    +Library()
+    +~Library()
+    +show_books_detail() : void
+    +show_borrowers_detail() : void
+    +add_book() : void
+    +loan_book(book_name : string) : void
+    +add_borrower() : void
+}
+
+class Catalogue {
+    -book_records_cnt : int
+    -book_records : vector<BookRecord>
+    +Catalogue()
+    +~Catalogue()
+    +show_detail() : void
+    +add_book() : void
+    +loan_book(book_name : string) : void
+    +get_loan_num() : int
+    +get_free_num() : int
+}
+
+class BookRecord {
+    -book_id : string
+    -book_title : string
+    -first_name : string
+    -last_name : string
+    -year_published : int
+    -number_of_copies : int
+    -number_of_copies_available : int
+    +BookRecord(vec : vector<string>)
+    +~BookRecord()
+    +get_book_id() : string
+    +show_detail() : void
+    +get_number() : int
+    +get_number_can_loan() : int
+    +loan_one() : void
+    +return_one() : void
+}
+
+
+class Borrower {
+    -borrower_id : int
+    -first_name : string
+    -last_name : string
+    -number_of_books_on_loan : int
+    -books_on_loan : vector<string>
+    +Borrower(vec : vector<string>)
+    +~Borrower()
+    +show_detail() : void
+    +get_loan_books() : vector<string>
+}
+
+Library..>Borrower
+Library..>Catalogue
+Catalogue..>BookRecord
+@enduml

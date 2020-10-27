@@ -1,0 +1,20 @@
+2 *2 Matrix Class.
+For this task, put your code in the following files: Matrix.cpp, Matrix.h. You are to write a class Matrix which includes appropriate fields associated with 2*2 matrices. A 2*2 matrix takes the following form:
+  (where a, b, c and d are real numbers)
+Your Matrix class must have the following features:
+	When a matrix object is created, it should be initialized to the identity matrix. The identity matrix has the following form:  
+	Overload the insertion operator to display the contents of the matrix in the following form:  
+	Overload the extraction operator to take four real numbers to fill the contents of the matrix. The four numbers will be in sequence: a b c d
+	Overload the binary +, -, and * operators to perform matrix addition, subtraction and multiplication. These calculations all result in a 2 _ 2 matrix, as shown below:
+ 
+These operations must be chainable (e.g. A + B + C).
+
+	Overload the +=, -=, and *= operators, as member functions of class Matrix.
+	Overload the * operator to perform scalar multiplication, as shown below:
+ 
+	Overload the equality and inequality operators to compare two matrices.
+ 
+Use the main function provided in MatrixMain.cpp to test your Matrix class. 
+
+
+
