@@ -3,7 +3,7 @@ from typing import Optional
 import sqlalchemy
 from passlib.context import CryptContext
 
-from ..typing.user import UserInDB
+from ..typing.user import UserInDB, UserCreate
 from .database import db, meta
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -20,6 +20,7 @@ user_table = sqlalchemy.Table(
     sqlalchemy.Column(
         'name',
         sqlalchemy.VARCHAR(30),
+        unique=True,
         nullable=False,
     ),
     sqlalchemy.Column(
@@ -39,8 +40,12 @@ user_table = sqlalchemy.Table(
 )
 
 
-async def db_user_insert(user : UserInDB) -> None:
-    await db.execute(user_table.insert(user.dict()))
+async def db_user_insert(user: UserCreate) -> bool:
+    try:
+        await db.execute(user_table.insert(user.dict()))
+        return True
+    except:
+        return False
 
 
 async def db_user_query_username(name: str) -> Optional[UserInDB]:

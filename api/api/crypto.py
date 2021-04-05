@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 
 from ..db.user import authenticate_user, db_user_insert, pwd_context, db_user_query_uid
 from ..typing.crypto import Token, jwtToken
-from ..typing.user import User, UserInDB
+from ..typing.user import User, UserCreate
 from ..app import app
 from .depend import get_user, possible_user
 
@@ -23,8 +23,7 @@ async def authenticate(name: str, pwd: str, response: Response):
 
 @app.get("/user/register", response_model=Token, tags=['authentication'])
 async def create_user(username: str, password: str, response: Response):
-    obj = UserInDB(
-        mail='someone@example.com',
+    obj = UserCreate(
         name=username,
         hash_pwd=pwd_context.hash(password),
     )
