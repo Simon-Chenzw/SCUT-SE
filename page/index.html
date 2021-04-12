@@ -1,6 +1,9 @@
-<html>
+<!doctype html>
+<html lang="zh-cn">
+
 
 <head>
+    <link rel="stylesheet" type="text/css" href="main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
@@ -19,13 +22,33 @@
                 <v-toolbar>
                     <v-row>
 
-                        <v-col cols='3'>
+                        <v-col cols='2'>
                             <v-btn icon href='/'>
                                 <v-icon>fa-home</v-icon>
                             </v-btn>
                         </v-col>
 
-                        <v-col cols='9' class="text-right">
+                        <v-col cols="8">
+                            <template>
+                                <div v-on:keyup.enter="search">
+                                    <v-menu offset-y>
+                                        <template v-slot:activator="{ on }">
+                                            <v-text-field solo hide-details label="请输入关键词" append-icon="search"
+                                                v-model="text" class="input-search" autocomplete="off" v-on="on"
+                                                ref="search"></v-text-field>
+                                        </template>
+                                        <v-list rounded v-if="results.length > 0" class="border-list" dense>
+                                            <v-list-item v-for="(result, index) in results" :key="index"
+                                                @click="resultClick(result)">
+                                                <v-list-item-title>{{ result.name }}</v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+                                    </v-menu>
+                                </div>
+                            </template>
+                        </v-col>
+
+                        <v-col cols='2' class="text-right">
 
                             <template v-if='self_user_info'>
 
@@ -69,10 +92,16 @@
         data() {
             return {
                 self_user_info: undefined,
+                text: '',
+                showSelect: true,
+                results: []
             }
         },
         mounted() {
             this.user_info()
+        },
+        watch: {
+            text: 'inputHandle'
         },
         methods: {
             user_info(uid) {
@@ -87,9 +116,56 @@
                 axios.get("/api/user/logout").then(
                     (resp) => this.user_info()
                 )
-            }
+            },
+            resultClick(result) {
+                this.text = result.name
+                this.$refs.search.blur()
+            },
+            inputHandle(text) {
+                if (text.trim() !== '') {
+                    this.showSelect = true
+                    setTimeout(() => {
+                        this.getEntity()
+                    }, 300)
+                }
+            },
+            getEntity() {
+                // API
+                this.results = [
+                    {
+                        key: '1234',
+                        name: '1234'
+                    },
+                    {
+                        key: 'abc',
+                        name: 'abc'
+                    },
+                    {
+                        key: 'def',
+                        name: 'def'
+                    },
+                    {
+                        key: 'ccc',
+                        name: 'ccc'
+                    },
+                    {
+                        key: 'ccc',
+                        name: 'ccc'
+                    },
+                    {
+                        key: 'ccc',
+                        name: 'ccc'
+                    }
+                ]
+            },
+            search() {
+                // TODO: page skip
+                window.open('https://www.baidu.com');
+                this.$refs.search.blur()
+                console.log(this.text)
+            },
         }
     })
-</script>>
+</script>
 
 </html>
