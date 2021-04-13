@@ -8,8 +8,9 @@ software system analysis and design 基于问答的讨论社区
 2. 安装配置 python api
    1. python3.8 及以上
    2. `python3.8 -m pip install -r requirement.txt`
-   3. `python3.8 -m api` 运行api模块
-   4. 此时api已经运行在 `127.0.0.1:8081`
+   3. 参照 [env_example.py](/api/env_example.py) 新建一个 `env.py`
+   4. `python3.8 -m api` 运行api模块
+   5. 此时api已经运行在 `127.0.0.1:8081`
 3. 配置web服务器
    1. 参考nginx配置文档
         ```
