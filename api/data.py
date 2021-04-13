@@ -1,8 +1,8 @@
 from databases import Database
 from sqlalchemy import MetaData, create_engine
 
-from ..app import app
-from ..env import dburl_dbs, dburl_sqlalchemy
+from .app import app
+from .env import dburl_dbs, dburl_sqlalchemy
 
 db = Database(dburl_dbs)
 
@@ -23,6 +23,7 @@ async def shutdown():
     await db.disconnect()
 
 
-@app.get('/db/create')
+@app.get('/db/recreate', tags=['database'])
 async def db_create():
+    meta.drop_all()
     meta.create_all()

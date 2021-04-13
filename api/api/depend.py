@@ -4,7 +4,7 @@ from fastapi import Depends, HTTPException, status, Cookie
 from fastapi.security import OAuth2PasswordBearer
 from ..typing.user import UserInDB
 from ..typing.crypto import jwtToken
-from ..db.user import db_user_query_username
+from ..database.user import db_user_query_username
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token", auto_error=False)
 

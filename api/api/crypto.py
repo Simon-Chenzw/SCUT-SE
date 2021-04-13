@@ -1,7 +1,7 @@
 from fastapi import Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from ..db.user import authenticate_user, db_user_insert, pwd_context, db_user_query_uid
+from ..database.user import authenticate_user, db_user_insert, pwd_context, db_user_query_uid
 from ..typing.crypto import Token, jwtToken
 from ..typing.user import User, UserCreate
 from ..app import app
@@ -67,7 +67,7 @@ async def login_for_access_token(
     return await authenticate(form_data.username, form_data.password, response)
 
 
-@app.get("/user/all")
+@app.get("/user/all", tags=['user'])
 async def get_all_users():
-    from ..db.database import db
+    from ..data import db
     return await db.fetch_all("select name from users;")
