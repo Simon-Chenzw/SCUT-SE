@@ -18,70 +18,130 @@
 
     <div id="app">
         <v-app>
-            <header>
-                <v-toolbar>
-                    <v-row>
+            <v-toolbar>
+                <v-row>
 
-                        <v-col cols='2'>
-                            <v-btn icon href='/'>
-                                <v-icon>fa-home</v-icon>
-                            </v-btn>
-                        </v-col>
+                    <v-col cols='2' class="header-icon">
+                        <v-btn icon href='/'>
+                            <v-icon>fa-home</v-icon>
+                        </v-btn>
+                    </v-col>
 
-                        <v-col cols="8">
-                            <template>
-                                <div v-on:keyup.enter="search">
-                                    <v-menu offset-y>
-                                        <template v-slot:activator="{ on }">
-                                            <v-text-field solo hide-details label="请输入关键词" append-icon="search"
-                                                v-model="text" class="input-search" autocomplete="off" v-on="on"
-                                                ref="search"></v-text-field>
+                    <v-col cols="8" class="search-bar">
+                        <template>
+                            <v-form>
+                                <v-continer>
+                                    <v-text-field v-model="search_msg" v-on:keyup.enter="search">
+                                        <template v-slot:label>
+                                            What do you wanna know?<v-icon style="vertical-align: middle">
+                                                mdi-file-find
+                                            </v-icon>
                                         </template>
-                                        <v-list rounded v-if="results.length > 0" class="border-list" dense>
-                                            <v-list-item v-for="(result, index) in results" :key="index"
-                                                @click="resultClick(result)">
-                                                <v-list-item-title>{{ result.name }}</v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
-                                    </v-menu>
-                                </div>
-                            </template>
-                        </v-col>
+                                        <v-icon slot="append" @click="search" color="blue">
+                                            fa-search
+                                        </v-icon>
+                                    </v-text-field>
+                                </v-continer>
+                            </v-form>
+                        </template>
+                    </v-col>
 
-                        <v-col cols='2' class="text-right">
+                    <v-col cols='2' class="text-right header-icon">
 
-                            <template v-if='self_user_info'>
+                        <template v-if='self_user_info'>
 
-                                <v-btn icon>
-                                    <v-icon>fa-user</v-icon>
-                                </v-btn>
+                            <v-btn icon>
+                                <v-icon>fa-user</v-icon>
+                            </v-btn>
 
-                                {{self_user_info.name}}
+                            {{self_user_info.name}}
 
-                                <v-btn v-on:click='logout'> logout </v-btn>
+                            <v-btn v-on:click='logout'> logout </v-btn>
 
 
-                            </template>
+                        </template>
 
-                            <template v-else>
+                        <template v-else>
 
-                                <v-btn icon>
-                                    <v-icon>fa-user-slash</v-icon>
-                                </v-btn>
+                            <v-btn icon>
+                                <v-icon>fa-user-slash</v-icon>
+                            </v-btn>
 
-                                <v-btn href='/login.html'> login </v-btn>
+                            <v-btn href='/login.html'> login </v-btn>
 
-                            </template>
+                        </template>
 
-                        </v-col>
+                    </v-col>
 
-                    </v-row>
-                </v-toolbar>
-            </header>
-
-
+                </v-row>
+            </v-toolbar>
         </v-app>
+
     </div>
+
+    <div id="card">
+        <v-container fill-height fluid>
+            <v-row justify="center">
+                <v-col cols='3'></v-col>
+                <v-col cols='6'>
+                    <template>
+                        <v-card class="mx-auto">
+                            <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="200px"></v-img>
+
+                            <v-card-title>
+                                Top western road trips
+                            </v-card-title>
+
+                            <v-card-subtitle>
+                                1,000 miles of wonder
+                            </v-card-subtitle>
+
+                            <v-card-actions>
+                                <v-btn color="orange lighten-2" text>
+                                    Explore
+                                </v-btn>
+
+                                <v-spacer></v-spacer>
+
+                                <v-btn icon @click="show = !show">
+                                    <v-icon>{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                </v-btn>
+                            </v-card-actions>
+
+                            <v-expand-transition>
+                                <div v-show="show">
+                                    <v-divider></v-divider>
+
+                                    <v-card-text>
+                                        I'm a thing. But, like most politicians, he promised more than he could deliver.
+                                        You
+                                        won't
+                                        have
+                                        time
+                                        for sleeping, soldier, not with all the bed making you'll be doing. Then we'll
+                                        go
+                                        with
+                                        that
+                                        data
+                                        file! Hey, you add a one and two zeros to that or we walk! You're going to do
+                                        his
+                                        laundry?
+                                        I've
+                                        got
+                                        to find a way to escape.
+                                    </v-card-text>
+                                </div>
+                            </v-expand-transition>
+                        </v-card>
+                    </template>
+                </v-col>
+                <v-col cols='3'></v-col>
+            </v-row>
+        </v-container>
+
+    </div>
+
+
 </body>
 
 <script>
@@ -94,14 +154,13 @@
                 self_user_info: undefined,
                 text: '',
                 showSelect: true,
-                results: []
+                results: [],
+                search_msg: '',
+                value
             }
         },
         mounted() {
             this.user_info()
-        },
-        watch: {
-            text: 'inputHandle'
         },
         methods: {
             user_info(uid) {
@@ -117,54 +176,22 @@
                     (resp) => this.user_info()
                 )
             },
-            resultClick(result) {
-                this.text = result.name
-                this.$refs.search.blur()
-            },
-            inputHandle(text) {
-                if (text.trim() !== '') {
-                    this.showSelect = true
-                    setTimeout(() => {
-                        this.getEntity()
-                    }, 300)
-                }
-            },
-            getEntity() {
-                // API
-                this.results = [
-                    {
-                        key: '1234',
-                        name: '1234'
-                    },
-                    {
-                        key: 'abc',
-                        name: 'abc'
-                    },
-                    {
-                        key: 'def',
-                        name: 'def'
-                    },
-                    {
-                        key: 'ccc',
-                        name: 'ccc'
-                    },
-                    {
-                        key: 'ccc',
-                        name: 'ccc'
-                    },
-                    {
-                        key: 'ccc',
-                        name: 'ccc'
-                    }
-                ]
-            },
             search() {
                 // TODO: page skip
-                window.open('https://www.baidu.com');
+                window.open('https://www.baidu.com/s?wd=' + this.search_msg);
                 this.$refs.search.blur()
                 console.log(this.text)
             },
         }
+    })
+
+
+    new Vue({
+        el: '#card',
+        vuetify: new Vuetify(),
+        data: () => ({
+            show: false,
+        }),
     })
 </script>
 
