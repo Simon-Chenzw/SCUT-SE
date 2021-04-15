@@ -16,8 +16,10 @@
 
 <body>
 
+    <v-app>
     <div id="app">
-        <v-app>
+            <div class="flex-1-1-auto d-flex align-center justify-end">
+
             <v-toolbar>
                 <v-row>
 
@@ -33,9 +35,7 @@
                                 <v-continer>
                                     <v-text-field v-model="search_msg" v-on:keyup.enter="search">
                                         <template v-slot:label>
-                                            What do you wanna know?<v-icon style="vertical-align: middle">
-                                                mdi-file-find
-                                            </v-icon>
+                                            What do you wanna know?
                                         </template>
                                         <v-icon slot="append" @click="search" color="blue">
                                             fa-search
@@ -75,14 +75,14 @@
 
                 </v-row>
             </v-toolbar>
-        </v-app>
-
-    </div>
+            </div>           
+        </div>
+    </v-app>
 
     <div id="card">
         <v-container fill-height fluid>
             <v-row justify="center">
-                <v-col cols='3'></v-col>
+                <v-col cols='2'></v-col>
                 <v-col cols='6'>
                     <template>
                         <v-card class="mx-auto">
@@ -97,10 +97,14 @@
                             </v-card-subtitle>
 
                             <v-card-actions>
-                                <v-btn color="orange lighten-2" text>
-                                    Explore
+                                <v-btn color="orange lighten-2" text @cilck="agree">
+                                    Agree
                                 </v-btn>
 
+                                <v-btn color="orange lighten-2" text @cilck="disagree">
+                                    Disagree
+                                </v-btn>
+                                
                                 <v-spacer></v-spacer>
 
                                 <v-btn icon @click="show = !show">
@@ -135,7 +139,8 @@
                         </v-card>
                     </template>
                 </v-col>
-                <v-col cols='3'></v-col>
+                <v-col cols='2'></v-col>
+                <v-col cols='2'></v-col>
             </v-row>
         </v-container>
 
@@ -192,6 +197,15 @@
         data: () => ({
             show: false,
         }),
+        methods:{
+            agree() {
+                alert("yes");
+            },
+            disagree() {
+                alert("No");
+
+            }
+        }
     })
 </script>
 
