@@ -1,4 +1,7 @@
 /* header css */
+.header-lock {
+  position: fixed;
+}
 .input-search {
   width: 40%;
   margin: auto;
