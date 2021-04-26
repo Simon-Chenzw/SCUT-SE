@@ -13,137 +13,135 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
 
-    <script type="text/javascript" src="iview.min.js"></script>
+    <!-- <script type="text/javascript" src="iview.min.js"></script> -->
 </head>
 
 <body>
 
     <v-app>
         <div id="app">
-            <header class="flex-1-1-auto d-flex align-center justify-end">
-                <Affix>
+            <v-app-bar app hide-on-scroll>
 
-                    <v-toolbar class="demo-affix">
-                        <v-row>
+                <v-row>
 
-                            <v-col cols='2' class="header-icon">
-                                <v-btn icon href='/'>
-                                    <v-icon>fa-home</v-icon>
-                                </v-btn>
-                            </v-col>
+                    <v-col cols='2' class="header-icon">
+                        <v-btn icon href='/'>
+                            <v-icon>fa-home</v-icon>
+                        </v-btn>
+                    </v-col>
 
-                            <v-col cols="8" class="search-bar">
-                                <template>
-                                    <v-form>
-                                        <v-continer>
-                                            <v-text-field v-model="search_msg" v-on:keyup.enter="search">
-                                                <template v-slot:label>
-                                                    What do you wanna know?
-                                                </template>
-                                                <v-icon slot="append" @click="search" color="blue">
-                                                    fa-search
-                                                </v-icon>
-                                            </v-text-field>
-                                        </v-continer>
-                                    </v-form>
-                                </template>
-                            </v-col>
+                    <v-col cols="8" class="search-bar">
+                        <template>
+                            <v-form>
+                                <v-continer>
+                                    <v-text-field v-model="search_msg" v-on:keyup.enter="search">
+                                        <template v-slot:label>
+                                            What do you wanna know?
+                                        </template>
+                                        <v-icon slot="append" @click="search" color="blue">
+                                            fa-search
+                                        </v-icon>
+                                    </v-text-field>
+                                </v-continer>
+                            </v-form>
+                        </template>
+                    </v-col>
 
-                            <v-col cols='2' class="text-right header-icon">
+                    <v-col cols='2' class="text-right header-icon">
 
-                                <template v-if='self_user_info'>
+                        <template v-if='self_user_info'>
 
-                                    <v-btn icon>
-                                        <v-icon>fa-user</v-icon>
-                                    </v-btn>
+                            <v-btn icon>
+                                <v-icon>fa-user</v-icon>
+                            </v-btn>
 
-                                    {{self_user_info.name}}
+                            {{self_user_info.name}}
 
-                                    <v-btn v-on:click='logout'> logout </v-btn>
+                            <v-btn v-on:click='logout'> logout </v-btn>
 
 
-                                </template>
+                        </template>
 
-                                <template v-else>
+                        <template v-else>
 
-                                    <v-btn icon>
-                                        <v-icon>fa-user-slash</v-icon>
-                                    </v-btn>
+                            <v-btn icon>
+                                <v-icon>fa-user-slash</v-icon>
+                            </v-btn>
 
-                                    <v-btn href='/login.html'> login </v-btn>
+                            <v-btn href='/login.html'> login </v-btn>
 
-                                </template>
+                        </template>
 
-                            </v-col>
+                    </v-col>
 
-                        </v-row>
-                    </v-toolbar>
+                </v-row>
 
-                </Affix>
-            </header>
+            </v-app-bar>
         </div>
+
+        <v-main>
+            <div id="card" style="padding-top: 80px;">
+                <v-container fill-height fluid>
+                    <v-row justify="center" style="justify-content: center">
+
+                        <v-col cols='6'>
+                            <template>
+                                <v-card class="mx-auto" v-for="data in datas">
+
+                                    <v-card-title>
+                                        {{data.question}}
+                                    </v-card-title>
+
+                                    <v-card-subtitle>
+                                        {{data.description}}
+                                    </v-card-subtitle>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="agree">
+                                            Agree
+                                        </v-btn>
+
+                                        <v-btn text color="orange lighten-2" @click="disagree">
+                                            Disagree
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+
+                                        <v-btn icon @click="data.show = !data.show">
+                                            <v-icon>{{ data.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+
+                                    <v-expand-transition>
+                                        <div v-show="data.show">
+                                            <v-divider></v-divider>
+
+                                            <v-card-text>
+                                                {{data.answer}}
+                                            </v-card-text>
+                                        </div>
+                                    </v-expand-transition>
+                                </v-card>
+                            </template>
+                        </v-col>
+
+                        <v-col cols='2'>
+                            <template>
+                                <v-carousel :show-arrows="false">
+                                    <v-carousel-item v-for="(photo,i) in photos" :key="i" :src="photo.src">
+                                    </v-carousel-item>
+                                </v-carousel>
+                            </template>
+                        </v-col>
+
+                    </v-row>
+                </v-container>
+            </div>
+        </v-main>
+
     </v-app>
 
-    <div id="card">
-        <v-container fill-height fluid>
-            <v-row justify="center">
-                <v-col cols='2'></v-col>
 
-
-                <v-col cols='6'>
-                    <template>
-                        <v-card class="mx-auto" v-for="data in datas">
-
-                            <v-card-title>
-                                {{data.question}}
-                            </v-card-title>
-
-                            <v-card-subtitle>
-                                {{data.description}}
-                            </v-card-subtitle>
-
-                            <v-card-actions>
-                                <v-btn text color="orange lighten-2" @click="agree">
-                                    Agree
-                                </v-btn>
-
-                                <v-btn text color="orange lighten-2" @click="disagree">
-                                    Disagree
-                                </v-btn>
-
-                                <v-spacer></v-spacer>
-
-                                <v-btn icon @click="data.show = !data.show">
-                                    <v-icon>{{ data.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                                </v-btn>
-                            </v-card-actions>
-
-                            <v-expand-transition>
-                                <div v-show="data.show">
-                                    <v-divider></v-divider>
-
-                                    <v-card-text>
-                                        {{data.answer}}
-                                    </v-card-text>
-                                </div>
-                            </v-expand-transition>
-                        </v-card>
-                    </template>
-                </v-col>
-
-                <v-col cols='2'>
-                    <template>
-                        <v-carousel :show-arrows="false">
-                            <v-carousel-item v-for="(photo,i) in photos" :key="i" :src="photo.src"></v-carousel-item>
-                        </v-carousel>
-                    </template>
-                </v-col>
-
-                <v-col cols='2'></v-col>
-            </v-row>
-        </v-container>
-
-    </div>
 
 
 </body>
@@ -272,7 +270,7 @@
                         answer: "3",
                         show: false,
                     });
-                    console.log(this.datas);
+                    // console.log(this.datas);
                 }
             }
         },
