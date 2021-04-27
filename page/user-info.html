@@ -22,13 +22,42 @@
 
             <v-navigation-drawer v-model="drawer" app>
                 <v-sheet color="grey lighten-4" class="pa-4">
-                    <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
+                    
+                    <div>
+                        <v-row>
+                            <v-col cols="2">
+                            <v-avatar class="mb-4" color="grey darken-1" size="64">
+                                <img :src='avatarsrc'>
+                            </v-avatar>
+                            <v-btn @click="follow" right rounded fixed>
+                                follow
+                            </v-btn>
+                        </v-row>
+                    </div>
+                    
+                    
+                    <div class="font-weight-black">
+                        {{ this.name }}
+                    </div>
 
                     <div>
-                        {{ this.names }}
+                        {{ this.self_introduction }}
+                    </div>
+
+                    <div justify="center" style="justify-content: center">
+                        <v-icon>
+                            mdi-thumb-up 
+                        </v-icon>
+                        {{ this.approved }}
+                        <v-icon>
+                            mdi-account-multiple 
+                        </v-icon>
+                        {{ this.followers }}
                     </div>
 
                 </v-sheet>
+
+               
 
                 <v-divider>
                 </v-divider>
@@ -92,16 +121,23 @@
         el: '#inspire',
         vuetify: new Vuetify(),
         data: () => ({
-            names: "Alice",
+            name: "Alice",
             cards: ['Today', 'Yesterday'],
             drawer: null,
             menus: [
                 ['mdi-comment-question-outline', 'Question'],
                 ['mdi-forum', 'Answer'],
             ],
-            followers: 201,
-            approved: 102,
+            followers: 2010,
+            approved: 1023,
+            avatarsrc: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+            self_introduction: 'hello world!',
         }),
+        methods: {
+            follow() {
+                window.alert("follow");
+            }
+        }
     })
 </script>
 
