@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-cn">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.x/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- <script type="text/javascript" src="iview.min.js"></script> -->
+</head>
+
+<body>
+    <div id="inspire">
+        <v-app>
+
+            <v-navigation-drawer v-model="drawer" app>
+                <v-sheet color="grey lighten-4" class="pa-4">
+                    <v-avatar class="mb-4" color="grey darken-1" size="64"></v-avatar>
+
+                    <div>
+                        {{ this.names }}
+                    </div>
+
+                </v-sheet>
+
+                <v-divider>
+                </v-divider>
+
+                <v-list>
+
+                    <v-list-item v-for="[icon, text] in menus" :key="icon" link>
+                        <v-list-item-icon>
+                            <v-icon>
+                                {{ icon }}
+                            </v-icon>
+                        </v-list-item-icon>
+
+                        <v-list-item-content>
+                            <v-list-item-title>
+                                {{ text }}
+                            </v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                </v-list>
+            </v-navigation-drawer>
+
+            <v-main>
+                <v-container class="py-8 px-6" fluid>
+                    <v-row>
+                        <v-col v-for="card in cards" :key="card" cols="12">
+                            <v-card>
+                                <v-subheader>{{ card }}</v-subheader>
+
+                                <v-list two-line>
+                                    <template v-for="n in 6">
+                                        <v-list-item :key="n">
+                                            <v-list-item-avatar color="grey darken-1">
+                                            </v-list-item-avatar>
+
+                                            <v-list-item-content>
+                                                <v-list-item-title>Message {{ n }}</v-list-item-title>
+
+                                                <v-list-item-subtitle>
+                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
+                                                    repellendus distinctio similique
+                                                </v-list-item-subtitle>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
+                                    </template>
+                                </v-list>
+                            </v-card>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </v-main>
+        </v-app>
+    </div>
+</body>
+
+<script>
+    new Vue({
+        el: '#inspire',
+        vuetify: new Vuetify(),
+        data: () => ({
+            names: "Alice",
+            cards: ['Today', 'Yesterday'],
+            drawer: null,
+            menus: [
+                ['mdi-comment-question-outline', 'Question'],
+                ['mdi-forum', 'Answer'],
+            ],
+            followers: 201,
+            approved: 102,
+        }),
+    })
+</script>
+
+</html>
