@@ -27,3 +27,4 @@ async def shutdown():
 async def db_create():
     meta.drop_all()
     meta.create_all()
+    return {'msg': 'database recreate success'}

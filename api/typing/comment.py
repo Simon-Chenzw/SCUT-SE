@@ -1,27 +1,23 @@
-from typing import List
-
 import sqlalchemy
 from pydantic import BaseModel  # pylint: disable=no-name-in-module
 
 from ..data import meta
-from .comment import Comment
 from .user import User
-from .vote import VoteStatus
 
 table = sqlalchemy.Table(
-    'answer',
+    'comment',
     meta,
     sqlalchemy.Column(
-        'aid',
+        'cid',
         sqlalchemy.INTEGER,
         primary_key=True,
         autoincrement=True,
         nullable=False,
     ),
     sqlalchemy.Column(
-        'qid',
+        'aid',
         sqlalchemy.INTEGER,
-        sqlalchemy.ForeignKey('question.qid'),
+        sqlalchemy.ForeignKey('answer.aid'),
         nullable=False,
     ),
     sqlalchemy.Column(
@@ -38,21 +34,16 @@ table = sqlalchemy.Table(
 )
 
 
-class AnswerInDB(BaseModel):
+class CommentInDB(BaseModel):
+    cid: int
     aid: int
-    qid: int
     uid: int
-
     text: str
 
 
-class Answer(AnswerInDB):
+class Comment(CommentInDB):
     user: User
-    voteup_cnt: int
-    votedown_cnt: int
-    vote_status: VoteStatus
-    comment: List[Comment]
 
 
-class AnswerCreate(BaseModel):
+class CommentCreate(BaseModel):
     text: str

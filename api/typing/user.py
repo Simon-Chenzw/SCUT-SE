@@ -1,15 +1,14 @@
-from enum import Enum
-from typing import Optional
 import sqlalchemy
 from ..data import meta
-from pydantic import BaseModel, EmailStr  # pylint: disable=no-name-in-module
+from typing import Optional
+from pydantic import BaseModel, HttpUrl  # pylint: disable=no-name-in-module
 
 table = sqlalchemy.Table(
-    'users',
+    'user',
     meta,
     sqlalchemy.Column(
         'uid',
-        sqlalchemy.Integer,
+        sqlalchemy.INTEGER,
         primary_key=True,
         autoincrement=True,
         nullable=False,
@@ -26,34 +25,40 @@ table = sqlalchemy.Table(
         nullable=False,
     ),
     sqlalchemy.Column(
-        'mail',
+        'avatar',
         sqlalchemy.TEXT,
+        nullable=True,
     ),
     sqlalchemy.Column(
-        'gender',
-        sqlalchemy.VARCHAR(10),
-        default='not_given',
+        'introduction',
+        sqlalchemy.TEXT,
+        nullable=True,
     ),
 )
 
 
-class Gender(str, Enum):
-    male = 'male'
-    female = 'female'
-    other = 'other'
-    not_given = 'not_given'
-
-
-class User(BaseModel):
+class UserBase(BaseModel):
     uid: int
     name: str
-    mail: Optional[EmailStr]
-    gender: Gender = Gender.not_given
+    avatar: Optional[HttpUrl]
+    introduction: Optional[str]
 
 
-class UserInDB(User):
+class UserInDB(UserBase):
     hash_pwd: str
 
 
-class UserCreate(UserInDB):
-    uid: None = None
+class User(UserBase):
+    follower: int
+    voteup: int
+
+
+class UserCreate(BaseModel):
+    username: str
+    password: str
+
+
+class UserModify(BaseModel):
+    name: Optional[str]
+    avatar: Optional[HttpUrl]
+    introduction: Optional[str]

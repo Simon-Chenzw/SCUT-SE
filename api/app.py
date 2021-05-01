@@ -11,10 +11,12 @@ async def root():
     return {'msg': 'hello world'}
 
 
-path = ['/home/simon/code/uml/api/api']
-prefix = 'api.api.'
 modules = {}
 
-for moduleInfo in pkgutil.iter_modules(path, prefix):
-    name = moduleInfo.name
-    modules[name] = importlib.import_module(name)
+for name in ['api', 'typing']:
+    for moduleInfo in pkgutil.iter_modules(
+        [f'/home/simon/code/uml/api/{name}'],
+            f'api.{name}.',
+    ):
+        name = moduleInfo.name
+        modules[name] = importlib.import_module(name)
