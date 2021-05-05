@@ -2,7 +2,7 @@
 All homework in SCUT
 
 # 声明
-本repo的作业与报告**仅供参考**，请勿搬运、抄袭。
+本repo仅作为储存备份作业与报告所用，**仅供参考**，请勿搬运、抄袭。
 
 # catalogue
 * [cpp](./cpp/README.md) C++(下)
