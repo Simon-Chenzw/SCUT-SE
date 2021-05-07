@@ -27,7 +27,7 @@
                         <v-row>
                             <v-col cols="2">
                             <v-avatar class="mb-4" color="grey darken-1" size="64">
-                                <img :src='avatarsrc'>
+                                <img :src='info.avatar'>
                             </v-avatar>
                             <v-btn @click="follow" right rounded fixed>
                                 follow
@@ -37,22 +37,22 @@
                     
                     
                     <div class="font-weight-black">
-                        {{ this.name }}
+                        {{ this.info.name }}
                     </div>
 
                     <div>
-                        {{ this.self_introduction }}
+                        {{ this.info.introduction }}
                     </div>
 
                     <div justify="center" style="justify-content: center">
                         <v-icon>
                             mdi-thumb-up 
                         </v-icon>
-                        {{ this.approved }}
+                        {{ this.info.voteup }}
                         <v-icon>
                             mdi-account-multiple 
                         </v-icon>
-                        {{ this.followers }}
+                        {{ this.info.follower }}
                     </div>
 
                 </v-sheet>
@@ -121,22 +121,41 @@
         el: '#inspire',
         vuetify: new Vuetify(),
         data: () => ({
-            name: "Alice",
+            info: null,
             cards: ['Today', 'Yesterday'],
             drawer: null,
             menus: [
                 ['mdi-comment-question-outline', 'Question'],
                 ['mdi-forum', 'Answer'],
             ],
-            followers: 2010,
-            approved: 1023,
-            avatarsrc: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-            self_introduction: 'hello world!',
         }),
+        mounted() {
+            this.user_info()
+        },
         methods: {
             follow() {
                 window.alert("follow");
-            }
+            },
+            user_info(uid) {
+                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                axios.get(url)
+                .then(response => {
+                    console.log(response)
+                    this.info = response.data
+                })
+                .catch(error => {
+                    // console.log(error)
+                    this.info = {
+                        "uid": 1,
+                        "name": "xth",
+                        "avatar": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+                        "introduction": null,
+                        "follower": 0,
+                        "voteup": 0
+                    }
+
+                })
+            },
         }
     })
 </script>

@@ -151,25 +151,26 @@
     new Vue({
         el: '#app',
         vuetify: new Vuetify(),
-        data() {
-            return {
-                self_user_info: undefined,
-                text: '',
-                showSelect: true,
-                results: [],
-                search_msg: '',
-                value
-            }
-        },
+        data: () => ({
+            self_user_info: undefined,
+            text: '',
+            showSelect: true,
+            results: [],
+            search_msg: '',
+        }),
         mounted() {
             this.user_info()
         },
         methods: {
             user_info(uid) {
                 url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
-                axios.get(url).then(
-                    (resp) => this.self_user_info = resp.data
-                ).catch(
+                axios.get(url)
+                .then(
+                (resp) => {
+                    console.log(resp.data)
+                    this.self_user_info = resp.data
+                })
+                .catch(
                     (err) => this.self_user_info = undefined
                 )
             },
@@ -260,7 +261,7 @@
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
                 let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-                console.log(scrollTop, windowHeight, scrollHeight);
+                // console.log(scrollTop, windowHeight, scrollHeight);
                 // debugger;
                 if (scrollTop + windowHeight >= scrollHeight - 100) {
                     // window.alert("end");

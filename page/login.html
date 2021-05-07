@@ -127,13 +127,18 @@
             },
             register() {
                 if (!this.valid) return
-                axios.get("/api/user/register", {
-                    params: {
-                        username: this.username,
-                        password: this.password,
-                    }
+                axios.post("/api/user/create", {
+                    username: this.username,
+                    password: this.password,
                 }).then(
-                    (resp) => this.user_info()
+                    (resp) => { 
+                        this.user_info()
+                        window.alert("register successful!")
+                })
+                .catch(
+                    error => {
+                        window.alert("username has been used")
+                    }
                 )
             }
         }
