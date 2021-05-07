@@ -1,13 +1,13 @@
-from typing import Optional
+from typing import List, Optional
 
 from fastapi import Depends, HTTPException, status
 
 from ..app import app
 from ..data import db
-from ..typing.question import Question, table, QuestionCreate
-from ..typing.user import UserInDB
-from ..depends.user import login_user
 from ..depends.question import get_question
+from ..depends.user import login_user
+from ..typing.question import Question, QuestionCreate, table
+from ..typing.user import UserInDB
 
 
 @app.post("/question/create", tags=['question'])
@@ -47,3 +47,14 @@ async def question_modify(
             'desc': mod.desc,
         }))
     return {'msg': 'Question modify successfully'}
+
+
+@app.get("/question/list", response_model=List[Question], tags=['question'])
+async def question_list(
+    last_qid: Optional[int] = None,
+    limit: int = 10,
+) -> List[Question]:
+    sel = table.select().order_by(table.c.qid).limit(limit)
+    if isinstance(last_qid, int):
+        sel = sel.where(table.c.qid <= last_qid)
+    return [Question.parse_obj(obj) for obj in await db.fetch_all(sel)]

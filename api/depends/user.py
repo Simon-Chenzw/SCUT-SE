@@ -69,9 +69,13 @@ async def login_user(token: str = Depends(getToken)) -> UserInDB:
         )
 
 
-async def login_user_possible(token: str = Depends(
-    getToken)) -> Optional[UserInDB]:
+async def login_user_possible(
+        header_token: Optional[str] = Depends(oauth2_scheme),
+        token: Optional[str] = Cookie(None),
+) -> Optional[UserInDB]:
     try:
-        return await login_user(token)
+        token = header_token or token
+        if token:
+            return await login_user(token)
     except:
         pass

@@ -1,31 +1,21 @@
-from typing import Mapping, Optional
+from typing import List, Optional
 
 from fastapi import Depends, HTTPException, status
 from sqlalchemy import and_
 
 from ..app import app
 from ..data import db
+from ..depends.answer import get_answer
 from ..depends.question import get_question
-from ..depends.user import login_user, login_user_possible, get_full_user
-from ..typing import comment, vote
-from ..typing.answer import Answer, AnswerInDB, table, AnswerCreate
-from ..typing.comment import Comment, CommentInDB, CommentCreate
+from ..depends.user import get_full_user, login_user, login_user_possible
+from ..typing import vote
+from ..typing.answer import Answer, AnswerCreate, AnswerInDB, table
 from ..typing.question import Question
 from ..typing.user import UserInDB
 
 
-async def get_answer(aid: int) -> AnswerInDB:
-    obj = await db.fetch_one(table.select(table.c.aid == aid))
-    if not obj:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"aid {aid} does not exist",
-        )
-    return AnswerInDB.parse_obj(obj)
-
-
 @app.post("/answer/create", tags=['answer'])
-async def create_answer(
+async def answer_create(
         answer: AnswerCreate,
         que: Question = Depends(get_question),
         user: UserInDB = Depends(login_user),
@@ -35,14 +25,14 @@ async def create_answer(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"text cannot be empty",
         )
-    if db.fetch_val(
+    if await db.fetch_val(
             table.count(and_(
                 table.c.uid == user.uid,
                 table.c.qid == que.qid,
             ))):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"one can two answer in same question",
+            detail=f"one can not create two answer in same question",
         )
     obj = AnswerInDB(
         aid=0,
@@ -54,7 +44,7 @@ async def create_answer(
     return {'msg': 'Answer create successfully'}
 
 
-@app.get("/answer/info", tags=['answer'])
+@app.get("/answer/info", response_model=Answer, tags=['answer'])
 async def answer_info(
         answer: AnswerInDB = Depends(get_answer),
         user: Optional[UserInDB] = Depends(login_user_possible),
@@ -67,33 +57,35 @@ async def answer_info(
                     vote.table.c.status == stat,
                 )))
 
-    async def full_comment(obj: Mapping) -> Comment:
-        com = CommentInDB.parse_obj(obj)
-        user = await get_full_user(com.uid)
-        return Comment.parse_obj({**com.dict(), 'user': user.dict()})
-
     ans_user = await get_full_user(answer.uid)
-    comments = [
-        await full_comment(com) for com in await db.fetch_all(
-            comment.table.select(comment.table.c.aid == answer.aid))
-    ]
+    que = await get_question(answer.aid)
+
+    if user:
+        cur_stat = await db.fetch_one(
+            vote.table.select(
+                and_(
+                    vote.table.c.aid == answer.aid,
+                    vote.table.c.uid == user.uid,
+                )))
+    else:
+        cur_stat = None
     return Answer.parse_obj({
         **answer.dict(),
         'user':
         ans_user.dict(),
+        'question':
+        que.dict(),
         'voteup_cnt':
         await count_vote(vote.VoteStatus.up),
         'votedown_cnt':
         await count_vote(vote.VoteStatus.down),
         'vote_status':
-        'neither',
-        'comment':
-        comments,
+        cur_stat or 'neither',
     })
 
 
 @app.post("/answer/modify", tags=['answer'])
-async def modify_answer(
+async def answer_modify(
         mod: AnswerCreate,
         answer: AnswerInDB = Depends(get_answer),
         user: UserInDB = Depends(login_user),
@@ -112,70 +104,20 @@ async def modify_answer(
     return {'msg': 'Answer modify successfully'}
 
 
-@app.get("/answer/vote", tags=['vote'])
-async def answer_vote(
-        stat: vote.VoteStatus,
-        answer: AnswerInDB = Depends(get_answer),
-        user: UserInDB = Depends(login_user),
-):
-    if answer.uid == user.uid:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="can't vote yourself",
-        )
-    obj = await db.fetch_one(
-        vote.table.select(
-            and_(
-                vote.table.c.aid == answer.aid,
-                vote.table.c.uid == user.uid,
-            )))
-    if obj:
-        cur = obj['status']
-    else:
-        cur = vote.VoteStatus.neither
-
-    if cur == stat:
-        return {'msg': f'already vote: {cur}'}
-    else:
-        if stat == vote.VoteStatus.neither:
-            await db.execute(
-                vote.table.delete(
-                    and_(
-                        vote.table.c.aid == answer.aid,
-                        vote.table.c.uid == user.uid,
-                    )))
-        elif obj:
-            await db.execute(
-                vote.table.update(
-                    and_(
-                        vote.table.c.aid == answer.aid,
-                        vote.table.c.uid == user.uid,
-                    ),
-                    {'status': stat},
-                ))
-        else:
-            await db.execute(
-                vote.table.insert(
-                    vote.Vote(
-                        aid=answer.aid,
-                        uid=user.uid,
-                        status=stat,
-                    ).dict()))
-        return {'msg': f'current vote status: {stat}'}
-
-
-@app.post("/answer/comment", tags=['answer'])
-async def leave_comment(
-        com: CommentCreate,
-        answer: AnswerInDB = Depends(get_answer),
-        user: UserInDB = Depends(login_user),
-):
-    await db.execute(
-        comment.table.insert(
-            CommentInDB(
-                cid=0,
-                aid=answer.aid,
-                uid=user.uid,
-                text=com.text,
-            ).dict()))
-    return {'msg': 'Comment create successfully'}
+@app.get("/answer/list", response_model=List[Answer], tags=['answer'])
+async def answer_list(
+        last_aid: Optional[int] = None,
+        qid: Optional[int] = None,
+        limit: int = 10,
+        user: Optional[UserInDB] = Depends(login_user_possible),
+) -> List[Answer]:
+    sel = table.select().order_by(table.c.aid).limit(limit)
+    if qid:
+        que = await get_question(qid)
+        sel = sel.where(table.c.qid == que.qid)
+    if isinstance(last_aid, int):
+        sel = sel.where(table.c.aid <= last_aid)
+    return [
+        await answer_info(AnswerInDB.parse_obj(obj), user)
+        for obj in await db.fetch_all(sel)
+    ]

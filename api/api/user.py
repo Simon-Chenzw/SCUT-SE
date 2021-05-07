@@ -9,9 +9,9 @@ from ..app import app
 from ..data import db
 from ..depends.user import (get_full_from_InDB, get_full_user, get_user,
                             login_user, login_user_possible)
+from ..typing import follow
 from ..typing.crypto import Token, jwtToken
 from ..typing.user import User, UserCreate, UserInDB, UserModify, table
-from ..typing import follow
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -97,7 +97,7 @@ async def user_modify(
 
 
 @app.get("/user/login", response_model=Token, tags=['authentication'])
-async def login(username: str, password: str, response: Response):
+async def login(username: str, password: str, response: Response) -> Token:
     return await authenticate(username, password, response)
 
 
@@ -108,15 +108,15 @@ async def logout(response: Response):
 
 
 @app.post("/token", response_model=Token, tags=['authentication'])
-async def login_for_access_token(
+async def login_form(
         response: Response,
         form_data: OAuth2PasswordRequestForm = Depends(),
-):
+) -> Token:
     return await authenticate(form_data.username, form_data.password, response)
 
 
 @app.get("/user/all", tags=['user'])
-async def get_all_users():
+async def all_users():
     return await db.fetch_all(table.select().with_only_columns(
         [table.c.uid, table.c.name]))
 

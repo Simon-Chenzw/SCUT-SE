@@ -4,8 +4,8 @@ import sqlalchemy
 from pydantic import BaseModel  # pylint: disable=no-name-in-module
 
 from ..data import meta
-from .comment import Comment
 from .user import User
+from .question import Question
 from .vote import VoteStatus
 
 table = sqlalchemy.Table(
@@ -48,10 +48,10 @@ class AnswerInDB(BaseModel):
 
 class Answer(AnswerInDB):
     user: User
+    question: Question
     voteup_cnt: int
     votedown_cnt: int
     vote_status: VoteStatus
-    comment: List[Comment]
 
 
 class AnswerCreate(BaseModel):
