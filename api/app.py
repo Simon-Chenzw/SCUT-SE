@@ -1,5 +1,6 @@
 import importlib
 import pkgutil
+from os import path
 
 from fastapi import FastAPI
 
@@ -15,7 +16,7 @@ modules = {}
 
 for name in ['api', 'typing']:
     for moduleInfo in pkgutil.iter_modules(
-        [f'/home/simon/code/uml/api/{name}'],
+        [path.join(path.split(__file__)[0], name)],
             f'api.{name}.',
     ):
         name = moduleInfo.name

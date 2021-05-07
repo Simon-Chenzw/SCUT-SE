@@ -35,6 +35,15 @@ async def create_answer(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"text cannot be empty",
         )
+    if db.fetch_val(
+            table.count(and_(
+                table.c.uid == user.uid,
+                table.c.qid == que.qid,
+            ))):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"one can two answer in same question",
+        )
     obj = AnswerInDB(
         aid=0,
         qid=que.qid,
