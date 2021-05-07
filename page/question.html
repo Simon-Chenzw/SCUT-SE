@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-cn">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.x/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- <script type="text/javascript" src="iview.min.js"></script> -->
+</head>
+
+<body>
+
+    <v-app>
+        <div id="app">
+            <v-app-bar app hide-on-scroll>
+
+                <v-row>
+
+                    <v-col cols='2' class="header-icon">
+                        <v-btn icon href='/'>
+                            <v-icon>fa-home</v-icon>
+                        </v-btn>
+                    </v-col>
+
+                    <v-col cols="8" class="search-bar">
+                        <template>
+                            <v-form>
+                                <v-continer>
+                                    <v-text-field v-model="search_msg" v-on:keyup.enter="search">
+                                        <template v-slot:label>
+                                            What do you wanna know?
+                                        </template>
+                                        <v-icon slot="append" @click="search" color="blue">
+                                            fa-search
+                                        </v-icon>
+                                    </v-text-field>
+                                </v-continer>
+                            </v-form>
+                        </template>
+                    </v-col>
+
+                    <v-col cols='2' class="text-right header-icon">
+
+                        <template v-if='self_user_info'>
+
+                            <v-btn icon>
+                                <v-icon>fa-user</v-icon>
+                            </v-btn>
+
+                            {{self_user_info.name}}
+
+                            <v-btn v-on:click='logout'> logout </v-btn>
+
+
+                        </template>
+
+                        <template v-else>
+
+                            <v-btn icon>
+                                <v-icon>fa-user-slash</v-icon>
+                            </v-btn>
+
+                            <v-btn href='/login.html'> login </v-btn>
+
+                        </template>
+
+                    </v-col>
+
+                </v-row>
+
+            </v-app-bar>
+        </div>
+
+        <v-main>
+            <div id="card" style="padding-top: 80px;">
+                <v-container fill-height fluid>
+                    <v-row justify="center" style="justify-content: center">
+
+                        <v-col cols='6'>
+                            <template>
+                                <v-card class="mx-auto">
+                                    <v-card-title>
+                                        {{question_data.title}}
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        {{question_data.description}}
+                                    </v-card-text>
+                                </v-card>
+
+                                <v-card class="mx-auto" v-for="data in answer_datas">
+
+                                    <v-card-title>
+                                        {{data.user}}
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        {{data.answer}}
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="agree">
+                                            Agree
+                                        </v-btn>
+
+                                        <v-btn text color="orange lighten-2" @click="disagree">
+                                            Disagree
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+
+                                        <v-btn icon @click="data.show = !data.show">
+                                            <v-icon>{{ data.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+
+                                    <v-expand-transition>
+                                        <div v-show="data.show">
+                                            <v-divider></v-divider>
+
+                                            <v-card-text v-for="comment in data.comments">
+                                                {{comment.user}} : {{comment.comment}}
+                                            </v-card-text>
+                                        </div>
+                                    </v-expand-transition>
+                                </v-card>
+                            </template>
+                        </v-col>
+
+                    </v-row>
+                </v-container>
+            </div>
+        </v-main>
+
+    </v-app>
+
+
+
+
+</body>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                self_user_info: undefined,
+                text: '',
+                showSelect: true,
+                results: [],
+                search_msg: '',
+            }
+        },
+        mounted() {
+            this.user_info()
+        },
+        methods: {
+            user_info(uid) {
+                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                axios.get(url).then(
+                    (resp) => this.self_user_info = resp.data
+                ).catch(
+                    (err) => this.self_user_info = undefined
+                )
+            },
+            logout() {
+                axios.get("/api/user/logout").then(
+                    (resp) => this.user_info()
+                )
+            },
+            search() {
+                // TODO: page skip
+                window.open('https://www.baidu.com/s?wd=' + this.search_msg);
+                this.$refs.search.blur()
+                console.log(this.text)
+            },
+        }
+    })
+
+
+    new Vue({
+        el: '#card',
+        vuetify: new Vuetify(),
+        data: () => ({
+            show: false,
+            question_info: undefined,
+            question_data: {
+                title: "蓝桥杯做几题能拿省三啊?",
+                description: "python组",
+            },
+            answer_datas: [
+                {
+                    answer_info: undefined,
+                    show: false,
+                },
+                {
+                    user: "Bob",
+                    answer: "I Don't know",
+                    show: false,
+                    comments: [
+                        {
+                            user: "Ailce",
+                            comment: "really",
+                        },
+                        {
+                            user: "Bob",
+                            comment: "?",
+                        },
+                    ],
+                },
+                {
+                    user: "Cat",
+                    answer: "I Don't know",
+                    show: false,
+                    comments: [
+                        {
+                            user: "Ailce",
+                            comment: "really",
+                        },
+                        {
+                            user: "Cat",
+                            comment: "meow",
+                        },
+                    ],
+                },
+                {
+                    user: "Dog",
+                    answer: "I Don't know",
+                    show: false,
+                    comments: [
+
+                    ],
+                },
+            ],
+            answer_num: 0,
+            answer_loaded: false
+        }),
+        mounted() {
+            addEventListener('scroll', this.handleScroll)//监听函数
+        },
+        methods: {
+            agree() {
+                window.alert("yes");
+            },
+            disagree() {
+                window.alert("No");
+            },
+            get_question_info(qid) {
+                url = "/api/question/info?qid=" + toString(qid)
+                axios.get(url)
+                    .then(
+                        (resp) => this.question_info = resp.data
+                    )
+                    .catch(
+                        (error) => {
+
+                        }
+                    )
+            },
+            get_new_answer(aid) {
+                axios.get("/api/answer/list",
+                    params = {
+                        last_aid: aid,
+                        qid: qid,
+                    })
+            },
+            handleScroll() {
+                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                console.log(scrollTop, windowHeight, scrollHeight);
+                // debugger;
+                if (!this.answer_loaded && scrollTop + windowHeight >= scrollHeight - 100) {
+                    // window.alert("end");
+                    this.answer_datas.push({
+                        user: "Cat",
+                        answer: "I Don't know",
+                        show: false,
+                        comments: [
+                            {
+                                user: "Ailce",
+                                comment: "really",
+                            },
+                        ],
+                    });
+                    // console.log(this.datas);
+                }
+            }
+        },
+        destroyed() {
+            window.removeEventListener('scroll', this.handleScroll)
+        }
+    })
+</script>
+
+</html>
