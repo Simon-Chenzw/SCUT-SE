@@ -107,18 +107,12 @@ async def logout(response: Response):
     return {'msg': 'logout success'}
 
 
-@app.post("/token", response_model=Token, tags=['authentication'])
+@app.post("/token", response_model=Token, tags=['debug'])
 async def login_form(
         response: Response,
         form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> Token:
     return await authenticate(form_data.username, form_data.password, response)
-
-
-@app.get("/user/all", tags=['user'])
-async def all_users():
-    return await db.fetch_all(table.select().with_only_columns(
-        [table.c.uid, table.c.name]))
 
 
 @app.get("/user/follow", tags=['user'])

@@ -23,7 +23,7 @@ async def shutdown():
     await db.disconnect()
 
 
-@app.get('/db/recreate', tags=['database'])
+@app.get('/db/recreate', tags=['debug'])
 async def db_create():
     meta.drop_all()
     meta.create_all()
