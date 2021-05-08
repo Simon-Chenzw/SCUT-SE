@@ -15,6 +15,11 @@ async def question_create(
         que: QuestionCreate,
         user: UserInDB = Depends(login_user),
 ):
+    if len(que.title) > 100:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="title too long",
+        )
     obj = Question(
         qid=0,
         title=que.title,

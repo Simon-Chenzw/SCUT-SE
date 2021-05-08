@@ -39,23 +39,23 @@ async def user_create(
     user: UserCreate,
     response: Response,
 ) -> Token:
-    try:
-        assert (await db.fetch_one(table.select(table.c.name == user.username)
-                                   )) is None
-        await db.execute(
-            table.insert(
-                UserInDB(
-                    uid=0,
-                    name=user.username,
-                    hash_pwd=pwd_context.hash(user.password),
-                ).dict()))
-        return await authenticate(user.username, user.password, response)
-    except:
+    if len(user.username) > 30:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="username repeat or database error",
-            headers={"WWW-Authenticate": "Bearer"},
+            detail="username too long",
         )
+    if await db.fetch_val(table.count(table.c.name == user.username)):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="username repeat",
+        )
+    obj = UserInDB(
+        uid=0,
+        name=user.username,
+        hash_pwd=pwd_context.hash(user.password),
+    )
+    await db.execute(table.insert(obj.dict()))
+    return await authenticate(user.username, user.password, response)
 
 
 @app.get("/user/info", response_model=User, tags=['user'])
