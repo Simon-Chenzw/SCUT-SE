@@ -8,6 +8,7 @@ from ..data import db
 from ..depends.answer import get_answer
 from ..depends.question import get_question
 from ..depends.user import get_full_user, login_user, login_user_possible
+from ..depends.vote import vote_count, vote_stat
 from ..typing import vote
 from ..typing.answer import Answer, AnswerCreate, AnswerInDB, table
 from ..typing.question import Question
@@ -49,38 +50,22 @@ async def answer_info(
         answer: AnswerInDB = Depends(get_answer),
         user: Optional[UserInDB] = Depends(login_user_possible),
 ) -> Answer:
-    async def count_vote(stat: str) -> int:
-        return await db.fetch_val(
-            vote.table.count(
-                and_(
-                    vote.table.c.aid == answer.aid,
-                    vote.table.c.status == stat,
-                )))
-
+    vote_up, vote_down = await vote_count(answer.aid)
     ans_user = await get_full_user(answer.uid)
     que = await get_question(answer.aid)
 
     if user:
-        cur_stat = await db.fetch_one(
-            vote.table.select(
-                and_(
-                    vote.table.c.aid == answer.aid,
-                    vote.table.c.uid == user.uid,
-                )))
+        cur_stat = await vote_stat(answer.aid, user.uid)
     else:
-        cur_stat = None
+        cur_stat = vote.VoteStatus.neither
+
     return Answer.parse_obj({
         **answer.dict(),
-        'user':
-        ans_user.dict(),
-        'question':
-        que.dict(),
-        'voteup_cnt':
-        await count_vote(vote.VoteStatus.up),
-        'votedown_cnt':
-        await count_vote(vote.VoteStatus.down),
-        'vote_status':
-        cur_stat or 'neither',
+        'user': ans_user.dict(),
+        'question': que.dict(),
+        'voteup_cnt': vote_up,
+        'votedown_cnt': vote_down,
+        'vote_status': cur_stat,
     })
 
 

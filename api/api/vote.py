@@ -32,7 +32,10 @@ async def vote_set(
         cur = VoteStatus.neither
 
     if cur == stat:
-        return {'msg': f'already vote: {cur}'}
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f'already vote: {cur}',
+        )
     else:
         if stat == VoteStatus.neither:
             await db.execute(
