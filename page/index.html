@@ -88,40 +88,51 @@
                             <template>
                                 <v-card class="mx-auto" v-for="data in datas">
 
-                                    <v-card-title>
-                                        {{data.question}}
+                                    <v-card-title @click="page_turn">
+                                        {{data.question.title}}
                                     </v-card-title>
 
                                     <v-card-subtitle>
-                                        {{data.description}}
+                                        {{data.question.desc}}
                                     </v-card-subtitle>
 
+                                    <v-card-text>
+                                        {{data.user.name}}
+                                    </v-card-text>
+
+                                    <v-card-text>
+                                        {{data.text}}
+                                    </v-card-text>
+
                                     <v-card-actions>
-                                        <v-btn text color="orange lighten-2" @click="agree">
-                                            Agree
+                                        <v-btn text color="orange lighten-2" @click="agree(data.aid)">
+                                            Agree {{data.voteup_cnt}}
                                         </v-btn>
 
-                                        <v-btn text color="orange lighten-2" @click="disagree">
-                                            Disagree
+                                        <v-btn text color="orange lighten-2" @click="disagree(data.aid)">
+                                            Disagree {{data.votedown_cnt}}
                                         </v-btn>
 
-                                        <v-spacer></v-spacer>
-
-                                        <v-btn icon @click="data.show = !data.show">
+                                        
+                                        <!-- <v-btn icon @click="data.show = !data.show">
                                             <v-icon>{{ data.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
-                                        </v-btn>
+                                        </v-btn> -->
                                     </v-card-actions>
 
-                                    <v-expand-transition>
+                                    <v-spacer></v-spacer>
+                                    
+                                    <!-- <v-expand-transition>
                                         <div v-show="data.show">
                                             <v-divider></v-divider>
 
                                             <v-card-text>
                                                 {{data.answer}}
                                             </v-card-text>
+
                                         </div>
-                                    </v-expand-transition>
+                                    </v-expand-transition> -->
                                 </v-card>
+
                             </template>
                         </v-col>
 
@@ -167,7 +178,6 @@
                 axios.get(url)
                 .then(
                 (resp) => {
-                    console.log(resp.data)
                     this.self_user_info = resp.data
                 })
                 .catch(
@@ -194,6 +204,8 @@
         vuetify: new Vuetify(),
         data: () => ({
             show: false,
+            answer_number: 10,
+            no_more:false,
             photos: [
                 {
                     src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -208,71 +220,82 @@
                     src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
                 },
             ],
-            datas: [
-                {
-                    question: "1+1=?",
-                    description: "I Don't know",
-                    answer: "2",
-                    show: false,
-                },
-                {
-                    question: "2+1=?",
-                    description: "I Don't know",
-                    answer: "3",
-                    show: false,
-                },
-                {
-                    question: "3+1=?",
-                    description: "I Don't know",
-                    answer: "4",
-                    show: false,
-                },
-                {
-                    question: "4+1=?",
-                    description: "I Don't know",
-                    answer: "5",
-                    show: false,
-                },
-                {
-                    question: "5+1=?",
-                    description: "I Don't know",
-                    answer: "6",
-                    show: false,
-                },
-                {
-                    question: "6+1=?",
-                    description: "I Don't know",
-                    answer: "7",
-                    show: false,
-                },
-            ]
+            datas: []
         }),
         mounted() {
+            this.index_init()
             addEventListener('scroll', this.handleScroll)//监听函数
         },
         methods: {
-            agree() {
-                window.alert("yes");
+            agree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'up',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success")
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
             },
-            disagree() {
-                window.alert("No");
+            disagree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'down',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success") 
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
+            },
+            get_answer_info(aid) {
+                url = '/api/answer/info'
+                axios.get(url, {
+                    params : {
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => {
+                        console.log(resp.data)
+                        this.datas.push(resp.data)
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.no_more = true
+                    }
+                )
+            },
+            index_init() {
+                for (i = 1; i < 10; i++) { 
+                    this.get_answer_info(i);
+                }
             },
             handleScroll() {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
                 let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
-                // console.log(scrollTop, windowHeight, scrollHeight);
-                // debugger;
-                if (scrollTop + windowHeight >= scrollHeight - 100) {
-                    // window.alert("end");
-                    this.datas.push({
-                        question: "2+1=?",
-                        description: "I Don't know",
-                        answer: "3",
-                        show: false,
-                    });
-                    // console.log(this.datas);
+                if (!this.no_more && scrollTop + windowHeight >= scrollHeight - 100) {
+                    this.get_answer_info(this.answer_number);
+                    this.answer_number = this.answer_number + 1;
                 }
+            },
+            page_turn() {
+                window.alert("skip!")
             }
         },
         destroyed() {

@@ -121,8 +121,17 @@
                         username: this.username,
                         password: this.password,
                     }
-                }).then(
-                    (resp) => this.user_info()
+                })
+                .then(
+                    (resp) => {
+                        this.user_info()
+                        window.alert("login successful!")
+                    }
+                )
+                .catch(
+                    (error) => {
+                        window.alert("incorrect username or password!")
+                    }
                 )
             },
             register() {
@@ -137,7 +146,7 @@
                 })
                 .catch(
                     error => {
-                        window.alert("username has been used")
+                        window.alert("username has been used!")
                     }
                 )
             }
