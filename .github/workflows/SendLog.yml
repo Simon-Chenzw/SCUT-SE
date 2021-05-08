@@ -19,6 +19,6 @@ jobs:
 
       - name: Send Commit log
         timeout-minutes: 1
-        run: git log  --stat --format=%s -n 1 | python3.8 ./.github/qqsend.py
+        run: git log --name-status --format=%s -n 1 | python3.8 ./.github/qqsend.py
         env:
           MADOKA_ARGS: ${{ secrets.MADOKA_ARGS }}
