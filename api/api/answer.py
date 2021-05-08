@@ -5,7 +5,7 @@ from sqlalchemy import and_
 
 from ..app import app
 from ..data import db
-from ..depends.answer import get_answer
+from ..depends.answer import get_answer, get_full_answer
 from ..depends.question import get_question
 from ..depends.user import get_full_user, login_user, login_user_possible
 from ..depends.vote import vote_count, vote_stat
@@ -50,23 +50,7 @@ async def answer_info(
         answer: AnswerInDB = Depends(get_answer),
         user: Optional[UserInDB] = Depends(login_user_possible),
 ) -> Answer:
-    vote_up, vote_down = await vote_count(answer.aid)
-    ans_user = await get_full_user(answer.uid)
-    que = await get_question(answer.aid)
-
-    if user:
-        cur_stat = await vote_stat(answer.aid, user.uid)
-    else:
-        cur_stat = vote.VoteStatus.neither
-
-    return Answer.parse_obj({
-        **answer.dict(),
-        'user': ans_user.dict(),
-        'question': que.dict(),
-        'voteup_cnt': vote_up,
-        'votedown_cnt': vote_down,
-        'vote_status': cur_stat,
-    })
+    return await get_full_answer(answer, user)
 
 
 @app.post("/answer/modify", tags=['answer'])
@@ -103,6 +87,6 @@ async def answer_list(
     if isinstance(last_aid, int):
         sel = sel.where(table.c.aid <= last_aid)
     return [
-        await answer_info(AnswerInDB.parse_obj(obj), user)
+        await get_full_answer(AnswerInDB.parse_obj(obj), user)
         for obj in await db.fetch_all(sel)
     ]

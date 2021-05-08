@@ -1,7 +1,14 @@
+from typing import Optional
+
 from fastapi import HTTPException, status
 
 from ..data import db
-from ..typing.answer import AnswerInDB, table
+from ..depends.question import get_question
+from ..depends.user import get_full_user
+from ..depends.vote import vote_count, vote_stat
+from ..typing import vote
+from ..typing.answer import Answer, AnswerInDB, table
+from ..typing.user import UserInDB
 
 
 async def get_answer(aid: int) -> AnswerInDB:
@@ -12,3 +19,26 @@ async def get_answer(aid: int) -> AnswerInDB:
             detail=f"aid {aid} does not exist",
         )
     return AnswerInDB.parse_obj(obj)
+
+
+async def get_full_answer(
+    answer: AnswerInDB,
+    user: Optional[UserInDB],
+) -> Answer:
+    vote_up, vote_down = await vote_count(answer.aid)
+    ans_user = await get_full_user(answer.uid)
+    que = await get_question(answer.aid)
+
+    if user:
+        cur_stat = await vote_stat(answer.aid, user.uid)
+    else:
+        cur_stat = vote.VoteStatus.neither
+
+    return Answer.parse_obj({
+        **answer.dict(),
+        'user': ans_user.dict(),
+        'question': que.dict(),
+        'voteup_cnt': vote_up,
+        'votedown_cnt': vote_down,
+        'vote_status': cur_stat,
+    })
