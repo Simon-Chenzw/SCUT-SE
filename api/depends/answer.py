@@ -27,7 +27,7 @@ async def get_full_answer(
 ) -> Answer:
     vote_up, vote_down = await vote_count(answer.aid)
     ans_user = await get_full_user(answer.uid)
-    que = await get_question(answer.aid)
+    que = await get_question(answer.qid)
 
     if user:
         cur_stat = await vote_stat(answer.aid, user.uid)
