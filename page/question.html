@@ -220,38 +220,33 @@
                 axios.get(url)
                 .then(
                     (resp) => {
-                        console.log(resp.data)
-                        this.question_info = resp.data
+                        console.log(resp.data);
+                        this.question_info = resp.data;
                     }
                 )
                 .catch(
                     (error) => {
-                        window.alert("question not found!")
+                        window.alert("question not found!");
                     }
-                )
+                );
             },
             get_new_answer(aid) {
-                axios.get("/api/answer/list",{
-                    params: {
-                        last_aid: aid,
-                        qid: this.question_info.qid,
-                        limit: 1,
-                    }})
+                url = aid ? "/api/answer/list?last_aid=" + aid + "&qid=" + this.question_info.qid + "&limit=1"
+                : '/api/answer/list?' + "&qid=" + this.question_info.qid + "&limit=1"
+                axios.get(url)
                 .then(
                     (resp) => {
-                        console.log(resp.data)
-                        axios.get("/api/comment/list",
-                            params = {
-                                aid: resp.data[0].aid
-                            }
-                        )
+                        console.log(resp.data[0].aid);
+                        url = "/api/comment/list?aid=" + resp.data[0].aid + "&limit=100"
+                        axios.post(url)
                         .then(
                             (comresp) => {
+                                console.log(comresp.data);
                                 this.answer_datas.push({
                                     answer_info: resp.data[0],
                                     comment_info: comresp.data,
                                     show: false
-                                })
+                                });
                             }
                         )
                         .error(
@@ -260,17 +255,17 @@
                                     answer_info: resp.data[0],
                                     comment_info: undefined,
                                     show: false
-                                })
+                                });
                             }
-                        )
-                        this.answer_num = resp.data[0].aid
+                        );
+                        this.answer_num = resp.data[0].aid;
                     }
                 )
                 .catch(
                     (error) => {
-                        this.answer_loaded = true
+                        this.answer_loaded = true;
                     }
-                )
+                );
             },
             handleScroll() {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -292,6 +287,8 @@
                     //     ],
                     // });
                     this.get_new_answer(this.answer_num);
+                    const start = new Date().getTime();
+                    while (new Date().getTime() - start < 500) {}
                     // console.log(this.datas);
                 }
             }
