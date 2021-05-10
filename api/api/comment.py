@@ -49,7 +49,7 @@ async def comment_info(com: CommentInDB = Depends(get_comment)) -> Comment:
     })
 
 
-@app.post("/comment/list", response_model=List[Comment], tags=['comment'])
+@app.get("/comment/list", response_model=List[Comment], tags=['comment'])
 async def comment_list(
     aid: Optional[int] = None,
     last_cid: Optional[int] = None,
