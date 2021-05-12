@@ -31,8 +31,8 @@ async def answer_search(
             table.c.text.ilike(f"%{s}%"),
             question.table.c.title.ilike(f"%{s}%"),
             question.table.c.desc.ilike(f"%{s}%"),
-        )).with_only_columns(table.c).order_by(
-            table.c.aid).offset(offset).limit(limit)
+        )).with_only_columns(
+            table.c).order_by(-table.c.aid).offset(offset).limit(limit)
     return [
         await get_full_answer(AnswerInDB.parse_obj(obj), user)
         for obj in await db.fetch_all(sel)

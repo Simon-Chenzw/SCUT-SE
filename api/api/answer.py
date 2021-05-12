@@ -80,7 +80,7 @@ async def answer_list(
         limit: int = 10,
         user: Optional[UserInDB] = Depends(login_user_possible),
 ) -> List[Answer]:
-    sel = table.select().order_by(table.c.aid).limit(limit)
+    sel = table.select().order_by(-table.c.aid).limit(limit)
     if qid:
         que = await get_question(qid)
         sel = sel.where(table.c.qid == que.qid)

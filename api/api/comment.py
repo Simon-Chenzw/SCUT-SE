@@ -55,7 +55,7 @@ async def comment_list(
     last_cid: Optional[int] = None,
     limit=10,
 ) -> List[Comment]:
-    sel = table.select().order_by(table.c.cid).limit(limit)
+    sel = table.select().order_by(-table.c.cid).limit(limit)
     if aid:
         sel = sel.where(table.c.aid == aid)
     if isinstance(last_cid, int):

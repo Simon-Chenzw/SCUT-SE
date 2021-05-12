@@ -59,7 +59,7 @@ async def question_list(
     last_qid: Optional[int] = None,
     limit: int = 10,
 ) -> List[Question]:
-    sel = table.select().order_by(table.c.qid).limit(limit)
+    sel = table.select().order_by(-table.c.qid).limit(limit)
     if isinstance(last_qid, int):
         sel = sel.where(table.c.qid <= last_qid)
     return [Question.parse_obj(obj) for obj in await db.fetch_all(sel)]
