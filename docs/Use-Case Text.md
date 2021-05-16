@@ -7,6 +7,8 @@
 | Date | Version | Description | Author |
 | :----: | :----: | :----: | :----: |
 | 2021/04/13 | 1.0 | First draft. | Lost_Deviation |
+| 2021/04/13 | 2.0 | Add some use case. | Lost_Deviation |
+
 
 ## Just Ask
 
@@ -242,6 +244,7 @@
 
 #### Additional Information:
     Frequency of Occurrence: Occurs only when the user modifies the answer.
+
 ### Use-Case: < Search >
 #### Brief Description
     User search questions and answers
