@@ -1,0 +1,7 @@
+软件设计和建模第二次提交成果的说明：
+考虑到第二次迭代时需要还没有完整，所以修改第二次迭代需要的成果：
+(1)  在第一次迭代基础上完善的用例模型，需要表达完整的需求
+(2）系统分析模型： 主要是领域模型、主要用例场景的SSD
+(3）设计模型：
+     (3.1） 系统架构文档，模板地址:（RUP72cn/LargeProjects/extend.formal_resources/guidances/templates/software_architecture_document_CE85F5AC.html）
+     (3.2) 第一次迭代中选择用例的用例实现，内容地址：（RUP72cn/LargeProjects/extend.formal_resources/guidances/reports/use-case_realization_use-case_name_FAEC77DB.html，在该HTML中点击 相关元素中的 用例实现就可以看到文档模板了），注意：需要为每个用例创建1个用例实现。
