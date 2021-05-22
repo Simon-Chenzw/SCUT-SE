@@ -52,7 +52,7 @@
                         <template v-if='self_user_info'>
 
                             <v-btn icon>
-                                <v-icon>fa-user</v-icon>
+                                <v-icon @click="turn_to_user_info">fa-user</v-icon>
                             </v-btn>
 
                             {{self_user_info.name}}
@@ -99,20 +99,20 @@
                                 <v-card class="mx-auto" v-for="data in answer_datas">
 
                                     <v-card-title>
-                                        {{user.name}}
+                                        {{data.answer_info.user.name}}
                                     </v-card-title>
 
                                     <v-card-text>
-                                        {{text}}
+                                        {{data.answer_info.text}}
                                     </v-card-text>
 
                                     <v-card-actions>
-                                        <v-btn text color="orange lighten-2" @click="agree">
-                                            Agree {{voteup_cnt}}
+                                        <v-btn text color="orange lighten-2" @click="agree(data.answer_info.aid)">
+                                            Agree {{data.answer_info.voteup_cnt}}
                                         </v-btn>
 
-                                        <v-btn text color="orange lighten-2" @click="disagree">
-                                            Disagree {{votedown_cnt}
+                                        <v-btn text color="orange lighten-2" @click="disagree(data.answer_info.aid)">
+                                            Disagree {{data.answer_info.votedown_cnt}}
                                         </v-btn>
 
                                         <v-spacer></v-spacer>
@@ -184,6 +184,10 @@
                 this.$refs.search.blur()
                 console.log(this.text)
             },
+            turn_to_user_info() {
+                console.log('yes')
+                window.open('/user-info.html')
+            }
         }
     })
 
@@ -194,34 +198,59 @@
         data: () => ({
             show: false,
             question_info: undefined,
-            answer_datas: [
-                // {
-                //     answer_info: undefined,
-                //     comment_info: undefined,
-                //     show: false,
-                // },
-            ],
+            answer_datas: [],
             answer_num: 0,
             answer_loaded: false
         }),
         mounted() {
-            this.get_question_info(1)
+            this.init()
             addEventListener('scroll', this.handleScroll)//监听函数
+            console.log(location)
         },
         methods: {
-            agree() {
-                window.alert("yes");
+            agree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'up',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success")
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
             },
-            disagree() {
-                window.alert("No");
+            disagree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'down',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success") 
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
             },
-            get_question_info(qid) {
+            get_question_info : async function(qid) {
                 url = "/api/question/info?qid=" + qid
-                axios.get(url)
+                await axios.get(url)
                 .then(
                     (resp) => {
                         console.log(resp.data);
                         this.question_info = resp.data;
+                        this.show = true;
+                        // this.get_new_answer()
                     }
                 )
                 .catch(
@@ -230,15 +259,22 @@
                     }
                 );
             },
-            get_new_answer(aid) {
-                url = aid ? "/api/answer/list?last_aid=" + aid + "&qid=" + this.question_info.qid + "&limit=1"
+            get_new_answer : async function(aid) {
+                url = aid ? "/api/answer/list?last_aid=" + (aid - 1) + "&qid=" + this.question_info.qid + "&limit=1"
                 : '/api/answer/list?' + "&qid=" + this.question_info.qid + "&limit=1"
-                axios.get(url)
+                console.log(url)
+                await axios.get(url)
                 .then(
                     (resp) => {
                         console.log(resp.data[0].aid);
-                        url = "/api/comment/list?aid=" + resp.data[0].aid + "&limit=100"
-                        axios.post(url)
+                        this.answer_num = resp.data[0].aid;
+                        url = "/api/comment/list"
+                        axios.get(url, {
+                            params: {
+                                aid: resp.data[0].aid,
+                                limit: 100
+                            }
+                        })
                         .then(
                             (comresp) => {
                                 console.log(comresp.data);
@@ -247,10 +283,12 @@
                                     comment_info: comresp.data,
                                     show: false
                                 });
+                                console.log(this.answer_datas)
                             }
                         )
-                        .error(
+                        .catch(
                             (comerror) => {
+                                console.log("failed")
                                 this.answer_datas.push({
                                     answer_info: resp.data[0],
                                     comment_info: undefined,
@@ -258,11 +296,15 @@
                                 });
                             }
                         );
-                        this.answer_num = resp.data[0].aid;
+                        console.log("success2");
+                        console.log(this.answer_datas);
                     }
                 )
                 .catch(
                     (error) => {
+                        debugger;
+                        console.log(error)
+                        console.log('failed in answer get')
                         this.answer_loaded = true;
                     }
                 );
@@ -291,12 +333,28 @@
                     while (new Date().getTime() - start < 500) {}
                     // console.log(this.datas);
                 }
-            }
+            },
+            init : async function() {
+                thisqid = ~~(location.search.slice(1))
+                console.log(thisqid)
+                await this.get_question_info(thisqid);
+                console.log(this.show,"?")
+                if (this.show) {
+                    for (i = 1; i <= 10; i++) {
+                        if (!this.answer_loaded) {
+                            await this.get_new_answer(this.answer_num);
+                            console.log(i,this.answer_num);
+                        }
+                    }    
+                }
+            },  
         },
         destroyed() {
             window.removeEventListener('scroll', this.handleScroll)
         }
     })
+
+
 </script>
 
 </html>

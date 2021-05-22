@@ -88,7 +88,7 @@
                             <template>
                                 <v-card class="mx-auto" v-for="data in datas">
 
-                                    <v-card-title @click="page_turn">
+                                    <v-card-title @click="page_turn(data.qid)">
                                         {{data.question.title}}
                                     </v-card-title>
 
@@ -294,8 +294,9 @@
                     this.answer_number = this.answer_number + 1;
                 }
             },
-            page_turn() {
-                window.alert("skip!")
+            page_turn(qid) {
+                url = '/question.html?' + qid
+                window.open(url)
             }
         },
         destroyed() {
