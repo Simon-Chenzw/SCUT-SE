@@ -7,7 +7,7 @@ from ..app import app
 from ..data import db
 from ..depends.answer import get_answer, get_full_answer
 from ..depends.question import get_question
-from ..depends.user import get_full_user, login_user, login_user_possible
+from ..depends.user import get_full_user, login_user, login_user_possible, get_user
 from ..depends.vote import vote_count, vote_stat
 from ..typing import vote
 from ..typing.answer import Answer, AnswerCreate, AnswerInDB, table
@@ -90,3 +90,22 @@ async def answer_list(
         await get_full_answer(AnswerInDB.parse_obj(obj), user)
         for obj in await db.fetch_all(sel)
     ]
+
+@app.get("/answer/userlist", response_model=List[Answer], tags=['answer'])
+async def answer_userlist(
+        last_aid: Optional[int] = None,
+        uid: Optional[int] = None,
+        limit: int = 10,
+        user: Optional[UserInDB] = Depends(login_user_possible),
+) -> List[Answer]:
+    sel = table.select().order_by(-table.c.aid).limit(limit)
+    if uid:
+        sel = sel.where(table.c.uid == uid)
+        print(sel, uid)
+    if isinstance(last_aid, int):
+        sel = sel.where(table.c.aid <= last_aid)
+    return [
+        await get_full_answer(AnswerInDB.parse_obj(obj), user)
+        for obj in await db.fetch_all(sel)
+    ]
+
