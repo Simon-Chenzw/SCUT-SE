@@ -8,3 +8,6 @@ package-lock.json
 # build
 /dist
 /dist_electron
+
+# husky
+/.husky
