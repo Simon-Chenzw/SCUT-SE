@@ -1,57 +1,74 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-navigation-drawer app permanent>
+      <v-list-item>
+        <v-list-item-content>
+          <v-list-item-title class="text-h6">
+            投资组合评比器
+          </v-list-item-title>
+          <v-list-item-subtitle> Fund Analysis </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
+      <v-divider></v-divider>
 
-      <v-spacer></v-spacer>
+      <v-list dense nav>
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+          @click="current = item.title"
+        >
+          <v-list-item-icon>
+            <v-icon>
+              {{ item.icon }}
+            </v-icon>
+          </v-list-item-icon>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+          <v-list-item-content>
+            <v-list-item-title>
+              {{ item.desc || item.title }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
     <v-main>
-      <HelloWorld />
+      <v-container>
+        <template v-if="current == 'Init' || current == 'Fund'">
+          Fund TODO
+        </template>
+        <template v-else-if="current == 'Website'">
+          <website-page />
+        </template>
+        <template v-else-if="current == 'URL'"> URL TODO </template>
+        <template v-else-if="current == 'Help'"> Help TODO </template>
+        <template v-else> !! Error: current={{ current }} </template>
+      </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue"
-import HelloWorld from "./components/HelloWorld.vue"
+import website_page from "./components/website_page.vue"
 
 export default Vue.extend({
   name: "App",
 
   components: {
-    HelloWorld,
+    "website-page": website_page,
   },
 
   data: () => ({
-    //
+    items: [
+      { title: "Fund", icon: "mdi-chart-multiple", desc: "基金浏览" },
+      { title: "Website", icon: "mdi-feature-search" },
+      { title: "URL", icon: "mdi-link" },
+      { title: "Help", icon: "mdi-help-box" },
+    ],
+    current: "Init",
   }),
 })
 </script>
