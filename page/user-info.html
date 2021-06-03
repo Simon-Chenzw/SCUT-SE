@@ -57,8 +57,6 @@
 
                 </v-sheet>
 
-               
-
                 <v-divider>
                 </v-divider>
 
@@ -82,30 +80,18 @@
             </v-navigation-drawer>
 
             <v-main>
-                <v-container class="py-8 px-6" fluid>
+                <v-container fluid>
                     <v-row>
-                        <v-col v-for="card in cards" :key="card" cols="12">
-                            <v-card>
-                                <v-subheader>{{ card }}</v-subheader>
-
+                        <v-col v-for="answer in answers" :key="answers.aid" cols="12">
+                            <v-card class="mx-auto">
                                 <v-list two-line>
-                                    <template v-for="n in 6">
-                                        <v-list-item :key="n">
-                                            <v-list-item-avatar color="grey darken-1">
-                                            </v-list-item-avatar>
-
-                                            <v-list-item-content>
-                                                <v-list-item-title>Message {{ n }}</v-list-item-title>
-
-                                                <v-list-item-subtitle>
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil
-                                                    repellendus distinctio similique
-                                                </v-list-item-subtitle>
-                                            </v-list-item-content>
-                                        </v-list-item>
-
-                                        <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
-                                    </template>
+                                    <p class="text-h4 text--primary">
+                                        {{ answer.question.title }}
+                                    </p>
+                                    <p>
+                                        {{ answer.text }}
+                                    </p>
+                                    </v-list-item-content>
                                 </v-list>
                             </v-card>
                         </v-col>
@@ -123,39 +109,68 @@
         data: () => ({
             info: null,
             cards: ['Today', 'Yesterday'],
+            answers: [],
             drawer: null,
             menus: [
-                ['mdi-comment-question-outline', 'Question'],
+                // ['mdi-comment-question-outline', 'Question'],
                 ['mdi-forum', 'Answer'],
             ],
         }),
         mounted() {
-            this.user_info()
+            this.init()
         },
         methods: {
             follow() {
-                window.alert("follow");
-            },
-            user_info(uid) {
-                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                url = '/api/user/follow?uid=' + this.info.uid
                 axios.get(url)
                 .then(response => {
-                    console.log(response)
+                    console.log(response.data)
+                    window.alert(response.data.msg)
+                })
+                .catch(error => {
+                    console.log(error.data)
+                    window.alert('error'); 
+                })
+            },
+            user_info: async function() {
+                uid = ~~(location.search.slice(1))
+                console.log(uid)
+                url = uid ? "/api/user/info?uid=" + uid : "/api/user/info"
+                await axios.get(url)
+                .then(response => {
+                    console.log(response.data)
                     this.info = response.data
                 })
                 .catch(error => {
                     // console.log(error)
                     this.info = {
-                        "uid": 1,
-                        "name": "xth",
+                        "uid": 0,
+                        "name": "none",
                         "avatar": "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
                         "introduction": null,
                         "follower": 0,
                         "voteup": 0
                     }
-
                 })
             },
+            get_user_answer: async function() {
+                console.log(this.info)
+                uid = this.info.uid
+                url = uid ? "/api/answer/userlist?uid=" + uid : "/api/answer/userlist?uid=0"
+                url = url + "&limit=100"
+                await axios.get(url)
+                .then(response => {
+                    console.log(response.data)
+                    this.answers = response.data
+                })
+                .catch(error => {
+                    console.log('failed')
+                }) 
+            },
+            init: async function() {
+                await this.user_info()
+                await this.get_user_answer()
+            }
         }
     })
 </script>

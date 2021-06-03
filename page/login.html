@@ -30,7 +30,7 @@
                             <template v-if='self_user_info'>
 
                                 <v-btn icon>
-                                    <v-icon>fa-user</v-icon>
+                                    <v-icon @click='turn_to_user()'>fa-user</v-icon>
                                 </v-btn>
 
                                 {{self_user_info.name}}
@@ -149,6 +149,10 @@
                         window.alert("username has been used!")
                     }
                 )
+            },
+            turn_to_user(uid) {
+                url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
+                window.open(url)
             }
         }
     })

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-cn">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.x/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- <script type="text/javascript" src="iview.min.js"></script> -->
+</head>
+
+<body>
+
+    <v-app>
+        <div id="app">
+            <v-app-bar app hide-on-scroll>
+
+                <v-row>
+
+                    <v-col cols='2' class="header-icon">
+                        <v-btn icon href='/'>
+                            <v-icon>fa-home</v-icon>
+                        </v-btn>
+                    </v-col>
+
+                    <v-col cols="8" class="search-bar">
+                        <template>
+                            <v-form>
+                                <v-continer>
+                                    <v-text-field v-model="search_msg" v-on:keyup.enter="search">
+                                        <template v-slot:label>
+                                            What do you wanna know?
+                                        </template>
+                                        <v-icon slot="append" @click="search" color="blue">
+                                            fa-search
+                                        </v-icon>
+                                    </v-text-field>
+                                </v-continer>
+                            </v-form>
+                        </template>
+                    </v-col>
+
+                    <v-col cols='2' class="text-right header-icon">
+
+                        <template v-if='self_user_info'>
+
+                            <v-btn icon>
+                                <v-icon @click='turn_to_user()'>fa-user</v-icon>
+                            </v-btn>
+
+                            {{self_user_info.name}}
+
+                            <v-btn v-on:click='logout'> logout </v-btn>
+
+
+                        </template>
+
+                        <template v-else>
+
+                            <v-btn icon>
+                                <v-icon>fa-user-slash</v-icon>
+                            </v-btn>
+
+                            <v-btn href='/login.html'> login </v-btn>
+
+                        </template>
+
+                    </v-col>
+
+                </v-row>
+
+            </v-app-bar>
+        </div>
+
+        <v-main>
+            <div id="card" style="padding-top: 80px;">
+                <v-container fill-height fluid>
+                    <v-row justify="center" style="justify-content: center">
+
+                        <v-col cols='8'>
+                            <template>
+                                <v-card class="mx-auto" v-for="data in datas">
+
+                                    <v-card-title @click="page_turn(data.qid)">
+                                        {{data.question.title}}
+                                    </v-card-title>
+
+                                    <v-card-subtitle>
+                                        {{data.question.desc}}
+                                    </v-card-subtitle>
+
+                                    <v-card-text>
+                                        {{data.user.name}}
+                                    </v-card-text>
+
+                                    <v-card-text>
+                                        {{data.text}}
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="agree(data.aid)">
+                                            Agree {{data.voteup_cnt}}
+                                        </v-btn>
+
+                                        <v-btn text color="orange lighten-2" @click="disagree(data.aid)">
+                                            Disagree {{data.votedown_cnt}}
+                                        </v-btn>
+
+                                    </v-card-actions>
+
+                                    <v-spacer></v-spacer>
+                                    
+                                </v-card>
+
+                            </template>
+                        </v-col>
+
+                    </v-row>
+                </v-container>
+            </div>
+        </v-main>
+
+    </v-app>
+
+
+
+
+</body>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data: () => ({
+            self_user_info: undefined,
+            text: '',
+            showSelect: true,
+            results: [],
+            search_msg: '',
+        }),
+        mounted() {
+            this.user_info()
+        },
+        methods: {
+            user_info(uid) {
+                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                axios.get(url)
+                .then(
+                (resp) => {
+                    this.self_user_info = resp.data
+                })
+                .catch(
+                    (err) => this.self_user_info = undefined
+                )
+            },
+            logout() {
+                axios.get("/api/user/logout").then(
+                    (resp) => this.user_info()
+                )
+            },
+            search() {
+                window.open('/search.html?' + this.search_msg);
+                this.$refs.search.blur()
+                console.log(this.text)
+            },
+            turn_to_user(uid) {
+                url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
+                window.open(url)
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '#card',
+        vuetify: new Vuetify(),
+        data: () => ({
+            datas: [],
+            hasres: true
+        }),
+        mounted() {
+            this.search_init()
+        },
+        methods: {
+            agree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'up',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success")
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
+            },
+            disagree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'down',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success") 
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
+            },
+            get_answer_info(searchtext) {
+                url = '/api/answer/search'
+                axios.get(url, {
+                    params : {
+                        s: searchtext,
+                    }
+                })
+                .then(
+                    (resp) => {
+                        this.datas = resp.data
+                        console.log(this.datas)
+                    }
+                )
+                .catch(
+                    (error) => {
+                        this.hasres = false
+                        window.alert('oops, we can\'t find it!')
+                    }
+                )
+            },
+            search_init : async function() {
+                searchtext = location.search.slice(1)
+                console.log(searchtext)
+                await this.get_answer_info(searchtext);
+            },
+            page_turn(qid) {
+                url = '/question.html?' + qid
+                window.open(url)
+            }
+        },
+        destroyed() {
+            window.removeEventListener('scroll', this.handleScroll)
+        }
+    })
+</script>
+
+</html>

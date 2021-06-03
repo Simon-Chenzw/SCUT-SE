@@ -52,7 +52,7 @@
                         <template v-if='self_user_info'>
 
                             <v-btn icon>
-                                <v-icon>fa-user</v-icon>
+                                <v-icon @click='turn_to_user()'>fa-user</v-icon>
                             </v-btn>
 
                             {{self_user_info.name}}
@@ -190,11 +190,14 @@
                 )
             },
             search() {
-                // TODO: page skip
-                window.open('https://www.baidu.com/s?wd=' + this.search_msg);
+                window.open('/search.html?' + this.search_msg);
                 this.$refs.search.blur()
                 console.log(this.text)
             },
+            turn_to_user(uid) {
+                url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
+                window.open(url)
+            }
         }
     })
 
