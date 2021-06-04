@@ -4,10 +4,10 @@ import path from "path"
 
 declare const __static: string
 
-export default function get_db(): sqlite3.Database {
+export function get_db(): sqlite3.Database {
   let db = undefined
   const config = {
-    // verbose: console.log,
+    verbose: console.debug,
   }
   try {
     db = new sqlite3("fund_data.sqlite3", { fileMustExist: true, ...config })
@@ -22,3 +22,6 @@ export default function get_db(): sqlite3.Database {
   db.pragma("foreign_keys = ON")
   return db
 }
+
+const db = get_db()
+export default db

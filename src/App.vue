@@ -42,7 +42,9 @@
         <template v-else-if="current == 'Website'">
           <website-page />
         </template>
-        <template v-else-if="current == 'URL'"> URL TODO </template>
+        <template v-else-if="current == 'URL'">
+          <url-page />
+        </template>
         <template v-else-if="current == 'Help'"> Help TODO </template>
         <template v-else> !! Error: current={{ current }} </template>
       </v-container>
@@ -52,6 +54,7 @@
 
 <script lang="ts">
 import Vue from "vue"
+import url_page from "./components/url_page.vue"
 import website_page from "./components/website_page.vue"
 
 export default Vue.extend({
@@ -59,6 +62,7 @@ export default Vue.extend({
 
   components: {
     "website-page": website_page,
+    "url-page": url_page,
   },
 
   data: () => ({

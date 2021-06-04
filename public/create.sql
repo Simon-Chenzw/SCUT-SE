@@ -1,10 +1,10 @@
 -- script
 CREATE TABLE script (
    name varchar(100) PRIMARY KEY,
-   re varchar(300) NOT NULL
+   hostname varchar(300) NOT NULL UNIQUE
 );
-INSERT INTO script values ('danjuan', 'danjuanapp.com/strategy/([^/?]*)');
-INSERT INTO script values ('qieman', 'qieman.com/portfolios/([^/?]*)');
+INSERT INTO script values ('danjuan', 'danjuanapp.com');
+INSERT INTO script values ('qieman', 'qieman.com');
 -- url
 CREATE TABLE url (
     url varchar(300) PRIMARY KEY,

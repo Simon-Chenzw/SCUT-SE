@@ -1,7 +1,7 @@
 // database script
 export interface ScriptDesc {
   readonly name: string // website name, like danjuan or qieman. file: ${name}.js
-  readonly re: RegExp // RegExp of url
+  readonly hostname: string // hostname of website
 }
 
 // database url
