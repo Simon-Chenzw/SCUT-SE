@@ -8,12 +8,12 @@ export interface ScriptDesc {
 export interface URLDesc {
   readonly url: string
   readonly name: string // from script.name
-  readonly tag: string // fund tag in current website
+  readonly last_update: number // fund tag in current website
 }
 
 // database fund
 export interface DailyInfo {
-  readonly date: Date // YYYY-MM-DD
+  readonly date: number // timestamp
   readonly value: number // fund value
 }
 
