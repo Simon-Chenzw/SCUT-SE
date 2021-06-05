@@ -18,12 +18,12 @@ class QQbot:
         qid: int,
         adminQid: int,
         socket: str,
-        authKey: str,
+        verifyKey: str,
     ) -> None:
         self.qid = qid
         self.adminQid = adminQid
         self.socket = socket
-        self.authKey = authKey
+        self.verifyKey = verifyKey
 
     def apiPost(self, interface: str, **data: Any) -> Dict[str, Any]:
         try:
@@ -48,14 +48,25 @@ class QQbot:
 
     def __enter__(self) -> 'QQbot':
         # auth
-        self.session = self.apiPost('auth', authKey=self.authKey)['session']
+        self.session = self.apiPost(
+            'verify',
+            verifyKey=self.verifyKey,
+        )['session']
         # verify
-        self.apiPost('verify', sessionKey=self.session, qq=self.qid)
+        self.apiPost(
+            'bind',
+            sessionKey=self.session,
+            qq=self.qid,
+        )
 
         return self
 
     def __exit__(self, exc_type, exc_value, traceback) -> bool:
-        self.apiPost('release', sessionKey=self.session, qq=self.qid)
+        try:
+            self.apiPost('release', sessionKey=self.session, qq=self.qid)
+        except RuntimeError:
+            # https://github.com/project-mirai/mirai-api-http/issues/358
+            pass
         return False
 
     def send(self, message: str) -> None:
@@ -72,7 +83,7 @@ class QQbot:
 
 args = os.getenv('MADOKA_ARGS')
 if args:
-    qid, adminQid, socket, authKey = args.split()
+    qid, adminQid, socket, verifyKey = args.split()
 else:
     logger.error("can't get environment variables MADOKA_ARGS")
     exit(1)
@@ -81,7 +92,7 @@ with QQbot(
         qid=int(qid),
         adminQid=int(adminQid),
         socket=socket,
-        authKey=authKey,
+        verifyKey=verifyKey,
 ) as bot:
     message = sys.stdin.read()
     if message.endswith('\n'): message = message[:-1]
