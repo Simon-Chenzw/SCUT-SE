@@ -1,0 +1,24 @@
+name: Send git log
+on:
+  workflow_dispatch:
+  push:
+jobs:
+  Send:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Send Commit log
+        timeout-minutes: 1
+        run: "git rev-list ${{ github.sha }} ^${{ github.event.before }} --reverse | xargs -n 1 git log --format=\"%s%nAuthor: %an <%ar>\" --name-status -1 | python3.8 ./.github/qqsend.py"
+        env:
+          MADOKA_ARGS: ${{ secrets.MADOKA_ARGS }}
