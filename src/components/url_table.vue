@@ -141,11 +141,10 @@ export default Vue.extend({
     },
     rules: {
       required: (val: string | undefined) => !!val || "Required.",
-      counter: (val: string | undefined) =>
-        (!!val && val.length <= 100) || "Max 100 characters",
-      isURL: (val: string | undefined) => {
+      counter: (val: string) => val.length <= 100 || "Max 100 characters",
+      isURL: (val: string) => {
         try {
-          new URL(val || "")
+          new URL(val)
           return true
         } catch (error) {
           return "Must be a Legal URL"
@@ -201,13 +200,18 @@ export default Vue.extend({
     },
 
     save(): void {
-      const ret = api_url.insert(this.editedItem.url)
-      const inserted = api_url.select(this.editedItem.url)
-      if (ret && inserted) {
-        this.desserts.push(inserted)
-      } else {
-        this.snackbar_text = "URL'hostname must existed in website"
+      if (api_url.select(this.editedItem.url)) {
+        this.snackbar_text = "URL must be unique."
         this.snackbar = true
+      } else {
+        const ret = api_url.insert(this.editedItem.url)
+        const inserted = api_url.select(this.editedItem.url)
+        if (ret && inserted) {
+          this.desserts.push(inserted)
+        } else {
+          this.snackbar_text = "URL's hostname must existed in website"
+          this.snackbar = true
+        }
       }
       this.close()
     },
