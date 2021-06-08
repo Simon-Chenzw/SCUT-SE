@@ -99,10 +99,15 @@
   </div>
 </template>
 
-<script>
-/* global api_website:readonly */
+<script lang="ts">
+import Vue from "vue"
+import type * as Tapi_website from "../api/api_website"
+import type { ScriptDesc } from "../api/typing"
 
-export default {
+declare const api_website: typeof Tapi_website
+
+export default Vue.extend({
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data: () => ({
     dialog: false,
     dialogDelete: false,
@@ -111,7 +116,7 @@ export default {
       { text: "HostName", value: "hostname" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: [],
+    desserts: [] as ScriptDesc[],
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -122,26 +127,26 @@ export default {
       hostname: "",
     },
     rules: {
-      required: (value) => !!value || "Required.",
-      counter: (value) => value.length <= 100 || "Max 100 characters",
+      required: (val: string | undefined) => !!val || "Required.",
+      counter: (val: string) => val.length <= 100 || "Max 100 characters",
     },
     isFormValid: false,
     snackbar: false,
     snackbar_text: "",
   }),
 
-  created() {
+  created(): void {
     this.desserts = api_website.select_all()
   },
 
   methods: {
-    editItem(item) {
+    editItem(item: ScriptDesc): void {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
     },
 
-    save() {
+    save(): void {
       if (this.editedIndex > -1) {
         api_website.update(
           this.desserts[this.editedIndex].name,
@@ -160,29 +165,29 @@ export default {
       this.close()
     },
 
-    close() {
+    close(): void {
       this.dialog = false
       this.editedItem = Object.assign({}, this.defaultItem)
       this.editedIndex = -1
     },
 
-    deleteItem(item) {
+    deleteItem(item: ScriptDesc): void {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
 
-    deleteItemConfirm() {
+    deleteItemConfirm(): void {
       api_website.remove(this.desserts[this.editedIndex].name)
       this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
-    closeDelete() {
+    closeDelete(): void {
       this.dialogDelete = false
       this.editedItem = Object.assign({}, this.defaultItem)
       this.editedIndex = -1
     },
   },
-}
+})
 </script>
