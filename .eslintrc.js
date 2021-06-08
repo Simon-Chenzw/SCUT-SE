@@ -31,12 +31,4 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
   },
-  overrides: [
-    {
-      files: ["*.vue"],
-      rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-      },
-    },
-  ],
 }

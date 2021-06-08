@@ -5,9 +5,14 @@ export function select_all(): ScriptDesc[] {
   return db.prepare("select * from script").all()
 }
 
+export function select_host(hostname: string): string | undefined {
+  const stmt = db.prepare("select name from script where hostname = ?")
+  return stmt.get(hostname).name
+}
+
 export function insert(script: ScriptDesc): boolean {
   try {
-    const stmt = db.prepare("insert into script values (?,?)")
+    const stmt = db.prepare("insert into script (name, hostname) values (?,?)")
     stmt.run(script.name, script.hostname)
     return true
   } catch (error) {
@@ -21,6 +26,5 @@ export function update(name: string, desc: ScriptDesc): void {
 }
 
 export function remove(name: string): void {
-  const stmt = db.prepare("delete from script where name = ?")
-  stmt.run(name)
+  db.prepare("delete from script where name = ?").run(name)
 }
