@@ -37,7 +37,7 @@
     <v-main>
       <v-container>
         <template v-if="current == 'Init' || current == 'Fund'">
-          Fund TODO
+          <fund-page />
         </template>
         <template v-else-if="current == 'Website'">
           <website-page />
@@ -60,6 +60,7 @@ import Vue from "vue"
 import url_page from "./components/url_page.vue"
 import website_page from "./components/website_page.vue"
 import script_page from "./components/script_page.vue"
+import fund_page from "./components/fund_page.vue"
 
 export default Vue.extend({
   name: "App",
@@ -68,6 +69,7 @@ export default Vue.extend({
     "website-page": website_page,
     "url-page": url_page,
     "script-page": script_page,
+    "fund-page": fund_page,
   },
 
   data: () => ({
