@@ -7,7 +7,7 @@ import * as api_website from "./api_website"
 
 async function exec_script(url: string): Promise<void> {
   const hostname = new URL(url).hostname
-  const code = api_website.get_script(hostname)
+  const code = api_website.get_script_hostname(hostname)
   assert(code !== undefined)
   const script = new vm.Script(code)
   const ctx = vm.createContext({ require, axios })

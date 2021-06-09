@@ -2,7 +2,7 @@
 export interface WebsiteDesc {
   readonly name: string // website name, like danjuan or qieman. file: ${name}.js
   readonly hostname: string // hostname of website
-  readonly script?: string // code of crawler
+  // readonly script?: string // code of crawler
 }
 
 // database url

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app permanent>
+    <v-navigation-drawer app permanent class="elevation-3">
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">

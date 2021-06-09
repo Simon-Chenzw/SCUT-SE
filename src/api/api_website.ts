@@ -2,7 +2,7 @@ import db from "./db"
 import { WebsiteDesc } from "./typing"
 
 export function select_all(): WebsiteDesc[] {
-  return db.prepare("select * from website").all()
+  return db.prepare("select name, hostname from website").all()
 }
 
 export function select_host(hostname: string): string | undefined {
@@ -31,8 +31,17 @@ export function remove(name: string): void {
   db.prepare("delete from website where name = ?").run(name)
 }
 
-export function get_script(hostname: string): string | undefined {
+export function get_script_name(name: string): string | undefined {
+  return db.prepare("select script from website where name = ?").get(name)
+    .script
+}
+
+export function get_script_hostname(hostname: string): string | undefined {
   return db
     .prepare("select script from website where hostname = ?")
     .get(hostname).script
+}
+
+export function save_script(name: string, code: string): void {
+  db.prepare("update website set script = ? where name = ?").run(code, name)
 }
