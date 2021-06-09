@@ -125,7 +125,7 @@ export default Vue.extend({
     dialogDelete: false,
     headers: [
       { text: "URL", value: "url" },
-      { text: "Website Name", value: "name" },
+      { text: "Website Name", value: "hostname" },
       { text: "last update time", value: "last_update_str" },
       { text: "Actions", value: "actions", sortable: false },
     ],
@@ -133,11 +133,11 @@ export default Vue.extend({
     editedIndex: -1,
     editedItem: {
       url: "",
-      name: "",
+      hostname: "",
     },
     defaultItem: {
       url: "",
-      name: "",
+      hostname: "",
     },
     rules: {
       required: (val: string | undefined) => !!val || "Required.",
@@ -191,12 +191,13 @@ export default Vue.extend({
       try {
         const hostname = new URL(url || "").hostname
         for (const website of this.$data.temp_website) {
-          if (hostname == website.hostname) this.editedItem.name = website.name
+          if (hostname == website.hostname)
+            this.editedItem.hostname = website.name
         }
       } catch (error) {
         // empty
       }
-      this.editedItem.name = "Unknown"
+      this.editedItem.hostname = "Unknown"
     },
 
     save(): void {

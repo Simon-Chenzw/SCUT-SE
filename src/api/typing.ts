@@ -7,7 +7,7 @@ export interface ScriptDesc {
 // database url
 export interface URLDesc {
   readonly url: string
-  readonly name: string // from script.name
+  readonly hostname: string // from script.name
   readonly last_update: number // fund tag in current website
 }
 
