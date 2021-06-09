@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const axios = require("axios")
+/* global axios :readonly */
 
 const re = new RegExp("danjuanapp.com/strategy/([^?/]+)")
 
@@ -13,8 +13,8 @@ async function get(url) {
 
   const lst = resp.data.data.fund_nav_growth
 
-  return lst.map((element) => ({
-    date: new Date(element.date),
-    value: Number(element.value),
+  return lst.map((ele) => ({
+    date: new Date(ele.date).valueOf(),
+    value: Number(ele.value),
   }))
 }

@@ -4,12 +4,15 @@ import path from "path"
 import { app, protocol, BrowserWindow } from "electron"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
+import register from "./api/main-process-api"
 const isDevelopment = process.env.NODE_ENV !== "production"
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ])
+
+register()
 
 async function createWindow() {
   // Create the browser window.

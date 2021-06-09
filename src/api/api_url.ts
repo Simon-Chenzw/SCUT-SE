@@ -25,13 +25,3 @@ export function insert(url: string): boolean {
 export function remove(url: string): void {
   db.prepare("delete from url where url = ?").run(url)
 }
-
-export function exec(url: string): void {
-  // TODO
-  console.log("exec" + url)
-}
-
-export function exec_all(): void {
-  // TODO
-  console.log("exec all")
-}

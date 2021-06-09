@@ -30,3 +30,9 @@ export function update(name: string, desc: WebsiteDesc): void {
 export function remove(name: string): void {
   db.prepare("delete from website where name = ?").run(name)
 }
+
+export function get_script(hostname: string): string | undefined {
+  return db
+    .prepare("select script from website where hostname = ?")
+    .get(hostname).script
+}

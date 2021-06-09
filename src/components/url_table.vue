@@ -56,7 +56,7 @@
           </v-dialog>
           <!-- exec all -->
 
-          <v-btn color="primary" class="ml-2" @click="execAll">
+          <v-btn color="primary" class="ml-2" @click="exec_all">
             exec all
           </v-btn>
 
@@ -83,8 +83,16 @@
 
       <!-- actions -->
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small class="mr-2" @click="exec(item)"> mdi-download </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon small right @click="exec(item)"> mdi-download </v-icon>
+        <v-icon
+          small
+          right
+          @click="clear_fund(item)"
+          :disabled="item.last_update == 0"
+        >
+          mdi-broom
+        </v-icon>
+        <v-icon small right @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar" :timeout="2000">
@@ -97,10 +105,12 @@
 import Vue from "vue"
 import type * as Tapi_website from "../api/api_website"
 import type * as Tapi_url from "../api/api_url"
+import type * as Tapi_fund from "../api/api_fund"
 import type { URLDesc } from "../api/typing"
 
 declare const api_website: typeof Tapi_website
 declare const api_url: typeof Tapi_url
+declare const api_fund: typeof Tapi_fund
 
 interface ExURLDesc extends URLDesc {
   last_update_str?: string
@@ -141,31 +151,57 @@ export default Vue.extend({
   created(): void {
     this.desserts = api_url.select_all()
     this.$data.temp_website = api_website.select_all()
+    api_fund.set_exec_callback((resp) => {
+      console.log(resp)
+      if (resp.status) {
+        this.update(resp.url)
+      } else {
+        console.log(resp.err)
+      }
+    })
   },
 
   watch: {
     desserts(val: ExURLDesc[]): void {
       for (const it of val) {
         it.last_update_str = it.last_update
-          ? new Date(it.last_update).toString()
+          ? new Date(it.last_update).toLocaleDateString()
           : "Not yet"
       }
     },
   },
 
   methods: {
-    exec(item: ExURLDesc): void {
-      // TODO add Visual effect
-      const index = this.desserts.indexOf(item)
-      api_url.exec(item.url)
-      const desc = api_url.select(item.url)
-      if (desc) Object.assign(this.desserts[index], desc)
+    get_index(url: string): number {
+      this.desserts.forEach((item, index) => {
+        if (item.url == url) return index
+      })
+      return -1
     },
 
-    execAll(): void {
+    update(url: string): void {
+      this.desserts.forEach((item, index) => {
+        if (item.url == url) {
+          const desc = api_url.select(this.desserts[index].url)
+          if (desc) this.$set(this.desserts, index, desc)
+          return
+        }
+      })
+    },
+
+    exec(item: ExURLDesc): void {
       // TODO add Visual effect
-      api_url.exec_all()
-      this.desserts = api_url.select_all()
+      api_fund.exec(item.url)
+    },
+
+    exec_all(): void {
+      // TODO add Visual effect
+      for (const item of this.desserts) this.exec(item)
+    },
+
+    clear_fund(item: ExURLDesc): void {
+      api_fund.clear(item.url)
+      this.update(item.url)
     },
 
     save(): void {
