@@ -4,6 +4,18 @@ import path from "path"
 
 declare const __static: string
 
+function init_db(db: sqlite3.Database): void {
+  db.exec(fs.readFileSync(path.join(__static, "create.sql"), "utf8"))
+  const danjuan_code = fs.readFileSync(
+    path.join(__static, "danjuan.js"),
+    "utf8"
+  )
+  db.prepare("update website set script = ? where hostname = ?").run(
+    danjuan_code,
+    "danjuanapp.com"
+  )
+}
+
 export function get_db(): sqlite3.Database {
   let db = undefined
   const config = {
@@ -15,8 +27,7 @@ export function get_db(): sqlite3.Database {
   } catch (error) {
     console.log("Database doesn't exist, rebuilding...")
     db = new sqlite3("fund_data.sqlite3", config)
-    const sql_path = path.join(__static, "create.sql")
-    db.exec(fs.readFileSync(sql_path, "utf8"))
+    init_db(db)
     console.log("rebuild successful")
   }
   db.pragma("foreign_keys = ON")

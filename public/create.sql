@@ -1,10 +1,11 @@
 -- website
 CREATE TABLE website (
    name varchar(100) PRIMARY KEY,
-   hostname varchar(300) NOT NULL UNIQUE
+   hostname varchar(300) NOT NULL UNIQUE,
+   script varchar(10000)
 );
-INSERT INTO website values ('danjuan', 'danjuanapp.com');
-INSERT INTO website values ('qieman', 'qieman.com');
+INSERT INTO website (name, hostname) values ('danjuan', 'danjuanapp.com');
+INSERT INTO website (name, hostname) values ('qieman', 'qieman.com');
 -- url
 CREATE TABLE url (
     url varchar(300) PRIMARY KEY,

@@ -45,6 +45,9 @@
         <template v-else-if="current == 'URL'">
           <url-page />
         </template>
+        <template v-else-if="current == 'Script'">
+          <script-page />
+        </template>
         <template v-else-if="current == 'Help'"> Help TODO </template>
         <template v-else> !! Error: current={{ current }} </template>
       </v-container>
@@ -56,6 +59,7 @@
 import Vue from "vue"
 import url_page from "./components/url_page.vue"
 import website_page from "./components/website_page.vue"
+import script_page from "./components/script_page.vue"
 
 export default Vue.extend({
   name: "App",
@@ -63,6 +67,7 @@ export default Vue.extend({
   components: {
     "website-page": website_page,
     "url-page": url_page,
+    "script-page": script_page,
   },
 
   data: () => ({
@@ -70,6 +75,7 @@ export default Vue.extend({
       { title: "Fund", icon: "mdi-chart-multiple", desc: "基金浏览" },
       { title: "Website", icon: "mdi-feature-search" },
       { title: "URL", icon: "mdi-link" },
+      { title: "Script", icon: "mdi-file-code-outline" },
       { title: "Help", icon: "mdi-help-box" },
     ],
     current: "Init",
