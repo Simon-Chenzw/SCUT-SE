@@ -41,7 +41,6 @@
                         <v-text-field
                           v-model="editedItem.hostname"
                           :rules="[rules.required, rules.counter]"
-                          :disabled="editedIndex !== -1"
                           label="host name"
                         ></v-text-field>
                       </v-col>
