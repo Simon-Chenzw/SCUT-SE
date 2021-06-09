@@ -10,10 +10,10 @@ export function select_host(hostname: string): string | undefined {
   return stmt.get(hostname).name
 }
 
-export function insert(script: WebsiteDesc): boolean {
+export function insert(desc: WebsiteDesc): boolean {
   try {
-    const stmt = db.prepare("insert into script (name, hostname) values (?,?)")
-    stmt.run(script.name, script.hostname)
+    const stmt = db.prepare("insert into website (name, hostname) values (?,?)")
+    stmt.run(desc.name, desc.hostname)
     return true
   } catch (error) {
     return false
@@ -21,8 +21,10 @@ export function insert(script: WebsiteDesc): boolean {
 }
 
 export function update(name: string, desc: WebsiteDesc): void {
-  const stmt = db.prepare("update name = ?, hostname = ? where name = ?")
-  stmt.run(name, desc.name, desc.hostname)
+  const stmt = db.prepare(
+    "update website set name = ?, hostname = ? where name = ?"
+  )
+  stmt.run(desc.name, desc.hostname, name)
 }
 
 export function remove(name: string): void {

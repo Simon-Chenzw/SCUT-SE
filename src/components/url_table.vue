@@ -29,23 +29,11 @@
               <v-card-text>
                 <v-container>
                   <v-form v-model="isFormValid">
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.url"
-                          :rules="[rules.required, rules.counter, rules.isURL]"
-                          @input="calcHost"
-                          label="URL"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.hostname"
-                          disabled
-                          label="website hostname"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
+                    <v-text-field
+                      v-model="editedItem.url"
+                      :rules="[rules.required, rules.counter, rules.isURL]"
+                      label="URL"
+                    ></v-text-field>
                   </v-form>
                 </v-container>
               </v-card-text>
@@ -131,14 +119,8 @@ export default Vue.extend({
     ],
     desserts: [] as ExURLDesc[],
     editedIndex: -1,
-    editedItem: {
-      url: "",
-      hostname: "",
-    },
-    defaultItem: {
-      url: "",
-      hostname: "",
-    },
+    editedItem: { url: "" },
+    defaultItem: { url: "" },
     rules: {
       required: (val: string | undefined) => !!val || "Required.",
       counter: (val: string) => val.length <= 100 || "Max 100 characters",
@@ -184,15 +166,6 @@ export default Vue.extend({
       // TODO add Visual effect
       api_url.exec_all()
       this.desserts = api_url.select_all()
-    },
-
-    calcHost(url: string | undefined): void {
-      // May contain efficiency issues
-      try {
-        this.editedItem.hostname = new URL(url || "").hostname
-      } catch (error) {
-        this.editedItem.hostname = "Unknown"
-      }
     },
 
     save(): void {

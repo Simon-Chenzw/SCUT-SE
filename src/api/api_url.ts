@@ -1,5 +1,4 @@
 import db from "./db"
-import * as api_website from "./api_website"
 import { URLDesc } from "./typing"
 
 export function select_all(): URLDesc[] {
@@ -13,15 +12,11 @@ export function select(url: string): URLDesc | undefined {
 export function insert(url: string): boolean {
   try {
     const hostname = new URL(url).hostname
-    const scripts = api_website.select_host(hostname)
-    if (scripts !== undefined) {
-      const stmt = db.prepare(
-        "INSERT INTO url (url, hostname, last_update) values (?, ?, ?)"
-      )
-      stmt.run(url, scripts, 0)
-      return true
-    }
-    return false
+    const stmt = db.prepare(
+      "INSERT INTO url (url, hostname, last_update) values (?, ?, ?)"
+    )
+    stmt.run(url, hostname, 0)
+    return true
   } catch (error) {
     return false
   }
