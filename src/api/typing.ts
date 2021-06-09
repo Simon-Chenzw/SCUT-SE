@@ -1,5 +1,5 @@
 // database script
-export interface ScriptDesc {
+export interface WebsiteDesc {
   readonly name: string // website name, like danjuan or qieman. file: ${name}.js
   readonly hostname: string // hostname of website
 }

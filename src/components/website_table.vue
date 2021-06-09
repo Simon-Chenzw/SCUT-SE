@@ -101,7 +101,7 @@
 <script lang="ts">
 import Vue from "vue"
 import type * as Tapi_website from "../api/api_website"
-import type { ScriptDesc } from "../api/typing"
+import type { WebsiteDesc } from "../api/typing"
 
 declare const api_website: typeof Tapi_website
 
@@ -115,7 +115,7 @@ export default Vue.extend({
       { text: "HostName", value: "hostname" },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: [] as ScriptDesc[],
+    desserts: [] as WebsiteDesc[],
     editedIndex: -1,
     editedItem: {
       name: "",
@@ -139,7 +139,7 @@ export default Vue.extend({
   },
 
   methods: {
-    editItem(item: ScriptDesc): void {
+    editItem(item: WebsiteDesc): void {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialog = true
@@ -170,7 +170,7 @@ export default Vue.extend({
       this.editedIndex = -1
     },
 
-    deleteItem(item: ScriptDesc): void {
+    deleteItem(item: WebsiteDesc): void {
       this.editedIndex = this.desserts.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
