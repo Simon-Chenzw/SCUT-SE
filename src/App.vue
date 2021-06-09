@@ -48,7 +48,9 @@
         <template v-else-if="current == 'Script'">
           <script-page />
         </template>
-        <template v-else-if="current == 'Help'"> Help TODO </template>
+        <template v-else-if="current == 'Help'">
+          <help-page />
+        </template>
         <template v-else> !! Error: current={{ current }} </template>
       </v-container>
     </v-main>
@@ -57,19 +59,21 @@
 
 <script lang="ts">
 import Vue from "vue"
+import fund_page from "./components/fund_page.vue"
 import url_page from "./components/url_page.vue"
 import website_page from "./components/website_page.vue"
 import script_page from "./components/script_page.vue"
-import fund_page from "./components/fund_page.vue"
+import help_page from "./components/help_page.vue"
 
 export default Vue.extend({
   name: "App",
 
   components: {
+    "fund-page": fund_page,
     "website-page": website_page,
     "url-page": url_page,
     "script-page": script_page,
-    "fund-page": fund_page,
+    "help-page": help_page,
   },
 
   data: () => ({
