@@ -4,8 +4,8 @@
       dense
       :headers="headers"
       :items="desserts"
-      sort-by="name"
-      group-by="name"
+      sort-by="url"
+      group-by="hostname"
       class="elevation-1"
       fixed-header
       :items-per-page="100"
@@ -40,9 +40,9 @@
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.name"
+                          v-model="editedItem.hostname"
                           disabled
-                          label="website name"
+                          label="website hostname"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -189,15 +189,10 @@ export default Vue.extend({
     calcHost(url: string | undefined): void {
       // May contain efficiency issues
       try {
-        const hostname = new URL(url || "").hostname
-        for (const website of this.$data.temp_website) {
-          if (hostname == website.hostname)
-            this.editedItem.hostname = website.name
-        }
+        this.editedItem.hostname = new URL(url || "").hostname
       } catch (error) {
-        // empty
+        this.editedItem.hostname = "Unknown"
       }
-      this.editedItem.hostname = "Unknown"
     },
 
     save(): void {

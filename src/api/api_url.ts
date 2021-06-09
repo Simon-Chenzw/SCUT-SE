@@ -16,7 +16,7 @@ export function insert(url: string): boolean {
     const scripts = api_website.select_host(hostname)
     if (scripts !== undefined) {
       const stmt = db.prepare(
-        "INSERT INTO url (url, name, last_update) values (?, ?, ?)"
+        "INSERT INTO url (url, hostname, last_update) values (?, ?, ?)"
       )
       stmt.run(url, scripts, 0)
       return true
