@@ -1,10 +1,42 @@
 <template>
   <div>
     <v-app-bar app>
+      {{ editing ? `当前编辑: ${editing}.js` : "当前展示 template.js" }}
       <v-spacer></v-spacer>
-      <v-menu>
+      <v-spacer />
+      <!-- website select -->
+      <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="primary" dark v-bind="attrs" v-on="on"> select </v-btn>
+          <v-btn
+            color="primary ma-2"
+            dark
+            icon
+            @click="edit('')"
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon> mdi-file-eye </v-icon>
+          </v-btn>
+        </template>
+        <span> 查看模板脚本 </span>
+      </v-tooltip>
+
+      <v-menu offset-y>
+        <template v-slot:activator="{ on: menu, attrs }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on: tooltip }">
+              <v-btn
+                color="primary ma-2"
+                dark
+                icon
+                v-bind="attrs"
+                v-on="{ ...tooltip, ...menu }"
+              >
+                <v-icon> mdi-file-code </v-icon>
+              </v-btn>
+            </template>
+            <span> 选择修改的脚本</span>
+          </v-tooltip>
         </template>
         <v-list>
           <v-list-item
@@ -16,10 +48,26 @@
           </v-list-item>
         </v-list>
       </v-menu>
+
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            color="primary ma-2"
+            dark
+            @click="editor_save"
+            icon
+            v-bind="attrs"
+            v-on="on"
+          >
+            <v-icon> mdi-content-save </v-icon>
+          </v-btn>
+        </template>
+        <span> 保存 </span>
+      </v-tooltip>
     </v-app-bar>
 
     <v-container>
-      <script-editor :name="this.editing" />
+      <script-editor :name="this.editing" ref="editor" />
     </v-container>
   </div>
 </template>
@@ -50,15 +98,12 @@ export default Vue.extend({
 
   methods: {
     edit(name: string) {
-      console.log("name", name)
       this.editing = name
+    },
+
+    editor_save(): void {
+      ;(this.$refs.editor as unknown as { save: () => void }).save()
     },
   },
 })
 </script>
-
-<style>
-.div {
-  background: #2d2d2d;
-}
-</style>

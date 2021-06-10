@@ -99,6 +99,8 @@ export default Vue.extend({
           this.code = defaultCode
           this.alert(`${this.name}'s script in empty, use template`)
         }
+      } else {
+        this.code = defaultCode
       }
     },
 
@@ -107,8 +109,10 @@ export default Vue.extend({
     },
 
     save(): void {
-      api_website.save_script(this.name, this.code)
-      this.alert("Saved successfully")
+      if (this.name) {
+        api_website.save_script(this.name, this.code)
+        this.alert("Saved successfully")
+      }
     },
 
     alert(msg: string): void {
