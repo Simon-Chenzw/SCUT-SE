@@ -20,11 +20,16 @@ export function insert(desc: WebsiteDesc): boolean {
   }
 }
 
-export function update(name: string, desc: WebsiteDesc): void {
-  const stmt = db.prepare(
-    "update website set name = ?, hostname = ? where name = ?"
-  )
-  stmt.run(desc.name, desc.hostname, name)
+export function update(name: string, desc: WebsiteDesc): boolean {
+  try {
+    const stmt = db.prepare(
+      "update website set name = ?, hostname = ? where name = ?"
+    )
+    stmt.run(desc.name, desc.hostname, name)
+    return true
+  } catch (error) {
+    return false
+  }
 }
 
 export function remove(name: string): void {

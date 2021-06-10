@@ -11,37 +11,37 @@
       <!-- top -->
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Website Table</v-toolbar-title>
+          <v-toolbar-title> 网站列表 </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <!-- create/edit dialog -->
           <v-dialog v-model="dialog" max-width="500px" persistent>
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">
-                New Item
+                新建
               </v-btn>
             </template>
             <v-card>
               <v-card-title>
-                {{ editedIndex === -1 ? "New Item" : "Edit Item" }}
+                {{ editedIndex === -1 ? "新建记录" : "修改记录" }}
               </v-card-title>
 
               <v-card-text>
                 <v-container>
                   <v-form v-model="isFormValid">
                     <v-row>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col cols="12">
                         <v-text-field
                           v-model="editedItem.name"
                           :rules="[rules.required, rules.counter]"
-                          label="website name"
+                          label="网站名称 （自定义）"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col cols="12">
                         <v-text-field
                           v-model="editedItem.hostname"
                           :rules="[rules.required, rules.counter]"
-                          label="host name"
+                          label="网站域名"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -52,7 +52,8 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close">
-                  Cancel
+                  <v-icon> mdi-close-circle </v-icon>
+                  取消
                 </v-btn>
                 <v-btn
                   color="blue darken-1"
@@ -60,7 +61,8 @@
                   @click="save"
                   :disabled="!isFormValid"
                 >
-                  Save
+                  <v-icon> mdi-content-save </v-icon>
+                  保存
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -68,17 +70,19 @@
           <!-- delete dialog -->
           <v-dialog v-model="dialogDelete" max-width="500px" persistent>
             <v-card>
-              <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
-              >
+              <v-card-title class="text-h5 justify-center">
+                确定要删除网站：“{{ editedItem.name }}” 吗？
+              </v-card-title>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Cancel</v-btn
-                >
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >OK</v-btn
-                >
+                <v-btn color="blue darken-1" text @click="closeDelete">
+                  取消
+                  <v-icon right> mdi-cancel </v-icon>
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">
+                  确定
+                  <v-icon right> mdi-check </v-icon>
+                </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -111,9 +115,9 @@ export default Vue.extend({
     dialog: false,
     dialogDelete: false,
     headers: [
-      { text: "website name", value: "name" },
-      { text: "HostName", value: "hostname" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "名称", value: "name" },
+      { text: "网站域名", value: "hostname" },
+      { text: "操作", value: "actions", sortable: false },
     ],
     desserts: [] as WebsiteDesc[],
     editedIndex: -1,
@@ -126,8 +130,8 @@ export default Vue.extend({
       hostname: "",
     },
     rules: {
-      required: (val: string | undefined) => !!val || "Required.",
-      counter: (val: string) => val.length <= 100 || "Max 100 characters",
+      required: (val: string | undefined) => !!val || "必填项.",
+      counter: (val: string) => val.length <= 100 || "最长 100 字符",
     },
     isFormValid: false,
     snackbar: false,
@@ -147,17 +151,22 @@ export default Vue.extend({
 
     save(): void {
       if (this.editedIndex > -1) {
-        api_website.update(
+        const ret = api_website.update(
           this.desserts[this.editedIndex].name,
           this.editedItem
         )
-        Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        if (ret) {
+          Object.assign(this.desserts[this.editedIndex], this.editedItem)
+        } else {
+          this.snackbar_text = "名称和域名不能相同"
+          this.snackbar = true
+        }
       } else {
         const ret = api_website.insert(this.editedItem)
         if (ret) {
           this.desserts.push(this.editedItem)
         } else {
-          this.snackbar_text = "values must be unique"
+          this.snackbar_text = "名称和域名不能相同"
           this.snackbar = true
         }
       }

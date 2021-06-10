@@ -79,7 +79,7 @@ export default Vue.extend({
   data: () => ({
     items: [
       { title: "Fund", icon: "mdi-chart-multiple", desc: "基金浏览" },
-      { title: "Website", icon: "mdi-feature-search", desc: "网站管理" },
+      { title: "Website", icon: "mdi-feature-search", desc: "网站录入" },
       { title: "URL", icon: "mdi-link", desc: "URL管理" },
       { title: "Script", icon: "mdi-file-code-outline", desc: "脚本编辑" },
       { title: "Help", icon: "mdi-help-box", desc: "帮助" },
