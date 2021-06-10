@@ -8,3 +8,7 @@ contextBridge.exposeInMainWorld("api_url", api_url)
 
 import * as api_fund from "./api_fund"
 contextBridge.exposeInMainWorld("api_fund", api_fund)
+
+import * as api_calc from "./api_calc"
+contextBridge.exposeInMainWorld("api_calc", api_calc)
+
