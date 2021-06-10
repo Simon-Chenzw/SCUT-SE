@@ -214,7 +214,7 @@ export default Vue.extend({
       const start_unix_time = new Date(this.start_date + " 00:00:00:000")
       const end_unix_time = new Date(this.end_date + " 00:00:00:000")
       if (start_unix_time.getTime() > end_unix_time.getTime()) {
-        window.alert("start time cann't large than end time!")
+        window.alert("start time can't large than end time!")
         return
       }
       this.min_unix_date = start_unix_time.getTime()
