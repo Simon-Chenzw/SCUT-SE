@@ -1,22 +1,77 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" sm="6">
-        <v-date-picker v-model="dates" range></v-date-picker>
+      <v-col cols="12" sm="6" md="4">
+        <v-menu
+          v-model="menu1"
+          :close-on-content-click="false"
+          absolute
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="start_date"
+              label="Start date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="start_date"
+            @input="menu1 = false"
+          ></v-date-picker>
+        </v-menu>
       </v-col>
-      <v-col cols="12" sm="6">
-        <v-text-field
-          v-model="dateRangeText"
-          label="Date range"
-          prepend-icon="mdi-calendar"
-          readonly
-        ></v-text-field>
-        <v-btn @click="test()"> change </v-btn>
+
+      <v-spacer></v-spacer>
+
+      <v-col cols="12" sm="6" md="4">
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          absolute
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              v-model="end_date"
+              label="End date"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="end_date"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+      </v-col>
+
+      <v-spacer></v-spacer>
+
+      <v-col cols="12" sm="6" md="2">
+        <v-btn @click="update()">UPDATE</v-btn>
+      </v-col>
+
+      <v-spacer></v-spacer>
+
+      <v-col cols="12" sm="6" md="2">
+        <v-btn @click="reset()">RESET</v-btn>
       </v-col>
     </v-row>
+
     <highcharts :options="chartOptions"> </highcharts>
 
-    <v-btn @click="test()">Change</v-btn>
     <template>
       <v-data-table
         :headers="headers"
@@ -30,7 +85,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue"
-import highcharts from "highcharts"
+import highcharts, { each } from "highcharts"
 import HighchartsVue from "highcharts-vue"
 import type * as Tapi_website from "../api/api_website"
 import type * as Tapi_url from "../api/api_url"
@@ -63,8 +118,12 @@ export default Vue.extend({
     this.init()
   },
   data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    start_date: new Date().toISOString().substr(0, 10),
+    end_date: new Date().toISOString().substr(0, 10),
+    menu1: false,
+    menu2: false,
     url: [] as URLDesc[],
-    dates: ["2019-09-10", "2019-09-20"],
     chartOptions: {
       chart: {
         zoomType: "x",
@@ -137,10 +196,30 @@ export default Vue.extend({
       { text: "Volatility", value: "Volatility" },
     ],
     desserts: [] as any,
+    min_unix_date: 946656000000,
+    max_unix_date: 4102416000000,
+    min_date: "1970-01-01",
+    max_date: "1970-01-01",
   }),
   methods: {
     test() {
-      this.get_all_data()
+      console.log("test")
+    },
+    reset() {
+      this.min_unix_date = 946656000000
+      this.max_unix_date = 4102416000000
+      this.init()
+    },
+    update() {
+      const start_unix_time = new Date(this.start_date + " 00:00:00:000")
+      const end_unix_time = new Date(this.end_date + " 00:00:00:000")
+      if (start_unix_time.getTime() > end_unix_time.getTime()) {
+        window.alert("start time cann't large than end time!")
+        return
+      }
+      this.min_unix_date = start_unix_time.getTime()
+      this.max_unix_date = end_unix_time.getTime()
+      this.init()
     },
     get_all_url: async function () {
       this.url = api_url.select_all()
@@ -148,13 +227,27 @@ export default Vue.extend({
     get_all_data: async function () {
       var change_data = new Array()
       var change_total = new Array()
+      const min_unix_date = this.min_unix_date
+      const max_unix_date = this.max_unix_date
       this.url.forEach(function (this_url) {
         const basic_data = api_fund.select(this_url.url)
+        const p = this_url.url.search("danjuan") == -1
         var decode_data = new Array()
         let calc_data: FundInfo = []
         basic_data.forEach(function (each_data) {
-          calc_data.push({ date: each_data.date, value: each_data.value })
-          decode_data.push([each_data.date, each_data.value])
+          if (
+            each_data.date >= min_unix_date &&
+            each_data.date <= max_unix_date
+          ) {
+            calc_data.push({
+              date: each_data.date,
+              value: p ? each_data.value : each_data.value + 1,
+            })
+            decode_data.push([
+              each_data.date,
+              p ? each_data.value : each_data.value + 1,
+            ])
+          }
         })
         const tmp: FundCalc = api_calc.calc(calc_data)
         change_total.push({
@@ -173,14 +266,18 @@ export default Vue.extend({
       this.desserts = change_total
       this.chartOptions.series = change_data
     },
+    unix_to_date(date: Date) {
+      const Y = date.getFullYear() + "-"
+      const M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-"
+      const D = date.getDate()
+      return Y + M + D
+    },
     init: async function () {
       await this.get_all_url()
       await this.get_all_data()
-    },
-  },
-  computed: {
-    dateRangeText() {
-      return this.dates.join("~")
     },
   },
 })
