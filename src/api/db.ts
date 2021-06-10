@@ -14,6 +14,11 @@ function init_db(db: sqlite3.Database): void {
     danjuan_code,
     "danjuanapp.com"
   )
+  const qieman_code = fs.readFileSync(path.join(__static, "qieman.js"), "utf8")
+  db.prepare("update website set script = ? where hostname = ?").run(
+    qieman_code,
+    "qieman.com"
+  )
 }
 
 export function get_db(): sqlite3.Database {
