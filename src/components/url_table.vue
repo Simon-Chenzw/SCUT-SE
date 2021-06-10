@@ -5,7 +5,7 @@
       :headers="headers"
       :items="desserts"
       sort-by="url"
-      group-by="hostname"
+      group-by="域名"
       class="elevation-1"
       fixed-header
       :items-per-page="100"
@@ -14,18 +14,18 @@
       <!-- top -->
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>URL Table</v-toolbar-title>
+          <v-toolbar-title>URL 列表</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <!-- create/edit dialog -->
           <v-dialog v-model="dialog" max-width="500px" persistent>
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="ml-2" v-bind="attrs" v-on="on">
-                New Item
+                新建 URL
               </v-btn>
             </template>
             <v-card>
-              <v-card-title> New Item </v-card-title>
+              <v-card-title> 新建 URL </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-form v-model="isFormValid">
@@ -41,7 +41,8 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close">
-                  Cancel
+                  <v-icon> mdi-close-circle </v-icon>
+                  取消
                 </v-btn>
                 <v-btn
                   color="blue darken-1"
@@ -49,7 +50,8 @@
                   @click="save"
                   :disabled="!isFormValid"
                 >
-                  Save
+                  <v-icon> mdi-content-save </v-icon>
+                  保存
                 </v-btn>
               </v-card-actions>
             </v-card>
@@ -57,23 +59,26 @@
           <!-- exec all -->
 
           <v-btn color="primary" class="ml-2" @click="exec_all">
-            exec all
+            爬取全部
           </v-btn>
 
           <!-- delete dialog -->
           <v-dialog v-model="dialogDelete" max-width="500px" persistent>
             <v-card>
-              <v-card-title class="text-h5"
-                >Are you sure you want to delete this item?</v-card-title
-              >
+              <v-card-title class="text-h5">
+                确定要删除这个 URL ?
+              </v-card-title>
+              <v-card-text class="text-h6"> {{ editedItem.url }} </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="closeDelete"
-                  >Cancel</v-btn
-                >
-                <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                  >OK</v-btn
-                >
+                <v-btn color="blue darken-1" text @click="closeDelete">
+                  取消
+                  <v-icon right> mdi-cancel </v-icon>
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="deleteItemConfirm">
+                  确定
+                  <v-icon right> mdi-check </v-icon>
+                </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
             </v-card>
@@ -83,16 +88,46 @@
 
       <!-- actions -->
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon small right @click="exec(item)"> mdi-download </v-icon>
-        <v-icon
-          small
-          right
-          @click="clear_fund(item)"
-          :disabled="item.last_update == 0"
-        >
-          mdi-broom
-        </v-icon>
-        <v-icon small right @click="deleteItem(item)"> mdi-delete </v-icon>
+        <!-- crawl -->
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon small right @click="exec(item)" v-bind="attrs" v-on="on">
+              mdi-download
+            </v-icon>
+          </template>
+          <span> 爬取数据 </span>
+        </v-tooltip>
+        <!-- clear -->
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              small
+              right
+              @click="clear_fund(item)"
+              :disabled="item.last_update == 0"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-broom
+            </v-icon>
+          </template>
+          <span> 清除数据 </span>
+        </v-tooltip>
+        <!-- remove -->
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              small
+              right
+              @click="deleteItem(item)"
+              v-bind="attrs"
+              v-on="on"
+            >
+              mdi-delete
+            </v-icon>
+          </template>
+          <span> 删除记录 </span>
+        </v-tooltip>
       </template>
     </v-data-table>
     <v-snackbar v-model="snackbar" :timeout="2000">
@@ -114,6 +149,7 @@ declare const api_fund: typeof Tapi_fund
 
 interface ExURLDesc extends URLDesc {
   last_update_str?: string
+  域名?: string
 }
 
 export default Vue.extend({
@@ -123,42 +159,50 @@ export default Vue.extend({
     dialogDelete: false,
     headers: [
       { text: "URL", value: "url" },
-      { text: "Website Name", value: "hostname" },
-      { text: "last update time", value: "last_update_str" },
-      { text: "Actions", value: "actions", sortable: false },
+      { text: "网站域名", value: "域名" },
+      { text: "数据最后时间", value: "last_update_str" },
+      { text: "操作", value: "actions", sortable: false },
     ],
     desserts: [] as ExURLDesc[],
     editedIndex: -1,
     editedItem: { url: "" },
     defaultItem: { url: "" },
     rules: {
-      required: (val: string | undefined) => !!val || "Required.",
-      counter: (val: string) => val.length <= 100 || "Max 100 characters",
+      required: (val: string | undefined) => !!val || "必填项.",
+      counter: (val: string) => val.length <= 100 || "最长 100 字符",
       isURL: (val: string) => {
         try {
           new URL(val)
           return true
         } catch (error) {
-          return "Must be a Legal URL"
+          return "必须是合法的URL"
         }
       },
     },
     isFormValid: false,
     snackbar: false,
     snackbar_text: "",
+    enable_exec_alert: true,
   }),
 
   created(): void {
     this.desserts = api_url.select_all()
+    for (const it of this.desserts) it.域名 = it.hostname
     this.$data.temp_website = api_website.select_all()
     api_fund.set_exec_callback((resp) => {
       console.log(resp)
       if (resp.status) {
         this.update(resp.url)
+        if (this.enable_exec_alert) this.alert(`爬取成功`)
       } else {
+        if (this.enable_exec_alert) this.alert(`爬取失败 ${resp.err?.message}`)
         console.log(resp.err)
       }
     })
+  },
+
+  destroyed(): void {
+    api_fund.rm_exec_callback()
   },
 
   watch: {
@@ -166,7 +210,8 @@ export default Vue.extend({
       for (const it of val) {
         it.last_update_str = it.last_update
           ? new Date(it.last_update).toLocaleDateString()
-          : "Not yet"
+          : "尚未爬取"
+        it.域名 = it.hostname
       }
     },
   },
@@ -190,13 +235,20 @@ export default Vue.extend({
     },
 
     exec(item: ExURLDesc): void {
-      // TODO add Visual effect
+      this.alert(`爬取 ${item.url}`)
+      this.enable_exec_alert = true
+      const hostname = new URL(item.url).hostname
+      if (api_website.get_script_hostname(hostname) === null) {
+        this.alert(`${hostname} 没有爬虫脚本`)
+        return
+      }
       api_fund.exec(item.url)
     },
 
     exec_all(): void {
-      // TODO add Visual effect
-      for (const item of this.desserts) this.exec(item)
+      this.alert("爬取全部 URL")
+      this.enable_exec_alert = false
+      api_fund.exec_all()
     },
 
     clear_fund(item: ExURLDesc): void {
@@ -205,18 +257,12 @@ export default Vue.extend({
     },
 
     save(): void {
-      if (api_url.select(this.editedItem.url)) {
-        this.snackbar_text = "URL must be unique."
-        this.snackbar = true
+      const ret = api_url.insert(this.editedItem.url)
+      const inserted = api_url.select(this.editedItem.url)
+      if (ret && inserted) {
+        this.desserts.push(inserted)
       } else {
-        const ret = api_url.insert(this.editedItem.url)
-        const inserted = api_url.select(this.editedItem.url)
-        if (ret && inserted) {
-          this.desserts.push(inserted)
-        } else {
-          this.snackbar_text = "URL's hostname must existed in website"
-          this.snackbar = true
-        }
+        this.alert("URL 不能相同.")
       }
       this.close()
     },
@@ -243,6 +289,12 @@ export default Vue.extend({
       this.dialogDelete = false
       this.editedItem = Object.assign({}, this.defaultItem)
       this.editedIndex = -1
+    },
+
+    alert(msg: string): void {
+      this.snackbar = false
+      this.snackbar_text = msg
+      this.snackbar = true
     },
   },
 })

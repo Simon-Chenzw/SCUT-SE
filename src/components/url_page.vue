@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ msg }}
+    <v-app-bar app> 已记录 URL </v-app-bar>
     <url-table />
   </div>
 </template>
@@ -13,9 +13,9 @@ export default Vue.extend({
   components: {
     "url-table": url_table,
   },
+
   name: "url_page",
-  data: () => ({
-    msg: "url_page",
-  }),
+
+  data: () => ({}),
 })
 </script>

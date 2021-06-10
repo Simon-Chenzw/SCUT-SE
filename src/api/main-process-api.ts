@@ -8,11 +8,16 @@ import * as api_website from "./api_website"
 async function exec_script(url: string): Promise<void> {
   const hostname = new URL(url).hostname
   const code = api_website.get_script_hostname(hostname)
-  assert(code !== undefined)
+  assert(code !== null, "script in empty")
   const script = new vm.Script(code)
   const ctx = vm.createContext({ require, axios })
   script.runInContext(ctx)
-  api_fund.insert(url, await ctx.get(url))
+  const ret = await ctx.get(url)
+  for (const ele of ret) {
+    assert(typeof ele.date === "number", "return type is illegal")
+    assert(typeof ele.value === "number", "return type is illegal")
+  }
+  api_fund.insert(url, ret)
 }
 
 export default function register() {

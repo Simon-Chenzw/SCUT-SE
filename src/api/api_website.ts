@@ -5,7 +5,7 @@ export function select_all(): WebsiteDesc[] {
   return db.prepare("select name, hostname from website").all()
 }
 
-export function select_host(hostname: string): string | undefined {
+export function select_host(hostname: string): string | null {
   const stmt = db.prepare("select name from website where hostname = ?")
   return stmt.get(hostname).name
 }
@@ -36,12 +36,12 @@ export function remove(name: string): void {
   db.prepare("delete from website where name = ?").run(name)
 }
 
-export function get_script_name(name: string): string | undefined {
+export function get_script_name(name: string): string | null {
   return db.prepare("select script from website where name = ?").get(name)
     .script
 }
 
-export function get_script_hostname(hostname: string): string | undefined {
+export function get_script_hostname(hostname: string): string | null {
   return db
     .prepare("select script from website where hostname = ?")
     .get(hostname).script

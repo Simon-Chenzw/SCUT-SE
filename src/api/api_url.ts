@@ -5,7 +5,7 @@ export function select_all(): URLDesc[] {
   return db.prepare("select * from url").all()
 }
 
-export function select(url: string): URLDesc | undefined {
+export function select(url: string): URLDesc | null {
   return db.prepare("select * from url where url = ?").get(url)
 }
 

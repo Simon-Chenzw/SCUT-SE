@@ -6,12 +6,25 @@ export function exec(url: string): void {
   ipcRenderer.send("exec-start", url)
 }
 
+export function exec_all(): void {
+  const urls = db
+    .prepare(
+      "select url from website natural join url where script is not null"
+    )
+    .all()
+  for (const { url } of urls) ipcRenderer.send("exec-start", url)
+}
+
 export function set_exec_callback(
   callback: (resp: { url: string; status: boolean; err?: Error }) => void
 ): void {
   ipcRenderer.on("exec-end", (event, arg) => {
     callback(arg)
   })
+}
+
+export function rm_exec_callback() {
+  ipcRenderer.removeAllListeners("exec-end")
 }
 
 export function select(url: string): FundInfo {
