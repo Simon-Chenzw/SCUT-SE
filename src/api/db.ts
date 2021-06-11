@@ -22,7 +22,7 @@ function init_db(db: sqlite3.Database): void {
 }
 
 export function get_db(): sqlite3.Database {
-  if (process.env.NODE_ENV !== "production") fs.rmSync("fund_data.sqlite3")
+  // if (process.env.NODE_ENV !== "production") fs.rmSync("fund_data.sqlite3")
   let db = undefined
   const config = {
     verbose: console.debug,
