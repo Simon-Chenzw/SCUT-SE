@@ -97,7 +97,7 @@ export default Vue.extend({
           this.code = code
         } else {
           this.code = defaultCode
-          this.alert(`${this.name}'s script in empty, use template`)
+          this.alert(`${this.name} 的脚本为空，显示模板`)
         }
       } else {
         this.code = defaultCode
@@ -111,7 +111,7 @@ export default Vue.extend({
     save(): void {
       if (this.name) {
         api_website.save_script(this.name, this.code)
-        this.alert("Saved successfully")
+        this.alert("保存成功")
       }
     },
 
