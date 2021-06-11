@@ -195,7 +195,8 @@ export default Vue.extend({
         this.update(resp.url)
         if (this.enable_exec_alert) this.alert(`爬取成功`)
       } else {
-        if (this.enable_exec_alert) this.alert(`爬取失败 ${resp.err?.message}`)
+        if (this.enable_exec_alert)
+          this.alert(`爬取失败 ${resp.err?.message || resp.err}`)
         console.log(resp.err)
       }
     })
