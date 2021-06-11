@@ -36,7 +36,7 @@ function cal_sharpeRation(fund: FundInfo, annV: number) {
     const arr_length = fund.length - 1
     const final_value = fund[arr_length].value
     const sharpeRation = Number(
-        ((final_value - inital_value - 0.03) / annV).toFixed(4)
+        ((final_value - inital_value - 0.03) / annV).toFixed(2)
     )
     return sharpeRation
 }
@@ -61,12 +61,15 @@ function cal_annualizedVolatility(fund: FundInfo) {
 export function calc(fund: FundInfo): FundCalc {
     let sum = 0
     for (const ele of fund) sum += ele.value
-    const MDD = cal_MDD(fund)
-    console.log(MDD)
-    const roi = cal_roi(fund)
-    const annualizedVolatility = cal_annualizedVolatility(fund)
+    let MDD = cal_MDD(fund)
+    let roi = cal_roi(fund)
+    let annualizedVolatility = cal_annualizedVolatility(fund)
     const sharpeRatio = cal_sharpeRation(fund, annualizedVolatility)
+    annualizedVolatility = Number((annualizedVolatility * 100).toFixed(2))
+    MDD = Number((MDD * 100).toFixed(2))
+    roi = Number((roi * 100).toFixed(2))
     return {
+        // Percentage
         avg: sum / fund.length,
         mdd: MDD,
         roi: roi,

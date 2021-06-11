@@ -190,10 +190,10 @@ export default Vue.extend({
         sortable: false,
         value: "name",
       },
-      { text: "Increase", value: "Increase" },
-      { text: "Drawdown", value: "Drawdown" },
+      { text: "Increase (%)", value: "Increase" },
+      { text: "Drawdown (%)", value: "Drawdown" },
       { text: "Sharpe Ratio", value: "Sharpe_Ratio" },
-      { text: "Volatility", value: "Volatility" },
+      { text: "Volatility (%)", value: "Volatility" },
     ],
     desserts: [] as any,
     min_unix_date: 946656000000,
@@ -203,7 +203,8 @@ export default Vue.extend({
   }),
   methods: {
     test() {
-      console.log("test")
+      console.log(this.chartOptions.series)
+      this.get_all_data()
     },
     reset() {
       this.min_unix_date = 946656000000
@@ -214,7 +215,7 @@ export default Vue.extend({
       const start_unix_time = new Date(this.start_date + " 00:00:00:000")
       const end_unix_time = new Date(this.end_date + " 00:00:00:000")
       if (start_unix_time.getTime() > end_unix_time.getTime()) {
-        window.alert("start time can't large than end time!")
+        window.alert("start time cann't large than end time!")
         return
       }
       this.min_unix_date = start_unix_time.getTime()
@@ -231,6 +232,7 @@ export default Vue.extend({
       const max_unix_date = this.max_unix_date
       this.url.forEach(function (this_url) {
         const basic_data = api_fund.select(this_url.url)
+        if (basic_data.length === 0) return
         const p = this_url.url.search("danjuan") == -1
         var decode_data = new Array()
         let calc_data: FundInfo = []
@@ -262,9 +264,11 @@ export default Vue.extend({
           data: decode_data,
         })
       })
-      // console.log(change_data)
+      console.log(change_data)
       this.desserts = change_total
       this.chartOptions.series = change_data
+      // console.log(change_data)
+      // console.log(this.chartOptions.series)
     },
     unix_to_date(date: Date) {
       const Y = date.getFullYear() + "-"
