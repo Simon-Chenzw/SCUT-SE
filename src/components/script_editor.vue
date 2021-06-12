@@ -21,7 +21,7 @@ import Prism from "prismjs"
 import "prismjs/components/prism-clike"
 import "prismjs/components/prism-javascript"
 import "prismjs/themes/prism-tomorrow.css"
-import * as Tapi_website from "../api/api_website"
+import type * as Tapi_website from "../api/api_website"
 
 declare const api_website: typeof Tapi_website
 const defaultCode = `\

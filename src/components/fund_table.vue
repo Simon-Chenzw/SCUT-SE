@@ -84,23 +84,16 @@
 </template>
 <script lang="ts">
 import Vue from "vue"
-import highcharts, { chart, each } from "highcharts"
+// import highcharts, { chart, each } from "highcharts"
 import HighchartsVue from "highcharts-vue"
-import type * as Tapi_website from "../api/api_website"
 import type * as Tapi_url from "../api/api_url"
 import type * as Tapi_fund from "../api/api_fund"
 import type * as Tapi_calc from "../api/api_calc"
 import type { URLDesc, FundInfo } from "../api/typing"
 
-declare const api_website: typeof Tapi_website
 declare const api_url: typeof Tapi_url
 declare const api_fund: typeof Tapi_fund
 declare const api_calc: typeof Tapi_calc
-
-interface DataDesc {
-  name?: string
-  data?: []
-}
 
 interface FundCalc {
   avg: number
@@ -108,6 +101,19 @@ interface FundCalc {
   roi: number //年化收益率，增长越快越好
   sharpeRatio: number //夏普率，越小越好
   annualizedVolatility: number //年化波动率，越小越好
+}
+
+interface change_data_ele {
+  name: string[]
+  data: number[][]
+}
+
+interface change_total_ele {
+  name: string[]
+  Increase: number
+  Drawdown: number
+  Sharpe_Ratio: number
+  Volatility: number
 }
 
 Vue.use(HighchartsVue)
@@ -189,7 +195,7 @@ export default Vue.extend({
         },
       },
 
-      series: [] as any,
+      series: [] as change_data_ele[],
     },
     headers: [
       {
@@ -203,7 +209,7 @@ export default Vue.extend({
       { text: "夏普率", value: "Sharpe_Ratio" },
       { text: "年化波动率 (%)", value: "Volatility" },
     ],
-    desserts: [] as any,
+    desserts: [] as change_total_ele[],
     min_unix_date: 946656000000,
     max_unix_date: 4102416000000,
     min_date: "1970-01-01",
@@ -235,19 +241,17 @@ export default Vue.extend({
       this.url = api_url.select_all()
     },
     get_all_data: async function () {
-      // @ts-ignore
-      var change_data = new Array()
-      // @ts-ignore
-      var change_total = new Array()
+      var change_data = [] as change_data_ele[]
+      var change_total = [] as change_total_ele[]
       const min_unix_date = this.min_unix_date
       const max_unix_date = this.max_unix_date
 
       this.url.forEach(function (this_url) {
         const basic_data = api_fund.select(this_url.url)
         if (basic_data.length === 0) return
-        var decode_data = new Array()
+        var decode_data = [] as number[][]
         let calc_data: FundInfo = []
-        var basic_line: number = 0
+        var basic_line = 0
         basic_data.sort(function (x, y) {
           return x.date - y.date
         })

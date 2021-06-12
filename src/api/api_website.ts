@@ -1,5 +1,5 @@
 import db from "./db"
-import { WebsiteDesc } from "./typing"
+import type { WebsiteDesc } from "./typing"
 
 export function select_all(): WebsiteDesc[] {
   return db.prepare("select name, hostname from website").all()

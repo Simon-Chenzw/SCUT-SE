@@ -23,7 +23,7 @@ export function set_exec_callback(
   })
 }
 
-export function rm_exec_callback() {
+export function rm_exec_callback(): void {
   ipcRenderer.removeAllListeners("exec-end")
 }
 

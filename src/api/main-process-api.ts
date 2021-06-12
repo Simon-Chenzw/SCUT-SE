@@ -20,7 +20,7 @@ async function exec_script(url: string): Promise<void> {
   api_fund.insert(url, ret)
 }
 
-export default function register() {
+export default function register(): void {
   ipcMain.on("exec-start", (event, arg) => {
     exec_script(arg)
       .then(() => {
