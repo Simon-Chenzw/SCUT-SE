@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{ msg }}
     <fund-table />
   </div>
 </template>

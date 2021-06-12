@@ -5,7 +5,7 @@ const re = new RegExp("https://qieman.com/portfolios/([^?/]+)")
 // Sorry, but because of qieman's anti-crawler measures,
 // `x-sign` needs to be updated every day
 // Tutorial and the end of this code
-const x_sign = "16233135546674E69001B1A413762117451DF6CB5F058"
+const x_sign = "16234792881220C4FEE7E10B172EEFE3EDC6A3CC79B5C"
 
 async function get(url) {
   const tag = re.exec(url)[1]

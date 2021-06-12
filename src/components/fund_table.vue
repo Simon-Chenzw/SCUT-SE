@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" sm="6" md="4">
+      <v-col cols="12" sm="6" md="5">
         <v-menu
           v-model="menu1"
           :close-on-content-click="false"
@@ -14,7 +14,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="start_date"
-              label="Start date"
+              label="开始日期"
               prepend-icon="mdi-calendar"
               readonly
               v-bind="attrs"
@@ -24,13 +24,14 @@
           <v-date-picker
             v-model="start_date"
             @input="menu1 = false"
+            @change="update()"
           ></v-date-picker>
         </v-menu>
       </v-col>
 
       <v-spacer></v-spacer>
 
-      <v-col cols="12" sm="6" md="4">
+      <v-col cols="12" sm="6" md="5">
         <v-menu
           v-model="menu2"
           :close-on-content-click="false"
@@ -43,7 +44,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
               v-model="end_date"
-              label="End date"
+              label="结束日期"
               prepend-icon="mdi-calendar"
               readonly
               v-bind="attrs"
@@ -53,6 +54,7 @@
           <v-date-picker
             v-model="end_date"
             @input="menu2 = false"
+            @change="update()"
           ></v-date-picker>
         </v-menu>
       </v-col>
@@ -60,13 +62,9 @@
       <v-spacer></v-spacer>
 
       <v-col cols="12" sm="6" md="2">
-        <v-btn @click="update()">UPDATE</v-btn>
-      </v-col>
-
-      <v-spacer></v-spacer>
-
-      <v-col cols="12" sm="6" md="2">
-        <v-btn @click="reset()">RESET</v-btn>
+        <div class="cent">
+          <v-icon x-large @click="reset()"> mdi-backup-restore </v-icon>
+        </div>
       </v-col>
     </v-row>
 
@@ -74,6 +72,7 @@
 
     <template>
       <v-data-table
+        dense
         :headers="headers"
         :items="desserts"
         :sort-desc="[false, true]"
@@ -85,7 +84,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue"
-import highcharts, { each } from "highcharts"
+import highcharts, { chart, each } from "highcharts"
 import HighchartsVue from "highcharts-vue"
 import type * as Tapi_website from "../api/api_website"
 import type * as Tapi_url from "../api/api_url"
@@ -119,7 +118,7 @@ export default Vue.extend({
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
-    start_date: new Date().toISOString().substr(0, 10),
+    start_date: "2000-01-01",
     end_date: new Date().toISOString().substr(0, 10),
     menu1: false,
     menu2: false,
@@ -134,10 +133,13 @@ export default Vue.extend({
       subtitle: {
         text:
           document.ontouchstart === undefined
-            ? "鼠标拖动可以进行缩放"
-            : "手势操作进行缩放",
+            ? "鼠标拖动可以进行缩放，点击下方圆点可隐藏对应股票曲线"
+            : "手势操作进行缩放，点击下方圆点可隐藏对应股票曲线",
       },
       xAxis: {
+        title: {
+          text: "日期",
+        },
         type: "datetime",
         dateTimeLabelFormats: {
           millisecond: "%H:%M:%S.%L",
@@ -164,9 +166,10 @@ export default Vue.extend({
       },
       yAxis: {
         title: {
-          text: "ytitle",
+          text: "净值",
         },
       },
+
       plotOptions: {
         area: {
           marker: {
@@ -180,20 +183,25 @@ export default Vue.extend({
             threshold: null,
           },
         },
+        marker: {
+          enabled: false,
+          //radius: 10
+        },
       },
+
       series: [] as any,
     },
     headers: [
       {
-        text: "Name",
+        text: "基金编码",
         align: "start",
         sortable: false,
         value: "name",
       },
-      { text: "Increase (%)", value: "Increase" },
-      { text: "Drawdown (%)", value: "Drawdown" },
-      { text: "Sharpe Ratio", value: "Sharpe_Ratio" },
-      { text: "Volatility (%)", value: "Volatility" },
+      { text: "年化收益率 (%)", value: "Increase" },
+      { text: "最大回撤 (%)", value: "Drawdown" },
+      { text: "夏普率", value: "Sharpe_Ratio" },
+      { text: "年化波动率 (%)", value: "Volatility" },
     ],
     desserts: [] as any,
     min_unix_date: 946656000000,
@@ -203,12 +211,13 @@ export default Vue.extend({
   }),
   methods: {
     test() {
-      console.log(this.chartOptions.series)
       this.get_all_data()
     },
     reset() {
       this.min_unix_date = 946656000000
       this.max_unix_date = 4102416000000
+      this.start_date = "2000-01-01"
+      this.end_date = this.date
       this.init()
     },
     update() {
@@ -220,36 +229,46 @@ export default Vue.extend({
       }
       this.min_unix_date = start_unix_time.getTime()
       this.max_unix_date = end_unix_time.getTime()
-      this.init()
+      this.get_all_data()
     },
     get_all_url: async function () {
       this.url = api_url.select_all()
     },
     get_all_data: async function () {
+      // @ts-ignore
       var change_data = new Array()
+      // @ts-ignore
       var change_total = new Array()
       const min_unix_date = this.min_unix_date
       const max_unix_date = this.max_unix_date
+
       this.url.forEach(function (this_url) {
         const basic_data = api_fund.select(this_url.url)
         if (basic_data.length === 0) return
-        const p = this_url.url.search("danjuan") == -1
         var decode_data = new Array()
         let calc_data: FundInfo = []
+        var basic_line: number = 0
+        basic_data.sort(function (x, y) {
+          return x.date - y.date
+        })
+
         basic_data.forEach(function (each_data) {
           if (
             each_data.date >= min_unix_date &&
             each_data.date <= max_unix_date
           ) {
+            if (basic_line === 0) basic_line = each_data.value
             calc_data.push({
               date: each_data.date,
-              value: p ? each_data.value : each_data.value + 1,
+              value: each_data.value / basic_line,
             })
-            decode_data.push([
-              each_data.date,
-              p ? each_data.value : each_data.value + 1,
-            ])
+            decode_data.push([each_data.date, each_data.value / basic_line])
           }
+        })
+        if (calc_data.length === 0) return
+
+        calc_data.sort(function (x, y) {
+          return x.date - y.date
         })
         const tmp: FundCalc = api_calc.calc(calc_data)
         change_total.push({
@@ -259,16 +278,15 @@ export default Vue.extend({
           Sharpe_Ratio: tmp.sharpeRatio,
           Volatility: tmp.annualizedVolatility,
         })
+
         change_data.push({
           name: this_url.url.split("/").slice(-1),
           data: decode_data,
         })
       })
-      console.log(change_data)
+
       this.desserts = change_total
       this.chartOptions.series = change_data
-      // console.log(change_data)
-      // console.log(this.chartOptions.series)
     },
     unix_to_date(date: Date) {
       const Y = date.getFullYear() + "-"
@@ -293,5 +311,12 @@ export default Vue.extend({
   height: 400px;
   border: 1px solid #ddd;
   margin: auto;
+}
+.cent {
+  height: 60px;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -11,6 +11,6 @@ async function get(url) {
 
   return resp.data.data.fund_nav_growth.map((ele) => ({
     date: new Date(ele.date).valueOf(),
-    value: Number(ele.value),
+    value: Number(ele.value) + 1,
   }))
 }
