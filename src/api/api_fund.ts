@@ -32,17 +32,17 @@ export function select(url: string): FundInfo {
 }
 
 export function insert(url: string, data: FundInfo): void {
-  const last_update_stmt = db.prepare(
-    "update url set last_update = ? where url = ?"
-  )
-  const insert_stmt = db.prepare("insert into fund values (?,?,?)")
+  const clear = db.prepare("delete from fund where url = ?")
+  const update_last = db.prepare("update url set last_update = ? where url = ?")
+  const stmt = db.prepare("insert into fund values (?,?,?)")
   db.transaction(() => {
+    clear.run(url)
     let last_update = 0
     for (const ele of data) {
-      insert_stmt.run(url, ele.date, ele.value)
+      stmt.run(url, ele.date, ele.value)
       last_update = Math.max(last_update, ele.date)
     }
-    last_update_stmt.run(last_update, url)
+    update_last.run(last_update, url)
   })()
 }
 
