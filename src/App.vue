@@ -48,9 +48,6 @@
         <template v-else-if="current == 'Script'">
           <script-page />
         </template>
-        <template v-else-if="current == 'Help'">
-          <help-page />
-        </template>
         <template v-else> !! Error: current={{ current }} </template>
       </v-container>
     </v-main>
@@ -63,7 +60,6 @@ import fund_page from "./components/fund_page.vue"
 import url_page from "./components/url_page.vue"
 import website_page from "./components/website_page.vue"
 import script_page from "./components/script_page.vue"
-import help_page from "./components/help_page.vue"
 
 export default Vue.extend({
   name: "App",
@@ -73,7 +69,6 @@ export default Vue.extend({
     "website-page": website_page,
     "url-page": url_page,
     "script-page": script_page,
-    "help-page": help_page,
   },
 
   data: () => ({
@@ -82,7 +77,6 @@ export default Vue.extend({
       { title: "Website", icon: "mdi-feature-search", desc: "网站录入" },
       { title: "URL", icon: "mdi-link", desc: "URL管理" },
       { title: "Script", icon: "mdi-file-code-outline", desc: "脚本编辑" },
-      { title: "Help", icon: "mdi-help-box", desc: "帮助" },
     ],
     current: "Init",
   }),
