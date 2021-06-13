@@ -80,6 +80,10 @@
         class="elevation-1"
       ></v-data-table>
     </template>
+
+    <v-snackbar v-model="snackbar" :timeout="2000">
+      {{ snackbar_text }}
+    </v-snackbar>
   </div>
 </template>
 <script lang="ts">
@@ -123,6 +127,8 @@ export default Vue.extend({
     this.init()
   },
   data: () => ({
+    snackbar: false,
+    snackbar_text: "",
     date: new Date().toISOString().substr(0, 10),
     start_date: "2000-01-01",
     end_date: new Date().toISOString().substr(0, 10),
@@ -230,7 +236,7 @@ export default Vue.extend({
       const start_unix_time = new Date(this.start_date + " 00:00:00:000")
       const end_unix_time = new Date(this.end_date + " 00:00:00:000")
       if (start_unix_time.getTime() > end_unix_time.getTime()) {
-        window.alert("start time cann't large than end time!")
+        this.alert("起始时间不能大于结束时间！")
         return
       }
       this.min_unix_date = start_unix_time.getTime()
@@ -275,6 +281,7 @@ export default Vue.extend({
           return x.date - y.date
         })
         const tmp: FundCalc = api_calc.calc(calc_data)
+
         change_total.push({
           name: this_url.url.split("/").slice(-1),
           Increase: tmp.roi,
@@ -287,6 +294,18 @@ export default Vue.extend({
           name: this_url.url.split("/").slice(-1),
           data: decode_data,
         })
+      })
+
+      change_data.sort(function (x, y) {
+        if (x.name < y.name) return -1
+        if (x.name > y.name) return 1
+        return 0
+      })
+
+      change_total.sort(function (x, y) {
+        if (x.name < y.name) return -1
+        if (x.name > y.name) return 1
+        return 0
       })
 
       this.desserts = change_total
@@ -304,6 +323,11 @@ export default Vue.extend({
     init: async function () {
       await this.get_all_url()
       await this.get_all_data()
+    },
+    alert(msg: string): void {
+      this.snackbar = false
+      this.snackbar_text = msg
+      this.snackbar = true
     },
   },
 })
