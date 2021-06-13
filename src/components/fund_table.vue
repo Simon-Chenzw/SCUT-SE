@@ -134,7 +134,7 @@ export default Vue.extend({
         zoomType: "x",
       },
       title: {
-        text: "收益率曲线",
+        text: "收益曲线",
       },
       subtitle: {
         text:
