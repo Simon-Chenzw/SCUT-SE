@@ -6,7 +6,7 @@
   "author": "Simon-Chen",
   "private": true,
   "scripts": {
-    "prepare": "npx husky install && npx husky set .husky/pre-commit \"npx lint-staged\"",
+    "husky": "npx husky install && npx husky set .husky/pre-commit \"npx lint-staged\"",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
