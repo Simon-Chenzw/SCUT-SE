@@ -81,6 +81,7 @@
 
         <v-main>
             <div id="card" style="padding-top: 80px;">
+
                 <v-container fill-height fluid>
                     <v-row justify="center" style="justify-content: center">
 
@@ -94,7 +95,28 @@
                                     <v-card-text>
                                         {{question_info.desc}}
                                     </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="answer()"> 
+                                            answer_this_question
+                                            <v-btn icon>
+                                                <v-icon>{{ answer_show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                            </v-btn>
+                                        </v-btn>
+                                    </v-card-actions>
+
+                                    <v-expand-transition>
+                                        <div v-show="answer_show">
+                                            <v-container fluid>
+                                                <v-textarea v-model="answer_text" filled label="answer in here" auto-grow></v-textarea>
+                                            </v-container>
+                                            <v-btn @click="submit_answer()"> submit </v-btn>
+                                        </div>
+                                    </v-expand-transition>
+
                                 </v-card>
+
+                                <v-divider></v-divider>
 
                                 <v-card class="mx-auto" v-for="data in answer_datas">
 
@@ -129,8 +151,18 @@
                                             <v-card-text v-for="comment in data.comment_info">
                                                 {{comment.user.name}} : {{comment.text}}
                                             </v-card-text>
+
+                                            <v-divider></v-divider>
+
+                                            <v-container fluid>
+                                                <v-textarea v-model="comment_text" filled label="comment in here" auto-grow></v-textarea>
+                                            </v-container>
+                                            <v-btn @click="submit_comment(data.answer_info.aid)"> submit </v-btn>
                                         </div>
+
+                                            
                                     </v-expand-transition>
+
                                 </v-card>
                             </template>
                         </v-col>
@@ -196,10 +228,15 @@
         vuetify: new Vuetify(),
         data: () => ({
             show: false,
+            answer_show: false,
             question_info: undefined,
             answer_datas: [],
             answer_num: 0,
-            answer_loaded: false
+            answer_loaded: false,
+            dialog: false,
+            my_answer: undefined,
+            answer_text: undefined,
+            comment_text: undefined,
         }),
         mounted() {
             this.init()
@@ -347,6 +384,51 @@
                     }    
                 }
             },  
+            answer : async function() {
+                url = "/api/user/info"
+                axios.get(url).then(
+                    (resp) => {
+                        // await get_this_answer() TODO
+                        this.answer_show = !this.answer_show
+                    }
+                ).catch(
+                    (err) => window.alert("please login first")
+                )
+            },
+            submit_answer() {
+                url = "/api/answer/create?qid=" + this.question_info.qid
+                axios.post(url, {
+                    text: this.answer_text,
+                })
+                .then(function (resp) {
+                    window.alert("succeed")
+                    location.reload()
+                })
+                .catch(function (error) {
+                    window.alert("you have answered it!")
+                })
+                
+            },
+            submit_comment(aid) {
+                url = "/api/user/info"
+                axios.get(url).then(
+                    (resp) => {
+                        url = "/api/comment/create?aid=" + aid
+                        axios.post(url, {
+                            text: this.comment_text,
+                        })
+                        .then(function (resp) {
+                            window.alert("succeed")
+                        })
+                        .catch(function (error) {
+                            window.alert("failed")
+                        })
+                    }
+                ).catch(
+                    (err) => window.alert("please login first")
+                )
+                
+            }
         },
         destroyed() {
             window.removeEventListener('scroll', this.handleScroll)
