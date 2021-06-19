@@ -80,7 +80,30 @@
         </div>
 
         <v-main>
+
             <div id="card" style="padding-top: 80px;">
+
+                <v-card-actions>
+                    <v-btn text color="orange lighten-2" @click="ask()"> 
+                        ask_question
+                        <v-btn icon>
+                            <v-icon>{{ ask_show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                        </v-btn>
+                    </v-btn>
+                </v-card-actions>
+    
+                <v-expand-transition>
+                    <div v-show="ask_show">
+                        <v-container fluid>
+                            <v-textarea v-model="title" filled label="input title" auto-grow></v-textarea>
+                        </v-container>
+                        <v-container fluid>
+                            <v-textarea v-model="desc" filled label="input desc" auto-grow></v-textarea>
+                        </v-container>
+                        <v-btn @click="submit_question()"> submit </v-btn>
+                    </div>
+                </v-expand-transition>
+
                 <v-container fill-height fluid>
                     <v-row justify="center" style="justify-content: center">
 
@@ -197,7 +220,7 @@
             turn_to_user(uid) {
                 url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
                 window.open(url)
-            }
+            },
         }
     })
 
@@ -223,6 +246,9 @@
                     src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
                 },
             ],
+            title: undefined,
+            ask_show: false,
+            desc: undefined,
             datas: []
         }),
         mounted() {
@@ -300,7 +326,38 @@
             page_turn(qid) {
                 url = '/question.html?' + qid
                 window.open(url)
-            }
+            },
+            ask() {
+                url = "/api/user/info"
+                axios.get(url).then(
+                    (resp) => {
+                        // await get_this_answer() TODO
+                        this.ask_show = !this.ask_show
+                    }
+                ).catch(
+                    (err) => window.alert("please login first")
+                )
+            },
+            submit_question() {
+                if (this.title && this.desc) {
+                    url = "/api/question/create"
+                    axios.post(url, {
+                        title: this.title,
+                        desc: this.desc,
+                    }).then(
+                    (resp) => {
+                        window.alert("ask success")
+                        return
+                    }
+                    ).catch(
+                        (err) => {
+                            window.alert("please login first")
+                            return
+                        }
+                    )
+                }
+                window.alert("please input title & desc")
+            },
         },
         destroyed() {
             window.removeEventListener('scroll', this.handleScroll)
