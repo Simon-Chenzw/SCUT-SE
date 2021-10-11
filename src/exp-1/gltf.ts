@@ -3,16 +3,26 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 let vertexShader = `
-void main() {
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); 
+uniform float delta;
+
+void main()
+{
+    vec3 p = position.xyz;
+    float new_x = p.x*cos(delta) - p.y*sin(delta);
+    float new_y = p.y*cos(delta) + p.x*sin(delta);
+    
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(new_x, new_y, p.z, 1.0);
 }
 `
 
 let fragmentShader = `
-uniform vec3 color; 
+uniform float delta;
 
 void main() {
-    gl_FragColor = vec4(color.r, color.g, color.b, 1.0);
+    float co = cos(delta) / 2.0 + 0.5;
+    float si = sin(delta) / 2.0 + 0.5;
+
+    gl_FragColor = vec4(co, si, 0.0, 1.0);
 }
 `
 
@@ -20,21 +30,16 @@ class CustomMaterial extends ShaderMaterial {
     constructor() {
         super({
             uniforms: {
-                color: { value: new Color(0x808080) },
+                delta: { value: 0 }
             },
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
         })
     }
 
-    randColor(from: Color) {
-        from.r += (Math.random() - 0.5) * 0.02;
-        from.g += (Math.random() - 0.5) * 0.02;
-        from.b += (Math.random() - 0.5) * 0.02;
-    }
-
     update() {
-        this.randColor(this.uniforms.color.value);
+        this.uniforms.delta.value += 0.002;
+        if (this.uniforms.delta.value > 2 * Math.PI) this.uniforms.delta.value = 0;
     }
 }
 
