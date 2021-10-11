@@ -56,7 +56,7 @@ export class App {
 
     constructor() {
         const loader = new GLTFLoader()
-        loader.load('src/exp-1/scene.gltf', (gltf) => {
+        loader.load('./static/exp-1-gltf/scene.gltf', (gltf) => {
             gltf.scene.traverse((obj) => {
                 if (obj instanceof Mesh) obj.material = this.material
             })
