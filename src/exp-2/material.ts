@@ -1,4 +1,4 @@
-import { ShaderMaterial, Vector3, Vector4 } from 'three';
+import { ShaderMaterial, Vector3, Vector4 } from "three"
 
 // https://observablehq.com/@camargo/three-js-utah-teapot-with-a-custom-phong-shader-material
 
@@ -43,18 +43,18 @@ void main() {
 `
 
 export class LightMaterial extends ShaderMaterial {
-    constructor() {
-        super({
-            uniforms: {
-                Ka: { value: new Vector3(0.9, 0.5, 0.3) },
-                Kd: { value: new Vector3(0.9, 0.5, 0.3) },
-                Ks: { value: new Vector3(0.8, 0.8, 0.8) },
-                LightIntensity: { value: new Vector4(0.5, 0.5, 0.5, 1.0) },
-                LightPosition: { value: new Vector4(0.0, 2000.0, 0.0, 1.0) },
-                Shininess: { value: 200.0 }
-            },
-            vertexShader,
-            fragmentShader,
-        });
-    }
+  constructor() {
+    super({
+      uniforms: {
+        Ka: { value: new Vector3(0.9, 0.5, 0.3) },
+        Kd: { value: new Vector3(0.9, 0.5, 0.3) },
+        Ks: { value: new Vector3(0.8, 0.8, 0.8) },
+        LightIntensity: { value: new Vector4(0.5, 0.5, 0.5, 1.0) },
+        LightPosition: { value: new Vector4(0.0, 2000.0, 0.0, 1.0) },
+        Shininess: { value: 200.0 },
+      },
+      vertexShader,
+      fragmentShader,
+    })
+  }
 }
