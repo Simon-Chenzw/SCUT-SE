@@ -35,12 +35,12 @@ export class App {
       this.scene.add(gltf.scene)
     })
 
-    const ambient = new AmbientLight("white", 0.3)
-    this.scene.add(ambient)
+    // const ambient = new AmbientLight("white", 0.3)
+    // this.scene.add(ambient)
 
-    const diffuse = new PointLight("blue", 1, 0, 2)
-    diffuse.position.set(50, 50, 50)
-    this.scene.add(diffuse)
+    // const diffuse = new PointLight("blue", 1, 0, 2)
+    // diffuse.position.set(50, 50, 50)
+    // this.scene.add(diffuse)
 
     this.controls.target.set(
       11.29808356545446,

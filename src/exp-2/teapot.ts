@@ -40,12 +40,12 @@ export class App {
     const teapot = new Teapot()
     this.scene.add(teapot)
 
-    const ambient = new AmbientLight("white", 0.3)
-    this.scene.add(ambient)
+    // const ambient = new AmbientLight("white", 0.3)
+    // this.scene.add(ambient)
 
-    const diffuse = new PointLight("blue", 1, 0, 2)
-    diffuse.position.set(50, 50, 50)
-    this.scene.add(diffuse)
+    // const diffuse = new PointLight("blue", 1, 0, 2)
+    // diffuse.position.set(50, 50, 50)
+    // this.scene.add(diffuse)
 
     this.controls.target.set(0, 0, 0)
     this.controls.object.position.set(1000, 1000, 1500)
