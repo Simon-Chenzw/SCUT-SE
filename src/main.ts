@@ -5,7 +5,7 @@
 // import { App } from './exp-1/gltf';
 // import { App } from './exp-2/gltf';
 // import { App } from "./exp-2/teapot"
-import { App } from "./homework-5-2/5-16"
+import { App } from "./homework-6/app"
 
 declare global {
   interface Window {
