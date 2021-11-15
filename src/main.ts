@@ -6,7 +6,8 @@
 // import { App } from './exp-2/gltf';
 // import { App } from "./exp-2/teapot"
 // import { App } from "./homework-6/app"
-import { App } from "./exp-3/teapot"
+// import { App } from "./exp-3/teapot"
+import { App } from "./exp-4/scene"
 
 declare global {
   interface Window {
