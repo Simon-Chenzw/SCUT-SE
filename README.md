@@ -21,3 +21,4 @@ All homework in SCUT
     -   [computer_networks](./computer_networks/) 计算机网络
     -   [fund_analysis](https://github.com/Simon-Chenzw/fund_analysis) 数据库开发实训
 -   大三上
+    -   [computer_graphics](./computer_graphics) 计算机图形学
