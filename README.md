@@ -19,4 +19,5 @@ All homework in SCUT
     -   [database](./database/) 数据库系统
     -   [operating_system](./operating_system/) 操作系统
     -   [computer_networks](./computer_networks/) 计算机网络
+    -   [fund_analysis](https://github.com/Simon-Chenzw/fund_analysis) 数据库开发实训
 -   大三上
