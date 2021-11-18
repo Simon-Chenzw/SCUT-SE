@@ -1,0 +1,13 @@
+﻿f=imread('medicine_pic.jpg'); 
+imhist(f,256);title('直方图');
+figure();
+g1=imadjust(f,[0 1],[1 0]); 
+subplot(2,2,1);imshow(g1);title('负片图像');
+g2=imadjust(f,[0.5 0.75],[0 1]);
+subplot(2,2,2);imshow(g2),title('将灰度级扩展到[0 1]');
+g=imread('point.jpg');
+h=log(1+double(g)); 
+subplot(2,2,3);imshow(h),title('对数映射变换图'); 
+h=mat2gray(h); 
+h=im2uint8(h); 
+subplot(2,2,4);imshow(h);title('转换为 8 位图');

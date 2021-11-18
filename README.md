@@ -22,3 +22,4 @@ All homework in SCUT
     -   [fund_analysis](https://github.com/Simon-Chenzw/fund_analysis) 数据库开发实训
 -   大三上
     -   [computer_graphics](./computer_graphics) 计算机图形学
+    -   [image_processing](./image_processing) 图像处理基础
