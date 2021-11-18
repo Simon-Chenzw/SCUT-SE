@@ -27,4 +27,8 @@ export class DataBase {
     this.tables.push({ name, table });
     return table;
   }
+
+  static restore(json: string): DataBase {
+    return JSON.parse(json);
+  }
 }

@@ -1,30 +1,29 @@
 <template>
-  <v-container>
-    <template>
-      <v-container> `TODO: excel requirement here` </v-container>
-      <v-row>
-        <v-col cols="7">
-          <v-container>
-            <input type="file" accept=".xls,.xlsx" ref="excel_input" />
-          </v-container>
-        </v-col>
-        <v-spacer />
-        <v-col cols="4">
-          <v-container>
-            <v-btn outlined color="cyan" @click="solve">
-              <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
-            </v-btn>
-          </v-container>
-        </v-col>
-      </v-row>
-    </template>
-  </v-container>
+  <v-card elevation="2">
+    <v-card-title> 上传 excel </v-card-title>
+    <v-card-text>
+      <v-container>
+        格式要求：
+        <ol>
+          <li>一个文件可以有多个表</li>
+          <li>每个表的第一行为字段名称</li>
+          <li>接下来每一行为一个记录</li>
+        </ol>
+      </v-container>
+    </v-card-text>
+    <v-card-actions>
+      <input type="file" accept=".xls,.xlsx" ref="excel_input" hidden />
+      <v-btn outlined color="cyan" @click="inputEle().click()">
+        <v-icon>mdi-microsoft-excel</v-icon>
+      </v-btn>
+    </v-card-actions>
+  </v-card>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { CellValue, Workbook } from "exceljs";
 import { DataBase } from "@/util/data";
+import { CellValue, Workbook } from "exceljs";
+import Vue from "vue";
 
 export default Vue.extend({
   name: "load_excel",
@@ -34,44 +33,27 @@ export default Vue.extend({
   },
 
   mounted() {
-    const db = this.loadLocal();
-    if (db) {
-      console.log("reuse excel in local");
-      this.load(db);
-    }
+    // event on input file
+    const ele = this.inputEle();
+    ele.onchange = () => {
+      if (ele.files?.length) {
+        this.readFile(ele.files[0]);
+      }
+    };
   },
 
-  data: () => ({
-    excel: undefined as number | undefined,
-  }),
-
   methods: {
-    saveLocal(db: DataBase): void {
-      window.localStorage.setItem("save_type", "excel");
-      window.localStorage.setItem("execl_save", JSON.stringify(db));
+    inputEle(): HTMLInputElement {
+      return this.$refs.excel_input as HTMLInputElement;
     },
 
-    loadLocal(): DataBase | null {
-      if (window.localStorage.getItem("save_type") != "excel") {
-        return null;
-      }
-      const save = window.localStorage.getItem("execl_save");
-      return save && JSON.parse(save);
-    },
-
-    solve(): void {
-      const ele = this.$refs.excel_input as HTMLInputElement;
-      if (ele.files?.length) {
-        const wb = new Workbook();
-        ele.files[0]
-          .arrayBuffer()
-          .then((buf) => wb.xlsx.load(buf))
-          .then((wb) => {
-            const db = this.collect(wb);
-            this.saveLocal(db);
-            this.load(db);
-          });
-      }
+    readFile(f: File): void {
+      const wb = new Workbook();
+      f.arrayBuffer()
+        .then((buf) => wb.xlsx.load(buf))
+        .then((wb) => {
+          this.load(this.collect(wb));
+        });
     },
 
     // parse excel to database
