@@ -2,6 +2,7 @@ package symbols;
 
 import lexer.Tag;
 
+// 储存数组
 public class Array extends Type {
 	public Type of;
 	public int size = 1;

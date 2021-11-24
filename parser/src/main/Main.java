@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import parser.Parser;
 import lexer.Lexer;
+import lexer.Token;
 
 public class Main {
 
@@ -15,4 +16,13 @@ public class Main {
 		System.out.print("\n");
 	}
 
+	// public static void main(String[] args) throws IOException {
+	// Lexer lexer = new Lexer();
+	// Token token = lexer.scan();
+	// while (token.tag != 65535) {
+	// System.out.println("(" + Integer.toString(token.tag) + ", " +
+	// token.toString() + " )");
+	// token = lexer.scan();
+	// }
+	// }
 }

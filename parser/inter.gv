@@ -1,0 +1,40 @@
+digraph G {
+    // 箭头从下到上
+    rankdir=BT; 
+    // 默认方形
+    node [shape = "record", fontname = "Consolas"]
+    // 默认空箭头
+    edge [arrowhead = "empty", fontname = "Consolas"]
+
+    "class graph in inter" [shape = plaintext];
+
+    "Node"
+
+    "Stmt" -> "Node"
+    "Expr" -> "Node"
+
+    "Set" -> "Stmt"
+    "SetElem" -> "Stmt"
+    "If" -> "Stmt"
+    "Else" -> "Stmt"
+    "For" -> "Stmt"
+    "While" -> "Stmt"
+    "Do" -> "Stmt"
+    "Break" -> "Stmt"
+    "Seq" -> "Stmt"
+
+    "Id" -> "Expr"
+    "Constant" -> "Expr"
+    "Temp" -> "Expr"
+    "Logical" -> "Expr"
+    "Op" -> "Expr"
+
+    "And" -> "Logical"
+    "Or" -> "Logical"
+    "Rel" -> "Logical"
+    "Not" -> "Logical"
+
+    "Access" -> "Op"
+    "Unary" -> "Op"
+    "Arith" -> "Op"
+}

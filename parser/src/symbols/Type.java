@@ -3,6 +3,7 @@ package symbols;
 import lexer.Tag;
 import lexer.Word;
 
+// 储存类型数据
 public class Type extends Word {
 	public int width = 0;
 

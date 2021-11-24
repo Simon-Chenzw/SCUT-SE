@@ -8,6 +8,7 @@ import inter.Constant;
 import inter.Do;
 import inter.Else;
 import inter.Expr;
+import inter.For;
 import inter.Id;
 import inter.If;
 import inter.Not;
@@ -43,6 +44,7 @@ public class Parser {
 		move();
 	}
 
+	// 获取下一个 token
 	void move() throws IOException {
 		look = lex.scan();
 	}
@@ -51,6 +53,7 @@ public class Parser {
 		throw new Error("near line " + lex.line + ": " + s);
 	}
 
+	// 断定下一个 token
 	void match(int t) throws IOException {
 		if (look.tag == t)
 			move();
@@ -58,6 +61,7 @@ public class Parser {
 			error("syntax error");
 	}
 
+	// 解析 程序 （即整个文本）
 	public void program() throws IOException { // program -> block
 		// build the syntax tree
 		Stmt s = block();
@@ -66,30 +70,35 @@ public class Parser {
 		s.display();
 	}
 
+	// 解析 block
 	Stmt block() throws IOException { // block -> { decls stmts }
 		match('{');
+		// 建立新 env
 		Env savedEnv = top;
 		top = new Env(top);
 		decls();
 		Stmt s = stmts();
 		match('}');
+		// 恢复 env
 		top = savedEnv;
 		return s;
 	}
 
+	// 解析变量声明
 	void decls() throws IOException {
-
+		// 循环处理声明
 		while (look.tag == Tag.BASIC) { // D -> type ID ;
-			Type p = type();
+			Type p = type(); // 类型
 			Token tok = look;
 			match(Tag.ID);
 			match(';');
 			Id id = new Id((Word) tok, p, used);
-			top.put(tok, id);
-			used = used + p.width;
+			top.put(tok, id); // 保存在 env
+			used = used + p.width; // 开辟空间
 		}
 	}
 
+	// 获取当前类型，单个 or 数组
 	Type type() throws IOException {
 
 		Type p = (Type) look; // expect look.tag == Tag.BASIC
@@ -100,6 +109,7 @@ public class Parser {
 			return dims(p); // return array type
 	}
 
+	// 获取数组大小 并返回 Array
 	Type dims(Type p) throws IOException {
 		match('[');
 		Token tok = look;
@@ -110,6 +120,7 @@ public class Parser {
 		return new Array(((Num) tok).value, p);
 	}
 
+	// 解析多条语句
 	Stmt stmts() throws IOException {
 		if (look.tag == '}')
 			return Stmt.Null;
@@ -117,6 +128,7 @@ public class Parser {
 			return new Seq(stmt(), stmts());
 	}
 
+	// 解析单条语句
 	Stmt stmt() throws IOException {
 		Expr x;
 		Stmt s, s1, s2;
@@ -139,6 +151,25 @@ public class Parser {
 			match(Tag.ELSE);
 			s2 = stmt();
 			return new Else(x, s1, s2);
+
+		case Tag.FOR:// stmt -> for (assign;bool;assign) stmt
+			For fornode = new For();
+			savedStmt = Stmt.Enclosing;
+			Stmt.Enclosing = fornode;
+			match(Tag.FOR);
+			// inner stmt start
+			match('(');
+			s1 = assign_without_semi();
+			match(';');
+			x = bool();
+			match(';');
+			s2 = assign_without_semi();
+			match(')');
+			// inner stmt end
+			s = stmt();
+			fornode.init(s1, x, s2, s);
+			Stmt.Enclosing = savedStmt; // reset Stmt.Enclosing
+			return fornode;
 
 		case Tag.WHILE:
 			While whilenode = new While();
@@ -181,6 +212,7 @@ public class Parser {
 		}
 	}
 
+	// 赋值语句
 	Stmt assign() throws IOException {
 		Stmt stmt;
 		Token t = look;
@@ -201,6 +233,29 @@ public class Parser {
 		return stmt;
 	}
 
+	// 赋值语句 无分号
+	// 用于 for 语句
+	Stmt assign_without_semi() throws IOException {
+		Stmt stmt;
+		Token t = look;
+		match(Tag.ID);
+		Id id = top.get(t);
+		if (id == null)
+			error(t.toString() + " undeclared");
+
+		if (look.tag == '=') { // S -> id = E ;
+			move();
+			stmt = new Set(id, bool());
+		} else { // S -> L = E ;
+			Access x = offset(id);
+			match('=');
+			stmt = new SetElem(x, bool());
+		}
+		return stmt;
+	}
+
+	// bool 表达式
+	// 处理 or
 	Expr bool() throws IOException {
 		Expr x = join();
 		while (look.tag == Tag.OR) {
@@ -211,6 +266,7 @@ public class Parser {
 		return x;
 	}
 
+	// 处理 and
 	Expr join() throws IOException {
 		Expr x = equality();
 		while (look.tag == Tag.AND) {
@@ -221,6 +277,7 @@ public class Parser {
 		return x;
 	}
 
+	// 处理 相等/不等
 	Expr equality() throws IOException {
 		Expr x = rel();
 		while (look.tag == Tag.EQ || look.tag == Tag.NE) {
@@ -231,6 +288,7 @@ public class Parser {
 		return x;
 	}
 
+	// 处理比较
 	Expr rel() throws IOException {
 		Expr x = expr();
 		switch (look.tag) {
@@ -246,6 +304,7 @@ public class Parser {
 		}
 	}
 
+	// 处理加减
 	Expr expr() throws IOException {
 		Expr x = term();
 		while (look.tag == '+' || look.tag == '-') {
@@ -256,6 +315,7 @@ public class Parser {
 		return x;
 	}
 
+	// 处理乘除
 	Expr term() throws IOException {
 		Expr x = unary();
 		while (look.tag == '*' || look.tag == '/') {
@@ -266,6 +326,7 @@ public class Parser {
 		return x;
 	}
 
+	// 处理一元运算符
 	Expr unary() throws IOException {
 		if (look.tag == '-') {
 			move();
@@ -278,6 +339,7 @@ public class Parser {
 			return factor();
 	}
 
+	// 处理 括号/常量
 	Expr factor() throws IOException {
 		Expr x = null;
 		switch (look.tag) {

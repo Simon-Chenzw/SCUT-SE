@@ -5,10 +5,11 @@ import java.util.Hashtable;
 
 import symbols.Type;
 
+// 词法分析器
 public class Lexer {
 	public static int line = 1;
 	char peek = ' ';
-	Hashtable words = new Hashtable();
+	Hashtable<String, Word> words = new Hashtable<String, Word>();
 
 	void reserve(Word w) {
 		words.put(w.lexeme, w);
@@ -20,6 +21,7 @@ public class Lexer {
 		reserve(new Word("while", Tag.WHILE));
 		reserve(new Word("do", Tag.DO));
 		reserve(new Word("break", Tag.BREAK));
+		reserve(new Word("for", Tag.FOR));
 
 		reserve(Word.True);
 		reserve(Word.False);
