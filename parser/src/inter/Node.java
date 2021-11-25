@@ -2,6 +2,9 @@ package inter;
 
 import lexer.Lexer;
 
+/**
+ * 语法树中的基础类型，inter 中所有类型的基类。所有类型的继承关系详见： inter.gv / inter.png
+ */
 public class Node {
 	int lexline = 0;
 

@@ -32,6 +32,9 @@ import lexer.Token;
 import lexer.Word;
 import lexer.Num;
 
+/**
+ * Parser：本次实验的核心部分，内含 Lexer ，有多个成员函数负责构建语法树，主要入口为 program()
+ */
 public class Parser {
 
 	private Lexer lex; // lexical analyzer for this parser

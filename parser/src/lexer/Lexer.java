@@ -5,7 +5,9 @@ import java.util.Hashtable;
 
 import symbols.Type;
 
-// 词法分析器
+/**
+ * 词法分析器： 负责从分本形式的代码中分割 Token 供 parser 使用
+ */
 public class Lexer {
 	public static int line = 1;
 	char peek = ' ';
