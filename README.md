@@ -7,3 +7,9 @@ The experimental content of the compilation principle course
 scanner
 
 run: `cd scanner && make`
+
+# exp-2
+
+parser
+
+run: `cd parser && make`
