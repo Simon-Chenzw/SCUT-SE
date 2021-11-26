@@ -36,6 +36,8 @@ public class For extends Stmt {
 
     public void display() {
         emit("stmt : for begin");
+        first.display();
+        third.display();
         stmt.display();
         emit("stmt : for end");
     }
