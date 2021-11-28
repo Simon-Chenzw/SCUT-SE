@@ -42,12 +42,12 @@ export default Vue.extend({
       },
     ],
     prizes: [
-      { fonts: [{ text: "0" }], background: "#e9e8fe" },
-      { fonts: [{ text: "1" }], background: "#b8c5f2" },
-      { fonts: [{ text: "2" }], background: "#e9e8fe" },
-      { fonts: [{ text: "3" }], background: "#b8c5f2" },
-      { fonts: [{ text: "4" }], background: "#e9e8fe" },
-      { fonts: [{ text: "5" }], background: "#b8c5f2" },
+      { fonts: [{ text: "" }], background: "#e9e8fe" },
+      { fonts: [{ text: "" }], background: "#b8c5f2" },
+      { fonts: [{ text: "" }], background: "#e9e8fe" },
+      { fonts: [{ text: "" }], background: "#b8c5f2" },
+      { fonts: [{ text: "" }], background: "#e9e8fe" },
+      { fonts: [{ text: "" }], background: "#b8c5f2" },
     ],
   }),
 
