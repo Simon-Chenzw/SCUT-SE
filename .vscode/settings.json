@@ -1,0 +1,5 @@
+{
+    "python.analysis.typeCheckingMode": "basic",
+    "python.linting.enabled": false,
+    "python.analysis.diagnosticMode": "workspace"
+}
