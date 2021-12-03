@@ -1,12 +1,32 @@
+import contextlib
+import contextvars
+import os
 import shutil
 from pathlib import Path
-from typing import Callable, Iterator, Literal, Union
+from typing import Callable, Iterator, List, Literal, TypeVar, Union
 
-import cfg
 import cv2
 import numpy as np
+from rich.progress import Progress
+
+import cfg
 
 SolveFunc = Callable[[np.ndarray], np.ndarray]
+
+fname_var = contextvars.ContextVar('fname')  # without extension
+output_dir_var = contextvars.ContextVar('output_dir')  # without extension
+output_dir_var.set(cfg.TMP_DIR)
+
+T = TypeVar('T')
+
+
+@contextlib.contextmanager
+def ctx_set(ctx: contextvars.ContextVar, var: T) -> Iterator[T]:
+    token = ctx.set(var)
+    try:
+        yield var
+    finally:
+        ctx.reset(token)
 
 
 def run(
@@ -30,9 +50,18 @@ def runAll(
 
     dst_dir.mkdir(parents=True, exist_ok=True)
 
-    for name in fnameAll():  # TODO:progress bar
-        print(name)
-        run(func, src_dir / name, dst_dir / name)
+    with ctx_set(output_dir_var, dst_dir):
+        with Progress() as progress:
+            names = fnameAll()
+            task = progress.add_task("Solving...", total=len(names))
+
+            for name in names:
+                progress.update(task, description=f"Solving...   {name}")
+
+                with ctx_set(fname_var, os.path.splitext(name)[0]):
+                    run(func, src_dir / name, dst_dir / name)
+
+                progress.update(task, advance=1)
 
 
 def fname(
@@ -43,12 +72,11 @@ def fname(
     return f"{num}_{a}_{b}.png"
 
 
-def fnameAll() -> Iterator[str]:
-    for i in range(cfg.IMAGE_TOTAL):
-        yield fname(i, 'LF')
-        yield fname(i, 'RF')
-        yield fname(i, 'LB')
-        yield fname(i, 'RB')
+def fnameAll() -> List[str]:
+    return [
+        fname(i, s) for i in range(cfg.IMAGE_TOTAL)  # type: ignore
+        for s in ['LB', 'LF', 'RB', 'RF']
+    ]
 
 
 if __name__ == "__main__":
