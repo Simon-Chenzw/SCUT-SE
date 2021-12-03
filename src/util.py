@@ -14,6 +14,7 @@ import cfg
 SolveFunc = Callable[[np.ndarray], np.ndarray]
 
 fname_var = contextvars.ContextVar('fname')  # without extension
+fname_var.set('tmp')
 output_dir_var = contextvars.ContextVar('output_dir')  # without extension
 output_dir_var.set(cfg.TMP_DIR)
 

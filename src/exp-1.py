@@ -1,8 +1,8 @@
 import cv2
+import shutil
 import numpy as np
 from matplotlib import pyplot as plt
 from rich import print
-
 import cfg
 import util
 
@@ -40,59 +40,71 @@ def HomomorphicFiltering(img: np.ndarray, sigma: int = 10) -> np.ndarray:
     result = img_fft * mask
     img_out_log = np.real(np.fft.ifft2(result))[0:rows, 0:cols]
     img_out: np.ndarray = np.expm1(img_out_log)
+    return img_out
 
-    # remove highlight
-    # 考虑到图片中存在无用高光
-    # 直接采取比例截取的方式
-    highlight_remove_rate = 0.0005
-    highlight_remove_pos = int(rows * cols * highlight_remove_rate)
-    highlight_remove_val: float = np.partition(
-        img_out.flat, -(highlight_remove_pos + 1))[-(highlight_remove_pos + 1)]
 
-    img_clip = np.clip(img_out, img_out.min(), highlight_remove_val)
-    remove_rate = ((img_clip.max() - img_out.min()) /
-                   (img_out.max() - img_out.min()))
+def clip(img: np.ndarray, rate: float) -> np.ndarray:
+    """
+    考虑到图片中存在无用高光
+    直接采取比例截取的方式
+    """
+    hlr_pos = int(img.size * rate)
+    hlr_val: float = np.partition(img.flat, -(hlr_pos + 1))[-(hlr_pos + 1)]
+    return img.clip(img.min(), hlr_val)
 
-    print(f"{util.fname_var.get()} {highlight_remove_pos=} {remove_rate=:%}")
 
-    return normalized(img_clip)
+def gammaCorrection(img: np.ndarray, gamma: float):
+    img = (img - np.min(img)) / (np.max(img) - np.min(img))
+    return img**gamma
 
 
 def solve(img: np.ndarray) -> np.ndarray:
+    def debug(suffix: str):
+        if cfg.DEBUG and __name__ == "__main__":
+            if hasattr(debug, 'cnt'):
+                debug.cnt += 1
+            else:
+                debug.cnt = 1
+            cv2.imwrite(
+                str(util.output_dir_var.get() /
+                    f"{util.fname_var.get()}_{debug.cnt}__{suffix}.png"),
+                normalized(img),
+            )
+
+            plt.hist(normalized(img).ravel(), 256, (0, 256))
+            plt.savefig(
+                str(util.output_dir_var.get() /
+                    f"{util.fname_var.get()}_{debug.cnt}_hist_{suffix}.png"))
+            plt.clf()
+
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)  # 灰度图
+    debug('grey')
+
     img = cv2.medianBlur(img, 3)  # 中值滤波
+    debug("median")
+
     img = HomomorphicFiltering(img)  # 同态滤波
+    debug('gauss_high')
 
-    if cfg.DEBUG:
-        plt.hist(img.ravel(), 256, (0, 256))
-        plt.savefig(
-            str(util.output_dir_var.get() /
-                f"{util.fname_var.get('tmp')}_hist.png"))
-        plt.clf()
+    img = clip(img, 0.001)  # 裁剪
+    debug('clip')
 
-        cv2.imwrite(
-            str(util.output_dir_var.get() /
-                f"{util.fname_var.get('tmp')}_max_200.png"),
-            (img > 200).astype(np.uint8) * 255,
-        )
+    img = gammaCorrection(img, 0.7)  # 伽马校正
+    debug("gamma")
 
-        cv2.imwrite(
-            str(util.output_dir_var.get() /
-                f"{util.fname_var.get('tmp')}_max_255.png"),
-            (img == 255).astype(np.uint8) * 255,
-        )
-
-    return img
+    return normalized(img)
 
 
 if __name__ == "__main__":
-    util.runAll(
-        solve,
-        cfg.IMAGE_PREFIX,
-        cfg.OUTPUT_DIR / "exp-1",
-        clean=True,
-    )
+    # util.runAll(
+    #     solve,
+    #     cfg.IMAGE_PREFIX,
+    #     cfg.OUTPUT_DIR / "exp-1",
+    #     clean=True,
+    # )
 
-    # cfg.TMP_DIR.mkdir(exist_ok=True)
-    # img = cv2.imread(str(cfg.IMAGE_PREFIX / "17_L_B.png"))
-    # cv2.imwrite(str(cfg.TMP_DIR / "tmp.png"), solve(img))
+    if cfg.TMP_DIR.exists():
+        shutil.rmtree(cfg.TMP_DIR)
+    cfg.TMP_DIR.mkdir(exist_ok=True)
+    img = cv2.imread(str(cfg.IMAGE_PREFIX / "17_L_B.png"))
+    cv2.imwrite(str(cfg.TMP_DIR / "tmp.png"), solve(img))
