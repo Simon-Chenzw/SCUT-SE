@@ -9,6 +9,8 @@ PROJECT_DIR = SRC_DIR.parent
 IMAGE_TOTAL = 47  # 0 ~ 46
 IMAGE_PREFIX = PROJECT_DIR / "data" / "images"
 
+EXP_2_BENCHMARK = PROJECT_DIR / "data" / "exp-2-benchmark"
+
 OUTPUT_DIR = PROJECT_DIR / "dest"
 
 TMP_DIR = PROJECT_DIR / "tmp"

@@ -2,6 +2,7 @@ import cv2
 import shutil
 import numpy as np
 from matplotlib import pyplot as plt
+from numpy.core.defchararray import equal
 from rich import print
 import cfg
 import util
@@ -86,7 +87,7 @@ def solve(img: np.ndarray) -> np.ndarray:
     img = HomomorphicFiltering(img)  # 同态滤波
     debug('gauss_high')
 
-    img = clip(img, 0.001)  # 裁剪
+    img = clip(img, 0.001)  # 去除高光
     debug('clip')
 
     img = gammaCorrection(img, 0.7)  # 伽马校正
@@ -96,15 +97,15 @@ def solve(img: np.ndarray) -> np.ndarray:
 
 
 if __name__ == "__main__":
-    # util.runAll(
-    #     solve,
-    #     cfg.IMAGE_PREFIX,
-    #     cfg.OUTPUT_DIR / "exp-1",
-    #     clean=True,
-    # )
+    util.runAll(
+        solve,
+        cfg.IMAGE_PREFIX,
+        cfg.OUTPUT_DIR / "exp-1",
+        clean=True,
+    )
 
-    if cfg.TMP_DIR.exists():
-        shutil.rmtree(cfg.TMP_DIR)
-    cfg.TMP_DIR.mkdir(exist_ok=True)
-    img = cv2.imread(str(cfg.IMAGE_PREFIX / "17_L_B.png"))
-    cv2.imwrite(str(cfg.TMP_DIR / "tmp.png"), solve(img))
+    # if cfg.TMP_DIR.exists():
+    #     shutil.rmtree(cfg.TMP_DIR)
+    # cfg.TMP_DIR.mkdir(exist_ok=True)
+    # img = cv2.imread(str(cfg.IMAGE_PREFIX / "0_L_B.png"))
+    # cv2.imwrite(str(cfg.TMP_DIR / "tmp.png"), solve(img))
