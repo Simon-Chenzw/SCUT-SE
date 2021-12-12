@@ -182,9 +182,12 @@ def threshSolve(img: np.ndarray) -> np.ndarray:
                 img,
             )
 
-    cfg.DEBUG = False
-    img = exp1.solve(img)
-    cfg.DEBUG = True
+    if cfg.DEBUG:
+        cfg.DEBUG = False
+        img = exp1.solve(img)
+        cfg.DEBUG = True
+    else:
+        img = exp1.solve(img)
     debug("origin")
 
     img = cv2.GaussianBlur(img, (3, 3), 5)

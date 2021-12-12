@@ -32,7 +32,7 @@ def HomomorphicFiltering(img: np.ndarray, sigma: int = 10) -> np.ndarray:
         centerX, centerY = np.ceil(N / 2), np.ceil(M / 2)
         gaussianNumerator = (X - centerX)**2 + (Y - centerY)**2
         Hlow = np.exp(-gaussianNumerator / (2 * sigma * sigma))
-        Hhigh = 1 - Hlow
+        Hhigh = 1 - Hlow  # type: ignore
         return Hhigh
 
     img_log = np.log1p(img.astype(np.float_) / 255)
@@ -40,7 +40,7 @@ def HomomorphicFiltering(img: np.ndarray, sigma: int = 10) -> np.ndarray:
     mask = np.fft.ifftshift(GaussianHighPass())
     result = img_fft * mask
     img_out_log = np.real(np.fft.ifft2(result))[0:rows, 0:cols]
-    img_out: np.ndarray = np.expm1(img_out_log)
+    img_out: np.ndarray = np.expm1(img_out_log)  # type:ignore
     return img_out
 
 
@@ -54,9 +54,9 @@ def clip(img: np.ndarray, rate: float) -> np.ndarray:
     return img.clip(img.min(), hlr_val)
 
 
-def gammaCorrection(img: np.ndarray, gamma: float):
+def gammaCorrection(img: np.ndarray, gamma: float) -> np.ndarray:
     img = (img - np.min(img)) / (np.max(img) - np.min(img))
-    return img**gamma
+    return img**gamma  # type: ignore
 
 
 def solve(img: np.ndarray) -> np.ndarray:
