@@ -8,6 +8,7 @@ public class If extends Stmt {
 
    public If(Expr x, Stmt s) {
       expr = x;  stmt = s;
+      // 检查控制语句中的表达式为 bool
       if( expr.type != Type.Bool ) expr.error("boolean required in if");
    }
 

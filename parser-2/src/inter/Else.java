@@ -8,6 +8,7 @@ public class Else extends Stmt {
 
    public Else(Expr x, Stmt s1, Stmt s2) {
       expr = x; stmt1 = s1; stmt2 = s2;
+      // 检查控制语句中的表达式为 bool
       if( expr.type != Type.Bool ) expr.error("boolean required in if");
    }
    public void gen(int b, int a) {

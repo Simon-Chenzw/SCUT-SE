@@ -2,6 +2,8 @@ package inter;
 
 import lexer.Token;
 
+// 逻辑或
+// 主要逻辑位于 Logical 父类
 public class Or extends Logical {
 
    public Or(Token tok, Expr x1, Expr x2) { super(tok, x1, x2); }

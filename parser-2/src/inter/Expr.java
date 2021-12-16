@@ -3,6 +3,9 @@ package inter;
 import symbols.Type;
 import lexer.Token;
 
+// 表达式 Node
+// type 储存了当前表达式的类型，
+// 供语义分析
 public class Expr extends Node{
 
 	public Token op;

@@ -32,6 +32,10 @@ import lexer.Token;
 import lexer.Word;
 import lexer.Num;
 
+// 语法解析器
+// 绝大部分功能与实验二相同
+// 不再添加赘述注释
+// 添加的注释主要位于 inter.*
 public class Parser {
 
 	   private Lexer lex;    // lexical analyzer for this parser
@@ -66,6 +70,9 @@ public class Parser {
 	      return s;
 	   }
 
+	   // 变量声明
+	   // 获取 type 和 tok
+	   // 将 Id 存入 top 这个 env 中
 	   void decls() throws IOException {
 
 	      while( look.tag == Tag.BASIC ) {   // D -> type ID ;
@@ -157,6 +164,8 @@ public class Parser {
 	      }
 	   }
 	   
+	   // for 循环的赋值语句
+	   // 通过 top.get 获取赋值对象的 Id
 	   Stmt forassign() throws IOException {
 		      Stmt stmt;  Token t = look;
 		      match(Tag.ID);
@@ -173,6 +182,8 @@ public class Parser {
 		      return stmt;
 	   }
 
+	   // 正常的赋值语句
+	   // 通过 top.get 获取赋值对象的 Id
 	   Stmt assign() throws IOException {
 	      Stmt stmt;  Token t = look;
 	      match(Tag.ID);
@@ -190,6 +201,9 @@ public class Parser {
 	      return stmt;
 	   }
 
+	   // 以下多个函数为表达式的生成方式
+	   // 采用递归下降的分析方法
+	   // 语义分析 类型检查 内含与 Expr 的 Node 中
 	   Expr bool() throws IOException {
 	      Expr x = join();
 	      while( look.tag == Tag.OR ) {

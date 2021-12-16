@@ -10,6 +10,7 @@ public class Do extends Stmt {
 
    public void init(Stmt s, Expr x) {
       expr = x; stmt = s;
+      // 检查控制语句中的表达式为 bool
       if( expr.type != Type.Bool ) expr.error("boolean required in do");
    }
 

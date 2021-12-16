@@ -3,6 +3,9 @@ package inter;
 import symbols.Type;
 import lexer.Token;
 
+
+// 逻辑运算的主要逻辑
+// 语义检查部分主要为 check 成员函数
 public class Logical extends Expr{
 	public Expr expr1, expr2;
 	Logical(Token tok, Expr x1, Expr x2){
@@ -12,6 +15,7 @@ public class Logical extends Expr{
 		if(type==null) error("type error");
 	}
 	
+	// 检查 p1 与 p2 是否都是 bool
 	public Type check(Type p1, Type p2){
 		if(p1==Type.Bool&&p2==Type.Bool) return Type.Bool;
 		else return null;

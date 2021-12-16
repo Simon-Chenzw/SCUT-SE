@@ -10,12 +10,13 @@ public class For extends Stmt {
 	public void init(Stmt s1, Expr x, Stmt s2, Stmt s3) {
 		expr = x; stmt1 = s1; stmt2 = s2; stmt3 = s3;
 		//此处添加对for语句的条件表达式的类型检查，有类型错误时提示for语句语义错误
+		// 检查控制语句中的表达式为 bool
 		if (expr.type != Type.Bool)
 			expr.error("boolean required in while");
-		// stmt1 - Set or SetElem
+		// 初始化语句应为 Set or SetElem
 		if (!(stmt1 instanceof Set || stmt1 instanceof SetElem))
 			stmt1.error("stmt1 must be a assign");
-		// stmt2 - Set or SetElem
+		// 步增语句应为 Set or SetElem
 		if (!(stmt2 instanceof Set || stmt2 instanceof SetElem))
 			stmt2.error("stmt2 must be a assign");
 	}

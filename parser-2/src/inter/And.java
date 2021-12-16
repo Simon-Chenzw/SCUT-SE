@@ -2,6 +2,8 @@ package inter;
 
 import lexer.Token;
 
+// 逻辑并
+// 主要逻辑位于 Logical 父类
 public class And extends Logical{
 	public And(Token tok, Expr x1, Expr x2) { super(tok,x1,x2);}
 	
