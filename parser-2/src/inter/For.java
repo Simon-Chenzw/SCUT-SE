@@ -12,7 +12,7 @@ public class For extends Stmt {
 		//此处添加对for语句的条件表达式的类型检查，有类型错误时提示for语句语义错误
 		// 检查控制语句中的表达式为 bool
 		if (expr.type != Type.Bool)
-			expr.error("boolean required in while");
+			expr.error("boolean required in For");
 		// 初始化语句应为 Set or SetElem
 		if (!(stmt1 instanceof Set || stmt1 instanceof SetElem))
 			stmt1.error("stmt1 must be a assign");
