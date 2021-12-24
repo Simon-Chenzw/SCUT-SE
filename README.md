@@ -23,3 +23,4 @@ All homework in SCUT
 -   大三上
     -   [computer_graphics](./computer_graphics) 计算机图形学
     -   [image_processing](./image_processing) 图像处理基础
+    -   [compilation_principle](./compilation_principle) 编译技术
