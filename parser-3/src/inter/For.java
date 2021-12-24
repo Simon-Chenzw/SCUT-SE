@@ -12,6 +12,25 @@ public class For extends Stmt {
 		if( expr.type != Type.Bool ) expr.error("boolean required in do");
 	}
 	
-	public void gen(int b, int a) {}
+	// 实验四 中间代码生成
+	public void gen(int b, int a) {
+		int init_lb = newlabel();
+		int expr_lb = newlabel();
+		int stmt_lb = newlabel();
+		int step_lb = newlabel();
+		// init
+		emitlabel(init_lb);
+		stmt1.gen(b, expr_lb);
+		// check expr
+		emitlabel(expr_lb);
+		expr.jumping(0, a);
+		// stmt
+		emitlabel(stmt_lb);
+		stmt3.gen(expr_lb, step_lb);
+		// step
+		emitlabel(step_lb);
+		stmt2.gen(stmt_lb, expr_lb);
+		emit("goto L" + expr_lb);
+	}
 
 }
