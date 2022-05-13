@@ -13,3 +13,15 @@ run: `cd scanner && make`
 parser
 
 run: `cd parser && make`
+
+# exp-3
+
+parser-2
+
+run: `cd parser-2 && make`
+
+# exp-4
+
+parser-3
+
+run: `cd parser-3 && make`
