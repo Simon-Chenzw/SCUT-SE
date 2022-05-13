@@ -24,3 +24,5 @@ All homework in SCUT
     -   [computer_graphics](./computer_graphics) 计算机图形学
     -   [image_processing](./image_processing) 图像处理基础
     -   [compilation_principle](./compilation_principle) 编译技术
+-   大三下
+    -   [game_engine_design](./game_engine_design) 3D游戏引擎架构设计基础

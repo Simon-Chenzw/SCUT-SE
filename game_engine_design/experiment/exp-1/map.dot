@@ -1,0 +1,35 @@
+digraph {
+    rankdir = LR
+    compound = true
+
+    node [ shape = box ]
+
+    subgraph cluster_modules {
+        graph [ label="Modules"; ]
+        FAssetRegistryModule 
+        FCUDAModule 
+        FInputCoreModule 
+        IAISystemModule 
+        IAudioDeviceModule 
+        IIPCModule 
+        IInputDeviceModule 
+        IPhysicsCoreModule 
+        IRendererModule 
+        "Other..." 
+    }
+
+    IIPCModule -> IModuleInterface [
+        label = 继承
+        ltail = cluster_modules
+        style = dashed 
+        arrowhead = onormal 
+    ]
+
+
+    IModuleInterface -> FModuleManager [ 
+        label = 管理
+        dir = back 
+        arrowtail = vee 
+    ]
+
+}
