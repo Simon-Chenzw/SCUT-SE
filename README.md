@@ -2,6 +2,8 @@
 
 All homework in SCUT
 
+大型项目归档地址：[repo](https://github.com/Simon-Chenzw/homework_project)
+
 # 声明
 
 本 repo 仅作为储存备份作业与报告所用，**仅供参考**，请勿搬运、抄袭。
@@ -19,7 +21,6 @@ All homework in SCUT
     -   [database](./database/) 数据库系统
     -   [operating_system](./operating_system/) 操作系统
     -   [computer_networks](./computer_networks/) 计算机网络
-    -   [fund_analysis](https://github.com/Simon-Chenzw/fund_analysis) 数据库开发实训
 -   大三上
     -   [computer_graphics](./computer_graphics) 计算机图形学
     -   [image_processing](./image_processing) 图像处理基础
