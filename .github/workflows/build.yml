@@ -4,9 +4,22 @@ on:
   pull_request:
   workflow_dispatch: {}
 jobs:
+  format:
+    name: Format check by csharpier 
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+      - name: install csharpier
+        run: dotnet tool install -g csharpier
+      - name: check format
+        run: dotnet csharpier --check .
   build:
     name: Build for Windows
     runs-on: ubuntu-latest
+    needs: format
     steps:
       - uses: actions/checkout@v2
         with:
