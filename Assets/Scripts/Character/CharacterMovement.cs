@@ -6,7 +6,7 @@ public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float MoveSpeed = 10.0f; // 移动速度
-    public float JumpSpeed = 16.0f; // 跳跃速度
+    public float JumpSpeed = 14.0f; // 跳跃速度
     public int MaxJumpChance = 2; // 最大跳跃段数
 
     [Header("Movement Status")]
@@ -36,9 +36,19 @@ public class CharacterMovement : MonoBehaviour
         // 判断是否进入掉落状态
         if (!IsFalling && CharacterRigidbody.velocity.y < 0)
         {
+            // 若不是因为跳跃而进入掉落状态，则不允许跳跃
+            if (!IsJumping)
+            {
+                CurrentJumpChance = 0;
+            }
             IsJumping = false;
             IsFalling = true;
-            CharacterCollider.isTrigger = false; // 将主角的碰撞体设为非触发器
+        }
+
+        // 在空中时，将主角的碰撞体设为非触发器
+        if (IsFalling && !CharacterCollider.IsTouchingLayers(PlatformLayerMask))
+        {
+            CharacterCollider.isTrigger = false;
         }
 
         // 判断是否落地

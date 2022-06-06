@@ -15,7 +15,7 @@ public class MonsterMovement : MonoBehaviour
 
     [Header("Command Settings")]
     public float CommandCD = 1.0f; // AI指令间隔
-    public float CommandCDFloat = 0.3f; // AI指令间隔浮动区间
+    public float CommandCDFloat = 0.5f; // AI指令间隔浮动区间
 
     [Header("Layer Settings")]
     public LayerMask PlatformLayerMask; // 平台层
@@ -34,7 +34,7 @@ public class MonsterMovement : MonoBehaviour
         MonsterRigidbody = transform.GetComponent<Rigidbody2D>();
 
         CurrentJumpChance = MaxJumpChance;
-        CommandCountDown = CommandCD;
+        CommandCountDown = 0.0f;
     }
 
     void Update()
@@ -42,8 +42,18 @@ public class MonsterMovement : MonoBehaviour
         // 判断是否进入掉落状态
         if (!IsFalling && MonsterRigidbody.velocity.y < 0)
         {
+            // 若不是因为跳跃而进入掉落状态，则不允许跳跃
+            if (!IsJumping)
+            {
+                CurrentJumpChance = 0;
+            }
             IsJumping = false;
             IsFalling = true;
+        }
+
+        // 在空中时，将怪物的碰撞体设为非触发器
+        if (IsFalling && !MonsterCollider.IsTouchingLayers(PlatformLayerMask))
+        {
             MonsterCollider.isTrigger = false;
         }
 

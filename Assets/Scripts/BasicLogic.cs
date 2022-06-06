@@ -6,7 +6,7 @@ public class BasicLogic : MonoBehaviour
 {
     [Header("Settings")]
     public int maxHP = 100;
-    public int maxMP = 100;
+    public int maxMP = 50;
 
     [Header("Status")]
     public int HP;
