@@ -22,11 +22,6 @@ public class CharacterMovement : MonoBehaviour
 
     private int CurrentJumpChance; // 当前剩余跳跃段数
 
-    // 按键定义
-    // static private KeyCode LeftMoveKey = KeyCode.A;
-    // static private KeyCode RightMoveKey = KeyCode.D;
-    static private KeyCode JumpKey = KeyCode.Space;
-
     void Start()
     {
         // 获取主角的各种组件
@@ -58,7 +53,7 @@ public class CharacterMovement : MonoBehaviour
         }
 
         // 跳跃按键输入
-        if (Input.GetKeyDown(JumpKey) && CurrentJumpChance > 0)
+        if (Input.GetKeyDown(GlobalSetting.JumpKey) && CurrentJumpChance > 0)
         {
             CurrentJumpChance--;
             CharacterRigidbody.velocity = new Vector2(CharacterRigidbody.velocity.x, JumpSpeed);
