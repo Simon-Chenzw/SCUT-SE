@@ -23,9 +23,9 @@ public class BasicLogic : MonoBehaviour
         healthBar.SetMaxHealth(maxHP);
     }
 
-    protected void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
-        HP -= damage;
+        HP -= (int)damage;
         healthBar.SetHealth(HP);
     }
 }

@@ -529,6 +529,7 @@ GameObject:
   - component: {fileID: 1217480808984389016}
   - component: {fileID: 1172211728875869771}
   - component: {fileID: 417207139521238601}
+  - component: {fileID: 4960871912055499265}
   m_Layer: 10
   m_Name: DemoCharacter
   m_TagString: Untagged
@@ -641,6 +642,21 @@ MonoBehaviour:
   MP: 0
   ATK: 0
   DEF: 0
+--- !u!114 &4960871912055499265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7152960186525731064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 428b4eb74fde6db499d2641d82759d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CommonAttackRange: {fileID: 1165847330309641993, guid: 4e04be1d96714f449af42d7b35d8798a, type: 3}
+  tmp: {fileID: 0}
+  Attack: 0
 --- !u!1 &7662733898734132286
 GameObject:
   m_ObjectHideFlags: 0
