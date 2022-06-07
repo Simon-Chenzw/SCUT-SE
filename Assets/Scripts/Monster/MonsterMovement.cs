@@ -71,11 +71,11 @@ public class MonsterMovement : MonoBehaviour
         // 修改怪物朝向
         if (MonsterRigidbody.velocity.x > 0)
         {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
         else if (MonsterRigidbody.velocity.x < 0)
         {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
         // 撞墙处理

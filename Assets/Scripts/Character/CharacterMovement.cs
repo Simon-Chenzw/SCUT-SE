@@ -75,11 +75,11 @@ public class CharacterMovement : MonoBehaviour
         // 修改角色朝向
         if (CharacterRigidbody.velocity.x > 0)
         {
-            transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
         else if (CharacterRigidbody.velocity.x < 0)
         {
-            transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
         // 根据轴输入移动（直接改变Transform）

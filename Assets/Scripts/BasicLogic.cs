@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BasicLogic : MonoBehaviour
 {
+    public HealthBar healthBar;
+
     [Header("Settings")]
     public int maxHP = 100;
     public int maxMP = 50;
@@ -18,5 +20,12 @@ public class BasicLogic : MonoBehaviour
     {
         HP = maxHP;
         MP = maxMP;
+        healthBar.SetMaxHealth(maxHP);
+    }
+
+    protected void TakeDamage(int damage)
+    {
+        HP -= damage;
+        healthBar.SetHealth(HP);
     }
 }
