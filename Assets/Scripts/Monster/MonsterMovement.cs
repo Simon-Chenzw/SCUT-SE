@@ -108,11 +108,13 @@ public class MonsterMovement : MonoBehaviour
 
     void MoveLeft()
     {
+        transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
     }
 
     void MoveRight()
     {
+        transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
     }
 
