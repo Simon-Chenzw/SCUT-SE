@@ -7,7 +7,6 @@ public class CharacterAttack : MonoBehaviour
     public GameObject CommonAttackRange;
 
     public GameObject tmp;
-    static private KeyCode AttackKey = KeyCode.J;
 
     private Collider2D CharacterCollider;
     private Rigidbody2D CharacterRigidbody;
@@ -23,10 +22,10 @@ public class CharacterAttack : MonoBehaviour
 
     void UseSkill()
     {
-        if (Input.GetKeyDown(AttackKey))
+        if (Input.GetKeyDown(GlobalSetting.AttackKey))
         {
             Vector3 position = new Vector3(0, 0, 0);
-            if (transform.localScale.x > 0)
+            if (transform.GetChild(0).localScale.x > 0)
             {
                 position = new Vector3(
                     CharacterCollider.bounds.center.x + CharacterCollider.bounds.size.x,

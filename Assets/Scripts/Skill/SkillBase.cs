@@ -9,11 +9,10 @@ public abstract class SkillBase : MonoBehaviour
     public float SkillCD;
 
     public float attack;
-    public LayerMask MonsterLayerMask; //
 
-    public LayerMask CharacterLayerMask; //
+    public LayerMask MonsterLayerMask;
+    public LayerMask CharacterLayerMask;
 
     public abstract void UseSkill();
-
     public abstract void SkillDamage();
 }

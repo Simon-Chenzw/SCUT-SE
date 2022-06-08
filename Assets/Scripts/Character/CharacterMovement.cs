@@ -62,16 +62,6 @@ public class CharacterMovement : MonoBehaviour
             CurrentJumpChance = MaxJumpChance;
         }
 
-        // 跳跃按键输入
-        if (Input.GetKeyDown(GlobalSetting.JumpKey) && CurrentJumpChance > 0)
-        {
-            CurrentJumpChance--;
-            CharacterRigidbody.velocity = new Vector2(CharacterRigidbody.velocity.x, JumpSpeed);
-            IsJumping = true;
-            IsFalling = false;
-            CharacterCollider.isTrigger = true; // 将主角的碰撞体设为触发器，使其能够穿越并跳上平台
-        }
-
         // 修改角色朝向
         if (CharacterRigidbody.velocity.x > 0)
         {
@@ -91,6 +81,7 @@ public class CharacterMovement : MonoBehaviour
             CharacterRigidbody.velocity.y
         );
 
+        bool CanJump = true;
         // 若碰撞到墙，朝速度方向发射射线，射线碰到墙则停止该水平方向的移动，避免因为此时主角的碰撞体为触发器而穿墙
         if (CharacterCollider.IsTouchingLayers(WallLayerMask))
         {
@@ -143,6 +134,42 @@ public class CharacterMovement : MonoBehaviour
                     CharacterRigidbody.velocity = new Vector2(0.0f, CharacterRigidbody.velocity.y);
                 }
             }
+
+            if (CharacterRigidbody.velocity.y >= 0)
+            {
+                RaycastHit2D InspectRaycast1 = Physics2D.Raycast(
+                    CharacterCollider.bounds.min,
+                    Vector2.up,
+                    InspectDistance,
+                    WallLayerMask
+                );
+                RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
+                    CharacterCollider.bounds.max,
+                    Vector2.up,
+                    InspectDistance,
+                    WallLayerMask
+                );
+                if (
+                    InspectRaycast1.collider != null
+                        && CharacterCollider.IsTouching(InspectRaycast1.collider)
+                    || InspectRaycast2.collider != null
+                        && CharacterCollider.IsTouching(InspectRaycast2.collider)
+                )
+                {
+                    CharacterRigidbody.velocity = new Vector2(CharacterRigidbody.velocity.x, 0.0f);
+                    CanJump = false;
+                }
+            }
+        }
+
+        // 跳跃按键输入
+        if (Input.GetKeyDown(GlobalSetting.JumpKey) && CurrentJumpChance > 0 && CanJump)
+        {
+            CurrentJumpChance--;
+            CharacterRigidbody.velocity = new Vector2(CharacterRigidbody.velocity.x, JumpSpeed);
+            IsJumping = true;
+            IsFalling = false;
+            CharacterCollider.isTrigger = true; // 将主角的碰撞体设为触发器，使其能够穿越并跳上平台
         }
     }
 }
