@@ -284,19 +284,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cce85467bfd8b594390238a6aa8ff0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 8
-  JumpSpeed: 0
-  MaxJumpChance: 0
-  IsJumping: 0
-  IsFalling: 0
-  CommandCD: 1
-  CommandCDFloat: 0.5
+  MoveSpeed: 4
+  DropProbability: 0.3
   PlatformLayerMask:
     serializedVersion: 2
     m_Bits: 128
   WallLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  MonsterMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  CharacterMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  DetectDistance: 0.5
+  DetectDepth: 0.5
+  DetectDepthOffset: 0.5
 --- !u!114 &3002471440211371483
 MonoBehaviour:
   m_ObjectHideFlags: 0

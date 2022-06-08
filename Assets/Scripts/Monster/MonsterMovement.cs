@@ -5,152 +5,215 @@ using UnityEngine;
 public class MonsterMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
-    public float MoveSpeed = 8.0f; // 移动速度
-    public float JumpSpeed = 0.0f; // 跳跃速度
-    public int MaxJumpChance = 0; // 最大跳跃段数
+    public float MoveSpeed; // 移动速度
 
-    [Header("Movement Status")]
-    public bool IsJumping = false; // 是否正在跳跃
-    public bool IsFalling = false; // 是否正在掉落
-
-    [Header("Command Settings")]
-    public float CommandCD = 1.0f; // AI指令间隔
-    public float CommandCDFloat = 0.5f; // AI指令间隔浮动区间
+    public float DropProbability; // 下落概率
 
     [Header("Layer Settings")]
     public LayerMask PlatformLayerMask; // 平台层
     public LayerMask WallLayerMask; // 墙壁层
+    public LayerMask MonsterMask; // 怪物层
+    public LayerMask CharacterMask; // 人物层
 
     private Collider2D MonsterCollider; // 怪物的碰撞组件
     private Rigidbody2D MonsterRigidbody; // 怪物的刚体组件
-
-    private int CurrentJumpChance; // 当前剩余跳跃段数
-    private float CommandCountDown; // AI指令可用倒计时
 
     void Start()
     {
         // 获取怪物的各种组件
         MonsterCollider = transform.GetComponent<BoxCollider2D>();
         MonsterRigidbody = transform.GetComponent<Rigidbody2D>();
-
-        CurrentJumpChance = MaxJumpChance;
-        CommandCountDown = 0.0f;
     }
 
-    void Update()
+    ////////////////////////////////////////////////////////////////////////////
+    // Detection functions
+
+    [Header("Detect Settings")]
+    public float DetectDistance; //左右移动探测距离
+    public float DetectDepth; //往下探测距离
+    public float DetectDepthOffset; //往下探测时偏移距离
+
+    bool HasWallAtLeft()
     {
-        // 判断是否进入掉落状态
-        if (!IsFalling && MonsterRigidbody.velocity.y < 0)
+        RaycastHit2D Raycast = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center,
+            Vector2.left,
+            MonsterCollider.bounds.extents.x + DetectDistance,
+            WallLayerMask | MonsterMask | CharacterMask
+        );
+        return Raycast.collider != null;
+    }
+
+    bool HasWallAtRight()
+    {
+        RaycastHit2D Raycast = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center,
+            Vector2.right,
+            MonsterCollider.bounds.extents.x + DetectDistance,
+            WallLayerMask | MonsterMask | CharacterMask
+        );
+        return Raycast.collider != null;
+    }
+
+    bool HasPlatformAtLeft()
+    {
+        RaycastHit2D Raycast = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center
+                + Vector2.left * (MonsterCollider.bounds.extents.x + DetectDepthOffset),
+            Vector2.down,
+            MonsterCollider.bounds.extents.y + DetectDepth,
+            PlatformLayerMask
+        );
+        return Raycast.collider != null;
+    }
+
+    bool HasPlatformAtRight()
+    {
+        RaycastHit2D Raycast = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center
+                + Vector2.right * (MonsterCollider.bounds.extents.x + DetectDepthOffset),
+            Vector2.down,
+            MonsterCollider.bounds.extents.y + DetectDepth,
+            PlatformLayerMask
+        );
+        return Raycast.collider != null;
+    }
+
+    bool OnPlatform()
+    {
+        RaycastHit2D RaycastLeft = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center
+                + Vector2.left * MonsterCollider.bounds.extents.x,
+            Vector2.down,
+            MonsterCollider.bounds.extents.y + DetectDepth,
+            PlatformLayerMask
+        );
+        RaycastHit2D RaycastRight = Physics2D.Raycast(
+            (Vector2)MonsterCollider.bounds.center
+                + Vector2.right * MonsterCollider.bounds.extents.x,
+            Vector2.down,
+            MonsterCollider.bounds.extents.y + DetectDepth,
+            PlatformLayerMask
+        );
+        return RaycastLeft.collider != null || RaycastRight.collider != null;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Movement functions
+
+    void Stand()
+    {
+        MonsterRigidbody.velocity = Vector2.zero * MoveSpeed;
+    }
+
+    void MoveLeft()
+    {
+        MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
+    }
+
+    void MoveRight()
+    {
+        MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    // Decision functions
+
+    //////////
+    // WalkAround
+
+    private bool WalkAroundLeft = true;
+    private bool WalkAroundAtCenter = true;
+    private bool WalkAroundWillDrop = false;
+
+    void WalkAround()
+    {
+        bool platLeft = HasPlatformAtLeft();
+        bool platRight = HasPlatformAtRight();
+        if (platLeft && platRight)
         {
-            // 若不是因为跳跃而进入掉落状态，则不允许跳跃
-            if (!IsJumping)
+            if (!WalkAroundAtCenter)
             {
-                CurrentJumpChance = 0;
+                WalkAroundWillDrop = Random.value < DropProbability;
             }
-            IsJumping = false;
-            IsFalling = true;
+            WalkAroundAtCenter = true;
         }
-
-        // 在空中时，将怪物的碰撞体设为非触发器
-        if (IsFalling && !MonsterCollider.IsTouchingLayers(PlatformLayerMask))
+        else if (OnPlatform())
         {
-            MonsterCollider.isTrigger = false;
-        }
-
-        // 判断是否落地
-        if (
-            IsFalling
-            && MonsterRigidbody.velocity.y == 0
-            && MonsterRigidbody.IsTouchingLayers(PlatformLayerMask)
-        )
-        {
-            IsFalling = false;
-            CurrentJumpChance = MaxJumpChance;
-        }
-
-        // 修改怪物朝向
-        if (MonsterRigidbody.velocity.x > 0)
-        {
-            transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-        }
-        else if (MonsterRigidbody.velocity.x < 0)
-        {
-            transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
-        }
-
-        // 撞墙处理
-        if (MonsterCollider.IsTouchingLayers(WallLayerMask))
-        {
-            float InspectDistance = MonsterCollider.bounds.extents.x * 3;
-            if (MonsterRigidbody.velocity.x > 0)
+            WalkAroundAtCenter = false;
+            if (!WalkAroundWillDrop)
             {
-                RaycastHit2D InspectRaycast1 = Physics2D.Raycast(
-                    MonsterCollider.bounds.min,
-                    Vector2.right,
-                    InspectDistance,
-                    WallLayerMask
-                );
-                RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
-                    MonsterCollider.bounds.max,
-                    Vector2.right,
-                    InspectDistance,
-                    WallLayerMask
-                );
-                if (
-                    InspectRaycast1.collider != null
-                        && MonsterCollider.IsTouching(InspectRaycast1.collider)
-                    || InspectRaycast2.collider != null
-                        && MonsterCollider.IsTouching(InspectRaycast2.collider)
-                )
-                {
-                    MonsterRigidbody.velocity = new Vector2(0.0f, MonsterRigidbody.velocity.y);
-                }
-            }
-            else if (MonsterRigidbody.velocity.x < 0)
-            {
-                RaycastHit2D InspectRaycast1 = Physics2D.Raycast(
-                    MonsterCollider.bounds.min,
-                    Vector2.left,
-                    InspectDistance,
-                    WallLayerMask
-                );
-                RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
-                    MonsterCollider.bounds.max,
-                    Vector2.left,
-                    InspectDistance,
-                    WallLayerMask
-                );
-                if (
-                    InspectRaycast1.collider != null
-                        && MonsterCollider.IsTouching(InspectRaycast1.collider)
-                    || InspectRaycast2.collider != null
-                        && MonsterCollider.IsTouching(InspectRaycast2.collider)
-                )
-                {
-                    MonsterRigidbody.velocity = new Vector2(0.0f, MonsterRigidbody.velocity.y);
-                }
+                WalkAroundLeft = platLeft;
             }
         }
-
-        CommandCountDown -= Time.deltaTime;
-        if (CommandCountDown < 0)
+        else
         {
-            MovementControl(); // 怪物的移动控制（AI）
+            WalkAroundAtCenter = true;
+            WalkAroundWillDrop = false;
+            return;
+        }
+
+        if (WalkAroundLeft)
+        {
+            if (!HasWallAtLeft())
+            {
+                MoveLeft();
+                WalkAroundLeft = true;
+            }
+            else
+            {
+                MoveRight();
+                WalkAroundLeft = false;
+            }
+        }
+        else
+        {
+            if (!HasWallAtRight())
+            {
+                MoveRight();
+                WalkAroundLeft = false;
+            }
+            else
+            {
+                MoveLeft();
+                WalkAroundLeft = true;
+            }
         }
     }
 
-    private void MovementControl()
-    {
-        int Command = Random.Range(0, 2);
-        if (Command == 0) // 左移
-        {
-            MonsterRigidbody.velocity = new Vector2(-MoveSpeed, MonsterRigidbody.velocity.y);
-        }
-        else if (Command == 1) // 右移
-        {
-            MonsterRigidbody.velocity = new Vector2(MoveSpeed, MonsterRigidbody.velocity.y);
-        }
+    //////////
+    // AI
 
-        CommandCountDown = CommandCD + Random.Range(-CommandCDFloat, CommandCDFloat); // 重置倒计时
+    void AI()
+    {
+        WalkAround();
+    }
+
+    private float RoundTime = 0.05f;
+    private float RemainTime = 0;
+
+    // private bool _OnPlatform;
+    // private bool _LeftWall;
+    // private bool _RightWall;
+    // private bool _LeftPlatform;
+    // private bool _RightPlatform;
+
+    void FixedUpdate()
+    {
+        // _OnPlatform = OnPlatform();
+        // _LeftWall = HasWallAtLeft();
+        // _RightWall = HasWallAtRight();
+        // _LeftPlatform = HasPlatformAtLeft();
+        // _RightPlatform = HasPlatformAtRight();
+
+        if (RemainTime <= 0)
+        {
+            AI();
+            RemainTime = RoundTime;
+        }
+        else
+        {
+            RemainTime -= Time.deltaTime;
+        }
     }
 }
