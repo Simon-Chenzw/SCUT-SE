@@ -29,7 +29,6 @@ public class BasicLogic : MonoBehaviour
     {
         int RealDamage = Mathf.CeilToInt(damage / (DEF / 100 + 1));
         Debug.Log(gameObject.ToString() + " get damage " + RealDamage.ToString());
-
         if (RealDamage > 0)
         {
             HP -= RealDamage;

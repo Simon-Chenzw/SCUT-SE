@@ -328,7 +328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CommonAttackRange: {fileID: 1165847330309641993, guid: 4e04be1d96714f449af42d7b35d8798a, type: 3}
-  tmp: {fileID: 0}
+  CommonManaAttackRange: {fileID: 6230072446716238933, guid: b3c8a02fc659480468509c0252a3bca7, type: 3}
+  del: 0
   Attack: 0
 --- !u!1 &7958066995368657456
 GameObject:

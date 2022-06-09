@@ -9,4 +9,5 @@ public class GlobalSetting : MonoBehaviour
     static public KeyCode RightMoveKey = KeyCode.D;
     static public KeyCode JumpKey = KeyCode.Space;
     static public KeyCode AttackKey = KeyCode.J;
+    static public KeyCode ManaAttackKey = KeyCode.K;
 }

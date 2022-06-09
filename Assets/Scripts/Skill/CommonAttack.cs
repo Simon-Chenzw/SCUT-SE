@@ -5,12 +5,12 @@ using UnityEngine;
 public class CommonAttack : SkillBase
 {
     private Collider2D SkillCollider;
+    private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
+    [Header("Basic Parameters")]
     public float rate;
 
     public float damage;
-
-    private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
     public float EndTime;
 
