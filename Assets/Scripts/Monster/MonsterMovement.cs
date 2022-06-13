@@ -9,12 +9,6 @@ public class MonsterMovement : MonoBehaviour
 
     public float DropProbability; // 下落概率
 
-    [Header("Layer Settings")]
-    public LayerMask PlatformLayerMask; // 平台层
-    public LayerMask WallLayerMask; // 墙壁层
-    public LayerMask MonsterMask; // 怪物层
-    public LayerMask CharacterMask; // 人物层
-
     private Collider2D MonsterCollider; // 怪物的碰撞组件
     private Rigidbody2D MonsterRigidbody; // 怪物的刚体组件
 
@@ -41,7 +35,7 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.left,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            WallLayerMask | MonsterMask
+            GlobalSetting.WallLayerMask | GlobalSetting.MonsterLayerMask
         );
         return Raycast.collider != null;
     }
@@ -52,7 +46,7 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.right,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            WallLayerMask | MonsterMask
+            GlobalSetting.WallLayerMask | GlobalSetting.MonsterLayerMask
         );
         return Raycast.collider != null;
     }
@@ -64,7 +58,7 @@ public class MonsterMovement : MonoBehaviour
                 + Vector2.left * (MonsterCollider.bounds.extents.x + DetectDepthOffset),
             Vector2.down,
             MonsterCollider.bounds.extents.y + DetectDepth,
-            PlatformLayerMask
+            GlobalSetting.PlatformLayerMask
         );
         return Raycast.collider != null;
     }
@@ -76,7 +70,7 @@ public class MonsterMovement : MonoBehaviour
                 + Vector2.right * (MonsterCollider.bounds.extents.x + DetectDepthOffset),
             Vector2.down,
             MonsterCollider.bounds.extents.y + DetectDepth,
-            PlatformLayerMask
+            GlobalSetting.PlatformLayerMask
         );
         return Raycast.collider != null;
     }
@@ -88,14 +82,14 @@ public class MonsterMovement : MonoBehaviour
                 + Vector2.left * MonsterCollider.bounds.extents.x,
             Vector2.down,
             MonsterCollider.bounds.extents.y + DetectDepth,
-            PlatformLayerMask
+            GlobalSetting.PlatformLayerMask
         );
         RaycastHit2D RaycastRight = Physics2D.Raycast(
             (Vector2)MonsterCollider.bounds.center
                 + Vector2.right * MonsterCollider.bounds.extents.x,
             Vector2.down,
             MonsterCollider.bounds.extents.y + DetectDepth,
-            PlatformLayerMask
+            GlobalSetting.PlatformLayerMask
         );
         return RaycastLeft.collider != null || RaycastRight.collider != null;
     }
@@ -109,7 +103,7 @@ public class MonsterMovement : MonoBehaviour
             ),
             new Vector2(DetectCharacterWidth, DetectCharacterHeight),
             0,
-            CharacterMask
+            GlobalSetting.CharacterLayerMask
         );
         return collider != null;
     }
@@ -123,7 +117,7 @@ public class MonsterMovement : MonoBehaviour
             ),
             new Vector2(DetectCharacterWidth, DetectCharacterHeight),
             0,
-            CharacterMask
+            GlobalSetting.CharacterLayerMask
         );
 
         return collider != null
@@ -139,7 +133,7 @@ public class MonsterMovement : MonoBehaviour
             ),
             new Vector2(DetectCharacterWidth, DetectCharacterHeight),
             0,
-            CharacterMask
+            GlobalSetting.CharacterLayerMask
         );
         return collider != null
             && collider.transform.position.x > MonsterCollider.transform.position.x;

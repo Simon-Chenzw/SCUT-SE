@@ -10,8 +10,5 @@ public abstract class SkillObject : MonoBehaviour
 
     public float attack;
 
-    public LayerMask MonsterLayerMask;
-
-    public LayerMask CharacterLayerMask;
     public abstract void CalculateSkillDamage();
 }

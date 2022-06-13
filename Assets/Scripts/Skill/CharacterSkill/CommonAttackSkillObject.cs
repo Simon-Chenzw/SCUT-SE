@@ -29,7 +29,7 @@ public class CommonAttackSkillObject : SkillObject
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if ((1 << other.gameObject.layer) == MonsterLayerMask.value)
+        if ((1 << other.gameObject.layer) == GlobalSetting.MonsterLayerMask.value)
         {
             if (other.gameObject.transform.parent == null)
             {

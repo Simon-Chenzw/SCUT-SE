@@ -11,4 +11,11 @@ public class GlobalSetting : MonoBehaviour
     static public KeyCode TeleportKey = KeyCode.E;
     static public KeyCode CommonAttackKey = KeyCode.J;
     static public KeyCode CommonManaAttackKey = KeyCode.K;
+
+    // 层级定义
+    static public LayerMask PlatformLayerMask = 1 << 7;
+    static public LayerMask WallLayerMask = 1 << 8;
+    static public LayerMask TeleporterLayerMask = 1 << 9;
+    static public LayerMask CharacterLayerMask = 1 << 11;
+    static public LayerMask MonsterLayerMask = 1 << 12;
 }

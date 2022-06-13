@@ -14,11 +14,6 @@ public class CharacterMovement : MonoBehaviour
     public bool IsFalling = false; // 是否正在掉落
     public bool NeedTeleport = false; // 是否需要传送
 
-    [Header("Layer Settings")]
-    public LayerMask PlatformLayerMask; // 平台层
-    public LayerMask WallLayerMask; // 墙壁层
-    public LayerMask TeleporterLayerMask; // 传送层
-
     private Collider2D CharacterCollider; // 主角的碰撞组件
     private Rigidbody2D CharacterRigidbody; // 主角的刚体组件
 
@@ -48,7 +43,7 @@ public class CharacterMovement : MonoBehaviour
         }
 
         // 在空中时，将主角的碰撞体设为非触发器
-        if (IsFalling && !CharacterCollider.IsTouchingLayers(PlatformLayerMask))
+        if (IsFalling && !CharacterCollider.IsTouchingLayers(GlobalSetting.PlatformLayerMask))
         {
             CharacterCollider.isTrigger = false;
         }
@@ -57,7 +52,7 @@ public class CharacterMovement : MonoBehaviour
         if (
             IsFalling
             && CharacterRigidbody.velocity.y == 0
-            && CharacterCollider.IsTouchingLayers(PlatformLayerMask)
+            && CharacterCollider.IsTouchingLayers(GlobalSetting.PlatformLayerMask)
         )
         {
             IsFalling = false;
@@ -86,7 +81,7 @@ public class CharacterMovement : MonoBehaviour
         bool CanJump = true;
 
         // 若碰撞到墙，朝速度方向发射射线，射线碰到墙则停止该水平方向的移动，避免因为此时主角的碰撞体为触发器而穿墙
-        if (CharacterCollider.IsTouchingLayers(WallLayerMask))
+        if (CharacterCollider.IsTouchingLayers(GlobalSetting.WallLayerMask))
         {
             float InspectDistance = CharacterCollider.bounds.extents.x * 3;
             if (CharacterRigidbody.velocity.x > 0)
@@ -95,13 +90,13 @@ public class CharacterMovement : MonoBehaviour
                     CharacterCollider.bounds.min,
                     Vector2.right,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
                     CharacterCollider.bounds.max,
                     Vector2.right,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 if (
                     InspectRaycast1.collider != null
@@ -119,13 +114,13 @@ public class CharacterMovement : MonoBehaviour
                     CharacterCollider.bounds.min,
                     Vector2.left,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
                     CharacterCollider.bounds.max,
                     Vector2.left,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 if (
                     InspectRaycast1.collider != null
@@ -144,13 +139,13 @@ public class CharacterMovement : MonoBehaviour
                     CharacterCollider.bounds.min,
                     Vector2.up,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 RaycastHit2D InspectRaycast2 = Physics2D.Raycast(
                     CharacterCollider.bounds.max,
                     Vector2.up,
                     InspectDistance,
-                    WallLayerMask
+                    GlobalSetting.WallLayerMask
                 );
                 if (
                     InspectRaycast1.collider != null
@@ -181,7 +176,7 @@ public class CharacterMovement : MonoBehaviour
             && !IsJumping
             && !IsFalling
             && !NeedTeleport
-            && CharacterCollider.IsTouchingLayers(TeleporterLayerMask)
+            && CharacterCollider.IsTouchingLayers(GlobalSetting.TeleporterLayerMask)
         )
         {
             NeedTeleport = true; // 添加传送标记
