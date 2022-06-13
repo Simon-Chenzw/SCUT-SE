@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+[CreateAssetMenu(fileName = "CommonAttackSkill", menuName = "Skill/CommonAttackSkill")]
+public class CommonAttackSkill : Skill
+{
+    public override string SkillName
+    {
+        get { return "CommonAttack"; }
+    }
+    public override float GlobalCD
+    {
+        get { return 0.5f; }
+    }
+    public override float CD
+    {
+        get { return 0.5f; }
+    }
+    public override float MPcost
+    {
+        get { return 0.0f; }
+    }
+
+    public override void CreateSkill(Bounds bounds, Transform transform)
+    {
+        Vector3 position = new Vector3(0, 0, 0);
+        if (transform.GetChild(0).localScale.x > 0)
+        {
+            position = new Vector3(bounds.center.x + bounds.size.x, bounds.center.y, 0);
+        }
+        else
+        {
+            position = new Vector3(bounds.center.x - bounds.size.x, bounds.center.y, 0);
+        }
+        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/CommonAttack");
+        GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
+    }
+}

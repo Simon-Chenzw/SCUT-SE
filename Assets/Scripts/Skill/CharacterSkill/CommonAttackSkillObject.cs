@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonAttack : SkillBase
+public class CommonAttackSkillObject : SkillObject
 {
-    private Collider2D SkillCollider;
     private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
     [Header("Basic Parameters")]
     public float rate;
-
-    public float damage;
 
     public float EndTime;
 
@@ -20,7 +17,7 @@ public class CommonAttack : SkillBase
         EndTime = 1.0f;
         rate = 1.0f;
         attack = transform.parent.GetComponent<CharacterBasicLogic>().ATK;
-        SkillDamage();
+        CalculateSkillDamage();
     }
 
     void Update()
@@ -45,10 +42,8 @@ public class CommonAttack : SkillBase
         }
     }
 
-    public override void UseSkill() { }
-
-    public override void SkillDamage()
+    public override void CalculateSkillDamage()
     {
-        damage = attack * rate;
+        damage = attack;
     }
 }
