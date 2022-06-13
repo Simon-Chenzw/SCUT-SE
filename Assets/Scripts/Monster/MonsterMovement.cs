@@ -32,6 +32,8 @@ public class MonsterMovement : MonoBehaviour
     public float DetectDistance; //左右移动探测距离
     public float DetectDepth; //往下探测距离
     public float DetectDepthOffset; //往下探测时偏移距离
+    public float DetectCharacterWidth; // 探测附近玩家距离
+    public float DetectCharacterHeight; // 探测附近玩家距离
 
     bool HasWallAtLeft()
     {
@@ -39,7 +41,7 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.left,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            WallLayerMask | MonsterMask | CharacterMask
+            WallLayerMask | MonsterMask
         );
         return Raycast.collider != null;
     }
@@ -50,7 +52,7 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.right,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            WallLayerMask | MonsterMask | CharacterMask
+            WallLayerMask | MonsterMask
         );
         return Raycast.collider != null;
     }
@@ -98,6 +100,51 @@ public class MonsterMovement : MonoBehaviour
         return RaycastLeft.collider != null || RaycastRight.collider != null;
     }
 
+    bool HasCharacterNear()
+    {
+        Collider2D collider = Physics2D.OverlapBox(
+            new Vector2(
+                MonsterCollider.bounds.center.x,
+                MonsterCollider.bounds.center.y + DetectCharacterHeight / 2
+            ),
+            new Vector2(DetectCharacterWidth, DetectCharacterHeight),
+            0,
+            CharacterMask
+        );
+        return collider != null;
+    }
+
+    bool HasCharacterLeft()
+    {
+        Collider2D collider = Physics2D.OverlapBox(
+            new Vector2(
+                MonsterCollider.bounds.center.x,
+                MonsterCollider.bounds.center.y + DetectCharacterHeight / 2
+            ),
+            new Vector2(DetectCharacterWidth, DetectCharacterHeight),
+            0,
+            CharacterMask
+        );
+
+        return collider != null
+            && collider.transform.position.x <= MonsterCollider.transform.position.x;
+    }
+
+    bool HasCharacterRight()
+    {
+        Collider2D collider = Physics2D.OverlapBox(
+            new Vector2(
+                MonsterCollider.bounds.center.x,
+                MonsterCollider.bounds.center.y - DetectCharacterHeight / 2
+            ),
+            new Vector2(DetectCharacterWidth, DetectCharacterHeight),
+            0,
+            CharacterMask
+        );
+        return collider != null
+            && collider.transform.position.x > MonsterCollider.transform.position.x;
+    }
+
     ////////////////////////////////////////////////////////////////////////////
     // Movement functions
 
@@ -106,66 +153,84 @@ public class MonsterMovement : MonoBehaviour
         MonsterRigidbody.velocity = Vector2.zero * MoveSpeed;
     }
 
-    void MoveLeft()
+    void FacingLeft()
     {
         transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+    }
+
+    void FacingRight()
+    {
+        transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+    }
+
+    void MoveLeft()
+    {
+        FacingLeft();
         MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
     }
 
     void MoveRight()
     {
-        transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        FacingRight();
         MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
+    }
+
+    Vector2 GetFacing()
+    {
+        if (transform.Find("Render").transform.localScale.x == -1.0f)
+            return Vector2.left;
+        else
+            return Vector2.right;
     }
 
     ////////////////////////////////////////////////////////////////////////////
     // Decision functions
 
     //////////
-    // WalkAround
+    // Patrol
 
-    private bool WalkAroundLeft = true;
-    private bool WalkAroundAtCenter = true;
-    private bool WalkAroundWillDrop = false;
+    private bool PatrolLeft = true;
+    private bool PatrolAtCenter = true;
+    private bool PatrolWillDrop = false;
 
-    void WalkAround()
+    void PatrolMode()
     {
         bool platLeft = HasPlatformAtLeft();
         bool platRight = HasPlatformAtRight();
         if (platLeft && platRight)
         {
-            if (!WalkAroundAtCenter)
+            if (!PatrolAtCenter)
             {
-                WalkAroundWillDrop = Random.value < DropProbability;
+                PatrolWillDrop = Random.value < DropProbability;
             }
-            WalkAroundAtCenter = true;
+            PatrolAtCenter = true;
         }
         else if (OnPlatform())
         {
-            WalkAroundAtCenter = false;
-            if (!WalkAroundWillDrop)
+            PatrolAtCenter = false;
+            if (!PatrolWillDrop)
             {
-                WalkAroundLeft = platLeft;
+                PatrolLeft = platLeft;
             }
         }
         else
         {
-            WalkAroundAtCenter = true;
-            WalkAroundWillDrop = false;
+            PatrolAtCenter = true;
+            PatrolWillDrop = false;
             return;
         }
 
-        if (WalkAroundLeft)
+        if (PatrolLeft)
         {
             if (!HasWallAtLeft())
             {
                 MoveLeft();
-                WalkAroundLeft = true;
+                PatrolLeft = true;
             }
             else
             {
                 MoveRight();
-                WalkAroundLeft = false;
+                PatrolLeft = false;
             }
         }
         else
@@ -173,49 +238,81 @@ public class MonsterMovement : MonoBehaviour
             if (!HasWallAtRight())
             {
                 MoveRight();
-                WalkAroundLeft = false;
+                PatrolLeft = false;
             }
             else
             {
                 MoveLeft();
-                WalkAroundLeft = true;
+                PatrolLeft = true;
             }
+        }
+    }
+
+    //////////
+    // Attack
+
+    void AttackWithSkill()
+    {
+        // TODO
+    }
+
+    bool ShouldAttack()
+    {
+        return HasCharacterNear();
+    }
+
+    void AttackMode()
+    {
+        if (HasCharacterLeft())
+        {
+            if (OnPlatform())
+                MoveLeft();
+            AttackWithSkill();
+        }
+        else if (HasCharacterRight())
+        {
+            if (OnPlatform())
+                MoveRight();
+            AttackWithSkill();
+        }
+        else
+        {
+            PatrolMode();
         }
     }
 
     //////////
     // AI
 
+    public float AttackLegacy; //延迟退出 Attack 时长
+    private float AttackLegacyCurrent;
+
     void AI()
     {
-        WalkAround();
+        if (ShouldAttack())
+        {
+            AttackLegacyCurrent = AttackLegacy;
+            AttackMode();
+        }
+        else if ((AttackLegacyCurrent -= Time.deltaTime) >= 0)
+        {
+            AttackMode();
+        }
+        else
+        {
+            PatrolMode();
+        }
     }
 
     private float RoundTime = 0.05f;
     private float RemainTime = 0;
 
-    // private bool _OnPlatform;
-    // private bool _LeftWall;
-    // private bool _RightWall;
-    // private bool _LeftPlatform;
-    // private bool _RightPlatform;
-
     void FixedUpdate()
     {
-        // _OnPlatform = OnPlatform();
-        // _LeftWall = HasWallAtLeft();
-        // _RightWall = HasWallAtRight();
-        // _LeftPlatform = HasPlatformAtLeft();
-        // _RightPlatform = HasPlatformAtRight();
-
-        if (RemainTime <= 0)
+        if ((RemainTime -= Time.deltaTime) <= 0)
         {
             AI();
             RemainTime = RoundTime;
-        }
-        else
-        {
-            RemainTime -= Time.deltaTime;
         }
     }
 }

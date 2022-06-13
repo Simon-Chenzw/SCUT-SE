@@ -301,6 +301,11 @@ MonoBehaviour:
   DetectDistance: 0.5
   DetectDepth: 0.5
   DetectDepthOffset: 0.5
+  DetectCharacterWidth: 20
+  DetectCharacterHeight: 5
+  Skills: []
+  SkillOffset: []
+  AttackLegacy: 10
 --- !u!114 &3002471440211371483
 MonoBehaviour:
   m_ObjectHideFlags: 0
