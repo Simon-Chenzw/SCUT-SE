@@ -43,10 +43,10 @@ GameObject:
   - component: {fileID: 3274253987588903933}
   - component: {fileID: 3274253987588903928}
   - component: {fileID: 3274253987588903931}
-  - component: {fileID: 3847849037804861225}
-  - component: {fileID: 2026460254452726387}
+  - component: {fileID: 8475147033364895055}
+  - component: {fileID: 2577237604164584553}
   m_Layer: 9
-  m_Name: Left
+  m_Name: PortA
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,7 +115,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!61 &3847849037804861225
+--- !u!61 &8475147033364895055
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +141,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &2026460254452726387
+--- !u!114 &2577237604164584553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -153,9 +153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a343819c3b3de4f8064a91b5e4697f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterLayerMask:
-    serializedVersion: 2
-    m_Bits: 2048
 --- !u!1 &7960426281977840770
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,10 +164,10 @@ GameObject:
   - component: {fileID: 8335452951172179294}
   - component: {fileID: 7073683210235941045}
   - component: {fileID: 5703060316348839947}
-  - component: {fileID: 8371211540777166083}
-  - component: {fileID: 6221028156494052292}
+  - component: {fileID: 7836638010073708799}
+  - component: {fileID: 8541969430224414684}
   m_Layer: 9
-  m_Name: Right
+  m_Name: PortB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,7 +236,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!61 &8371211540777166083
+--- !u!61 &7836638010073708799
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -265,7 +262,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &6221028156494052292
+--- !u!114 &8541969430224414684
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -277,6 +274,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99a343819c3b3de4f8064a91b5e4697f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterLayerMask:
-    serializedVersion: 2
-    m_Bits: 2048

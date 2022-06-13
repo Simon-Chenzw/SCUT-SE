@@ -11,6 +11,7 @@ public class GlobalSetting : MonoBehaviour
     static public KeyCode TeleportKey = KeyCode.E;
     static public KeyCode CommonAttackKey = KeyCode.J;
     static public KeyCode CommonManaAttackKey = KeyCode.K;
+    static public KeyCode ExitKey = KeyCode.Escape;
 
     // 层级定义
     static public LayerMask PlatformLayerMask = 1 << 7;
