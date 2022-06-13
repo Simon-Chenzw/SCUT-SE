@@ -12,10 +12,12 @@ public class CharacterMovement : MonoBehaviour
     [Header("Movement Status")]
     public bool IsJumping = false; // 是否正在跳跃
     public bool IsFalling = false; // 是否正在掉落
+    public bool NeedTeleport = false; // 是否需要传送
 
     [Header("Layer Settings")]
     public LayerMask PlatformLayerMask; // 平台层
     public LayerMask WallLayerMask; // 墙壁层
+    public LayerMask TeleporterLayerMask; // 传送层
 
     private Collider2D CharacterCollider; // 主角的碰撞组件
     private Rigidbody2D CharacterRigidbody; // 主角的刚体组件
@@ -82,6 +84,7 @@ public class CharacterMovement : MonoBehaviour
         );
 
         bool CanJump = true;
+
         // 若碰撞到墙，朝速度方向发射射线，射线碰到墙则停止该水平方向的移动，避免因为此时主角的碰撞体为触发器而穿墙
         if (CharacterCollider.IsTouchingLayers(WallLayerMask))
         {
@@ -170,6 +173,18 @@ public class CharacterMovement : MonoBehaviour
             IsJumping = true;
             IsFalling = false;
             CharacterCollider.isTrigger = true; // 将主角的碰撞体设为触发器，使其能够穿越并跳上平台
+        }
+
+        // 传送按键输入
+        if (
+            Input.GetKeyDown(GlobalSetting.TeleportKey)
+            && !IsJumping
+            && !IsFalling
+            && !NeedTeleport
+            && CharacterCollider.IsTouchingLayers(TeleporterLayerMask)
+        )
+        {
+            NeedTeleport = true; // 添加传送标记
         }
     }
 }

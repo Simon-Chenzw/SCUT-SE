@@ -8,6 +8,7 @@ public class GlobalSetting : MonoBehaviour
     static public KeyCode LeftMoveKey = KeyCode.A;
     static public KeyCode RightMoveKey = KeyCode.D;
     static public KeyCode JumpKey = KeyCode.Space;
+    static public KeyCode TeleportKey = KeyCode.E;
     static public KeyCode AttackKey = KeyCode.J;
     static public KeyCode ManaAttackKey = KeyCode.K;
 }

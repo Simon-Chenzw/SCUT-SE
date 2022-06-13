@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4321827495102392789}
   - component: {fileID: 8110582055611446010}
   - component: {fileID: 56685443087639633}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Eye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 7152960185956054664}
   - component: {fileID: 7152960185956054665}
   - component: {fileID: 7999498798914346633}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 1172211728875869771}
   - component: {fileID: 417207139521238601}
   - component: {fileID: 4960871912055499265}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: DemoCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,12 +290,16 @@ MonoBehaviour:
   MaxJumpChance: 2
   IsJumping: 0
   IsFalling: 0
+  NeedTeleport: 0
   PlatformLayerMask:
     serializedVersion: 2
     m_Bits: 128
   WallLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  TeleporterLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &417207139521238601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7535956388379630600}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Render
   m_TagString: Untagged
   m_Icon: {fileID: 0}
