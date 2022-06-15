@@ -11,12 +11,14 @@ public class MonsterMovement : MonoBehaviour
 
     private Collider2D MonsterCollider; // 怪物的碰撞组件
     private Rigidbody2D MonsterRigidbody; // 怪物的刚体组件
+    private GameObject Character;
 
     void Start()
     {
         // 获取怪物的各种组件
         MonsterCollider = transform.GetComponent<BoxCollider2D>();
         MonsterRigidbody = transform.GetComponent<Rigidbody2D>();
+        Character = GameObject.Find("Character");
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -163,11 +165,11 @@ public class MonsterMovement : MonoBehaviour
 
     void MoveLeft()
     {
+        FacingLeft();
         if (!OnPlatform())
             return;
         if (!HasWallAtLeft())
         {
-            FacingLeft();
             MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
         }
         else
@@ -178,11 +180,11 @@ public class MonsterMovement : MonoBehaviour
 
     void MoveRight()
     {
+        FacingRight();
         if (!OnPlatform())
             return;
         if (!HasWallAtRight())
         {
-            FacingRight();
             MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
         }
         else
@@ -267,28 +269,37 @@ public class MonsterMovement : MonoBehaviour
     //////////
     // Attack
 
+
+    [Header("Attack Settings")]
+    public Skill[] Skills;
+
     void AttackWithSkill()
     {
-        // TODO
-    }
-
-    bool ShouldAttack()
-    {
-        return HasCharacterNear();
+        MonsterBasicLogic basiclogic = gameObject.GetComponent<MonsterBasicLogic>();
+        if (basiclogic.InGlobalCD())
+            return;
+        foreach (Skill skill in Skills)
+        {
+            //     Debug.Log(transform.position);
+            Debug.Log(Character.transform.position);
+            if (skill.CheckUseSkill(basiclogic.BodyBox.bounds, transform, Character.transform))
+            {
+                basiclogic.UseSkill(skill);
+                return;
+            }
+        }
     }
 
     void AttackMode()
     {
         if (HasCharacterLeft())
         {
-            if (OnPlatform())
-                MoveLeft();
+            MoveLeft();
             AttackWithSkill();
         }
         else if (HasCharacterRight())
         {
-            if (OnPlatform())
-                MoveRight();
+            MoveRight();
             AttackWithSkill();
         }
         else
@@ -300,17 +311,9 @@ public class MonsterMovement : MonoBehaviour
     //////////
     // AI
 
-    public float AttackLegacy; //延迟退出 Attack 时长
-    private float AttackLegacyCurrent;
-
     void AI()
     {
-        if (ShouldAttack())
-        {
-            AttackLegacyCurrent = AttackLegacy;
-            AttackMode();
-        }
-        else if ((AttackLegacyCurrent -= Time.deltaTime) >= 0)
+        if (HasCharacterNear())
         {
             AttackMode();
         }

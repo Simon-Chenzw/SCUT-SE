@@ -44,6 +44,11 @@ public class BasicLogic : MonoBehaviour
         healthBar.SetMaxHealth(MaxHP);
     }
 
+    public bool InGlobalCD()
+    {
+        return Time.time < GlobalCD;
+    }
+
     public bool UseSkill(Skill skill)
     {
         // CD check

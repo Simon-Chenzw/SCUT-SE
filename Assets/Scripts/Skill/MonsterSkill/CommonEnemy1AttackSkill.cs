@@ -46,7 +46,7 @@ public class CommonEnemy1AttackSkill : Skill
             Mathf.Pow(OurTransform.position.x - EnemyTransform.position.x, 2.0f)
                 + Mathf.Pow(OurTransform.position.y - EnemyTransform.position.y, 2.0f)
         );
-        float SkillDistance = bounds.size.x * 2;
+        float SkillDistance = bounds.size.x * 4;
         if (SkillDistance >= distance)
             return true;
         else
