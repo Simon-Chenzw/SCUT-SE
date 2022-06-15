@@ -60,11 +60,11 @@ public class CharacterMovement : MonoBehaviour
         }
 
         // 修改角色朝向
-        if (CharacterRigidbody.velocity.x > 0)
+        if (Input.GetKey(GlobalSetting.RightMoveKey) && !Input.GetKey(GlobalSetting.LeftMoveKey))
         {
             transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
-        else if (CharacterRigidbody.velocity.x < 0)
+        if (Input.GetKey(GlobalSetting.LeftMoveKey) && !Input.GetKey(GlobalSetting.RightMoveKey))
         {
             transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }

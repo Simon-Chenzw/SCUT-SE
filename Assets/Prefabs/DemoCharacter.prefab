@@ -269,7 +269,7 @@ Rigidbody2D:
   m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: b65efc761811afe43abfe8ecba1819f4, type: 2}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &1172211728875869771
@@ -303,13 +303,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1978777631656878692}
+  BaseHP: 100
+  BaseATK: 50
+  BaseDEF: 10
   MaxHP: 0
   HP: 0
-  ATK: 20
+  ATK: 0
   DEF: 0
-  CharacterHP: 100
-  CharacterATK: 50
-  CharacterDEF: 20
   skill1: {fileID: 11400000, guid: e468e6498c5ddee4b809150c558a065b, type: 2}
   skill2: {fileID: 0}
 --- !u!1 &7958066995368657456

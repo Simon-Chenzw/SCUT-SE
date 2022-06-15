@@ -5,27 +5,18 @@ using UnityEngine;
 public class CharacterBasicLogic : BasicLogic
 {
     [Header("Settings")]
-    public int CharacterHP = 100;
-    public int CharacterATK = 100;
-    public int CharacterDEF = 100;
-
-    //used to test skill
     public Skill skill1;
     public Skill skill2;
-    Bounds BodyBounds;
-    Transform CharacterTransform;
+
+    private Bounds BodyBounds;
+    private Transform CharacterTransform;
+
     List<Item> Items;
 
     void Start()
     {
         SetStatus();
         CharacterTransform = gameObject.transform;
-    }
-
-    void UseSkill(Skill skill)
-    {
-        BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
-        skill.CreateSkill(BodyBounds, CharacterTransform);
     }
 
     void Update()
@@ -35,6 +26,17 @@ public class CharacterBasicLogic : BasicLogic
             UseSkill(skill1);
         }
         else if (Input.GetKeyDown(GlobalSetting.CommonManaAttackKey)) { }
+    }
+
+    private void UseSkill(Skill skill)
+    {
+        BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
+        skill.CreateSkill(BodyBounds, CharacterTransform);
+    }
+
+    public override void OnDie()
+    {
+        Destroy(gameObject);
     }
 
     void SetStatus()
@@ -57,8 +59,8 @@ public class CharacterBasicLogic : BasicLogic
                 def_mul += item.DefMul;
             }
         }
-        SetMaxHP(Mathf.CeilToInt((CharacterHP + hp_add) * (1 + hp_mul)));
-        ATK = (CharacterATK + atk_add) * (1 + atk_mul);
-        DEF = (CharacterDEF + def_add) * (1 + def_mul);
+        SetMaxHP(Mathf.CeilToInt((BaseHP + hp_add) * (1 + hp_mul)));
+        ATK = (BaseATK + atk_add) * (1 + atk_mul);
+        DEF = (BaseDEF + def_add) * (1 + def_mul);
     }
 }

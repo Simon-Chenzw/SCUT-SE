@@ -8,7 +8,7 @@ public class Teleporter : MonoBehaviour
     {
         // 确保碰撞到的是主角的根物体
         if (
-            (1 << other.gameObject.layer) != GlobalSetting.CharacterLayerMask
+            ((1 << other.gameObject.layer) & GlobalSetting.CharacterLayerMask) == 0
             || other.gameObject.transform.parent != null
             || !other.GetComponent<CharacterMovement>().NeedTeleport
         )

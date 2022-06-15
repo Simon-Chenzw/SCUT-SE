@@ -5,14 +5,22 @@ using UnityEngine;
 public class MonsterBasicLogic : BasicLogic
 {
     [Header("Settings")]
-    public int MonsterHP;
-    public float MonsterATK;
-    public float MonsterDEF;
+    public int GrowHP;
+    public float GrowATK;
+    public float GrowDEF;
 
     void Start()
     {
-        SetMaxHP(MonsterHP);
-        ATK = MonsterATK;
-        DEF = MonsterDEF;
+        int CurrentWave = GameObject.Find("GameController").GetComponent<GameControl>().CurrentWave;
+        SetMaxHP(BaseHP + GrowHP * CurrentWave);
+        healthBar.SetMaxHealth(MaxHP);
+        ATK = BaseATK + GrowATK * CurrentWave;
+        DEF = BaseDEF + GrowDEF * CurrentWave;
+    }
+
+    public override void OnDie()
+    {
+        GameObject.Find("GameController").GetComponent<GameControl>().CurrentMonsterNumber--;
+        Destroy(gameObject);
     }
 }

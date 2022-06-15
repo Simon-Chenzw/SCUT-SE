@@ -19,4 +19,33 @@ public class GlobalSetting : MonoBehaviour
     static public LayerMask TeleporterLayerMask = 1 << 9;
     static public LayerMask CharacterLayerMask = 1 << 11;
     static public LayerMask MonsterLayerMask = 1 << 12;
+
+    // 怪物生成数量定义
+    static public int[][] SpawnMonsterNumer = new int[24][]
+    {
+        new int[2] { 1, 0 },
+        new int[2] { 1, 0 },
+        new int[2] { 1, 0 },
+        new int[2] { 1, 0 },
+        new int[2] { 2, 1 },
+        new int[2] { 2, 0 },
+        new int[2] { 2, 0 },
+        new int[2] { 2, 0 },
+        new int[2] { 2, 0 },
+        new int[2] { 2, 1 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 1 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 3, 0 },
+        new int[2] { 2, 2 },
+        new int[2] { 4, 0 },
+        new int[2] { 4, 0 },
+        new int[2] { 4, 0 },
+        new int[2] { 4, 0 }
+    };
 }
