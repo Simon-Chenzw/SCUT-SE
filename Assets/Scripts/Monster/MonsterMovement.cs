@@ -271,7 +271,7 @@ public class MonsterMovement : MonoBehaviour
 
 
     [Header("Attack Settings")]
-    public Skill[] Skills;
+    public MonsterSkill[] Skills;
 
     void AttackWithSkill()
     {
@@ -280,8 +280,6 @@ public class MonsterMovement : MonoBehaviour
             return;
         foreach (Skill skill in Skills)
         {
-            //     Debug.Log(transform.position);
-            Debug.Log(Character.transform.position);
             if (skill.CheckUseSkill(basiclogic.BodyBox.bounds, transform, Character.transform))
             {
                 basiclogic.UseSkill(skill);

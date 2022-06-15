@@ -6,7 +6,7 @@ using UnityEngine;
     fileName = "CommonEnemy1AttackSkill",
     menuName = "Skill/Enemy/CommonEnemy1AttackSkill"
 )]
-public class CommonEnemy1AttackSkill : Skill
+public class CommonEnemy1AttackSkill : MonsterSkill
 {
     public override string SkillName
     {

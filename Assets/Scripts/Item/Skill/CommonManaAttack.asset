@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c16cb4807a2ccf4aab153c88ddb0236, type: 3}
   m_Name: CommonManaAttack
   m_EditorClassIdentifier: 
-  SkillItemName: 
-  skill: {fileID: 0}
+  SkillItemName: Item-CommonManaAttack
+  skill: {fileID: 11400000, guid: d038500cf9183d54dadd8073b5aabb38, type: 2}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "CommonAttackSkill", menuName = "Skill/Character/CommonAttackSkill")]
-public class CommonAttackSkill : Skill
+public class CommonAttackSkill : CharacterSkill
 {
     public override string SkillName
     {

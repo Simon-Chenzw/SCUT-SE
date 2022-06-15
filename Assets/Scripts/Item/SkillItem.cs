@@ -9,7 +9,7 @@ using UnityEngine;
 public class SkillItem : Item
 {
     public string SkillItemName;
-    public Skill skill;
+    public CharacterSkill skill;
 
     public override string ItemName
     {
