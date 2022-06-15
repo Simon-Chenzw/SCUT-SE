@@ -5,10 +5,10 @@ using UnityEngine;
 public class CharacterBasicLogic : BasicLogic
 {
     [Header("Settings")]
-    public Skill skill1;
-    public Skill skill2;
+    public SkillItem[] Skills;
 
-    List<Item> Items;
+    // Note: Public for testing
+    public List<BuffItem> Buffs = new List<BuffItem>();
 
     void Start()
     {
@@ -19,12 +19,18 @@ public class CharacterBasicLogic : BasicLogic
     {
         if (Input.GetKeyDown(GlobalSetting.CommonAttackKey))
         {
-            UseSkill(skill1);
+            UseSkill(Skills[0].Skill);
         }
         else if (Input.GetKeyDown(GlobalSetting.CommonManaAttackKey))
         {
-            UseSkill(skill2);
+            UseSkill(Skills[1].Skill);
         }
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        damage *= 1 + Vulnerable;
+        base.TakeDamage(damage);
     }
 
     public override void OnDie()
@@ -40,20 +46,32 @@ public class CharacterBasicLogic : BasicLogic
         float atk_mul = 0.0f;
         float def_add = 0.0f;
         float def_mul = 0.0f;
-        if (Items != null)
+
+        foreach (Item item in Buffs)
         {
-            foreach (Item item in Items)
-            {
-                hp_add += item.HpAdd;
-                hp_mul += item.HpMul;
-                atk_add += item.AtkAdd;
-                atk_mul += item.AtkMul;
-                def_add += item.DefAdd;
-                def_mul += item.DefMul;
-            }
+            hp_add += item.HpAdd;
+            hp_mul += item.HpMul;
+            atk_add += item.AtkAdd;
+            atk_mul += item.AtkMul;
+            def_add += item.DefAdd;
+            def_mul += item.DefMul;
         }
+
         SetMaxHP(Mathf.CeilToInt((BaseHP + hp_add) * (1 + hp_mul)));
         ATK = (BaseATK + atk_add) * (1 + atk_mul);
         DEF = (BaseDEF + def_add) * (1 + def_mul);
+    }
+
+    float Vulnerable
+    {
+        get
+        {
+            float Vulnerable = 0.0f;
+            foreach (Item item in Buffs)
+            {
+                Vulnerable += item.Vulnerable;
+            }
+            return Vulnerable;
+        }
     }
 }

@@ -3,53 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// BuffItem
-/// 多个 Buff 的乘算增益是先加再乘，所以没有效果是 0.0
+/// BuffItem 虚基类，但部分接口都有默认实现。
+/// 多个 Buff 的乘算增益是先加再乘，所以没有效果是 0.0f 。
 /// </summary>
-public class Item : ScriptableObject
+public abstract class Item : ScriptableObject
 {
-    /// 非虚基类，但无效果
-    public string ItemName
-    {
-        get { return "BaseItem"; }
-    }
+    public virtual string ItemName { get; }
 
-    public Skill Skill
+    /// <summary>
+    /// 返回值: "Skill" "Buff"
+    /// </summary>
+    public virtual string ItemType { get; }
+
+    public virtual Skill Skill
     {
         get { return null; }
     }
 
-    public int HpAdd
+    public virtual int HpAdd
     {
         get { return 0; }
     }
 
-    public float HpMul
+    public virtual float HpMul
     {
         get { return 0.0f; }
     }
 
-    public float AtkAdd
+    public virtual float AtkAdd
     {
         get { return 0.0f; }
     }
 
-    public float AtkMul
+    public virtual float AtkMul
     {
         get { return 0.0f; }
     }
 
-    public float DefAdd
+    public virtual float DefAdd
     {
         get { return 0.0f; }
     }
 
-    public float DefMul
+    public virtual float DefMul
     {
         get { return 0.0f; }
     }
 
-    public float Vulnerable
+    public virtual float Vulnerable
     {
         get { return 0.0f; }
     }

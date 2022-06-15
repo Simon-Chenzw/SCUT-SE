@@ -29,7 +29,7 @@ public class CommonEnemy1AttackSkillObject : SkillObject
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(other.name);
+        // Debug.Log(other.name);
         if ((1 << other.gameObject.layer) == GlobalSetting.CharacterLayerMask.value)
         {
             if (other.gameObject.transform.parent == null)
