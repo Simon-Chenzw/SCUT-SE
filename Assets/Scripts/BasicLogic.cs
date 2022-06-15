@@ -10,12 +10,15 @@ public class BasicLogic : MonoBehaviour
     public int BaseHP;
     public float BaseATK;
     public float BaseDEF;
+    public BoxCollider2D BodyBox;
 
     [Header("Status")]
     public int MaxHP;
     public int HP;
     public float ATK;
     public float DEF;
+    private float GlobalCD = 0.0f;
+    private Dictionary<Skill, float> CD = new Dictionary<Skill, float>();
 
     public virtual void TakeDamage(float damage)
     {
@@ -39,5 +42,22 @@ public class BasicLogic : MonoBehaviour
         MaxHP = maxhp;
         HP = maxhp;
         healthBar.SetMaxHealth(MaxHP);
+    }
+
+    public bool UseSkill(Skill skill)
+    {
+        // CD check
+        if (!CD.ContainsKey(skill))
+            CD[skill] = 0.0f;
+        if (Time.time < GlobalCD)
+            return false;
+        if (Time.time < CD[skill])
+            return false;
+
+        skill.CreateSkill(BodyBox.bounds, transform);
+
+        GlobalCD = Time.time + skill.GlobalCD;
+        CD[skill] = Time.time + skill.CD;
+        return true;
     }
 }

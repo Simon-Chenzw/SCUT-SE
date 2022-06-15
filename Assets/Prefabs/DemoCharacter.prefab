@@ -306,6 +306,7 @@ MonoBehaviour:
   BaseHP: 100
   BaseATK: 50
   BaseDEF: 10
+  BodyBox: {fileID: 7999498798914346633}
   MaxHP: 0
   HP: 0
   ATK: 0

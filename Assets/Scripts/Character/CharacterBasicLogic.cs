@@ -8,15 +8,11 @@ public class CharacterBasicLogic : BasicLogic
     public Skill skill1;
     public Skill skill2;
 
-    private Bounds BodyBounds;
-    private Transform CharacterTransform;
-
     List<Item> Items;
 
     void Start()
     {
         SetStatus();
-        CharacterTransform = gameObject.transform;
     }
 
     void Update()
@@ -29,13 +25,6 @@ public class CharacterBasicLogic : BasicLogic
         {
             UseSkill(skill2);
         }
-    }
-
-    private void UseSkill(Skill skill)
-    {
-        Transform CharacterTransform = gameObject.transform;
-        Bounds BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
-        skill.CreateSkill(BodyBounds, CharacterTransform);
     }
 
     public override void OnDie()
