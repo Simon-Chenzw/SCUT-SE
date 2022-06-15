@@ -6,24 +6,11 @@ public class BasicLogic : MonoBehaviour
 {
     public HealthBar healthBar;
 
-    [Header("Settings")]
-    public int maxHP = 100;
-    public int maxMP = 50;
-
     [Header("Status")]
+    public int MaxHP;
     public int HP;
-    public int MP;
     public float ATK;
     public float DEF;
-
-    void Start()
-    {
-        HP = maxHP;
-        MP = maxMP;
-        healthBar.SetMaxHealth(maxHP);
-        ATK = 50.0f;
-        DEF = 20.0f;
-    }
 
     public virtual void TakeDamage(float damage)
     {
@@ -38,5 +25,12 @@ public class BasicLogic : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    public void SetMaxHP(int maxhp)
+    {
+        MaxHP = maxhp;
+        HP = maxhp;
+        healthBar.SetMaxHealth(MaxHP);
     }
 }

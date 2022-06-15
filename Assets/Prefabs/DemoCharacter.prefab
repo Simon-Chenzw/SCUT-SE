@@ -290,15 +290,6 @@ MonoBehaviour:
   IsJumping: 0
   IsFalling: 0
   NeedTeleport: 0
-  PlatformLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  WallLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  TeleporterLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!114 &417207139521238601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,12 +303,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1978777631656878692}
-  maxHP: 100
-  maxMP: 50
+  MaxHP: 0
   HP: 0
-  MP: 0
   ATK: 20
   DEF: 0
+  CharacterHP: 100
+  CharacterATK: 50
+  CharacterDEF: 20
   skill1: {fileID: 11400000, guid: e468e6498c5ddee4b809150c558a065b, type: 2}
   skill2: {fileID: 0}
 --- !u!1 &7958066995368657456

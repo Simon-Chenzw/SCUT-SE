@@ -286,25 +286,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 4
   DropProbability: 0.3
-  PlatformLayerMask:
-    serializedVersion: 2
-    m_Bits: 128
-  WallLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  MonsterMask:
-    serializedVersion: 2
-    m_Bits: 4096
-  CharacterMask:
-    serializedVersion: 2
-    m_Bits: 1024
   DetectDistance: 0.5
   DetectDepth: 0.5
   DetectDepthOffset: 0.5
   DetectCharacterWidth: 20
   DetectCharacterHeight: 5
-  Skills: []
-  SkillOffset: []
   AttackLegacy: 10
 --- !u!114 &3002471440211371483
 MonoBehaviour:
@@ -319,12 +305,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2276200252643177923}
-  maxHP: 100
-  maxMP: 50
+  MaxHP: 0
   HP: 0
-  MP: 0
   ATK: 0
   DEF: 0
+  MonsterHP: 100
+  MonsterATK: 50
+  MonsterDEF: 20
 --- !u!1 &7223693015329145116
 GameObject:
   m_ObjectHideFlags: 0
