@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CommonAttackSkill", menuName = "Skill/CommonAttackSkill")]
+[CreateAssetMenu(fileName = "CommonAttackSkill", menuName = "Skill/Character/CommonAttackSkill")]
 public class CommonAttackSkill : Skill
 {
     public override string SkillName
@@ -16,10 +16,6 @@ public class CommonAttackSkill : Skill
     public override float CD
     {
         get { return 0.5f; }
-    }
-    public override float MPcost
-    {
-        get { return 0.0f; }
     }
 
     public override void CreateSkill(Bounds bounds, Transform transform)
@@ -35,5 +31,14 @@ public class CommonAttackSkill : Skill
         }
         GameObject SkillObject = Resources.Load<GameObject>("SkillRange/CommonAttack");
         GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
+    }
+
+    public override bool CheckUseSkill(
+        Bounds bounds,
+        Transform OurTransform,
+        Transform EnemyTransform
+    )
+    {
+        return false;
     }
 }

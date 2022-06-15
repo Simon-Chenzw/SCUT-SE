@@ -311,7 +311,7 @@ MonoBehaviour:
   ATK: 0
   DEF: 0
   skill1: {fileID: 11400000, guid: e468e6498c5ddee4b809150c558a065b, type: 2}
-  skill2: {fileID: 0}
+  skill2: {fileID: 11400000, guid: d038500cf9183d54dadd8073b5aabb38, type: 2}
 --- !u!1 &7958066995368657456
 GameObject:
   m_ObjectHideFlags: 0

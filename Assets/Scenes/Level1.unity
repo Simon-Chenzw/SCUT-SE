@@ -458,6 +458,10 @@ PrefabInstance:
       propertyPath: CommonManaAttackRange
       value: 
       objectReference: {fileID: 6230072446716238933, guid: b3c8a02fc659480468509c0252a3bca7, type: 3}
+    - target: {fileID: 417207139521238601, guid: ffe55c6b7b005164c9dcd6ca71229504, type: 3}
+      propertyPath: HP
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4155767385131104136, guid: ffe55c6b7b005164c9dcd6ca71229504, type: 3}
       propertyPath: cam
       value: 

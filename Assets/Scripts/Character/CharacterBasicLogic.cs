@@ -25,12 +25,16 @@ public class CharacterBasicLogic : BasicLogic
         {
             UseSkill(skill1);
         }
-        else if (Input.GetKeyDown(GlobalSetting.CommonManaAttackKey)) { }
+        else if (Input.GetKeyDown(GlobalSetting.CommonManaAttackKey))
+        {
+            UseSkill(skill2);
+        }
     }
 
     private void UseSkill(Skill skill)
     {
-        BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
+        Transform CharacterTransform = gameObject.transform;
+        Bounds BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
         skill.CreateSkill(BodyBounds, CharacterTransform);
     }
 

@@ -23,4 +23,23 @@ public class MonsterBasicLogic : BasicLogic
         GameObject.Find("GameController").GetComponent<GameControl>().CurrentMonsterNumber--;
         Destroy(gameObject);
     }
+
+    //Used to test Monster's attack
+
+    void UseSkill(Skill skill)
+    {
+        Bounds BodyBounds = transform.GetChild(0).GetChild(0).GetComponent<BoxCollider2D>().bounds;
+        skill.CreateSkill(BodyBounds, transform);
+    }
+
+    public Skill skill1;
+    private KeyCode TestKey = KeyCode.U;
+
+    void Update()
+    {
+        if (Input.GetKeyDown(TestKey))
+        {
+            UseSkill(skill1);
+        }
+    }
 }

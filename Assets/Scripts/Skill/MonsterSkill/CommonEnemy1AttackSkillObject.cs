@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonAttackSkillObject : SkillObject
+public class CommonEnemy1AttackSkillObject : SkillObject
 {
     private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
-    [Header("Basic Parameters")]
     public float rate;
 
     public float EndTime;
@@ -14,9 +13,10 @@ public class CommonAttackSkillObject : SkillObject
     void Start()
     {
         SkillCollider = transform.GetComponent<BoxCollider2D>();
-        EndTime = 1.0f;
+        EndTime = 0.5f;
         rate = 1.0f;
-        attack = transform.parent.GetComponent<CharacterBasicLogic>().ATK;
+        attack = 10;
+        //attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
         CalculateSkillDamage();
     }
 
@@ -27,16 +27,17 @@ public class CommonAttackSkillObject : SkillObject
             Destroy(gameObject);
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((1 << other.gameObject.layer) == GlobalSetting.MonsterLayerMask.value)
+        Debug.Log(other.name);
+        if ((1 << other.gameObject.layer) == GlobalSetting.CharacterLayerMask.value)
         {
             if (other.gameObject.transform.parent == null)
             {
                 if (!hashset.Contains(other.gameObject))
                 {
                     hashset.Add(other.gameObject);
-                    other.gameObject.GetComponent<MonsterBasicLogic>().TakeDamage(damage);
+                    other.gameObject.GetComponent<CharacterBasicLogic>().TakeDamage(damage);
                 }
             }
         }
@@ -44,6 +45,7 @@ public class CommonAttackSkillObject : SkillObject
 
     public override void CalculateSkillDamage()
     {
+        Debug.Log(attack);
         damage = attack * rate;
     }
 }
