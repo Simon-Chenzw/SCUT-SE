@@ -35,7 +35,9 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.left,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            GlobalSetting.WallLayerMask | GlobalSetting.MonsterLayerMask
+            GlobalSetting.WallLayerMask
+                | GlobalSetting.MonsterLayerMask
+                | GlobalSetting.CharacterLayerMask
         );
         return Raycast.collider != null;
     }
@@ -46,7 +48,9 @@ public class MonsterMovement : MonoBehaviour
             (Vector2)MonsterCollider.bounds.center,
             Vector2.right,
             MonsterCollider.bounds.extents.x + DetectDistance,
-            GlobalSetting.WallLayerMask | GlobalSetting.MonsterLayerMask
+            GlobalSetting.WallLayerMask
+                | GlobalSetting.MonsterLayerMask
+                | GlobalSetting.CharacterLayerMask
         );
         return Raycast.collider != null;
     }
@@ -144,7 +148,7 @@ public class MonsterMovement : MonoBehaviour
 
     void Stand()
     {
-        MonsterRigidbody.velocity = Vector2.zero * MoveSpeed;
+        MonsterRigidbody.velocity = Vector2.zero;
     }
 
     void FacingLeft()
@@ -159,14 +163,32 @@ public class MonsterMovement : MonoBehaviour
 
     void MoveLeft()
     {
-        FacingLeft();
-        MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
+        if (!OnPlatform())
+            return;
+        if (!HasWallAtLeft())
+        {
+            FacingLeft();
+            MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
+        }
+        else
+        {
+            Stand();
+        }
     }
 
     void MoveRight()
     {
-        FacingRight();
-        MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
+        if (!OnPlatform())
+            return;
+        if (!HasWallAtRight())
+        {
+            FacingRight();
+            MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
+        }
+        else
+        {
+            Stand();
+        }
     }
 
     Vector2 GetFacing()
