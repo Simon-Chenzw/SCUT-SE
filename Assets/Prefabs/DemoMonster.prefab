@@ -293,6 +293,7 @@ MonoBehaviour:
   DetectCharacterHeight: 5
   Skills:
   - {fileID: 11400000, guid: 00ab6e8fd27b43c4584d6bae1acf4c18, type: 2}
+  FreezeTime: 0.3
 --- !u!114 &3002471440211371483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +318,6 @@ MonoBehaviour:
   GrowHP: 20
   GrowATK: 10
   GrowDEF: 5
-  skill1: {fileID: 11400000, guid: 00ab6e8fd27b43c4584d6bae1acf4c18, type: 2}
 --- !u!1 &7223693015329145116
 GameObject:
   m_ObjectHideFlags: 0

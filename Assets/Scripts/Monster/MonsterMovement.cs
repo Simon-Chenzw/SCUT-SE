@@ -148,9 +148,17 @@ public class MonsterMovement : MonoBehaviour
     ////////////////////////////////////////////////////////////////////////////
     // Movement functions
 
+    bool CanMove()
+    {
+        return OnPlatform() && FreezeUntil <= Time.time;
+    }
+
     void Stand()
     {
-        MonsterRigidbody.velocity = Vector2.zero;
+        if (CanMove())
+        {
+            MonsterRigidbody.velocity = Vector2.zero;
+        }
     }
 
     void FacingLeft()
@@ -166,30 +174,32 @@ public class MonsterMovement : MonoBehaviour
     void MoveLeft()
     {
         FacingLeft();
-        if (!OnPlatform())
-            return;
-        if (!HasWallAtLeft())
+        if (CanMove())
         {
-            MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
-        }
-        else
-        {
-            Stand();
+            if (!HasWallAtLeft())
+            {
+                MonsterRigidbody.velocity = Vector2.left * MoveSpeed;
+            }
+            else
+            {
+                Stand();
+            }
         }
     }
 
     void MoveRight()
     {
         FacingRight();
-        if (!OnPlatform())
-            return;
-        if (!HasWallAtRight())
+        if (CanMove())
         {
-            MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
-        }
-        else
-        {
-            Stand();
+            if (!HasWallAtRight())
+            {
+                MonsterRigidbody.velocity = Vector2.right * MoveSpeed;
+            }
+            else
+            {
+                Stand();
+            }
         }
     }
 
@@ -272,8 +282,22 @@ public class MonsterMovement : MonoBehaviour
 
     [Header("Attack Settings")]
     public MonsterSkill[] Skills;
+    public float FreezeTime;
 
-    void AttackWithSkill()
+    private float FreezeUntil = 0.0f;
+    private Skill PreparedSkill;
+
+    void UseSkill()
+    {
+        if (PreparedSkill != null && FreezeUntil <= Time.time)
+        {
+            MonsterBasicLogic basiclogic = gameObject.GetComponent<MonsterBasicLogic>();
+            basiclogic.UseSkill(PreparedSkill);
+            PreparedSkill = null;
+        }
+    }
+
+    void PrepareSkill()
     {
         MonsterBasicLogic basiclogic = gameObject.GetComponent<MonsterBasicLogic>();
         if (basiclogic.InGlobalCD())
@@ -282,7 +306,9 @@ public class MonsterMovement : MonoBehaviour
         {
             if (skill.CheckUseSkill(basiclogic.BodyBox.bounds, transform, Character.transform))
             {
-                basiclogic.UseSkill(skill);
+                Stand();
+                FreezeUntil = Time.time + FreezeTime;
+                PreparedSkill = skill;
                 return;
             }
         }
@@ -290,19 +316,23 @@ public class MonsterMovement : MonoBehaviour
 
     void AttackMode()
     {
-        if (HasCharacterLeft())
+        UseSkill();
+        if (FreezeUntil <= Time.time)
         {
-            MoveLeft();
-            AttackWithSkill();
-        }
-        else if (HasCharacterRight())
-        {
-            MoveRight();
-            AttackWithSkill();
-        }
-        else
-        {
-            PatrolMode();
+            if (HasCharacterLeft())
+            {
+                MoveLeft();
+                PrepareSkill();
+            }
+            else if (HasCharacterRight())
+            {
+                MoveRight();
+                PrepareSkill();
+            }
+            else
+            {
+                PatrolMode();
+            }
         }
     }
 
@@ -324,7 +354,7 @@ public class MonsterMovement : MonoBehaviour
     private float RoundTime = 0.05f;
     private float RemainTime = 0;
 
-    void FixedUpdate()
+    void Update()
     {
         if ((RemainTime -= Time.deltaTime) <= 0)
         {
