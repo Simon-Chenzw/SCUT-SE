@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterBasicLogic : BasicLogic
 {
     [Header("Settings")]
     public SkillItem[] Skills;
+
+    [Header("Status")]
+    private int gold = 0;
 
     // Note: Public for testing
     public List<BuffItem> Buffs = new List<BuffItem>();
@@ -31,6 +35,12 @@ public class CharacterBasicLogic : BasicLogic
     {
         damage *= 1 + Vulnerable;
         base.TakeDamage(damage);
+    }
+
+    public void GetGold(int got)
+    {
+        gold += got;
+        GameObject.Find("GoldText").GetComponent<Text>().text = $"Gold: \t {gold}";
     }
 
     public override void OnDie()

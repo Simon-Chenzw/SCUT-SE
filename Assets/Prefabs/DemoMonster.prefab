@@ -318,6 +318,8 @@ MonoBehaviour:
   GrowHP: 20
   GrowATK: 10
   GrowDEF: 5
+  GoldUpper: 3
+  GoldLower: 1
 --- !u!1 &7223693015329145116
 GameObject:
   m_ObjectHideFlags: 0
