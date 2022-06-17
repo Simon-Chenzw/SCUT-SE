@@ -17,6 +17,7 @@ public class CharacterBasicLogic : BasicLogic
     void Start()
     {
         SetStatus();
+        GetGold(0);
     }
 
     void Update()
