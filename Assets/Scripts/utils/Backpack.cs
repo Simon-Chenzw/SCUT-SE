@@ -14,7 +14,7 @@ public class Backpack : MonoBehaviour
     [SerializeField] // Note: Public for testing
     private List<BuffItem> Buffs = new List<BuffItem>();
 
-    void start()
+    void Start()
     {
         GetGold(0);
     }
