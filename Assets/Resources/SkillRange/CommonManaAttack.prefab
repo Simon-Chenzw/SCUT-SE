@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8708085737328154080}
   - component: {fileID: 3073714685376472684}
   - component: {fileID: 2608634094007069826}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CommonManaAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}

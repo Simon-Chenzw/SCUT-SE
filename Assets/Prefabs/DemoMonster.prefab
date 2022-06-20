@@ -292,7 +292,7 @@ MonoBehaviour:
   DetectCharacterWidth: 20
   DetectCharacterHeight: 5
   Skills:
-  - {fileID: 11400000, guid: 00ab6e8fd27b43c4584d6bae1acf4c18, type: 2}
+  - {fileID: 11400000, guid: 933db5a59e9ef13459e6cf227b85375f, type: 2}
   FreezeTime: 0.3
 --- !u!114 &3002471440211371483
 MonoBehaviour:

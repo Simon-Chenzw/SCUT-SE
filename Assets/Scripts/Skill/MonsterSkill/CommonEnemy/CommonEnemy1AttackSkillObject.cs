@@ -13,10 +13,9 @@ public class CommonEnemy1AttackSkillObject : SkillObject
     void Start()
     {
         SkillCollider = transform.GetComponent<BoxCollider2D>();
-        EndTime = 0.5f;
+        EndTime = 0.2f;
         rate = 1.0f;
-        attack = 10;
-        //attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
+        attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
         CalculateSkillDamage();
     }
 
@@ -29,7 +28,6 @@ public class CommonEnemy1AttackSkillObject : SkillObject
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Debug.Log(other.name);
         if ((1 << other.gameObject.layer) == GlobalSetting.CharacterLayerMask.value)
         {
             if (other.gameObject.transform.parent == null)
@@ -45,7 +43,6 @@ public class CommonEnemy1AttackSkillObject : SkillObject
 
     public override void CalculateSkillDamage()
     {
-        Debug.Log(attack);
         damage = attack * rate;
     }
 }
