@@ -19,14 +19,9 @@ public class MonsterBasicLogic : BasicLogic
     ////////////////////////////////////////////////////////////////////////////
     // utils getter
 
-    GameObject Character
+    Backpack backpack
     {
-        get { return GameObject.Find("Character"); }
-    }
-
-    CharacterBasicLogic CharacterBasicLogic
-    {
-        get { return GameObject.Find("Character").GetComponent<CharacterBasicLogic>(); }
+        get { return GameObject.Find("Backpack").GetComponent<Backpack>(); }
     }
 
     GameControl GameControl
@@ -50,7 +45,7 @@ public class MonsterBasicLogic : BasicLogic
         float lower = GoldLower * ((wave - 1) / 10 + 1);
         float upper = GoldUpper * ((wave - 1) / 10 + 1);
         int got = Mathf.RoundToInt(Random.Range(lower, upper));
-        CharacterBasicLogic.GetGold(got);
+        backpack.GetGold(got);
     }
 
     public override void OnDie()

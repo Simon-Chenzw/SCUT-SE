@@ -44,6 +44,16 @@ public class BasicLogic : MonoBehaviour
         healthBar.SetMaxHealth(MaxHP);
     }
 
+    public void SetATK(float atk)
+    {
+        ATK = atk;
+    }
+
+    public void SetDEF(float def)
+    {
+        DEF = def;
+    }
+
     public bool InGlobalCD()
     {
         return Time.time < GlobalCD;
