@@ -8,50 +8,13 @@ using UnityEngine;
 /// </summary>
 public abstract class Item : ScriptableObject
 {
-    public virtual string ItemName { get; }
+    [Header("Item Settings")]
+    public string ItemName;
 
-    /// <summary>
-    /// 返回值: "Skill" "Buff"
-    /// </summary>
-    public virtual string ItemType { get; }
+    [TextArea(5, 10)]
+    public string ItemDesc;
 
-    public virtual Skill Skill
-    {
-        get { return null; }
-    }
+    public int ItemPrice;
 
-    public virtual int HpAdd
-    {
-        get { return 0; }
-    }
-
-    public virtual float HpMul
-    {
-        get { return 0.0f; }
-    }
-
-    public virtual float AtkAdd
-    {
-        get { return 0.0f; }
-    }
-
-    public virtual float AtkMul
-    {
-        get { return 0.0f; }
-    }
-
-    public virtual float DefAdd
-    {
-        get { return 0.0f; }
-    }
-
-    public virtual float DefMul
-    {
-        get { return 0.0f; }
-    }
-
-    public virtual float Vulnerable
-    {
-        get { return 0.0f; }
-    }
+    public int ItemRandomWeight;
 }

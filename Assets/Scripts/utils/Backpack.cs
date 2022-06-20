@@ -34,7 +34,7 @@ public class Backpack : MonoBehaviour
         float def_add = 0.0f;
         float def_mul = 0.0f;
 
-        foreach (Item item in Buffs)
+        foreach (BuffItem item in Buffs)
         {
             hp_add += item.HpAdd;
             hp_mul += item.HpMul;
@@ -79,7 +79,7 @@ public class Backpack : MonoBehaviour
         get
         {
             float Vulnerable = 0.0f;
-            foreach (Item item in Buffs)
+            foreach (BuffItem item in Buffs)
             {
                 Vulnerable += item.Vulnerable;
             }

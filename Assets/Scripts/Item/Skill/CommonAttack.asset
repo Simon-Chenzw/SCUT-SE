@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c16cb4807a2ccf4aab153c88ddb0236, type: 3}
   m_Name: CommonAttack
   m_EditorClassIdentifier: 
-  SkillItemName: Item-CommandAttack
+  ItemName: Common Attack Skill
+  ItemDesc: "this \nis \nCommon \nAttack \nSkill"
+  ItemPrice: 0
   skill: {fileID: 11400000, guid: e468e6498c5ddee4b809150c558a065b, type: 2}

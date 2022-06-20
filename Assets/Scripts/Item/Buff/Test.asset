@@ -12,11 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15edb0f019cf44c4fa85dc3fee2536a2, type: 3}
   m_Name: Test
   m_EditorClassIdentifier: 
-  BuffItemName: 
-  HpAddSetting: 0
-  HpMulSetting: 0
-  AtkAddSetting: 0
-  AtkMulSetting: 0
-  DefAddSetting: 0
-  DefMulSetting: 0
-  VulnerableSetting: 0
+  ItemName: Test Buff
+  ItemDesc: 'this
+
+    is
+
+    the
+
+    test
+
+    buff'
+  ItemPrice: 0
+  HpAdd: 0
+  HpMul: 0
+  AtkAdd: 0
+  AtkMul: 0
+  DefAdd: 0
+  DefMul: 0
+  Vulnerable: 0

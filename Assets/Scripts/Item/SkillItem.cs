@@ -8,21 +8,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SkillItem", menuName = "Item/Skill")]
 public class SkillItem : Item
 {
-    public string SkillItemName;
+    [Header("Skill Settings")]
     public CharacterSkill skill;
-
-    public override string ItemName
-    {
-        get { return SkillItemName; }
-    }
-
-    public override string ItemType
-    {
-        get { return "Skill"; }
-    }
-
-    public override Skill Skill
-    {
-        get { return skill; }
-    }
 }
