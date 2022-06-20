@@ -6,9 +6,11 @@ public class SpawnControl : MonoBehaviour
 {
     public int NeedToSpawnCommon = 0;
     public int NeedToSpawnSuper = 0;
+    public bool NeedToSpawnBoss = false;
 
     public GameObject CommonMonster;
     public GameObject SuperMonster;
+    public GameObject BossMonster;
 
     void Update()
     {
@@ -35,6 +37,11 @@ public class SpawnControl : MonoBehaviour
                 );
                 NeedToSpawnSuper--;
             }
+        }
+        else if (NeedToSpawnBoss)
+        {
+            Instantiate(BossMonster, gameObject.transform.position, gameObject.transform.rotation);
+            NeedToSpawnBoss = false;
         }
     }
 

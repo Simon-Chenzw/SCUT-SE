@@ -269,7 +269,7 @@ Rigidbody2D:
   m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: b65efc761811afe43abfe8ecba1819f4, type: 2}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &-2554983893020322608
@@ -315,11 +315,8 @@ MonoBehaviour:
   HP: 0
   ATK: 0
   DEF: 0
-  GrowHP: 20
-  GrowATK: 10
-  GrowDEF: 5
-  GoldUpper: 3
   GoldLower: 1
+  GoldUpper: 3
 --- !u!1 &7223693015329145116
 GameObject:
   m_ObjectHideFlags: 0

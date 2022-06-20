@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class Shop : MonoBehaviour, IPointerClickHandler
 {
@@ -12,7 +11,7 @@ public class Shop : MonoBehaviour, IPointerClickHandler
         GameObject go = eventData.pointerCurrentRaycast.gameObject;
         Debug.Log("Clicked: " + go.name);
         if (go.name == "Exit")
-            SceneManager.LoadScene("Scenes/Level1", LoadSceneMode.Single);
+            GameObject.Find("GlobalGameController").GetComponent<GlobalGameControl>().OnShopOut();
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -5,9 +5,6 @@ using UnityEngine;
 public class MonsterBasicLogic : BasicLogic
 {
     [Header("Settings")]
-    public int GrowHP;
-    public float GrowATK;
-    public float GrowDEF;
     public int GoldLower;
     public int GoldUpper;
 
@@ -24,33 +21,39 @@ public class MonsterBasicLogic : BasicLogic
         get { return GameObject.Find("Backpack").GetComponent<Backpack>(); }
     }
 
-    GameControl GameControl
+    GlobalGameControl GlobalGameController
+    {
+        get { return GameObject.Find("GlobalGameController").GetComponent<GlobalGameControl>(); }
+    }
+
+    GameControl GameController
     {
         get { return GameObject.Find("GameController").GetComponent<GameControl>(); }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    void SetStatus()
+    private void SetStatus()
     {
-        int wave = GameControl.CurrentWave;
-        SetMaxHP(BaseHP + GrowHP * wave);
-        ATK = BaseATK + GrowATK * wave;
-        DEF = BaseDEF + GrowDEF * wave;
+        int Wave = GlobalGameController.GlobalWave;
+        float Scale = (Wave - 1) / 10.0f + 1;
+        SetMaxHP(Mathf.RoundToInt(BaseHP * Scale));
+        SetATK(BaseATK * Scale);
+        SetDEF(BaseDEF * Scale);
     }
 
-    void DropGold()
+    private void DropGold()
     {
-        int wave = GameControl.CurrentWave;
-        float lower = GoldLower * ((wave - 1) / 10 + 1);
-        float upper = GoldUpper * ((wave - 1) / 10 + 1);
+        int Wave = GlobalGameController.GlobalWave;
+        float lower = GoldLower * ((Wave - 1) / 10.0f + 1);
+        float upper = GoldUpper * ((Wave - 1) / 10.0f + 1);
         int got = Mathf.RoundToInt(Random.Range(lower, upper));
         backpack.GetGold(got);
     }
 
     public override void OnDie()
     {
-        GameControl.CurrentMonsterNumber--;
+        GameController.CurrentMonsterNumber--;
         DropGold();
         Destroy(gameObject);
     }
