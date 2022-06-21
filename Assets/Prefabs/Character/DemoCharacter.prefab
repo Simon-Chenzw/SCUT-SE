@@ -365,10 +365,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1978777631656878692}
-  BaseHP: 100
+  BaseHP: 300
   BaseATK: 50
-  BaseDEF: 10
-  BodyBox: {fileID: 833515086203342921}
+  BaseDEF: 0
+  BodyBox: {fileID: 7999498798914346633}
   MaxHP: 0
   HP: 0
   ATK: 0

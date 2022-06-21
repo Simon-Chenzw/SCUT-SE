@@ -22,7 +22,7 @@ public class BasicLogic : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        int RealDamage = Mathf.CeilToInt(damage / (DEF / 100 + 1));
+        int RealDamage = Mathf.CeilToInt(damage * (1 - Mathf.Min(DEF, 60) / 100));
         Debug.Log(gameObject.ToString() + " get damage " + RealDamage.ToString());
         if (RealDamage > 0)
         {

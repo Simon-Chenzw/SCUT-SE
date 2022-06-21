@@ -354,8 +354,8 @@ MonoBehaviour:
   DetectCharacterWidth: 20
   DetectCharacterHeight: 5
   Skills:
-  - {fileID: 11400000, guid: 933db5a59e9ef13459e6cf227b85375f, type: 2}
-  FreezeTime: 0.3
+  - {fileID: 11400000, guid: 00ab6e8fd27b43c4584d6bae1acf4c18, type: 2}
+  FreezeTime: 1
 --- !u!114 &3002471440211371483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,10 +369,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 2276200252643177923}
-  BaseHP: 100
-  BaseATK: 50
-  BaseDEF: 10
-  BodyBox: {fileID: 2213674935939326269}
+  BaseHP: 80
+  BaseATK: 10
+  BaseDEF: 0
+  BodyBox: {fileID: 1285205351131047566}
   MaxHP: 0
   HP: 0
   ATK: 0

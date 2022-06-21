@@ -122,5 +122,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attack: 0
-  rate: 2
+  rate: 1
   EndTime: 0.5

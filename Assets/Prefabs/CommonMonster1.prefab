@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 4
-  DropProbability: 1
+  DropProbability: 0.3
   DetectDistance: 0.5
   DetectDepth: 0.5
   DetectDepthOffset: 0.5
@@ -315,9 +315,6 @@ MonoBehaviour:
   HP: 0
   ATK: 0
   DEF: 0
-  GrowHP: 20
-  GrowATK: 10
-  GrowDEF: 5
   GoldLower: 1
   GoldUpper: 3
 --- !u!1 &7223693015329145116
