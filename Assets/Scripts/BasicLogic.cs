@@ -27,7 +27,7 @@ public class BasicLogic : MonoBehaviour
         if (RealDamage > 0)
         {
             HP -= RealDamage;
-            healthBar.SetHealth(HP);
+            healthBar?.SetHealth(HP);
             if (HP <= 0)
             {
                 OnDie();
@@ -41,7 +41,7 @@ public class BasicLogic : MonoBehaviour
     {
         MaxHP = maxhp;
         HP = maxhp;
-        healthBar.SetMaxHealth(MaxHP);
+        healthBar?.SetMaxHealth(MaxHP);
     }
 
     public void SetATK(float atk)
