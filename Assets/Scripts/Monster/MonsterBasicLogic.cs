@@ -48,7 +48,7 @@ public class MonsterBasicLogic : BasicLogic
         float lower = GoldLower * ((Wave - 1) / 10.0f + 1);
         float upper = GoldUpper * ((Wave - 1) / 10.0f + 1);
         int got = Mathf.RoundToInt(Random.Range(lower, upper));
-        backpack.GetGold(got);
+        backpack.Get(got);
     }
 
     public override void OnDie()

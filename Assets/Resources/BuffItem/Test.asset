@@ -23,8 +23,9 @@ MonoBehaviour:
 
     buff'
   ItemPrice: 0
+  ItemRandomWeight: 1
   HpAdd: 0
-  HpMul: 0
+  HpMul: 100
   AtkAdd: 0
   AtkMul: 0
   DefAdd: 0

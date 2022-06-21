@@ -88,7 +88,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953662617737607253}
-  - component: {fileID: 8568926827352045797}
   m_Layer: 5
   m_Name: ShopItem
   m_TagString: Untagged
@@ -128,10 +127,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4311891443576472177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56281637cc42aa2438e8c74a14709e4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b734dd157e7f2540bc4911684cb0901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  behaviour: 3
 --- !u!1 &4927050247801029319
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +143,7 @@ GameObject:
   - component: {fileID: 4414434228607223231}
   - component: {fileID: 1685024725466265950}
   - component: {fileID: 4830491416837580794}
+  - component: {fileID: 8184851461024241593}
   m_Layer: 5
   m_Name: ItemDescription
   m_TagString: Untagged
@@ -204,11 +205,11 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
-    m_Alignment: 4
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'this is Desc
 
@@ -217,6 +218,20 @@ MonoBehaviour:
     Desc 3
 
     Desc 4'
+--- !u!114 &8184851461024241593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927050247801029319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 2
 --- !u!1 &5360685950710110466
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +243,6 @@ GameObject:
   - component: {fileID: 5360685950710110467}
   - component: {fileID: 5360685950710110470}
   - component: {fileID: 5360685950710110469}
-  - component: {fileID: 5360685950710110468}
   m_Layer: 5
   m_Name: ItemName
   m_TagString: Untagged
@@ -297,19 +311,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Name
---- !u!114 &5360685950710110468
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5360685950710110466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56281637cc42aa2438e8c74a14709e4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: e07df85b58a8089479cf0f147d3ce4ac, type: 2}
 --- !u!1 &6922237274610680793
 GameObject:
   m_ObjectHideFlags: 0

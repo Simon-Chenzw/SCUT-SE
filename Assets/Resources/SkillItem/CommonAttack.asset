@@ -10,18 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c16cb4807a2ccf4aab153c88ddb0236, type: 3}
-  m_Name: CommonManaAttack
+  m_Name: CommonAttack
   m_EditorClassIdentifier: 
-  ItemName: Common Mana Attack
-  ItemDesc: 'this
-
-    is
-
-    Common
-
-    Mana
-
-    Attack'
+  ItemName: Common Attack Skill
+  ItemDesc: "this \nis \nCommon \nAttack \nSkill"
   ItemPrice: 0
-  ItemRandomWeight: 0
-  skill: {fileID: 11400000, guid: d038500cf9183d54dadd8073b5aabb38, type: 2}
+  ItemRandomWeight: 1
+  skill: {fileID: 11400000, guid: e468e6498c5ddee4b809150c558a065b, type: 2}

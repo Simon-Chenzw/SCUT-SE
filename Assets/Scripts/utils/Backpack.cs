@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,13 +17,58 @@ public class Backpack : MonoBehaviour
 
     void Start()
     {
-        GetGold(0);
+        Display();
+        DontDestroyOnLoad(gameObject);
     }
 
-    public void GetGold(int got)
+    public int GetGold()
+    {
+        return gold;
+    }
+
+    public void Get(int got)
     {
         gold += got;
+        Display();
+    }
+
+    public bool Pay(int amounts)
+    {
+        if (gold >= amounts)
+        {
+            gold -= amounts;
+            Display();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void Display()
+    {
         GameObject.Find("GoldText").GetComponent<Text>().text = $"Gold: \t {gold}";
+    }
+
+    public void SwapSkill()
+    {
+        SkillItem tmp = Skills[0];
+        Skills[0] = Skills[1];
+        Skills[1] = tmp;
+    }
+
+    public void ReplaceSkill(SkillItem item, int index)
+    {
+        if (0 <= index | index < Skills.Length)
+        {
+            Skills[index] = item;
+        }
+    }
+
+    public void PushBuff(BuffItem item)
+    {
+        Buffs.Add(item);
     }
 
     public void SetBuff(CharacterBasicLogic logic)
@@ -63,6 +109,17 @@ public class Backpack : MonoBehaviour
         }
     }
 
+    public SkillItem SkillItemOne
+    {
+        get
+        {
+            if (Skills == null || Skills.Length < 1)
+                return null;
+            else
+                return Skills[0];
+        }
+    }
+
     public CharacterSkill SkillTwo
     {
         get
@@ -71,6 +128,17 @@ public class Backpack : MonoBehaviour
                 return null;
             else
                 return Skills[1].skill;
+        }
+    }
+
+    public SkillItem SkillItemTwo
+    {
+        get
+        {
+            if (Skills == null || Skills.Length < 2)
+                return null;
+            else
+                return Skills[1];
         }
     }
 
