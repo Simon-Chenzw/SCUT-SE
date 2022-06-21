@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attack: 0
   rate: 0
-  EndTime: 0
+  EndTime: 0.1
 --- !u!61 &8083300552359079670
 BoxCollider2D:
   m_ObjectHideFlags: 0

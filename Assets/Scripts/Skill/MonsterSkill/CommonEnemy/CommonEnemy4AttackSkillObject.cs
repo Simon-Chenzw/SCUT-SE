@@ -13,7 +13,6 @@ public class CommonEnemy4AttackSkillObject : SkillObject
     void Start()
     {
         SkillCollider = transform.GetComponent<BoxCollider2D>();
-        EndTime = 0.2f;
         rate = 1.0f;
         attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
         CalculateSkillDamage();
