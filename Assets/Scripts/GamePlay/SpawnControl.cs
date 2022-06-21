@@ -8,8 +8,8 @@ public class SpawnControl : MonoBehaviour
     public int NeedToSpawnSuper = 0;
     public bool NeedToSpawnBoss = false;
 
-    public GameObject CommonMonster;
-    public GameObject SuperMonster;
+    public GameObject[] CommonMonster;
+    public GameObject[] SuperMonster;
     public GameObject BossMonster;
 
     void Update()
@@ -19,7 +19,7 @@ public class SpawnControl : MonoBehaviour
             if (CanSpawn())
             {
                 Instantiate(
-                    CommonMonster,
+                    CommonMonster[Random.Range(0, CommonMonster.Length)],
                     gameObject.transform.position,
                     gameObject.transform.rotation
                 );
@@ -31,7 +31,7 @@ public class SpawnControl : MonoBehaviour
             if (CanSpawn())
             {
                 Instantiate(
-                    SuperMonster,
+                    SuperMonster[Random.Range(0, SuperMonster.Length)],
                     gameObject.transform.position,
                     gameObject.transform.rotation
                 );

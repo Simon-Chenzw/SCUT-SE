@@ -54,6 +54,11 @@ public class BasicLogic : MonoBehaviour
         DEF = def;
     }
 
+    public void MakeHPFull()
+    {
+        HP = MaxHP;
+    }
+
     public bool InGlobalCD()
     {
         return Time.time < GlobalCD;

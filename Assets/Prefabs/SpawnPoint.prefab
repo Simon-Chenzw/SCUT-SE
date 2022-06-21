@@ -46,6 +46,12 @@ MonoBehaviour:
   NeedToSpawnCommon: 0
   NeedToSpawnSuper: 0
   NeedToSpawnBoss: 0
-  CommonMonster: {fileID: 7152960186525731064, guid: 5b11942d553976143b070cc21f305339, type: 3}
-  SuperMonster: {fileID: 7152960186525731064, guid: 5b11942d553976143b070cc21f305339, type: 3}
+  CommonMonster:
+  - {fileID: 7152960186525731064, guid: b21b9e7f8eebc43409bac6e4f7bbcf85, type: 3}
+  - {fileID: 7152960186525731064, guid: 956d18d7b97bb1b46855e322c8af8194, type: 3}
+  - {fileID: 7152960186525731064, guid: 9e7a9b3f2a0d5fc4987905164458caa5, type: 3}
+  - {fileID: 7152960186525731064, guid: 9affeaa6e654f2b41b7dd34a654608b4, type: 3}
+  - {fileID: 7152960186525731064, guid: fed2145545ac9744f876b8d44c0ad9b7, type: 3}
+  SuperMonster:
+  - {fileID: 7152960186525731064, guid: 4b1a4b2d46453c64396b6eaa047f4167, type: 3}
   BossMonster: {fileID: 7152960186525731064, guid: 5b11942d553976143b070cc21f305339, type: 3}

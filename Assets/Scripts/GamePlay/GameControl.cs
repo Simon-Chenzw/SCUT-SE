@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour
 {
@@ -59,6 +60,7 @@ public class GameControl : MonoBehaviour
             IsBossExist = true;
             LastRefreshTime = CurrentTime;
             CurrentWave++;
+            GameObject.Find("WaveNumber").GetComponent<Text>().text = CurrentWave.ToString();
             GlobalGameController.OnNextWave();
             return;
         }
@@ -77,6 +79,7 @@ public class GameControl : MonoBehaviour
         {
             LastRefreshTime = CurrentTime;
             CurrentWave++;
+            GameObject.Find("WaveNumber").GetComponent<Text>().text = CurrentWave.ToString();
             GlobalGameController.OnNextWave();
             HaveBeenToShop = false;
 

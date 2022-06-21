@@ -48,7 +48,7 @@ public class Backpack : MonoBehaviour
 
     public void Display()
     {
-        GameObject.Find("GoldText").GetComponent<Text>().text = $"Gold: \t {gold}";
+        GameObject.Find("GoldNumber").GetComponent<Text>().text = gold.ToString();
     }
 
     public void SwapSkill()

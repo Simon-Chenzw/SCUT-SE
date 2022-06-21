@@ -39,6 +39,7 @@ public class GlobalGameControl : MonoBehaviour
 
     public void OnShopIn()
     {
+        GameObject.Find("Character").GetComponent<CharacterBasicLogic>().MakeHPFull();
         IsShopping = true;
         SceneManager.LoadScene("Scenes/Shop", LoadSceneMode.Additive);
     }
