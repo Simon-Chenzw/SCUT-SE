@@ -62,11 +62,13 @@ public class CharacterMovement : MonoBehaviour
         // 修改角色朝向
         if (Input.GetKey(GlobalSetting.RightMoveKey) && !Input.GetKey(GlobalSetting.LeftMoveKey))
         {
-            transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            transform.Find("RenderBody").localScale = new Vector3(1.0f, 1.0f, 1.0f);
+            transform.Find("LogicBody").localScale = new Vector3(1.0f, 1.0f, 1.0f);
         }
         if (Input.GetKey(GlobalSetting.LeftMoveKey) && !Input.GetKey(GlobalSetting.RightMoveKey))
         {
-            transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.Find("RenderBody").localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+            transform.Find("LogicBody").localScale = new Vector3(-1.0f, 1.0f, 1.0f);
         }
 
         // 根据轴输入移动（直接改变Transform）

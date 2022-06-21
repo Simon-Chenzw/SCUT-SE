@@ -163,12 +163,14 @@ public class MonsterMovement : MonoBehaviour
 
     void FacingLeft()
     {
-        transform.Find("Render").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        transform.Find("RenderBody").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
+        transform.Find("LogicBody").transform.localScale = new Vector3(-1.0f, 1.0f, 1.0f);
     }
 
     void FacingRight()
     {
-        transform.Find("Render").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        transform.Find("RenderBody").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+        transform.Find("LogicBody").transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
     }
 
     void MoveLeft()

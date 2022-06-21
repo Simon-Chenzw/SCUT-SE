@@ -24,7 +24,7 @@ public class CommonEnemy1AttackSkill : MonsterSkill
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
         Vector3 position = new Vector3(0, 0, 0);
-        if (transform.GetChild(0).localScale.x > 0)
+        if (transform.Find("LogicBody").localScale.x > 0)
         {
             position = new Vector3(bounds.max.x + bounds.size.x * 2, bounds.center.y, 0);
         }

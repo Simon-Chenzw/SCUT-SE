@@ -25,7 +25,7 @@ public class CommonEnemy3AttackSkill : MonsterSkill
     {
         Debug.Log("xxxxxxxxx");
         Vector3 position = new Vector3(0, 0, 0);
-        if (transform.GetChild(0).localScale.x > 0)
+        if (transform.Find("LogicBody").localScale.x > 0)
         {
             position = new Vector3(bounds.center.x + bounds.size.x * 0.75f, bounds.center.y, 0);
         }
