@@ -14,7 +14,7 @@ public class GlobalSetting : MonoBehaviour
     static public KeyCode ExitKey = KeyCode.Escape;
 
     // 测试按键定义
-    static public KeyCode KillAllMonsters = KeyCode.Keypad1;
+    static public KeyCode KillAllMonsters = KeyCode.F1;
 
     // 层级定义
     static public LayerMask PlatformLayerMask = 1 << 7;

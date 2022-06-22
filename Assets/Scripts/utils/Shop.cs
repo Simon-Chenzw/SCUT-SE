@@ -73,7 +73,9 @@ public class Shop : MonoBehaviour, IPointerClickHandler
 
     public void Display()
     {
-        GameObject.Find("GoldDisplay").GetComponent<Text>().text = $"Gold: \t {backpack.GetGold()}";
+        GameObject.Find("GoldNumberInShop").GetComponent<Text>().text = backpack
+            .GetGold()
+            .ToString();
         foreach (ShopItem item in items)
         {
             item.Display();

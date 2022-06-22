@@ -40,6 +40,7 @@ public class GlobalGameControl : MonoBehaviour
     public void OnShopIn()
     {
         GameObject.Find("Character").GetComponent<CharacterBasicLogic>().MakeHPFull();
+        GameObject.Find("Main Camera").GetComponent<AudioListener>().enabled = false;
         IsShopping = true;
         SceneManager.LoadScene("Scenes/Shop", LoadSceneMode.Additive);
     }
@@ -48,5 +49,6 @@ public class GlobalGameControl : MonoBehaviour
     {
         IsShopping = false;
         SceneManager.UnloadSceneAsync("Scenes/Shop");
+        GameObject.Find("Main Camera").GetComponent<AudioListener>().enabled = true;
     }
 }
