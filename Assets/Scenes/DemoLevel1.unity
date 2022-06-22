@@ -762,6 +762,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1670179793}
     m_Modifications:
+    - target: {fileID: 1717069175583507417, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
+      propertyPath: CommonMonster
+      value: 
+      objectReference: {fileID: 7152960186525731064, guid: d1c5fce824459c94da5c3ad515589859, type: 3}
     - target: {fileID: 1738690546895757125, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
       propertyPath: m_Name
       value: SpawnPoint2
@@ -1346,6 +1350,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1670179793}
     m_Modifications:
+    - target: {fileID: 1717069175583507417, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
+      propertyPath: CommonMonster
+      value: 
+      objectReference: {fileID: 7152960186525731064, guid: d1c5fce824459c94da5c3ad515589859, type: 3}
     - target: {fileID: 1738690546895757125, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
       propertyPath: m_Name
       value: SpawnPoint5
@@ -3569,6 +3577,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1670179793}
     m_Modifications:
+    - target: {fileID: 1717069175583507417, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
+      propertyPath: CommonMonster
+      value: 
+      objectReference: {fileID: 7152960186525731064, guid: d1c5fce824459c94da5c3ad515589859, type: 3}
     - target: {fileID: 1738690546895757125, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
       propertyPath: m_Name
       value: SpawnPoint4

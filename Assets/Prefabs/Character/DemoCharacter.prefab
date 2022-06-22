@@ -412,9 +412,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7152960186525731067}
     m_Modifications:
+    - target: {fileID: 154026126229472109, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4798933334793899938, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4798933334793899938, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5379153922400079747, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912972968470216330, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8210528382194004471, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
       propertyPath: m_AnchorMax.x
@@ -507,6 +523,10 @@ PrefabInstance:
     - target: {fileID: 8244229390831853254, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8836613832382556055, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
