@@ -38,6 +38,7 @@ public class MonsterMovement : MonoBehaviour
             Vector2.left,
             MonsterCollider.bounds.extents.x + DetectDistance,
             GlobalSetting.WallLayerMask
+                | GlobalSetting.PlatformLayerMask
                 | GlobalSetting.MonsterLayerMask
                 | GlobalSetting.CharacterLayerMask
         );
@@ -51,10 +52,19 @@ public class MonsterMovement : MonoBehaviour
             Vector2.right,
             MonsterCollider.bounds.extents.x + DetectDistance,
             GlobalSetting.WallLayerMask
+                | GlobalSetting.PlatformLayerMask
                 | GlobalSetting.MonsterLayerMask
                 | GlobalSetting.CharacterLayerMask
         );
         return Raycast.collider != null;
+    }
+
+    bool HasWallAhead()
+    {
+        if (GetFacing() == Vector2.left)
+            return HasWallAtLeft();
+        else
+            return HasWallAtRight();
     }
 
     bool HasPlatformAtLeft()
@@ -79,6 +89,14 @@ public class MonsterMovement : MonoBehaviour
             GlobalSetting.PlatformLayerMask
         );
         return Raycast.collider != null;
+    }
+
+    bool HasPlatformAhead()
+    {
+        if (GetFacing() == Vector2.left)
+            return HasPlatformAtLeft();
+        else
+            return HasPlatformAtRight();
     }
 
     bool OnPlatform()
@@ -205,9 +223,25 @@ public class MonsterMovement : MonoBehaviour
         }
     }
 
+    void MoveAhead()
+    {
+        if (GetFacing() == Vector2.left)
+            MoveLeft();
+        else
+            MoveRight();
+    }
+
+    void MoveBack()
+    {
+        if (GetFacing() == Vector2.left)
+            MoveRight();
+        else
+            MoveLeft();
+    }
+
     Vector2 GetFacing()
     {
-        if (transform.Find("Render").transform.localScale.x == -1.0f)
+        if (transform.Find("LogicBody").transform.localScale.x == -1.0f)
             return Vector2.left;
         else
             return Vector2.right;
@@ -219,61 +253,31 @@ public class MonsterMovement : MonoBehaviour
     //////////
     // Patrol
 
-    private bool PatrolLeft = true;
-    private bool PatrolAtCenter = true;
     private bool PatrolWillDrop = false;
 
     void PatrolMode()
     {
-        bool platLeft = HasPlatformAtLeft();
-        bool platRight = HasPlatformAtRight();
-        if (platLeft && platRight)
+        if (!OnPlatform())
         {
-            if (!PatrolAtCenter)
-            {
-                PatrolWillDrop = Random.value < DropProbability;
-            }
-            PatrolAtCenter = true;
-        }
-        else if (OnPlatform())
-        {
-            PatrolAtCenter = false;
-            if (!PatrolWillDrop)
-            {
-                PatrolLeft = platLeft;
-            }
-        }
-        else
-        {
-            PatrolAtCenter = true;
             PatrolWillDrop = false;
-            return;
-        }
-
-        if (PatrolLeft)
-        {
-            if (!HasWallAtLeft())
-            {
-                MoveLeft();
-                PatrolLeft = true;
-            }
-            else
-            {
-                MoveRight();
-                PatrolLeft = false;
-            }
         }
         else
         {
-            if (!HasWallAtRight())
+            if (HasWallAhead())
             {
-                MoveRight();
-                PatrolLeft = false;
+                MoveBack();
+            }
+            else if (HasPlatformAhead())
+            {
+                MoveAhead();
             }
             else
             {
-                MoveLeft();
-                PatrolLeft = true;
+                PatrolWillDrop |= Random.value < DropProbability;
+                if (PatrolWillDrop)
+                    MoveAhead();
+                else
+                    MoveBack();
             }
         }
     }
@@ -356,10 +360,21 @@ public class MonsterMovement : MonoBehaviour
     private float RoundTime = 0.05f;
     private float RemainTime = 0;
 
+    private bool StatusWallLeft;
+    private bool StatusWallRight;
+    private bool StatusPlatform;
+    private bool StatusPlatformLeft;
+    private bool StatusPlatformRight;
+
     void Update()
     {
         if ((RemainTime -= Time.deltaTime) <= 0)
         {
+            StatusWallLeft = HasWallAtLeft();
+            StatusWallRight = HasWallAtRight();
+            StatusPlatform = OnPlatform();
+            StatusPlatformLeft = HasPlatformAtLeft();
+            StatusPlatformRight = HasPlatformAtRight();
             AI();
             RemainTime = RoundTime;
         }
