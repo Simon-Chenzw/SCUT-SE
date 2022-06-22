@@ -2,29 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(
-    fileName = "CommonEnemy2AttackSkill",
-    menuName = "Skill/Enemy/CommonEnemy2AttackSkill"
-)]
-public class CommonEnemy2AttackSkill : MonsterSkill
+[CreateAssetMenu(fileName = "SuperEnemy2XiuSkill", menuName = "Skill/Enemy/SuperEnemy2XiuSkill")]
+public class SuperEnemy2XiuSkill : MonsterSkill
 {
     public override string SkillName
     {
-        get { return "CommonEnemy2AttackSkill"; }
+        get { return "SuperEnemy2XiuSkill"; }
     }
     public override float GlobalCD
     {
-        get { return 1.0f; }
+        get { return 2.0f; }
     }
     public override float CD
     {
-        get { return 1.0f; }
+        get { return 3.0f; }
     }
 
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
         Vector3 position = new Vector3(0, 0, 0);
-        if (transform.Find("LogicBody").localScale.x > 0)
+        if (transform.GetChild(0).localScale.x > 0)
         {
             position = new Vector3(bounds.max.x + bounds.size.x * 1.5f, bounds.center.y, 0);
         }
@@ -32,7 +29,7 @@ public class CommonEnemy2AttackSkill : MonsterSkill
         {
             position = new Vector3(bounds.min.x - bounds.size.x * 1.5f, bounds.center.y, 0);
         }
-        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/CommonEnemy2Attack");
+        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/SuperEnemy2XiuSkill");
         GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonEnemy4AttackSkillObject : SkillObject
+public class Boss1CommonAttackSkillObject : SkillObject
 {
     private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
@@ -14,15 +14,8 @@ public class CommonEnemy4AttackSkillObject : SkillObject
     {
         SkillCollider = transform.GetComponent<BoxCollider2D>();
         rate = 1.0f;
-        attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
+        attack = transform.parent.parent.GetComponent<MonsterBasicLogic>().ATK;
         CalculateSkillDamage();
-    }
-
-    void Update()
-    {
-        EndTime -= Time.deltaTime;
-        if (EndTime <= 0)
-            Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,8 +28,7 @@ public class CommonEnemy4AttackSkillObject : SkillObject
                 {
                     hashset.Add(other.gameObject);
                     other.gameObject.GetComponent<CharacterBasicLogic>().TakeDamage(damage);
-                    GameObject tmp = gameObject.transform.parent.gameObject;
-                    tmp.GetComponent<MonsterBasicLogic>().OnDie();
+                    Destroy(gameObject);
                 }
             }
         }

@@ -3,36 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(
-    fileName = "CommonEnemy2AttackSkill",
-    menuName = "Skill/Enemy/CommonEnemy2AttackSkill"
+    fileName = "SuperEnemy2CommonAttackSkill",
+    menuName = "Skill/Enemy/SuperEnemy2CommonAttackSkill"
 )]
-public class CommonEnemy2AttackSkill : MonsterSkill
+public class SuperEnemy2CommonAttackSkill : MonsterSkill
 {
     public override string SkillName
     {
-        get { return "CommonEnemy2AttackSkill"; }
+        get { return "SuperEnemy2CommonAttackSkill"; }
     }
     public override float GlobalCD
     {
-        get { return 1.0f; }
+        get { return 2.0f; }
     }
     public override float CD
     {
-        get { return 1.0f; }
+        get { return 0.5f; }
     }
 
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
         Vector3 position = new Vector3(0, 0, 0);
-        if (transform.Find("LogicBody").localScale.x > 0)
+        if (transform.GetChild(0).localScale.x > 0)
         {
-            position = new Vector3(bounds.max.x + bounds.size.x * 1.5f, bounds.center.y, 0);
+            position = new Vector3(bounds.center.x + bounds.size.x, bounds.center.y, 0);
         }
         else
         {
-            position = new Vector3(bounds.min.x - bounds.size.x * 1.5f, bounds.center.y, 0);
+            position = new Vector3(bounds.center.x - bounds.size.x, bounds.center.y, 0);
         }
-        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/CommonEnemy2Attack");
+        GameObject SkillObject = Resources.Load<GameObject>(
+            "SkillRange/SuperEnemy2CommonAttackSkill"
+        );
         GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
     }
 
@@ -46,7 +48,7 @@ public class CommonEnemy2AttackSkill : MonsterSkill
             Mathf.Pow(OurTransform.position.x - EnemyTransform.position.x, 2.0f)
                 + Mathf.Pow(OurTransform.position.y - EnemyTransform.position.y, 2.0f)
         );
-        float SkillDistance = bounds.size.x * 2f;
+        float SkillDistance = bounds.size.x * 3.0f;
         if (SkillDistance >= distance)
             return true;
         else

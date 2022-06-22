@@ -13,7 +13,6 @@ public class SuperEnemy1AttackSkillObject : SkillObject
     void Start()
     {
         SkillCollider = transform.GetComponent<PolygonCollider2D>();
-        EndTime = 1.0f;
         rate = 2.0f;
         attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
         CalculateSkillDamage();

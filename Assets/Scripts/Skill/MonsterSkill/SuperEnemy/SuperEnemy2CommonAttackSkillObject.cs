@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonEnemy4AttackSkillObject : SkillObject
+public class SuperEnemy2CommonAttackSkillObject : SkillObject
 {
     private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
@@ -25,7 +25,7 @@ public class CommonEnemy4AttackSkillObject : SkillObject
             Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if ((1 << other.gameObject.layer) == GlobalSetting.CharacterLayerMask.value)
         {
@@ -35,8 +35,6 @@ public class CommonEnemy4AttackSkillObject : SkillObject
                 {
                     hashset.Add(other.gameObject);
                     other.gameObject.GetComponent<CharacterBasicLogic>().TakeDamage(damage);
-                    GameObject tmp = gameObject.transform.parent.gameObject;
-                    tmp.GetComponent<MonsterBasicLogic>().OnDie();
                 }
             }
         }
