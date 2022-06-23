@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CommonManaAttackSkillObject : SkillObject
+public class FireSkillBallObject : SkillObject
 {
     private Rigidbody2D SkillRigidbody;
 
@@ -15,7 +15,7 @@ public class CommonManaAttackSkillObject : SkillObject
     {
         SkillRigidbody = transform.GetComponent<Rigidbody2D>();
         attack = transform.parent.GetComponent<CharacterBasicLogic>().ATK;
-        rate = 1.0f;
+        rate = 0.75f;
         if (transform.parent.Find("LogicBody").transform.localScale.x > 0)
             SkillRigidbody.velocity = new Vector2(MoveSpeed, 0);
         else

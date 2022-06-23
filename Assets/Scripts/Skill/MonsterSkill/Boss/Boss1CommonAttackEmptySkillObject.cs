@@ -26,11 +26,7 @@ public class Boss1CommonAttackEmptySkillObject : SkillObject
 
     public void Func()
     {
-        Bounds bounds = transform.parent
-            .GetChild(0)
-            .GetChild(0)
-            .GetComponent<BoxCollider2D>()
-            .bounds;
+        Bounds bounds = transform.parent.Find("LogicBody").GetComponent<BoxCollider2D>().bounds;
         GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1CommonAttackSkill");
         Vector3 position1 = new Vector3(bounds.center.x + bounds.size.x, bounds.min.y, 0);
         Vector3 position2 = new Vector3(bounds.center.x - bounds.size.x, bounds.min.y, 0);

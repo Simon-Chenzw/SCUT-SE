@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44e9506e421d93478f1b655216d443f, type: 3}
-  m_Name: CommonEnemy3AttackSkill
+  m_Script: {fileID: 11500000, guid: a2ec2f30759855046a317ed6d7dfa2c3, type: 3}
+  m_Name: FireSkill
   m_EditorClassIdentifier: 
