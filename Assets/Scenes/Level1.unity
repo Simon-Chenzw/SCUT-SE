@@ -3754,6 +3754,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1993219292}
     m_Modifications:
+    - target: {fileID: 1717069175583507417, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
+      propertyPath: BossMonster
+      value: 
+      objectReference: {fileID: 6240831159168390533, guid: b53826fba35bc884d9bd147070f652ff, type: 3}
     - target: {fileID: 1738690546895757125, guid: 2bf7a7e4edeefac42b07f8978a00eb5b, type: 3}
       propertyPath: m_Name
       value: BossSpawnPoint
