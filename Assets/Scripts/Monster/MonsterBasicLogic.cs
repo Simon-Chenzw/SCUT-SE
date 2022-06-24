@@ -23,7 +23,7 @@ public class MonsterBasicLogic : BasicLogic
 
     GlobalGameControl GlobalGameController
     {
-        get { return GameObject.Find("GlobalGameController").GetComponent<GlobalGameControl>(); }
+        get { return GameObject.Find("GlobalGameController")?.GetComponent<GlobalGameControl>(); }
     }
 
     GameControl GameController
@@ -31,11 +31,25 @@ public class MonsterBasicLogic : BasicLogic
         get { return GameObject.Find("GameController").GetComponent<GameControl>(); }
     }
 
+    int Wave
+    {
+        get
+        {
+            if (GlobalGameController != null)
+            {
+                return GlobalGameController.GlobalWave;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     private void SetStatus()
     {
-        int Wave = GlobalGameController.GlobalWave;
         float Scale = (Wave - 1) / 10.0f + 1;
         SetMaxHP(Mathf.RoundToInt(BaseHP * Scale));
         SetATK(BaseATK * Scale);
@@ -44,7 +58,6 @@ public class MonsterBasicLogic : BasicLogic
 
     private void DropGold()
     {
-        int Wave = GlobalGameController.GlobalWave;
         float lower = GoldLower * ((Wave - 1) / 10.0f + 1);
         float upper = GoldUpper * ((Wave - 1) / 10.0f + 1);
         int got = Mathf.RoundToInt(Random.Range(lower, upper));
