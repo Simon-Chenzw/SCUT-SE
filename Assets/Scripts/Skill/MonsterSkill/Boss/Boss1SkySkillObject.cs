@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1CommonAttackSkillObject : SkillObject
+public class Boss1SkySkillObject : SkillObject
 {
     private HashSet<GameObject> hashset = new HashSet<GameObject>();
 
@@ -20,6 +20,7 @@ public class Boss1CommonAttackSkillObject : SkillObject
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log(other.gameObject.name);
         if ((1 << other.gameObject.layer) == GlobalSetting.CharacterLayerMask.value)
         {
             if (other.gameObject.transform.parent == null)

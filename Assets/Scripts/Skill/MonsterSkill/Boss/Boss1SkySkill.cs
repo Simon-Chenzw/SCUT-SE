@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(
-    fileName = "Boss1CommonAttackSkill",
-    menuName = "Skill/Enemy/Boss1CommonAttackSkill"
-)]
-public class Boss1CommonAttackSkill : MonsterSkill
+[CreateAssetMenu(fileName = "Boss1SkySkill", menuName = "Skill/Enemy/Boss1SkySkill")]
+public class Boss1SkySkill : MonsterSkill
 {
     public override string SkillName
     {
-        get { return "Boss1CommonAttackSkill"; }
+        get { return "Boss1SkySkill"; }
     }
     public override float GlobalCD
     {
@@ -23,10 +20,8 @@ public class Boss1CommonAttackSkill : MonsterSkill
 
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
-        GameObject SkillObject = Resources.Load<GameObject>(
-            "SkillRange/Boss1CommonAttackSkillEmpty"
-        );
-        Vector3 position = transform.position;
+        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1SkyEmptySkill");
+        Vector3 position = new Vector3(0, 13.5f, 0);
         GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
     }
 
@@ -40,7 +35,7 @@ public class Boss1CommonAttackSkill : MonsterSkill
             Mathf.Pow(OurTransform.position.x - EnemyTransform.position.x, 2.0f)
                 + Mathf.Pow(OurTransform.position.y - EnemyTransform.position.y, 2.0f)
         );
-        float SkillDistance = bounds.size.x * 2;
+        float SkillDistance = bounds.size.x * 15;
         if (SkillDistance >= distance)
             return true;
         else

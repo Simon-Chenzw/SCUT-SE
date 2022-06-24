@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss1CommonAttackEmptySkillObject : SkillObject
+public class Boss1SkyEmptySkillObject : SkillObject
 {
     private int cnt = 0;
     private float PassedTime = 0.0f;
@@ -27,18 +27,12 @@ public class Boss1CommonAttackEmptySkillObject : SkillObject
     public void Func()
     {
         Bounds bounds = transform.parent.Find("LogicBody").GetComponent<BoxCollider2D>().bounds;
-        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1CommonAttackSkill");
-        Vector3 position1 = new Vector3(bounds.center.x + bounds.size.x, bounds.min.y, 0);
-        Vector3 position2 = new Vector3(bounds.center.x - bounds.size.x, bounds.min.y, 0);
+        GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1SkySkill");
+        float posX = Random.Range(-23.5f, 23.5f);
+        Vector3 position = new Vector3(posX, 13.5f, 0);
         GameObject.Instantiate(
             SkillObject,
-            position1,
-            transform.rotation,
-            transform.parent.transform
-        );
-        GameObject.Instantiate(
-            SkillObject,
-            position2,
+            position,
             transform.rotation,
             transform.parent.transform
         );

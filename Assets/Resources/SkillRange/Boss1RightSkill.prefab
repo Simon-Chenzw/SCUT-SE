@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4671388763253026327}
   - component: {fileID: -609778522133307268}
   - component: {fileID: -3216261792709217051}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 4671388763417161206}
   - component: {fileID: 4671388763417161205}
   - component: {fileID: 4671388763417161204}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 4671388763418999832}
   - component: {fileID: 4671388763418999815}
   - component: {fileID: 4671388763418999814}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - component: {fileID: 4671388763447276863}
   - component: {fileID: 4671388763447276862}
   - component: {fileID: 4671388763447276861}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +417,7 @@ GameObject:
   - component: {fileID: 4671388763465434221}
   - component: {fileID: 4671388763465434220}
   - component: {fileID: 4671388763465434219}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -512,7 +512,7 @@ GameObject:
   - component: {fileID: 4671388763644052112}
   - component: {fileID: 4671388763644052127}
   - component: {fileID: 4671388763644052126}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 4671388764283245562}
   - component: {fileID: 4671388764283245561}
   - component: {fileID: 4671388764283245560}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 4671388764585855229}
   - component: {fileID: 4671388764585855228}
   - component: {fileID: 4671388764585855227}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 4671388764713811418}
   - component: {fileID: 4671388764713811417}
   - component: {fileID: 4671388764713811416}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ GameObject:
   - component: {fileID: 4671388764725411151}
   - component: {fileID: 4671388764725411150}
   - component: {fileID: 4671388764725411149}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -987,7 +987,7 @@ GameObject:
   - component: {fileID: 4671388765044160284}
   - component: {fileID: 4671388765044160283}
   - component: {fileID: 4671388765044160282}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Boss1RightSkillCube10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
