@@ -22,6 +22,7 @@ public class GlobalSetting : MonoBehaviour
     static public LayerMask TeleporterLayerMask = 1 << 9;
     static public LayerMask CharacterLayerMask = 1 << 11;
     static public LayerMask MonsterLayerMask = 1 << 12;
+    static public LayerMask SkillLayerMask = 1 << 13;
 
     // 怪物生成数量定义，第一维是波数，第二维下标0为普通怪数量，下标1为精英怪数量
     static public int[][] SpawnMonsterNumer = new int[24][]

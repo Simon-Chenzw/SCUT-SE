@@ -396,6 +396,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelFileName:
   - Level1
+  - Level2
   CurrentLevel: 0
   GlobalWave: 0
   IsShopping: 0
