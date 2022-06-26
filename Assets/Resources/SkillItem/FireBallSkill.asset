@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c16cb4807a2ccf4aab153c88ddb0236, type: 3}
   m_Name: FireBallSkill
   m_EditorClassIdentifier: 
-  ItemName: FireBallSkill
-  ItemDesc: 
-  ItemPrice: 0
-  ItemRandomWeight: 0
+  ItemName: "\u7406\u529B\u4E4B\u6756"
+  ItemDesc: "\n\n\n\u5411\u524D\u65B9\u53D1\u51FA\u5927\n\u578B\u653B\u51FB\n\n\n\n\u201C\u6BD4\u5C0F\u578B\u5927\u4E00\u70B9\u201D"
+  ItemPrice: 50
+  ItemRandomWeight: 1
   skill: {fileID: 11400000, guid: bc4f237ce6d72b5488d1e9faf06a38f8, type: 2}

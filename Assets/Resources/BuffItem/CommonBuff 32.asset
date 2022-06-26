@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 15edb0f019cf44c4fa85dc3fee2536a2, type: 3}
-  m_Name: CommonBuff 15
+  m_Name: CommonBuff 32
   m_EditorClassIdentifier: 
-  ItemName: "\u7269\u7406\u5B66\u5723\u5251"
-  ItemDesc: "\n\n\n\u653B\u51FB\u5927\u5E45\u589E\u52A0\n\n\n\n\u201C\u6B64\u8EAB\u4E3A\u5251\u201D"
-  ItemPrice: 150
-  ItemRandomWeight: 6
+  ItemName: "\u201C\u5B64\u72EC\u8005\u201D"
+  ItemDesc: "\n\n\n\u6240\u53D7\u4F24\u5BB3\u5927\u5E45\n\u51CF\u5C11\uFF0C\u4F46\u653B\u51FB\n\u51CF\u534A\n\n\n\n\u201C\u6218\u6597\u7ED3\u675F\u540E\uFF0C\n\u8BA9\u4E16\u754C\u5FD8\u8BB0\u6211\u201D"
+  ItemPrice: 500
+  ItemRandomWeight: 2
   HpAdd: 0
   HpMul: 0
-  AtkAdd: 150
-  AtkMul: 0
+  AtkAdd: 0
+  AtkMul: -0.5
   DefAdd: 0
   DefMul: 0
-  Vulnerable: 0
+  Vulnerable: -0.7

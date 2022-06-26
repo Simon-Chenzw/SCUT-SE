@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15edb0f019cf44c4fa85dc3fee2536a2, type: 3}
   m_Name: CommonBuff 20
   m_EditorClassIdentifier: 
-  ItemName: "\u653B\u51FB\u3001\u9632\u5FA1\u4E2D\u5E45\u589E\u52A0"
-  ItemDesc: "\u6211\u6709\u6700\u5F3A\u7684\u77DB\u548C\u6700\u5F3A\u7684\u76FE"
+  ItemName: "\u77DB\u76FE\u7EC4\u5408"
+  ItemDesc: "\n\n\n\u653B\u51FB\u3001\u9632\u5FA1\u4E2D\n\u5E45\u589E\u52A0\n\n\n\n\u201C\u6211\u6709\u6700\u5F3A\u7684\u77DB\n\u548C\u6700\u5F3A\u7684\u76FE\u201D"
   ItemPrice: 150
   ItemRandomWeight: 6
   HpAdd: 0
