@@ -20,9 +20,9 @@ public class GlobalGameControl : MonoBehaviour
 
     public void OnNextLevel()
     {
-        if (CurrentLevel == LevelFileName.GetLength(0)) // 通关时，返回主菜单
+        if (CurrentLevel == LevelFileName.GetLength(0)) // 通关时，进入游戏结束场景
         {
-            SceneManager.LoadScene("Scenes/StartMenu", LoadSceneMode.Single);
+            SceneManager.LoadScene("Scenes/GameOverMenu", LoadSceneMode.Single);
             Destroy(gameObject);
         }
         else

@@ -397,6 +397,7 @@ MonoBehaviour:
   LevelFileName:
   - Level1
   - Level2
+  - Level3
   CurrentLevel: 0
   GlobalWave: 0
   IsShopping: 0

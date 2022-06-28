@@ -119,7 +119,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7106654257055360367}
+  - {fileID: 8271495284143440468}
   - {fileID: 7841317607896182363}
   - {fileID: 6317182685962061673}
   m_Father: {fileID: 0}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b70bc68f3f16a24893a32afe7973d76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 1978777631656878692}
+  healthBar: {fileID: 0}
   BaseHP: 100
   BaseATK: 50
   BaseDEF: 10
@@ -211,16 +211,40 @@ MonoBehaviour:
   HP: 0
   ATK: 0
   DEF: 0
---- !u!1001 &1222316732607331241
+--- !u!1001 &45919803972410514
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 7152960186525731067}
     m_Modifications:
+    - target: {fileID: 2149720216200029147, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.b
+      value: 0.07458747
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149720216200029147, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.g
+      value: 0.012210703
+      objectReference: {fileID: 0}
+    - target: {fileID: 2149720216200029147, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9245283
+      objectReference: {fileID: 0}
     - target: {fileID: 4798933334793899938, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
       propertyPath: m_Name
       value: HealthBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189804078481579526, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189804078481579526, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7189804078481579526, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8210528382194004471, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
       propertyPath: m_AnchorMax.x
@@ -316,22 +340,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
---- !u!224 &7106654257055360367 stripped
+--- !u!224 &8271495284143440468 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8244229390831853254, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
-  m_PrefabInstance: {fileID: 1222316732607331241}
+  m_PrefabInstance: {fileID: 45919803972410514}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1978777631656878692 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 828817715743873485, guid: 45af3ce7d086c7e49aa0a2e528884b73, type: 3}
-  m_PrefabInstance: {fileID: 1222316732607331241}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02c36113400741242aec9fd0df5040fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &2279066512830895937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -342,18 +355,6 @@ PrefabInstance:
     - target: {fileID: 100120, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
       propertyPath: m_Name
       value: Model
-      objectReference: {fileID: 0}
-    - target: {fileID: 400066, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.216
-      objectReference: {fileID: 0}
-    - target: {fileID: 400066, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400066, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.022
       objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: 5917c0e93d180a842b61d1ebc62a195c, type: 3}
       propertyPath: m_LocalPosition.x
