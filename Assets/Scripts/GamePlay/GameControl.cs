@@ -75,6 +75,12 @@ public class GameControl : MonoBehaviour
             return;
         }
 
+        // 应急bug修复
+        if (CurrentMonsterNumber < 0)
+        {
+            CurrentMonsterNumber = 0;
+        }
+
         if (CurrentTime - LastRefreshTime > RefreshInterval || CurrentMonsterNumber == 0) // 超过刷怪时间或怪物杀完时，进入下一波
         {
             LastRefreshTime = CurrentTime;

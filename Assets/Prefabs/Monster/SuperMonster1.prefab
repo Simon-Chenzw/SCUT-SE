@@ -121,14 +121,14 @@ MonoBehaviour:
   healthBar: {fileID: 2276200252643177923}
   BaseHP: 200
   BaseATK: 50
-  BaseDEF: 20
+  BaseDEF: 10
   BodyBox: {fileID: 7254661128588609871}
   MaxHP: 0
   HP: 0
   ATK: 0
   DEF: 0
   GoldLower: 2
-  GoldUpper: 5
+  GoldUpper: 3
 --- !u!1 &7223693015329145116
 GameObject:
   m_ObjectHideFlags: 0

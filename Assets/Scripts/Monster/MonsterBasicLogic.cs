@@ -8,6 +8,8 @@ public class MonsterBasicLogic : BasicLogic
     public int GoldLower;
     public int GoldUpper;
 
+    private bool IsDie = false;
+
     void Start()
     {
         SetStatus();
@@ -66,7 +68,11 @@ public class MonsterBasicLogic : BasicLogic
 
     public override void OnDie()
     {
-        GameController.CurrentMonsterNumber--;
+        if (!IsDie)
+        {
+            GameController.CurrentMonsterNumber--;
+        }
+        IsDie = true;
         DropGold();
         Destroy(gameObject);
     }
