@@ -29,6 +29,7 @@ public class CharacterBasicLogic : BasicLogic
     public override void OnDie()
     {
         Destroy(gameObject);
+        GameObject.Find("GlobalGameController").GetComponent<GlobalGameControl>().GameOver();
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -18,12 +18,17 @@ public class GlobalGameControl : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public void GameOver()
+    {
+        SceneManager.LoadScene("Scenes/GameOverMenu", LoadSceneMode.Single);
+        Destroy(gameObject);
+    }
+
     public void OnNextLevel()
     {
-        if (CurrentLevel == LevelFileName.GetLength(0)) // 通关时，进入游戏结束场景
+        if (CurrentLevel == LevelFileName.GetLength(0))
         {
-            SceneManager.LoadScene("Scenes/GameOverMenu", LoadSceneMode.Single);
-            Destroy(gameObject);
+            GameOver();
         }
         else
         {
