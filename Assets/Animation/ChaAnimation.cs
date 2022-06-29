@@ -5,6 +5,7 @@ using UnityEngine;
 public class ChaAnimation : MonoBehaviour
 {
     Animator animator;
+    static public KeyCode AttackKey = GlobalSetting.CommonAttackKey;
 
     // Start is called before the first frame update
     void Start()
@@ -36,7 +37,7 @@ public class ChaAnimation : MonoBehaviour
         {
             animator.SetBool("Jumping", true);
         }
-        if (Input.GetButtonDown("Fire1") == true)
+        if (Input.GetKey(AttackKey) == true)
         {
             animator.SetBool("Attack", true);
         }

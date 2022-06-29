@@ -65,9 +65,6 @@
         },
         {
             "m_Id": "40736b3593d0431992cddf80a74e6934"
-        },
-        {
-            "m_Id": "12f778db39664b3faa6553076a086d2e"
         }
     ],
     "m_GroupDatas": [],
@@ -110,7 +107,7 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "12f778db39664b3faa6553076a086d2e"
+                    "m_Id": "700d8967ecf641b49fd4b0b2ab4263b1"
                 },
                 "m_SlotId": 0
             }
@@ -124,7 +121,21 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "700d8967ecf641b49fd4b0b2ab4263b1"
+                    "m_Id": "abf5d20eda574211b0eb619812e3f0fa"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "5ac9e85a7b604ee89091ee0803aa7c46"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "ca972200e2224c4d8413cf4c899c095f"
                 },
                 "m_SlotId": 0
             }
@@ -202,8 +213,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 0.0,
-            "y": 0.0
+            "x": 116.00001525878906,
+            "y": 5.000001430511475
         },
         "m_Blocks": [
             {
@@ -219,8 +230,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 16.999998092651368,
-            "y": 199.00001525878907
+            "x": 115.0,
+            "y": 246.0
         },
         "m_Blocks": [
             {
@@ -240,15 +251,12 @@
             },
             {
                 "m_Id": "abf5d20eda574211b0eb619812e3f0fa"
-            },
-            {
-                "m_Id": "12f778db39664b3faa6553076a086d2e"
             }
         ]
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":10202,\"guid\":\"0000000000000000e000000000000000\",\"type\":0}}",
             "m_Guid": ""
         }
     },
@@ -321,39 +329,6 @@
     "m_TwoSided": true,
     "m_AlphaClip": false,
     "m_CustomEditorGUI": ""
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.BlockNode",
-    "m_ObjectId": "12f778db39664b3faa6553076a086d2e",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "SurfaceDescription.Alpha",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": 0.0,
-            "y": 0.0,
-            "width": 0.0,
-            "height": 0.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "ae4fdb0bd0414ddf8b26da144d5e2ce9"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_SerializedDescriptor": "SurfaceDescription.Alpha"
 }
 
 {
@@ -1355,21 +1330,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Occlusion"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "ae4fdb0bd0414ddf8b26da144d5e2ce9",
-    "m_Id": 0,
-    "m_DisplayName": "Alpha",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Alpha",
-    "m_StageCapability": 2,
-    "m_Value": 1.0,
-    "m_DefaultValue": 1.0,
-    "m_Labels": []
 }
 
 {
