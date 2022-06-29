@@ -232,7 +232,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Replace First Skill
+  m_Text: "\u66FF\u6362\u7B2C\u4E00\u4E2A\u6280\u80FD"
 --- !u!222 &83406534
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3231,7 +3231,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Replace Second Skill
+  m_Text: "\u66FF\u6362\u7B2C\u4E8C\u4E2A\u6280\u80FD"
 --- !u!222 &1704529866
 CanvasRenderer:
   m_ObjectHideFlags: 0
