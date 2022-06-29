@@ -21,6 +21,13 @@ public class CharacterBasicLogic : BasicLogic
         }
     }
 
+    public void RefreshStatus()
+    {
+        backpack.SetBuff(this);
+        HP = MaxHP;
+        healthBar?.SetHealth(HP);
+    }
+
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage * (1 + Vulnerable));
