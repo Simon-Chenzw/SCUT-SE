@@ -12,6 +12,10 @@ public class SuperEnemy1AttackSkillObject : SkillObject
 
     void Start()
     {
+        music = gameObject.AddComponent<AudioSource>();
+        AttackMusic = Resources.Load<AudioClip>("Music/Battleaxe1");
+        music.clip = AttackMusic;
+        music.Play();
         SkillCollider = transform.GetComponent<PolygonCollider2D>();
         rate = 2.0f;
         attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;

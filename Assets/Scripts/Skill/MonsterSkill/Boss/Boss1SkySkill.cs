@@ -18,11 +18,25 @@ public class Boss1SkySkill : MonsterSkill
         get { return 1.0f; }
     }
 
+    private AudioSource music;
+    private AudioClip AttackMusic;
+
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
         GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1SkyEmptySkill");
         Vector3 position = new Vector3(0, 13.5f, 0);
-        GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
+        GameObject skill = GameObject.Instantiate(
+            SkillObject,
+            position,
+            transform.rotation,
+            transform
+        );
+        GameObject Parent = skill.transform.parent.gameObject;
+        if (Parent.GetComponent<AudioSource>() == null)
+            music = Parent.AddComponent<AudioSource>();
+        AttackMusic = Resources.Load<AudioClip>("Music/Bow1");
+        music.clip = AttackMusic;
+        music.Play();
     }
 
     public override bool CheckUseSkill(

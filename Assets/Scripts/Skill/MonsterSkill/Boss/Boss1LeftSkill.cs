@@ -17,12 +17,25 @@ public class Boss1LeftSkill : MonsterSkill
     {
         get { return 5.0f; }
     }
+    private AudioSource music;
+    private AudioClip AttackMusic;
 
     public override void CreateSkill(Bounds bounds, Transform transform)
     {
         Vector3 position = new Vector3(bounds.center.x - bounds.size.x * 5, bounds.center.y, 0);
         GameObject SkillObject = Resources.Load<GameObject>("SkillRange/Boss1LeftSkill");
-        GameObject.Instantiate(SkillObject, position, transform.rotation, transform);
+        GameObject skill = GameObject.Instantiate(
+            SkillObject,
+            position,
+            transform.rotation,
+            transform
+        );
+        GameObject Parent = skill.transform.parent.gameObject;
+        if (Parent.GetComponent<AudioSource>() == null)
+            music = Parent.AddComponent<AudioSource>();
+        AttackMusic = Resources.Load<AudioClip>("Music/Bow1");
+        music.clip = AttackMusic;
+        music.Play();
     }
 
     public override bool CheckUseSkill(

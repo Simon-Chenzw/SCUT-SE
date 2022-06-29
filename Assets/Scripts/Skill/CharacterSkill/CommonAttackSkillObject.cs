@@ -13,6 +13,10 @@ public class CommonAttackSkillObject : SkillObject
 
     void Start()
     {
+        music = gameObject.AddComponent<AudioSource>();
+        AttackMusic = Resources.Load<AudioClip>("Music/Battleaxe1");
+        music.clip = AttackMusic;
+        music.Play();
         SkillCollider = transform.GetComponent<BoxCollider2D>();
         EndTime = 1.0f;
         rate = 1.0f;

@@ -10,5 +10,8 @@ public abstract class SkillObject : MonoBehaviour
 
     public float attack;
 
+    protected AudioSource music;
+    protected AudioClip AttackMusic;
+
     public abstract void CalculateSkillDamage();
 }

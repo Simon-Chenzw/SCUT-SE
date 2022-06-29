@@ -17,7 +17,7 @@ public class CommonEnemy5AttackSkillObject : SkillObject
         SkillRigidbody = transform.GetComponent<Rigidbody2D>();
         attack = transform.parent.GetComponent<MonsterBasicLogic>().ATK;
         rate = 1.0f;
-        if (transform.parent.GetChild(0).transform.localScale.x > 0)
+        if (transform.parent.Find("LogicBody").transform.localScale.x > 0)
             SkillRigidbody.velocity = new Vector2(MoveSpeed, 0);
         else
             SkillRigidbody.velocity = new Vector2(-MoveSpeed, 0);
