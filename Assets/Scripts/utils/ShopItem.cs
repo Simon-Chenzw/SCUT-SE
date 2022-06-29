@@ -34,7 +34,7 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
         else
         {
             TextName.text = "";
-            TextDesc.text = "Empty";
+            TextDesc.text = "已购买";
             TextPrice.text = "";
         }
     }
