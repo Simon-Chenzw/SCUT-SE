@@ -6,3 +6,7 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Next.js
+.next
+next-env.d.ts
