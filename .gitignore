@@ -10,3 +10,6 @@
 # Next.js
 .next
 next-env.d.ts
+
+# Cache create by prettier
+node_modules/.cache/prettier

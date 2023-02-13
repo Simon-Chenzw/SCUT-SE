@@ -9,7 +9,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next start",
+    "format": "prettier --write --ignore-unknown --ignore-path .gitignore . \"!.yarn\""
   },
   "dependencies": {
     "next": "^13.1.6",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
+    "prettier": "^2.8.4",
     "typescript": "^4.9.5"
   }
 }
