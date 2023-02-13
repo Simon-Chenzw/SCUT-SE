@@ -1,0 +1,8 @@
+{
+  "name": "image_analysis",
+  "private": true,
+  "packageManager": "yarn@3.4.1",
+  "engines": {
+    "node": ">=18.x"
+  }
+}
