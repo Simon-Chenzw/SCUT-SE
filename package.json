@@ -14,6 +14,14 @@
     "format": "prettier --write --ignore-unknown --ignore-path .gitignore . \"!.yarn\""
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.5",
+    "@emotion/serialize": "^1.1.1",
+    "@emotion/server": "^11.10.0",
+    "@emotion/utils": "^1.2.0",
+    "@mantine/core": "^5.10.3",
+    "@mantine/hooks": "^5.10.3",
+    "@mantine/next": "^5.10.3",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
