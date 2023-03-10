@@ -1,3 +1,5 @@
+.env
+
 # Yarn with Plug'n'Play
 .pnp.*
 .yarn/*
@@ -13,3 +15,6 @@ next-env.d.ts
 
 # Cache create by prettier
 node_modules/.cache/prettier
+
+# Prisma
+lib/prisma-client

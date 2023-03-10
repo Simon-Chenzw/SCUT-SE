@@ -6,7 +6,7 @@
     "node": ">=18.x"
   },
   "scripts": {
-    "postinstall": "husky install",
+    "postinstall": "husky install && yarn pnpify prisma generate",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -22,15 +22,18 @@
     "@mantine/core": "^5.10.3",
     "@mantine/hooks": "^5.10.3",
     "@mantine/next": "^5.10.3",
+    "@prisma/client": "4.11.0",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@prisma/nextjs-monorepo-workaround-plugin": "^4.11.0",
     "@types/node": "^18.13.0",
     "@types/react": "^18.0.28",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.51.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.40",
     "eslint": "^8.34.0",
     "eslint-config-next": "^13.1.6",
     "eslint-config-prettier": "^8.6.0",
@@ -38,6 +41,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
+    "prisma": "4.11.0",
     "typescript": "^4.9.5"
   }
 }
