@@ -12,8 +12,8 @@ datasource db {
 }
 
 model User {
-  id     String  @id @default(cuid())
-  name   String  @db.Text
-  email  String  @db.Text
-  passwd String? @db.Text // hash by argon2
+  id     String @id @default(cuid())
+  name   String @db.Text
+  email  String @unique @db.Text
+  passwd String @db.Text // hash by argon2
 }

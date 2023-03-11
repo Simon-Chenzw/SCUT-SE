@@ -5,7 +5,8 @@ export interface ResponseBase {
   message: string
 }
 
-export interface JsonApiRequest<T> extends Omit<NextApiRequest, "body"> {
+export interface JsonApiRequest<T = never>
+  extends Omit<NextApiRequest, "body"> {
   body: T
 }
 
