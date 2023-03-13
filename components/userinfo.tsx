@@ -1,48 +1,23 @@
-import { logoutRequest } from "@/lib/api/logout"
-import { meRequest } from "@/lib/api/me"
+import { UserInfo as IUserInfo } from "@/lib/auth-hook"
 import { Button, Text } from "@mantine/core"
-import { useToggle } from "@mantine/hooks"
 import { IconLogout } from "@tabler/icons-react"
-import { useEffect, useState } from "react"
 
-export default function UserInfo() {
-  const [type, setType] = useToggle(["unauthenticated", "authenticated"])
-  const [name, setName] = useState("UserName")
-  const [onLogout, setOnLogout] = useToggle([false, true])
-
-  // get info
-  useEffect(() => {
-    async function getInfo() {
-      const info = await meRequest()
-      if (info.data) {
-        setName(info.data.name)
-        setType("authenticated")
-      } else {
-        setType("unauthenticated")
-      }
-    }
-
-    getInfo()
-  }, [setType])
-
-  // logout
-  const logout = async () => {
-    setOnLogout(true)
-    await logoutRequest()
-    setOnLogout(false)
-    setType("unauthenticated")
-  }
-
+export default function UserInfo(props: {
+  userInfo: IUserInfo
+  onLogout: () => void
+}) {
   return (
     <>
-      <Text c="blue"> {type === "authenticated" ? name : "未登录"} </Text>
-      {type === "authenticated" && (
+      <Text c="blue">
+        {props.userInfo !== null ? props.userInfo.name : "未登录"}
+      </Text>
+
+      {props.userInfo && (
         <Button
-          leftIcon={<IconLogout size="1rem" />}
+          leftIcon={<IconLogout />}
           variant="outline"
           radius="md"
-          onClick={logout}
-          loading={onLogout}
+          onClick={props.onLogout}
         >
           登出
         </Button>

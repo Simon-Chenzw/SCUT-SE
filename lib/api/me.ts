@@ -1,11 +1,13 @@
 import { ResponseBase } from "@/lib/api"
 
+export interface MeInfo {
+  id: string
+  name: string
+  email: string
+}
+
 export interface MeResponse extends ResponseBase {
-  data?: {
-    id: string
-    name: string
-    email: string
-  }
+  data?: MeInfo
 }
 
 export async function meRequest(): Promise<MeResponse> {

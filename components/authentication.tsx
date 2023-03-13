@@ -1,8 +1,9 @@
-import { loginRequest } from "@/lib/api/login"
-import { registerRequest } from "@/lib/api/register"
+import { LoginRequest } from "@/lib/api/login"
+import { RegisterRequest } from "@/lib/api/register"
 import {
   Anchor,
   Button,
+  Container,
   Divider,
   Group,
   Paper,
@@ -10,11 +11,15 @@ import {
   Stack,
   Text,
   TextInput,
+  Title,
 } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useToggle } from "@mantine/hooks"
 
-export default function AuthenticationForm() {
+export default function AuthenticationForm(props: {
+  onRegister: (payload: RegisterRequest) => void
+  onLogin: (payload: LoginRequest) => void
+}) {
   const [type, toggle] = useToggle(["login", "register"])
   const form = useForm({
     initialValues: {
@@ -37,81 +42,91 @@ export default function AuthenticationForm() {
   })
 
   const onSubmit = async (values: typeof form.values) => {
-    if (type === "login") {
-      await loginRequest(values)
-    } else if (type === "register") {
-      await registerRequest(values)
-    }
+    if (type === "login") props.onLogin(values)
+    else if (type === "register") props.onRegister(values)
   }
 
   return (
-    <Paper radius="md" p="xl" withBorder>
-      <Text size="lg" weight={500}>
-        {type === "login" ? "请进行登录，以继续：" : "请进行注册，以继续："}
-      </Text>
+    <>
+      <Container size={420} my={40}>
+        <Title
+          align="center"
+          sx={(theme) => ({
+            fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+            fontWeight: 900,
+          })}
+        >
+          Welcome back!
+        </Title>
+      </Container>
+      <Paper radius="md" p="xl" withBorder>
+        <Text size="lg" weight={500}>
+          {type === "login" ? "请进行登录，以继续：" : "请进行注册，以继续："}
+        </Text>
 
-      <Group grow mb="md" mt="md">
-        <Button />
-      </Group>
+        <Group grow mb="md" mt="md">
+          <Button />
+        </Group>
 
-      <Divider label="或者 使用邮箱登录" labelPosition="center" my="lg" />
+        <Divider label="或者 使用邮箱登录" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(onSubmit)}>
-        <Stack>
-          {type === "register" && (
+        <form onSubmit={form.onSubmit(onSubmit)}>
+          <Stack>
+            {type === "register" && (
+              <TextInput
+                required
+                label="名称"
+                placeholder="Your username"
+                {...form.getInputProps("name")}
+                radius="md"
+              />
+            )}
+
             <TextInput
               required
-              label="名称"
-              placeholder="Your username"
-              {...form.getInputProps("name")}
+              label="邮箱"
+              placeholder="email@example.com"
+              {...form.getInputProps("email")}
               radius="md"
             />
-          )}
 
-          <TextInput
-            required
-            label="邮箱"
-            placeholder="email@example.com"
-            {...form.getInputProps("email")}
-            radius="md"
-          />
-
-          <PasswordInput
-            required
-            label="密码"
-            placeholder="Your password"
-            {...form.getInputProps("password")}
-            radius="md"
-          />
-
-          {type === "register" && (
             <PasswordInput
               required
-              label="重复密码"
-              placeholder="Repeat your password"
-              {...form.getInputProps("password_repeat")}
+              label="密码"
+              placeholder="Your password"
+              {...form.getInputProps("password")}
               radius="md"
             />
-          )}
-        </Stack>
 
-        <Group position="apart" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            color="dimmed"
-            onClick={() => toggle()}
-            size="xs"
-          >
-            {type === "login"
-              ? "还没有账户? 点击注册"
-              : "已经有了账户? 点击登录"}
-          </Anchor>
-          <Button type="submit" radius="xl">
-            {type === "login" ? "登录" : "注册"}
-          </Button>
-        </Group>
-      </form>
-    </Paper>
+            {type === "register" && (
+              <PasswordInput
+                required
+                label="重复密码"
+                placeholder="Repeat your password"
+                {...form.getInputProps("password_repeat")}
+                radius="md"
+              />
+            )}
+          </Stack>
+
+          <Group position="apart" mt="xl">
+            <Anchor
+              component="button"
+              type="button"
+              color="dimmed"
+              onClick={() => toggle()}
+              size="xs"
+            >
+              {type === "login"
+                ? "还没有账户? 点击注册"
+                : "已经有了账户? 点击登录"}
+            </Anchor>
+            <Button type="submit" radius="xl">
+              {type === "login" ? "登录" : "注册"}
+            </Button>
+          </Group>
+        </form>
+      </Paper>
+    </>
   )
 }
