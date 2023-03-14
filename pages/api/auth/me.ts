@@ -1,5 +1,5 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
-import { MeResponse } from "@/lib/api/me"
+import { MeResponse } from "@/lib/api/auth/me"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { getCookie } from "cookies-next"

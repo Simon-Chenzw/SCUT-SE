@@ -1,5 +1,5 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
-import { LogoutResponse } from "@/lib/api/logout"
+import { LogoutResponse } from "@/lib/api/auth/logout"
 import Token from "@/lib/auth"
 import { deleteCookie } from "cookies-next"
 

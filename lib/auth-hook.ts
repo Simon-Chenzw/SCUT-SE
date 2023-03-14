@@ -1,7 +1,7 @@
-import { loginRequest, LoginRequest } from "@/lib/api/login"
-import { logoutRequest } from "@/lib/api/logout"
-import { MeInfo, meRequest } from "@/lib/api/me"
-import { RegisterRequest, registerRequest } from "@/lib/api/register"
+import { loginRequest, LoginRequest } from "@/lib/api/auth/login"
+import { logoutRequest } from "@/lib/api/auth/logout"
+import { MeInfo, meRequest } from "@/lib/api/auth/me"
+import { RegisterRequest, registerRequest } from "@/lib/api/auth/register"
 import { useState } from "react"
 
 interface UserInfoApi {

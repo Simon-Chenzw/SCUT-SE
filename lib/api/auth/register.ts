@@ -12,7 +12,7 @@ export type RegisterResponse = ResponseBase
 export async function registerRequest(
   payload: RegisterRequest
 ): Promise<RegisterResponse> {
-  const resp = await fetch("/api/register", {
+  const resp = await fetch("/api/auth/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),

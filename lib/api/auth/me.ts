@@ -11,7 +11,7 @@ export interface MeResponse extends ResponseBase {
 }
 
 export async function meRequest(): Promise<MeResponse> {
-  const resp = await fetch("/api/me", {
+  const resp = await fetch("/api/auth/me", {
     method: "GET",
     headers: { "Content-Type": "application/json" },
   })

@@ -1,5 +1,5 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
-import { LoginRequest, LoginResponse } from "@/lib/api/login"
+import { LoginRequest, LoginResponse } from "@/lib/api/auth/login"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import argon2 from "argon2"
