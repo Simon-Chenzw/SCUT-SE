@@ -2,7 +2,6 @@ import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
 import { MeResponse } from "@/lib/api/auth/me"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
-import { getCookie } from "cookies-next"
 
 export default async function handler(
   req: JsonApiRequest,
@@ -14,41 +13,31 @@ export default async function handler(
       .send({ code: 405, message: "Only GET requests allowed" })
   }
 
-  do {
-    const jwt = getCookie("jwt", {
-      req,
-      res,
-      maxAge: 2 * Token.EXP,
-      httpOnly: true,
-      sameSite: "strict",
-      // secure: true, // HTTPS-Only
-    })
-    if (typeof jwt !== "string") break
-
-    const token = Token.from_jwt(jwt)
-    if (token === null) break
-
+  const token = Token.from_cookie(req, res)
+  if (token !== null) {
     const user = await prisma.user.findUnique({
       where: { id: token.id },
     })
-    if (user === null) break
-
-    return res.status(200).json({
-      code: 0,
-      message: "ok",
-      data: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-      },
+    if (user !== null) {
+      return res.status(200).json({
+        code: 0,
+        message: "ok",
+        data: {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        },
+      })
+    } else {
+      return res.status(401).json({
+        code: -1,
+        message: "user not exists",
+      })
+    }
+  } else {
+    return res.status(401).json({
+      code: -1,
+      message: "get info from jwt failed",
     })
-  } while (
-    // eslint-disable-next-line no-constant-condition
-    false
-  )
-
-  return res.status(401).json({
-    code: -1,
-    message: "get info from jwt failed",
-  })
+  }
 }

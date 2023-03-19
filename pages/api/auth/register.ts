@@ -3,7 +3,6 @@ import { RegisterRequest, RegisterResponse } from "@/lib/api/auth/register"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import argon2 from "argon2"
-import { setCookie } from "cookies-next"
 
 export default async function handler(
   req: JsonApiRequest<RegisterRequest>,
@@ -27,16 +26,7 @@ export default async function handler(
         passwd: await argon2.hash(password),
       },
     })
-
-    setCookie("jwt", new Token(user.id).to_jwt(), {
-      req,
-      res,
-      maxAge: 2 * Token.EXP,
-      httpOnly: true,
-      sameSite: "strict",
-      // secure: true, // HTTPS-Only
-    })
-
+    new Token(user.id).set_cookie(req, res)
     return res.status(200).json({ code: 0, message: "ok" })
   } catch (e) {
     if (e instanceof Object && "code" in e) {
