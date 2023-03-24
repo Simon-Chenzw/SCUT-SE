@@ -12,8 +12,33 @@ datasource db {
 }
 
 model User {
-  id     String @id @default(cuid())
-  name   String @db.Text
-  email  String @unique @db.Text
-  passwd String @db.Text // hash by argon2
+  id       String    @id @default(cuid())
+  name     String    @db.Text
+  email    String    @unique @db.Text
+  passwd   String    @db.Text
+  requests Request[]
+}
+
+model Request {
+  id             String          @id @default(cuid())
+  createdAt      DateTime        @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime        @updatedAt @db.Timestamptz(6)
+  user           User            @relation(fields: [userId], references: [id])
+  userId         String
+  image          Image?
+  machinedResult MachinedResult?
+}
+
+model Image {
+  id        String  @id @default(cuid())
+  blob      Bytes
+  request   Request @relation(fields: [requestId], references: [id])
+  requestId String  @unique
+}
+
+model MachinedResult {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  request   Request  @relation(fields: [requestId], references: [id])
+  requestId String   @unique
 }

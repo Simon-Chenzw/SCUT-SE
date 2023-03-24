@@ -1,5 +1,5 @@
 import AuthenticationForm from "@/components/authentication"
-import Info from "@/components/info"
+import RequestInfo from "@/components/request-info"
 import UserInfo from "@/components/userinfo"
 import { useUserInfo } from "@/lib/auth-hook"
 import { AppShell, Group, Header, useMantineTheme } from "@mantine/core"
@@ -41,7 +41,7 @@ export default function AppShellDemo() {
           onLogin={authApi.login}
         />
       ) : (
-        <Info />
+        <RequestInfo />
       )}
     </AppShell>
   )
