@@ -25,31 +25,16 @@ export default async function handler(
     code: 0,
     message: "ok",
     data: {
-      count: await prisma.request.count({
-        where: {
-          userId: token.id,
-        },
-      }),
+      count: await prisma.request.count({ where: { userId: token.id } }),
       requests: await prisma.request.findMany({
         // pagination
         take: req.body.limit,
         skip: req.body.searchAfter ? 1 : 0,
-        ...(req.body.searchAfter && {
-          cursor: {
-            id: req.body.searchAfter,
-          },
-        }),
+        ...(req.body.searchAfter && { cursor: { id: req.body.searchAfter } }),
 
-        where: {
-          userId: token.id,
-        },
-        include: {
-          image: true,
-          machinedResult: true,
-        },
-        orderBy: {
-          createdAt: "desc",
-        },
+        where: { userId: token.id },
+        include: { image: true, machinedResult: true },
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       }),
     },
   })

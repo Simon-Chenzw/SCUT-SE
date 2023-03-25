@@ -3234,6 +3234,7 @@ __metadata:
     husky: ^8.0.3
     jsonwebtoken: ^9.0.0
     lint-staged: ^13.1.2
+    mantine-datatable: ^2.2.5
     next: ^13.1.6
     prettier: ^2.8.4
     prisma: 4.11.0
@@ -3925,6 +3926,17 @@ __metadata:
     socks-proxy-agent: ^7.0.0
     ssri: ^9.0.0
   checksum: 2332eb9a8ec96f1ffeeea56ccefabcb4193693597b132cd110734d50f2928842e22b84cfa1508e921b8385cdfd06dda9ad68645fed62b50fff629a580f5fb72c
+  languageName: node
+  linkType: hard
+
+"mantine-datatable@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "mantine-datatable@npm:2.2.5"
+  peerDependencies:
+    "@mantine/core": ^6.0.4
+    "@mantine/hooks": ^6.0.4
+    react: ^18.2.0
+  checksum: f027354f3dbf360e7ab7a704cc895f85a6404af748f49cf091e03b4876b339e7d202cbee0c9d4e1a897accd970b66cc2e6efb1f1972762303564e9709c774ff3
   languageName: node
   linkType: hard
 

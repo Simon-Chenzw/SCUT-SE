@@ -28,6 +28,7 @@
     "argon2": "^0.30.3",
     "cookies-next": "^2.1.1",
     "jsonwebtoken": "^9.0.0",
+    "mantine-datatable": "^2.2.5",
     "next": "^13.1.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
