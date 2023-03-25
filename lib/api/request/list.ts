@@ -9,10 +9,8 @@ export type RequestListObject = Prisma.RequestGetPayload<{
 }>
 
 export interface RequestListRequest {
-  pagination?: {
-    offset: number
-    limit: number
-  }
+  searchAfter?: RequestListObject["id"]
+  limit?: number
 }
 
 export interface RequestListResponse extends ResponseBase {

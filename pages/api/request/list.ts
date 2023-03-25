@@ -31,8 +31,15 @@ export default async function handler(
         },
       }),
       requests: await prisma.request.findMany({
-        take: req.body.pagination?.limit,
-        skip: req.body.pagination?.offset,
+        // pagination
+        take: req.body.limit,
+        skip: req.body.searchAfter ? 1 : 0,
+        ...(req.body.searchAfter && {
+          cursor: {
+            id: req.body.searchAfter,
+          },
+        }),
+
         where: {
           userId: token.id,
         },

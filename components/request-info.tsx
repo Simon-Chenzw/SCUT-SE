@@ -8,13 +8,13 @@ export default function RequestInfo() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resp = await requestListRequest({
-        pagination: {
+      for (let i = 1; i <= activePage; i++) {
+        const resp = await requestListRequest({
           limit: 10,
-          offset: activePage * 10 - 10,
-        },
-      })
-      if (resp.data) setRequests(resp.data.requests)
+          searchAfter: i == 1 ? undefined : requests.at(-1)?.id,
+        })
+        if (i == activePage && resp.data) setRequests(resp.data.requests)
+      }
     }
 
     fetchData()
