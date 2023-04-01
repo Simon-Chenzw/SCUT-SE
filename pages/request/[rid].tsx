@@ -1,30 +1,21 @@
+import RequestDetail from "@/components/request/detail"
 import UserInfo from "@/components/userinfo"
-import { RequestObject } from "@/lib/api/request"
-import { requestGetRequest } from "@/lib/api/request/[rid]"
 import { useUserInfo } from "@/lib/auth-hook"
-import { AppShell, Group, Header, Text, useMantineTheme } from "@mantine/core"
+import { AppShell, Card, Group, Header, useMantineTheme } from "@mantine/core"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
   const router = useRouter()
 
   const [userInfo, authApi] = useUserInfo()
-  const [request, setRequest] = useState<RequestObject>()
   const { rid } = router.query as unknown as { rid: string }
 
   // async init
   useEffect(() => {
     ;(async () => {
       await authApi.getInfo()
-    })()
-  }, [])
-
-  useEffect(() => {
-    ;(async () => {
-      const req = await requestGetRequest({ id: rid })
-      setRequest(req.data)
     })()
   }, [])
 
@@ -46,7 +37,9 @@ export default function AppShellDemo() {
         </Header>
       }
     >
-      <Text> {JSON.stringify(request, undefined, "\t")} </Text>
+      <Card>
+        <RequestDetail rid={rid} />
+      </Card>
     </AppShell>
   )
 }
