@@ -3,6 +3,7 @@ import { requestGetRequest } from "@/lib/api/request/[rid]"
 import { Skeleton, Text, Timeline, TimelineItem } from "@mantine/core"
 import { IconPlus } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
+import RequestImageUploader from "./image-upload"
 
 function RequestDetailSkeleton() {
   return (
@@ -63,9 +64,13 @@ export default function RequestDetail(props: { rid: string }) {
           title="上传图片"
           lineVariant={active > 1 ? "solid" : "dashed"}
         >
-          <Text color="dimmed" size="sm">
-            {request.image?.id ?? "尚未上传图片"}
-          </Text>
+          {request.image == null ? (
+            <RequestImageUploader />
+          ) : (
+            <Text color="dimmed" size="sm">
+              {request.image.id}
+            </Text>
+          )}
         </TimelineItem>
 
         <TimelineItem
