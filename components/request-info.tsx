@@ -1,4 +1,5 @@
-import { RequestListObject, requestListRequest } from "@/lib/api/request/list"
+import { RequestObject } from "@/lib/api/request"
+import { requestListRequest } from "@/lib/api/request/list"
 import { ActionIcon, Card, Group, Text } from "@mantine/core"
 import { useListState } from "@mantine/hooks"
 import { IconArrowBarToUp, IconId, IconRefresh } from "@tabler/icons-react"
@@ -10,7 +11,7 @@ export default function RequestInfo() {
   const batchSize = 15
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
-  const [requests, setRequests] = useListState<RequestListObject>([])
+  const [requests, setRequests] = useListState<RequestObject>([])
   const scrollViewportRef = useRef<HTMLDivElement>(null)
 
   const reset = async () => {
@@ -49,7 +50,7 @@ export default function RequestInfo() {
           {
             accessor: "createAt",
             width: 80,
-            render: (request: RequestListObject) => {
+            render: (request: RequestObject) => {
               new Intl.RelativeTimeFormat(undefined, {
                 numeric: "auto",
               })
@@ -59,7 +60,7 @@ export default function RequestInfo() {
           {
             accessor: "status",
             width: 60,
-            render: (request: RequestListObject) => {
+            render: (request: RequestObject) => {
               if (request.image === null) {
                 return <Text>待上传</Text>
               } else if (request.machinedResult === null) {
@@ -72,7 +73,7 @@ export default function RequestInfo() {
           {
             accessor: "link",
             width: 30,
-            render: (request: RequestListObject) => {
+            render: (request: RequestObject) => {
               return (
                 <ActionIcon component={Link} href={`/request/${request.id}`}>
                   <IconId />

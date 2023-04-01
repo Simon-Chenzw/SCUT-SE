@@ -1,22 +1,15 @@
 import { ResponseBase } from "@/lib/api"
-import { Prisma } from "@/lib/prisma-client"
-
-export type RequestListObject = Prisma.RequestGetPayload<{
-  include: {
-    image: true
-    machinedResult: true
-  }
-}>
+import { RequestObject } from "@/lib/api/request"
 
 export interface RequestListRequest {
-  searchAfter?: RequestListObject["id"]
+  searchAfter?: RequestObject["id"]
   limit?: number
 }
 
 export interface RequestListResponse extends ResponseBase {
   data?: {
     count: number
-    requests: RequestListObject[]
+    requests: RequestObject[]
   }
 }
 
