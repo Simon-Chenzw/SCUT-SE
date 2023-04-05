@@ -3,8 +3,8 @@ import {
   isContentTypeOrSetResponse,
   isMethodRequestOrSetResponse,
 } from "@/lib/api/helper"
+import { getTokenOrSetResponse } from "@/lib/api/helper/token"
 import { ImageUploadResponse } from "@/lib/api/image/upload"
-import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { IncomingMessage } from "http"
 import { NextApiRequest, PageConfig } from "next"
@@ -38,9 +38,8 @@ export default async function handler(
   if (!isMethodRequestOrSetResponse(req, res, "POST")) return
   if (!isContentTypeOrSetResponse(req, res, "multipart/form-data")) return
 
-  const token = Token.from_cookie(req, res)
-  if (token === null)
-    return res.status(401).send({ code: -1, message: "Unauthorized" })
+  const token = getTokenOrSetResponse(req, res)
+  if (token === null) return
 
   const rid = req.query.rid as string
   const request = await prisma.request.findUnique({

@@ -1,7 +1,7 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
 import { isJsonRequestOrSetResponse } from "@/lib/api/helper"
+import { getTokenOrSetResponse } from "@/lib/api/helper/token"
 import { RequestListRequest, RequestListResponse } from "@/lib/api/request/list"
-import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 
 export default async function handler(
@@ -10,13 +10,8 @@ export default async function handler(
 ) {
   if (!isJsonRequestOrSetResponse(req, res)) return
 
-  const token = Token.from_cookie(req, res)
-  if (token === null) {
-    return res.status(401).json({
-      code: -1,
-      message: "please login",
-    })
-  }
+  const token = getTokenOrSetResponse(req, res)
+  if (token === null) return
 
   return res.status(200).json({
     code: 0,

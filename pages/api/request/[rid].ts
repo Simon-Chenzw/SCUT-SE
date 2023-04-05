@@ -1,7 +1,7 @@
 import { JsonApiResponse } from "@/lib/api"
 import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
+import { getTokenOrSetResponse } from "@/lib/api/helper/token"
 import { RequestGetResponse } from "@/lib/api/request/[rid]"
-import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { NextApiRequest } from "next"
 
@@ -11,13 +11,8 @@ export default async function handler(
 ) {
   if (!isMethodRequestOrSetResponse(req, res, "GET")) return
 
-  const token = Token.from_cookie(req, res)
-  if (token === null) {
-    return res.status(401).json({
-      code: -1,
-      message: "please login",
-    })
-  }
+  const token = getTokenOrSetResponse(req, res)
+  if (token === null) return
 
   const { rid } = req.query as unknown as { rid: string }
 

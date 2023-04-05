@@ -1,7 +1,7 @@
 import { JsonApiResponse } from "@/lib/api"
 import { LogoutResponse } from "@/lib/api/auth/logout"
 import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
-import Token from "@/lib/auth"
+import { deleteTokenCookie } from "@/lib/api/helper/token"
 import { NextApiRequest } from "next"
 
 export default async function handler(
@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   if (!isMethodRequestOrSetResponse(req, res, "GET")) return
 
-  Token.delete_cookie(req, res)
+  deleteTokenCookie(req, res)
 
   return res.status(200).json({ code: 0, message: "ok" })
 }
