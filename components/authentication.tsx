@@ -1,5 +1,5 @@
-import { LoginRequest } from "@/lib/api/login"
-import { RegisterRequest } from "@/lib/api/register"
+import { LoginRequest } from "@/lib/api/auth/login"
+import { RegisterRequest } from "@/lib/api/auth/register"
 import {
   Anchor,
   Button,
