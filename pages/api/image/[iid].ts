@@ -1,3 +1,4 @@
+import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { NextApiRequest, NextApiResponse } from "next"
@@ -6,6 +7,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  if (isMethodRequestOrSetResponse(req, res, "GET")) return
+
   const iid = req.query.iid as string
 
   const token = Token.from_cookie(req, res)

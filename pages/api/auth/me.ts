@@ -1,17 +1,15 @@
-import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
+import { JsonApiResponse } from "@/lib/api"
 import { MeResponse } from "@/lib/api/auth/me"
+import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
+import { NextApiRequest } from "next"
 
 export default async function handler(
-  req: JsonApiRequest,
+  req: NextApiRequest,
   res: JsonApiResponse<MeResponse>
 ) {
-  if (req.method !== "GET") {
-    return res
-      .status(405)
-      .send({ code: 405, message: "Only GET requests allowed" })
-  }
+  if (!isMethodRequestOrSetResponse(req, res, "GET")) return
 
   const token = Token.from_cookie(req, res)
   if (token !== null) {

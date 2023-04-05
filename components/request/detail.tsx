@@ -38,7 +38,7 @@ export default function RequestDetail(props: { rid: string }) {
   const [active, setActive] = useState(1)
 
   const update = async () => {
-    const req = await requestGetRequest({ id: props.rid })
+    const req = await requestGetRequest(props.rid)
     setRequest(req.data)
   }
 

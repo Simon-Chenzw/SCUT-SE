@@ -1,4 +1,5 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
+import { isJsonRequestOrSetResponse } from "@/lib/api/helper"
 import { RequestListRequest, RequestListResponse } from "@/lib/api/request/list"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
@@ -7,11 +8,7 @@ export default async function handler(
   req: JsonApiRequest<RequestListRequest>,
   res: JsonApiResponse<RequestListResponse>
 ) {
-  if (req.method !== "POST") {
-    return res
-      .status(405)
-      .send({ code: 405, message: "Only POST requests allowed" })
-  }
+  if (!isJsonRequestOrSetResponse(req, res)) return
 
   const token = Token.from_cookie(req, res)
   if (token === null) {

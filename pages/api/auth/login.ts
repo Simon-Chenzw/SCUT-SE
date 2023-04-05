@@ -1,5 +1,6 @@
 import { JsonApiRequest, JsonApiResponse } from "@/lib/api"
 import { LoginRequest, LoginResponse } from "@/lib/api/auth/login"
+import { isJsonRequestOrSetResponse } from "@/lib/api/helper"
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import argon2 from "argon2"
@@ -8,11 +9,7 @@ export default async function handler(
   req: JsonApiRequest<LoginRequest>,
   res: JsonApiResponse<LoginResponse>
 ) {
-  if (req.method !== "POST") {
-    return res
-      .status(405)
-      .send({ code: 405, message: "Only POST requests allowed" })
-  }
+  if (!isJsonRequestOrSetResponse(req, res)) return
 
   const user = await prisma.user.findUnique({
     where: { email: req.body.email },

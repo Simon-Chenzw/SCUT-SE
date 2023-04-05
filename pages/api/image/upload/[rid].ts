@@ -1,6 +1,9 @@
 import { JsonApiResponse } from "@/lib/api"
+import {
+  isContentTypeOrSetResponse,
+  isMethodRequestOrSetResponse,
+} from "@/lib/api/helper"
 import { ImageUploadResponse } from "@/lib/api/image/upload"
-
 import Token from "@/lib/auth"
 import prisma from "@/lib/prisma"
 import { IncomingMessage } from "http"
@@ -32,11 +35,8 @@ export default async function handler(
   req: NextApiRequest,
   res: JsonApiResponse<ImageUploadResponse>
 ) {
-  if (req.method !== "POST") {
-    return res
-      .status(405)
-      .send({ code: 405, message: "Only POST requests allowed" })
-  }
+  if (!isMethodRequestOrSetResponse(req, res, "POST")) return
+  if (!isContentTypeOrSetResponse(req, res, "multipart/form-data")) return
 
   const token = Token.from_cookie(req, res)
   if (token === null)
