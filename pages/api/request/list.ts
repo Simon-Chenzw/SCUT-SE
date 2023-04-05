@@ -33,7 +33,7 @@ export default async function handler(
         ...(req.body.searchAfter && { cursor: { id: req.body.searchAfter } }),
 
         where: { userId: token.id },
-        include: { image: true, machinedResult: true },
+        include: { image: { select: { id: true } }, machinedResult: true },
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       }),
     },

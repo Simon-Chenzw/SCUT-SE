@@ -25,7 +25,7 @@ export default async function handler(
 
   const request = await prisma.request.findUnique({
     where: { id: rid },
-    include: { image: true, machinedResult: true },
+    include: { image: { select: { id: true } }, machinedResult: true },
   })
 
   if (request === null) {
