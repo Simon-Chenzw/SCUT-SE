@@ -10,7 +10,9 @@ import {
 import { IconCheck, IconUpload, IconX } from "@tabler/icons-react"
 import { useState } from "react"
 
-export default function RequestImageUploader() {
+export default function RequestImageUploader(props: {
+  onImageUpload?: (file: File) => void
+}) {
   const [file, setFile] = useState<File | null>(null)
   const [fileUrl, setFileUrl] = useState<string | null>(null)
 
@@ -61,7 +63,8 @@ export default function RequestImageUploader() {
             radius="xl"
             size="xs"
             onClick={() => {
-              // [todo] upload
+              if (file !== null && props.onImageUpload !== undefined)
+                props.onImageUpload(file)
             }}
           >
             <IconCheck size="xs" />

@@ -31,6 +31,7 @@ model Request {
 
 model Image {
   id        String  @id @default(cuid())
+  mimeType  String  @db.Text
   blob      Bytes
   request   Request @relation(fields: [requestId], references: [id])
   requestId String  @unique

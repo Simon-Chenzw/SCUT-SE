@@ -1,6 +1,14 @@
+import { imageUploadToRequest } from "@/lib/api/image/upload"
 import { RequestObject } from "@/lib/api/request"
 import { requestGetRequest } from "@/lib/api/request/[rid]"
-import { Skeleton, Text, Timeline, TimelineItem } from "@mantine/core"
+import {
+  Image,
+  Skeleton,
+  Text,
+  Timeline,
+  TimelineItem,
+  Tooltip,
+} from "@mantine/core"
 import { IconPlus } from "@tabler/icons-react"
 import { useEffect, useState } from "react"
 import RequestImageUploader from "./image-upload"
@@ -29,11 +37,13 @@ export default function RequestDetail(props: { rid: string }) {
   const [request, setRequest] = useState<RequestObject>()
   const [active, setActive] = useState(1)
 
+  const update = async () => {
+    const req = await requestGetRequest({ id: props.rid })
+    setRequest(req.data)
+  }
+
   useEffect(() => {
-    ;(async () => {
-      const req = await requestGetRequest({ id: props.rid })
-      setRequest(req.data)
-    })()
+    update()
   }, [props.rid])
 
   useEffect(() => {
@@ -65,11 +75,25 @@ export default function RequestDetail(props: { rid: string }) {
           lineVariant={active > 1 ? "solid" : "dashed"}
         >
           {request.image == null ? (
-            <RequestImageUploader />
+            <RequestImageUploader
+              onImageUpload={async (file: File) => {
+                await imageUploadToRequest(props.rid, file)
+                await update()
+              }}
+            />
           ) : (
-            <Text color="dimmed" size="sm">
-              {request.image.id}
-            </Text>
+            <Image
+              height={240}
+              fit="contain"
+              src={`/api/image/${request.image.id}`}
+              withPlaceholder
+              alt="request image"
+              caption={
+                <Tooltip label={request.image.id}>
+                  <Text> 已上传图片 </Text>
+                </Tooltip>
+              }
+            ></Image>
           )}
         </TimelineItem>
 
