@@ -47,17 +47,17 @@ export default async function handler(
     include: { image: { select: { id: true } } },
   })
   if (request === null)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Request does not exist",
     })
   else if (request.userId !== token.id)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Not authorized to change the request",
     })
   else if (request.image !== null)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "The request already contains an image",
     })
@@ -65,12 +65,12 @@ export default async function handler(
   const form = await getFormData(req)
   const image = form.get("image")
   if (image === null)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Failed to parse the image",
     })
   else if (typeof image === "string" || image instanceof String)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "The payload is not a file",
     })
@@ -86,7 +86,7 @@ export default async function handler(
   } catch (e) {
     console.log(e)
 
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Failed to upload the image",
     })

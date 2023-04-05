@@ -19,12 +19,12 @@ export default async function handler(
     include: { request: true },
   })
   if (image === null)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Image does not exist",
     })
   else if (image.request.userId !== token.id)
-    return res.status(400).send({
+    return res.status(400).json({
       code: -1,
       message: "Not authorized to get the image",
     })
