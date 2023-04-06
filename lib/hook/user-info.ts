@@ -2,23 +2,24 @@ import { loginRequest, LoginRequest } from "@/lib/api/auth/login"
 import { logoutRequest } from "@/lib/api/auth/logout"
 import { MeInfo, meRequest } from "@/lib/api/auth/me"
 import { RegisterRequest, registerRequest } from "@/lib/api/auth/register"
-import { useState } from "react"
-
-interface UserInfoApi {
-  getInfo: () => Promise<void>
-  register: (payload: RegisterRequest) => Promise<void>
-  login: (payload: LoginRequest) => Promise<void>
-  logout: () => Promise<void>
-}
+import { useEffect, useState } from "react"
 
 export type UserInfo = MeInfo | null
 
-export function useUserInfo(): [MeInfo | null, UserInfoApi] {
-  const [info, setInfo] = useState<MeInfo | null>(null)
+export function useUserInfo(): [
+  MeInfo | undefined,
+  {
+    getInfo: () => Promise<void>
+    register: (payload: RegisterRequest) => Promise<void>
+    login: (payload: LoginRequest) => Promise<void>
+    logout: () => Promise<void>
+  }
+] {
+  const [info, setInfo] = useState<MeInfo>()
 
   const getInfo = async () => {
     const info = await meRequest()
-    setInfo(info.data ?? null)
+    setInfo(info.data)
   }
 
   const register = async (payload: RegisterRequest) => {
@@ -35,6 +36,10 @@ export function useUserInfo(): [MeInfo | null, UserInfoApi] {
     await logoutRequest()
     await getInfo()
   }
+
+  useEffect(() => {
+    getInfo()
+  }, [])
 
   return [info, { getInfo, register, login, logout }]
 }

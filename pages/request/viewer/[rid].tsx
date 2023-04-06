@@ -1,7 +1,7 @@
 import RequestImageViewer from "@/components/request/viewer"
 import UserInfo from "@/components/userinfo"
-import { useUserInfo } from "@/lib/auth-hook"
 import { useRequest } from "@/lib/hook/request"
+import { useUserInfo } from "@/lib/hook/user-info"
 import {
   AppShell,
   Button,
@@ -14,22 +14,12 @@ import {
 import { IconError404 } from "@tabler/icons-react"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { useEffect } from "react"
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
   const router = useRouter()
-
   const [userInfo, authApi] = useUserInfo()
-  const rid = router.query.rid as string
-  const [request] = useRequest(rid)
-
-  // async init
-  useEffect(() => {
-    ;(async () => {
-      await authApi.getInfo()
-    })()
-  }, [])
+  const [request] = useRequest(router.query.rid as string)
 
   return (
     <AppShell
@@ -65,7 +55,7 @@ export default function AppShellDemo() {
           <Button
             variant="light"
             component={Link}
-            href={`/request/${rid}`}
+            href={`/request/${router.query.rid as string}`}
             leftIcon={<IconError404 />}
           >
             报告异常 返回详情页

@@ -1,21 +1,12 @@
 import AuthenticationForm from "@/components/authentication"
 import RequestInfo from "@/components/request-info"
 import UserInfo from "@/components/userinfo"
-import { useUserInfo } from "@/lib/auth-hook"
+import { useUserInfo } from "@/lib/hook/user-info"
 import { AppShell, Group, Header, useMantineTheme } from "@mantine/core"
-import { useEffect } from "react"
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
-
   const [userInfo, authApi] = useUserInfo()
-
-  // async init
-  useEffect(() => {
-    ;(async () => {
-      await authApi.getInfo()
-    })()
-  }, [])
 
   return (
     <AppShell

@@ -1,15 +1,15 @@
-import { UserInfo as IUserInfo } from "@/lib/auth-hook"
+import { MeInfo } from "@/lib/api/auth/me"
 import { Button, Text } from "@mantine/core"
 import { IconLogout } from "@tabler/icons-react"
 
 export default function UserInfo(props: {
-  userInfo: IUserInfo
+  userInfo?: MeInfo
   onLogout: () => void
 }) {
   return (
     <>
       <Text c="blue">
-        {props.userInfo !== null ? props.userInfo.name : "未登录"}
+        {props.userInfo !== undefined ? props.userInfo.name : "未登录"}
       </Text>
 
       {props.userInfo && (
