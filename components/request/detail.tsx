@@ -1,7 +1,8 @@
 import { imageUploadToRequest } from "@/lib/api/image/upload"
-import { RequestObject } from "@/lib/api/request"
-import { requestGetRequest } from "@/lib/api/request/[rid]"
+import { useRequest } from "@/lib/hook/request"
 import {
+  Button,
+  Card,
   Image,
   Skeleton,
   Text,
@@ -9,7 +10,8 @@ import {
   TimelineItem,
   Tooltip,
 } from "@mantine/core"
-import { IconPlus } from "@tabler/icons-react"
+import { IconMan, IconPlus } from "@tabler/icons-react"
+import Link from "next/link"
 import { useEffect, useState } from "react"
 import RequestImageUploader from "./image-upload"
 
@@ -34,17 +36,8 @@ function TimeDisplay(props: { time: Date }) {
 }
 
 export default function RequestDetail(props: { rid: string }) {
-  const [request, setRequest] = useState<RequestObject>()
+  const [request, updateRequest] = useRequest(props.rid)
   const [active, setActive] = useState(1)
-
-  const update = async () => {
-    const req = await requestGetRequest(props.rid)
-    setRequest(req.data)
-  }
-
-  useEffect(() => {
-    update()
-  }, [props.rid])
 
   useEffect(() => {
     if (request === undefined) setActive(-1)
@@ -78,7 +71,7 @@ export default function RequestDetail(props: { rid: string }) {
             <RequestImageUploader
               onImageUpload={async (file: File) => {
                 await imageUploadToRequest(props.rid, file)
-                await update()
+                await updateRequest()
               }}
             />
           ) : (
@@ -102,9 +95,25 @@ export default function RequestDetail(props: { rid: string }) {
           title="生成报告"
           lineVariant={active > 2 ? "solid" : "dashed"}
         >
-          <Text color="dimmed" size="sm">
-            {request.machinedResult?.id ?? "尚未生成报告"}
-          </Text>
+          {request.machinedResult == null ? (
+            <Text color="dimmed" size="sm">
+              尚未生成报告
+            </Text>
+          ) : (
+            <>
+              <Card>
+                <Button
+                  variant="light"
+                  component={Link}
+                  href={`/request/viewer/${request.id}`}
+                  leftIcon={<IconMan />}
+                >
+                  查看报告
+                </Button>
+              </Card>
+              <TimeDisplay time={request.createdAt} />
+            </>
+          )}
         </TimelineItem>
       </Timeline>
     )
