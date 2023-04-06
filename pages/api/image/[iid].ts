@@ -7,7 +7,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (isMethodRequestOrSetResponse(req, res, "GET")) return
+  if (!isMethodRequestOrSetResponse(req, res, "GET")) return
 
   const iid = req.query.iid as string
 
