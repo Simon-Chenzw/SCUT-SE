@@ -77,6 +77,7 @@ export default function AuthenticationForm(props: {
                 required
                 label="名称"
                 placeholder="Your username"
+                autoComplete="name"
                 {...form.getInputProps("name")}
                 radius="md"
               />
@@ -86,6 +87,7 @@ export default function AuthenticationForm(props: {
               required
               label="邮箱"
               placeholder="email@example.com"
+              autoComplete="email"
               {...form.getInputProps("email")}
               radius="md"
             />
@@ -94,6 +96,9 @@ export default function AuthenticationForm(props: {
               required
               label="密码"
               placeholder="Your password"
+              autoComplete={
+                type === "register" ? "new-password" : "current-password"
+              }
               {...form.getInputProps("password")}
               radius="md"
             />
@@ -103,6 +108,7 @@ export default function AuthenticationForm(props: {
                 required
                 label="重复密码"
                 placeholder="Repeat your password"
+                autoComplete="new-password"
                 {...form.getInputProps("password_repeat")}
                 radius="md"
               />
