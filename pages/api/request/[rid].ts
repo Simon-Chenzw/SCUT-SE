@@ -1,8 +1,7 @@
 import { JsonApiResponse } from "@/lib/api"
 import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
-import { getTokenOrSetResponse } from "@/lib/api/helper/token"
+import { getRequestOrSetResponse } from "@/lib/api/helper/request"
 import { RequestGetResponse } from "@/lib/api/request/[rid]"
-import prisma from "@/lib/prisma"
 import { NextApiRequest } from "next"
 
 export default async function handler(
@@ -11,31 +10,16 @@ export default async function handler(
 ) {
   if (!isMethodRequestOrSetResponse(req, res, "GET")) return
 
-  const token = getTokenOrSetResponse(req, res)
-  if (token === null) return
+  const request = await getRequestOrSetResponse(
+    req,
+    res,
+    req.query.rid as string
+  )
+  if (request === null) return
 
-  const { rid } = req.query as unknown as { rid: string }
-
-  const request = await prisma.request.findUnique({
-    where: { id: rid },
-    include: { image: { select: { id: true } }, machinedResult: true },
+  return res.status(200).json({
+    code: 0,
+    message: "ok",
+    data: request,
   })
-
-  if (request === null) {
-    return res.status(404).json({
-      code: -1,
-      message: "not found",
-    })
-  } else if (request.userId !== token.id) {
-    return res.status(401).json({
-      code: -1,
-      message: "unauthorized",
-    })
-  } else {
-    return res.status(200).json({
-      code: 0,
-      message: "ok",
-      data: request,
-    })
-  }
 }

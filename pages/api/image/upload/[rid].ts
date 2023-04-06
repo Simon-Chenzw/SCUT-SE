@@ -3,7 +3,7 @@ import {
   isContentTypeOrSetResponse,
   isMethodRequestOrSetResponse,
 } from "@/lib/api/helper"
-import { getTokenOrSetResponse } from "@/lib/api/helper/token"
+import { getRequestOrSetResponse } from "@/lib/api/helper/request"
 import { ImageUploadResponse } from "@/lib/api/image/upload"
 import prisma from "@/lib/prisma"
 import { IncomingMessage } from "http"
@@ -38,25 +38,14 @@ export default async function handler(
   if (!isMethodRequestOrSetResponse(req, res, "POST")) return
   if (!isContentTypeOrSetResponse(req, res, "multipart/form-data")) return
 
-  const token = getTokenOrSetResponse(req, res)
-  if (token === null) return
+  const request = await getRequestOrSetResponse(
+    req,
+    res,
+    req.query.rid as string
+  )
+  if (request === null) return
 
-  const rid = req.query.rid as string
-  const request = await prisma.request.findUnique({
-    where: { id: rid },
-    include: { image: { select: { id: true } } },
-  })
-  if (request === null)
-    return res.status(400).json({
-      code: -1,
-      message: "Request does not exist",
-    })
-  else if (request.userId !== token.id)
-    return res.status(400).json({
-      code: -1,
-      message: "Not authorized to change the request",
-    })
-  else if (request.image !== null)
+  if (request.image !== null)
     return res.status(400).json({
       code: -1,
       message: "The request already contains an image",
@@ -80,7 +69,7 @@ export default async function handler(
       data: {
         mimeType: image.type,
         blob: Buffer.from(await image.arrayBuffer()),
-        requestId: rid,
+        requestId: req.query.rid as string,
       },
     })
   } catch (e) {
