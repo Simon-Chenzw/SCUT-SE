@@ -1,4 +1,5 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { JsonApiResponse } from "@/lib/api"
+import { NextApiRequest } from "next"
 
 export type HTTP_METHOD =
   | "GET"
@@ -13,7 +14,7 @@ export type HTTP_METHOD =
 
 export function isMethodRequestOrSetResponse(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: JsonApiResponse,
   method: HTTP_METHOD | HTTP_METHOD[]
 ): boolean {
   if (
@@ -36,7 +37,7 @@ export function isMethodRequestOrSetResponse(
 
 export function isContentTypeOrSetResponse(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: JsonApiResponse,
   contentType: string
 ): boolean {
   if (!isMethodRequestOrSetResponse(req, res, "POST")) return false
@@ -53,7 +54,7 @@ export function isContentTypeOrSetResponse(
 
 export function isJsonRequestOrSetResponse(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: JsonApiResponse
 ): boolean {
   if (!isMethodRequestOrSetResponse(req, res, "POST")) return false
   if (!isContentTypeOrSetResponse(req, res, "application/json")) return false

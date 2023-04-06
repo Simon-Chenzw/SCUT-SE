@@ -10,4 +10,5 @@ export interface JsonApiRequest<T = never>
   body: T
 }
 
-export type JsonApiResponse<T extends ResponseBase> = NextApiResponse<T>
+export type JsonApiResponse<T extends ResponseBase = ResponseBase> =
+  NextApiResponse<T>

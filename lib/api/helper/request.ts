@@ -1,11 +1,12 @@
+import { JsonApiResponse } from "@/lib/api"
 import { getTokenOrSetResponse } from "@/lib/api/helper/token"
 import { RequestObject } from "@/lib/api/request"
 import prisma from "@/lib/prisma"
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest } from "next"
 
 export async function getRequestOrSetResponse(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: JsonApiResponse,
   rid: string
 ): Promise<RequestObject | null> {
   const token = getTokenOrSetResponse(req, res)

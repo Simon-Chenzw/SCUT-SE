@@ -1,3 +1,4 @@
+import { JsonApiResponse } from "@/lib/api"
 import Token, { JWT_EXPIRES } from "@/lib/auth"
 import { deleteCookie, getCookie, setCookie } from "cookies-next"
 import { OptionsType as CookieOptions } from "cookies-next/lib/types"
@@ -13,7 +14,7 @@ export const JWT_COOKIE_CONFIG: CookieOptions = {
 
 export function getTokenOrSetResponse(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: JsonApiResponse
 ): Token | null {
   const jwt = getCookie(JWT_COOKIE_NAME, {
     req,
