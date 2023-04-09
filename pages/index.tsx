@@ -3,6 +3,15 @@ import RequestInfo from "@/components/request-info"
 import UserInfo from "@/components/userinfo"
 import { useUserInfo } from "@/lib/hook/user-info"
 import { AppShell, Group, Header, useMantineTheme } from "@mantine/core"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+
+export async function getStaticProps(props: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(props.locale, ["common"])),
+    },
+  }
+}
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()

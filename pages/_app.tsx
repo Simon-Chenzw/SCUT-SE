@@ -1,8 +1,9 @@
 import { MantineProvider } from "@mantine/core"
+import { appWithTranslation } from "next-i18next"
 import { AppProps } from "next/app"
 import Head from "next/head"
 
-export default function App(props: AppProps) {
+export function App(props: AppProps) {
   const { Component, pageProps } = props
 
   return (
@@ -28,3 +29,5 @@ export default function App(props: AppProps) {
     </>
   )
 }
+
+export default appWithTranslation(App)

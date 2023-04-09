@@ -12,8 +12,24 @@ import {
   useMantineTheme,
 } from "@mantine/core"
 import { IconError404 } from "@tabler/icons-react"
+import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Link from "next/link"
 import { useRouter } from "next/router"
+
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: "blocking",
+  }
+}
+
+export async function getStaticProps(props: { locale: string }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(props.locale, ["common"])),
+    },
+  }
+}
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
