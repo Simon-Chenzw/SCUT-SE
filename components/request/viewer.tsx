@@ -1,5 +1,6 @@
 import RequestImageViewerItem from "@/components/request/viewer-item"
 import { MachinedResultObject, RequestObject } from "@/lib/api/request"
+import { useImage } from "@/lib/hook/image"
 import { Modal } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import { useEffect, useRef, useState } from "react"
@@ -90,20 +91,6 @@ class ResultObjectList {
 
 ////////////////////////////////////////////////////////////////////////////////
 // hook
-
-function useImage(
-  image: NonNullable<RequestObject["image"]>
-): HTMLImageElement | undefined {
-  const [imageElement, setImageElement] = useState<HTMLImageElement>()
-
-  useEffect(() => {
-    const imageElement = new Image()
-    imageElement.src = `/api/image/${image.id}`
-    imageElement.decode().then(() => setImageElement(imageElement))
-  }, [image])
-
-  return imageElement
-}
 
 function useViewer(
   ref: React.RefObject<HTMLCanvasElement>,
