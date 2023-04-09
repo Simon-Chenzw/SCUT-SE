@@ -4,6 +4,7 @@ import { PrismaPlugin } from "@prisma/nextjs-monorepo-workaround-plugin"
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
+  reactStrictMode: true,
   // sync with next-i18next.config.js
   i18n: {
     defaultLocale: "en",
