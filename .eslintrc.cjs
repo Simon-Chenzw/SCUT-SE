@@ -22,4 +22,5 @@ module.exports = {
   rules: {
     "react-hooks/exhaustive-deps": "off",
   },
+  ignorePatterns: ["lib/prisma-client/*"],
 }
