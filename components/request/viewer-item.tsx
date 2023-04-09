@@ -1,7 +1,16 @@
 import { MachinedResultObject } from "@/lib/api/request"
+import {
+  Card,
+  Center,
+  Container,
+  Divider,
+  Grid,
+  Stack,
+  Text,
+} from "@mantine/core"
 import { useEffect, useRef } from "react"
 
-export default function RequestImageViewerItem(props: {
+function RequestImageViewerItemRegion(props: {
   image: HTMLImageElement | undefined
   object: MachinedResultObject | undefined
 }) {
@@ -37,5 +46,43 @@ export default function RequestImageViewerItem(props: {
         maxHeight: "100%",
       }}
     />
+  )
+}
+
+export default function RequestImageViewerItem(props: {
+  image: HTMLImageElement | undefined
+  object: MachinedResultObject | undefined
+}) {
+  return (
+    <Card shadow={"md"} withBorder>
+      <Grid>
+        <Grid.Col span={"auto"}>
+          <Stack>
+            <Center>
+              <Text>area</Text>
+            </Center>
+            <Divider />
+            <Center>
+              <Text>{props.object?.area}</Text>
+            </Center>
+          </Stack>
+        </Grid.Col>
+
+        <Grid.Col span={8}>
+          <Container>
+            <RequestImageViewerItemRegion {...props} />
+          </Container>
+        </Grid.Col>
+      </Grid>
+
+      <Card.Section>
+        <Divider
+          label={<Text size="md"> message </Text>}
+          labelPosition="center"
+        />
+      </Card.Section>
+
+      <Text> {props.object?.message} </Text>
+    </Card>
   )
 }
