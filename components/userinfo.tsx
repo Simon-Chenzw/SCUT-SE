@@ -22,7 +22,7 @@ export default function UserInfo(props: {
           radius="md"
           onClick={props.onLogout}
         >
-          登出
+          {t("auth.label.logout")}
         </Button>
       )}
     </>

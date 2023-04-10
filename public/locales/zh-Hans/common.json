@@ -1,3 +1,48 @@
 {
-  "guest": "游客"
+  "guest": "游客",
+  "auth": {
+    "valid": {
+      "name_too_long": "名称最长 50 个字符",
+      "email_not_valid": "邮箱地址格式不正常",
+      "password_too_short": "密码需要至少 6 个字符",
+      "password_not_match": "密码不一致"
+    },
+    "prompt": {
+      "register": "请进行注册，以继续：",
+      "login": "请进行登录，以继续：",
+      "login_with_email": "或者 使用邮箱登录",
+      "change_to_register": "还没有账户? 点击注册",
+      "change_to_login": "已经有了账户? 点击登录"
+    },
+    "label": {
+      "login": "登录",
+      "register": "注册",
+      "logout": "登出",
+      "name": "名称",
+      "email": "邮箱",
+      "password": "密码",
+      "password_confirm": "重复密码"
+    }
+  },
+  "request": {
+    "status": {
+      "table": {
+        "no_image": "待上传",
+        "no_result": "等待生成",
+        "done": "已生成"
+      },
+      "upload_done": "已上传图片",
+      "report_not_found": "尚未生成报告"
+    },
+    "stage": {
+      "create": "创建报告",
+      "upload": "上传图片",
+      "report": "生成报告"
+    },
+    "action": {
+      "upload_image": "上传图片",
+      "view_report": "查看报告",
+      "error_return_to_detail": "报告异常 返回详情页"
+    }
+  }
 }

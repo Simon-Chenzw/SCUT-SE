@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from "@mantine/core"
 import { IconMan, IconPlus } from "@tabler/icons-react"
+import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import RequestImageUploader from "./image-upload"
@@ -36,6 +37,7 @@ function TimeDisplay(props: { time: Date }) {
 }
 
 export default function RequestDetail(props: { rid: string }) {
+  const { t } = useTranslation()
   const [request, updateRequest] = useRequest(props.rid)
   const [active, setActive] = useState(1)
 
@@ -53,7 +55,7 @@ export default function RequestDetail(props: { rid: string }) {
       <Timeline active={active} bulletSize={24} lineWidth={3}>
         <TimelineItem
           bullet={<IconPlus size={12} />}
-          title="创建报告"
+          title={t("request.stage.create")}
           lineVariant={active > 0 ? "solid" : "dashed"}
         >
           <Text color="dimmed" size="sm">
@@ -64,7 +66,7 @@ export default function RequestDetail(props: { rid: string }) {
 
         <TimelineItem
           bullet={<IconPlus size={12} />}
-          title="上传图片"
+          title={t("request.stage.upload")}
           lineVariant={active > 1 ? "solid" : "dashed"}
         >
           {request.image == null ? (
@@ -83,7 +85,7 @@ export default function RequestDetail(props: { rid: string }) {
               alt="request image"
               caption={
                 <Tooltip label={request.image.id}>
-                  <Text> 已上传图片 </Text>
+                  <Text> {t("request.status.upload_done")} </Text>
                 </Tooltip>
               }
             ></Image>
@@ -92,12 +94,12 @@ export default function RequestDetail(props: { rid: string }) {
 
         <TimelineItem
           bullet={<IconPlus size={12} />}
-          title="生成报告"
+          title={t("request.stage.report")}
           lineVariant={active > 2 ? "solid" : "dashed"}
         >
           {request.machinedResult == null ? (
             <Text color="dimmed" size="sm">
-              尚未生成报告
+              {t("request.status.report_not_found")}
             </Text>
           ) : (
             <>
@@ -108,7 +110,7 @@ export default function RequestDetail(props: { rid: string }) {
                   href={`/request/viewer/${request.id}`}
                   leftIcon={<IconMan />}
                 >
-                  查看报告
+                  {t("request.action.view_report")}
                 </Button>
               </Card>
               <TimeDisplay time={request.createdAt} />

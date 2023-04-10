@@ -1,3 +1,48 @@
 {
-  "guest": "Guest"
+  "guest": "Guest",
+  "auth": {
+    "valid": {
+      "name_too_long": "Name cannot exceed 50 characters.",
+      "email_not_valid": "Email is not valid.",
+      "password_too_short": "Password must be at least 6 characters.",
+      "password_not_match": "Password does not match."
+    },
+    "prompt": {
+      "register": "Please register to continue:",
+      "login": "Please login to continue:",
+      "login_with_email": "Or continue with email",
+      "change_to_register": "Don't have an account? Register",
+      "change_to_login": "Already have an account? Login"
+    },
+    "label": {
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "password_confirm": "Confirm Password"
+    }
+  },
+  "request": {
+    "status": {
+      "table": {
+        "no_image": "Wait for upload.",
+        "no_result": "Wait for report.",
+        "done": "Report generated."
+      },
+      "upload_done": "Upload done.",
+      "report_not_found": "Report not generated."
+    },
+    "stage": {
+      "create": "Create Request",
+      "upload": "Upload Image",
+      "report": "Report Generated"
+    },
+    "action": {
+      "upload_image": "Upload image",
+      "view_report": "View report",
+      "error_return_to_detail": "Error! Return to request infomation page"
+    }
+  }
 }

@@ -4,10 +4,12 @@ import { ActionIcon, Card, Group, Text } from "@mantine/core"
 import { useListState } from "@mantine/hooks"
 import { IconArrowBarToUp, IconId, IconRefresh } from "@tabler/icons-react"
 import { DataTable } from "mantine-datatable"
+import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { useEffect, useRef, useState } from "react"
 
 export default function RequestInfo() {
+  const { t } = useTranslation()
   const batchSize = 15
   const [loading, setLoading] = useState(false)
   const [total, setTotal] = useState(0)
@@ -62,11 +64,11 @@ export default function RequestInfo() {
             width: 60,
             render: (request: RequestObject) => {
               if (request.image === null) {
-                return <Text>待上传</Text>
+                return <Text>{t("request.status.table.no_image")}</Text>
               } else if (request.machinedResult === null) {
-                return <Text>等待生成</Text>
+                return <Text>{t("request.status.table.no_result")}</Text>
               } else {
-                return <Text>已生成</Text>
+                return <Text>{t("request.status.table.done")}</Text>
               }
             },
           },

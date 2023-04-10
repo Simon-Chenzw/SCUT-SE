@@ -15,11 +15,13 @@ import {
 } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useToggle } from "@mantine/hooks"
+import { useTranslation } from "next-i18next"
 
 export default function AuthenticationForm(props: {
   onRegister: (payload: RegisterRequest) => void
   onLogin: (payload: LoginRequest) => void
 }) {
+  const { t } = useTranslation()
   const [type, toggle] = useToggle(["login", "register"])
   const form = useForm({
     initialValues: {
@@ -31,11 +33,17 @@ export default function AuthenticationForm(props: {
 
     validate: {
       name: (val) =>
-        type !== "register" || val.length <= 50 ? null : "名称最长 50 个字符",
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : "邮箱地址格式不正常"),
-      password: (val) => (val.length >= 6 ? null : "密码需要至少 6 个字符"),
+        type !== "register" || val.length <= 50
+          ? null
+          : t("auth.valid.name_too_long"),
+      email: (val) =>
+        /^\S+@\S+$/.test(val) ? null : t("auth.valid.email_not_valid"),
+      password: (val) =>
+        val.length >= 6 ? null : t("auth.valid.password_too_short"),
       password_repeat: (val, values) =>
-        type !== "register" || val === values.password ? null : "密码不一致",
+        type !== "register" || val === values.password
+          ? null
+          : t("auth.valid.password_not_match"),
     },
 
     validateInputOnBlur: true,
@@ -61,21 +69,27 @@ export default function AuthenticationForm(props: {
       </Container>
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" weight={500}>
-          {type === "login" ? "请进行登录，以继续：" : "请进行注册，以继续："}
+          {type === "login"
+            ? t("auth.prompt.login")
+            : t("auth.prompt.register")}
         </Text>
 
         <Group grow mb="md" mt="md">
           <Button />
         </Group>
 
-        <Divider label="或者 使用邮箱登录" labelPosition="center" my="lg" />
+        <Divider
+          label={t("auth.prompt.login_with_email")}
+          labelPosition="center"
+          my="lg"
+        />
 
         <form onSubmit={form.onSubmit(onSubmit)}>
           <Stack>
             {type === "register" && (
               <TextInput
                 required
-                label="名称"
+                label={t("auth.label.name")}
                 placeholder="Your username"
                 autoComplete="name"
                 {...form.getInputProps("name")}
@@ -85,7 +99,7 @@ export default function AuthenticationForm(props: {
 
             <TextInput
               required
-              label="邮箱"
+              label={t("auth.label.email")}
               placeholder="email@example.com"
               autoComplete="email"
               {...form.getInputProps("email")}
@@ -94,7 +108,7 @@ export default function AuthenticationForm(props: {
 
             <PasswordInput
               required
-              label="密码"
+              label={t("auth.label.password")}
               placeholder="Your password"
               autoComplete={
                 type === "register" ? "new-password" : "current-password"
@@ -106,7 +120,7 @@ export default function AuthenticationForm(props: {
             {type === "register" && (
               <PasswordInput
                 required
-                label="重复密码"
+                label={t("auth.label.password_confirm")}
                 placeholder="Repeat your password"
                 autoComplete="new-password"
                 {...form.getInputProps("password_repeat")}
@@ -124,11 +138,13 @@ export default function AuthenticationForm(props: {
               size="xs"
             >
               {type === "login"
-                ? "还没有账户? 点击注册"
-                : "已经有了账户? 点击登录"}
+                ? t("auth.prompt.change_to_register")
+                : t("auth.prompt.change_to_login")}
             </Anchor>
             <Button type="submit" radius="xl">
-              {type === "login" ? "登录" : "注册"}
+              {type === "login"
+                ? t("auth.label.login")
+                : t("auth.label.register")}
             </Button>
           </Group>
         </form>

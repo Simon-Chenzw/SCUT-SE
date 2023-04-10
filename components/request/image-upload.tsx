@@ -8,11 +8,13 @@ import {
   Space,
 } from "@mantine/core"
 import { IconCheck, IconUpload, IconX } from "@tabler/icons-react"
+import { useTranslation } from "next-i18next"
 import { useState } from "react"
 
 export default function RequestImageUploader(props: {
   onImageUpload?: (file: File) => void
 }) {
+  const { t } = useTranslation()
   const [file, setFile] = useState<File | null>(null)
   const [fileUrl, setFileUrl] = useState<string | null>(null)
 
@@ -36,7 +38,7 @@ export default function RequestImageUploader(props: {
           <FileButton onChange={changeFile} accept="image/*">
             {(props) => (
               <Button leftIcon={<IconUpload />} {...props}>
-                上传图片
+                {t("request.action.upload_image")}
               </Button>
             )}
           </FileButton>

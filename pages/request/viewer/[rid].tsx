@@ -12,6 +12,7 @@ import {
   useMantineTheme,
 } from "@mantine/core"
 import { IconError404 } from "@tabler/icons-react"
+import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Link from "next/link"
 import { useRouter } from "next/router"
@@ -32,6 +33,7 @@ export async function getStaticProps(props: { locale: string }) {
 }
 
 export default function AppShellDemo() {
+  const { t } = useTranslation()
   const theme = useMantineTheme()
   const router = useRouter()
   const [userInfo, authApi] = useUserInfo()
@@ -74,7 +76,7 @@ export default function AppShellDemo() {
             href={`/request/${router.query.rid as string}`}
             leftIcon={<IconError404 />}
           >
-            报告异常 返回详情页
+            {t("request.action.error_return_to_detail")}
           </Button>
         </Center>
       )}
