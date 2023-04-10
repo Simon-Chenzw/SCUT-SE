@@ -42,5 +42,6 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifierEnding": "minimal",
+  "typescript.preferences.autoImportFileExcludePatterns": ["react-i18next"],
   "eslint.nodePath": ".yarn/sdks"
 }

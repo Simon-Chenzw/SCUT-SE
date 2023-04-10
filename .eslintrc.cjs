@@ -21,6 +21,18 @@ module.exports = {
   plugins: ["react", "@typescript-eslint"],
   rules: {
     "react-hooks/exhaustive-deps": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        paths: [
+          {
+            name: "react-i18next",
+            importNames: ["useTranslation"],
+            message: "Import useTranslation from next-i18next instead.",
+          },
+        ],
+      },
+    ],
   },
   ignorePatterns: ["lib/prisma-client/*"],
 }
