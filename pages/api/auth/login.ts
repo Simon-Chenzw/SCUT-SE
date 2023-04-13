@@ -14,14 +14,19 @@ export default async function handler(
 
   const user = await prisma.user.findUnique({
     where: { email: req.body.email },
+    include: { credential: true },
   })
   if (user === null)
     return res.status(400).json({ code: -1, message: "user not found" })
 
-  if (!(await argon2.verify(user.passwd, req.body.password)))
-    return res.status(400).json({ code: -1, message: "password not correct" })
+  if (user.credential === null)
+    return res
+      .status(400)
+      .json({ code: -1, message: "User has not set a password" })
 
-  if (await argon2.verify(user.passwd, req.body.password)) {
+  if (!(await argon2.verify(user.credential.passwd, req.body.password)))
+    return res.status(400).json({ code: -1, message: "password not correct" })
+  else {
     setTokenCookie(req, res, new Token(user.id))
     return res.status(200).json({ code: 0, message: "ok" })
   }

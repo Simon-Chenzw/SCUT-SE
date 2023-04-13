@@ -1,10 +1,7 @@
 import { ResponseBase } from "@/lib/api"
+import { Prisma } from "@/lib/prisma-client"
 
-export interface MeInfo {
-  id: string
-  name: string
-  email: string
-}
+export type MeInfo = Prisma.UserGetPayload<object>
 
 export interface MeResponse extends ResponseBase {
   data?: MeInfo

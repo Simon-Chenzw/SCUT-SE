@@ -12,11 +12,17 @@ datasource db {
 }
 
 model User {
-  id       String    @id @default(cuid())
-  name     String    @db.Text
-  email    String    @unique @db.Text
-  passwd   String    @db.Text
-  requests Request[]
+  id         String      @id @default(cuid())
+  name       String      @db.Text
+  email      String?     @unique @db.Text
+  credential Credential?
+  requests   Request[]
+}
+
+model Credential {
+  user   User   @relation(fields: [email], references: [email])
+  email  String @unique @db.Text
+  passwd String @db.Text
 }
 
 model Request {

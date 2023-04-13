@@ -21,7 +21,11 @@ export default async function handler(
       data: {
         name,
         email,
-        passwd: await argon2.hash(password),
+        credential: {
+          create: {
+            passwd: await argon2.hash(password),
+          },
+        },
       },
     })
     setTokenCookie(req, res, new Token(user.id))
