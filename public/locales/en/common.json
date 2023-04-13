@@ -14,7 +14,7 @@
       "welcome": "Analysis of Infrared Images",
       "register": "Please register to continue:",
       "login": "Please login to continue:",
-      "login_with_email": "Or continue with email",
+      "with_email": "Or continue with email",
       "change_to_register": "Don't have an account? Register",
       "change_to_login": "Already have an account? Login"
     },

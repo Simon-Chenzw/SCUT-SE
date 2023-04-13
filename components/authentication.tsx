@@ -80,7 +80,7 @@ export default function AuthenticationForm(props: {
         </Group>
 
         <Divider
-          label={t("auth.prompt.login_with_email")}
+          label={t("auth.prompt.with_email")}
           labelPosition="center"
           my="lg"
         />

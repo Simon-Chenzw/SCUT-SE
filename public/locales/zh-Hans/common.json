@@ -14,7 +14,7 @@
       "welcome": "人体红外图像分析",
       "register": "请进行注册，以继续：",
       "login": "请进行登录，以继续：",
-      "login_with_email": "或者 使用邮箱登录",
+      "with_email": "或者 使用邮箱",
       "change_to_register": "还没有账户? 点击注册",
       "change_to_login": "已经有了账户? 点击登录"
     },
