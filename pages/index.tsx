@@ -1,8 +1,9 @@
 import AuthenticationForm from "@/components/authentication"
+import AppHeader from "@/components/header"
 import RequestInfo from "@/components/request-info"
-import UserInfo from "@/components/userinfo"
 import { useUserInfo } from "@/lib/hook/user-info"
-import { AppShell, Group, Header, useMantineTheme } from "@mantine/core"
+import { AppShell, Header, useMantineTheme } from "@mantine/core"
+
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export async function getStaticProps(props: { locale: string }) {
@@ -29,9 +30,7 @@ export default function AppShellDemo() {
       }}
       header={
         <Header height={60}>
-          <Group sx={{ height: "100%" }} px={20} position="right" spacing="xs">
-            <UserInfo userInfo={userInfo} onLogout={authApi.logout} />
-          </Group>
+          <AppHeader userInfo={userInfo} authApi={authApi} />
         </Header>
       }
     >

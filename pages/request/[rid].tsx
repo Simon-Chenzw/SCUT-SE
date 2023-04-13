@@ -1,7 +1,7 @@
+import AppHeader from "@/components/header"
 import RequestDetail from "@/components/request/detail"
-import UserInfo from "@/components/userinfo"
 import { useUserInfo } from "@/lib/hook/user-info"
-import { AppShell, Card, Group, Header, useMantineTheme } from "@mantine/core"
+import { AppShell, Card, Header, useMantineTheme } from "@mantine/core"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 
@@ -37,9 +37,7 @@ export default function AppShellDemo() {
       }}
       header={
         <Header height={60}>
-          <Group sx={{ height: "100%" }} px={20} position="right" spacing="xs">
-            <UserInfo userInfo={userInfo} onLogout={authApi.logout} />
-          </Group>
+          <AppHeader userInfo={userInfo} authApi={authApi} />
         </Header>
       }
     >

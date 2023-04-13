@@ -6,15 +6,14 @@ import { useEffect, useState } from "react"
 
 export type UserInfo = MeInfo | null
 
-export function useUserInfo(): [
-  MeInfo | undefined,
-  {
-    getInfo: () => Promise<void>
-    register: (payload: RegisterRequest) => Promise<void>
-    login: (payload: LoginRequest) => Promise<void>
-    logout: () => Promise<void>
-  }
-] {
+export interface UserInfoApi {
+  getInfo: () => Promise<void>
+  register: (payload: RegisterRequest) => Promise<void>
+  login: (payload: LoginRequest) => Promise<void>
+  logout: () => Promise<void>
+}
+
+export function useUserInfo(): [MeInfo | undefined, UserInfoApi] {
   const [info, setInfo] = useState<MeInfo>()
 
   const getInfo = async () => {

@@ -1,12 +1,11 @@
+import AppHeader from "@/components/header"
 import RequestImageViewer from "@/components/request/viewer"
-import UserInfo from "@/components/userinfo"
 import { useRequest } from "@/lib/hook/request"
 import { useUserInfo } from "@/lib/hook/user-info"
 import {
   AppShell,
   Button,
   Center,
-  Group,
   Header,
   Loader,
   useMantineTheme,
@@ -51,9 +50,7 @@ export default function AppShellDemo() {
       }}
       header={
         <Header height={60}>
-          <Group sx={{ height: "100%" }} px={20} position="right" spacing="xs">
-            <UserInfo userInfo={userInfo} onLogout={authApi.logout} />
-          </Group>
+          <AppHeader userInfo={userInfo} authApi={authApi} />
         </Header>
       }
     >
