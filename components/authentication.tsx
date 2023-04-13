@@ -56,15 +56,16 @@ export default function AuthenticationForm(props: {
 
   return (
     <>
-      <Container size={420} my={40}>
+      <Container size={420} my={20}>
         <Title
           align="center"
           sx={(theme) => ({
             fontFamily: `Greycliff CF, ${theme.fontFamily}`,
             fontWeight: 900,
+            fontSize: "2em",
           })}
         >
-          Welcome back!
+          {t("auth.prompt.welcome")}
         </Title>
       </Container>
       <Paper radius="md" p="xl" withBorder>

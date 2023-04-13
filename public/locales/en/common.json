@@ -1,5 +1,8 @@
 {
   "guest": "Guest",
+  "html": {
+    "title": "analysis of infrared images"
+  },
   "auth": {
     "valid": {
       "name_too_long": "Name cannot exceed 50 characters.",
@@ -8,6 +11,7 @@
       "password_not_match": "Password does not match."
     },
     "prompt": {
+      "welcome": "Analysis of Infrared Images",
       "register": "Please register to continue:",
       "login": "Please login to continue:",
       "login_with_email": "Or continue with email",

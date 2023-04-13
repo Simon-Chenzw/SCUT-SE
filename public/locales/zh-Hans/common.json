@@ -1,5 +1,8 @@
 {
   "guest": "游客",
+  "html": {
+    "title": "人体红外图像分析"
+  },
   "auth": {
     "valid": {
       "name_too_long": "名称最长 50 个字符",
@@ -8,6 +11,7 @@
       "password_not_match": "密码不一致"
     },
     "prompt": {
+      "welcome": "人体红外图像分析",
       "register": "请进行注册，以继续：",
       "login": "请进行登录，以继续：",
       "login_with_email": "或者 使用邮箱登录",
