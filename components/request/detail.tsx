@@ -3,6 +3,7 @@ import { useRequest } from "@/lib/hook/request"
 import {
   Button,
   Card,
+  Group,
   Image,
   Skeleton,
   Text,
@@ -104,14 +105,24 @@ export default function RequestDetail(props: { rid: string }) {
           ) : (
             <>
               <Card>
-                <Button
-                  variant="light"
-                  component={Link}
-                  href={`/request/viewer/${request.id}`}
-                  leftIcon={<IconMan />}
-                >
-                  {t("request.action.view_report")}
-                </Button>
+                <Group>
+                  <Button
+                    variant="light"
+                    component={Link}
+                    href={`/request/viewer/${request.id}`}
+                    leftIcon={<IconMan />}
+                  >
+                    {t("request.action.view_report")}
+                  </Button>
+                  <Button
+                    variant="light"
+                    component={Link}
+                    href={`/request/detail/${request.id}`}
+                    leftIcon={<IconMan />}
+                  >
+                    {t("request.action.report_detail")}
+                  </Button>
+                </Group>
               </Card>
               <TimeDisplay time={request.createdAt} />
             </>

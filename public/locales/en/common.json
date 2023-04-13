@@ -53,6 +53,7 @@
     "action": {
       "upload_image": "Upload image",
       "view_report": "View report",
+      "report_detail": "View report detail",
       "error_return_to_detail": "Error! Return to request infomation page"
     }
   }

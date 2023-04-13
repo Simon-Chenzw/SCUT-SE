@@ -53,6 +53,7 @@
     "action": {
       "upload_image": "上传图片",
       "view_report": "查看报告",
+      "report_detail": "查看报告详情",
       "error_return_to_detail": "报告异常 返回详情页"
     }
   }
