@@ -26,6 +26,13 @@
       "email": "Email",
       "password": "Password",
       "password_confirm": "Confirm Password"
+    },
+    "third_party": {
+      "wechat": {
+        "name": "wechat",
+        "waiting": "Waiting for WeChat ...",
+        "logging": "Logging in with WeChat ..."
+      }
     }
   },
   "request": {

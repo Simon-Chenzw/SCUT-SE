@@ -40,3 +40,12 @@ fs.appendFileSync(
   )}"\n\nPRIVATE_KEY="${key.privateKey.replaceAll("\n", "\\n")}"\n`
 )
 ```
+
+## Wechat
+
+setup these env
+
+```sh
+WECHAT_APP_ID=...
+WECHAT_APP_SECRET=...
+```

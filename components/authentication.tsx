@@ -1,5 +1,6 @@
 import { LoginRequest } from "@/lib/api/auth/login"
 import { RegisterRequest } from "@/lib/api/auth/register"
+import { WECHAT_COLOR } from "@/lib/wechat"
 import {
   Anchor,
   Button,
@@ -15,7 +16,9 @@ import {
 } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useToggle } from "@mantine/hooks"
+import { IconBrandWechat } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
+import Link from "next/link"
 
 export default function AuthenticationForm(props: {
   onRegister: (payload: RegisterRequest) => void
@@ -76,7 +79,16 @@ export default function AuthenticationForm(props: {
         </Text>
 
         <Group grow mb="md" mt="md">
-          <Button />
+          <Button
+            leftIcon={<IconBrandWechat color={WECHAT_COLOR} />}
+            color="green.7"
+            variant="light"
+            radius="xl"
+            component={Link}
+            href={`/auth/wechat`}
+          >
+            {t("auth.third_party.wechat.name")}
+          </Button>
         </Group>
 
         <Divider
