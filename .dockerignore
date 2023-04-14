@@ -11,6 +11,7 @@
 .nvmrc
 .prettierrc.cjs
 
+CODEOWNERS
 Dockerfile
 LICENSE
 README.md
