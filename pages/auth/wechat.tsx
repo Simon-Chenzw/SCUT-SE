@@ -1,10 +1,11 @@
 import { wechatAppidRequest } from "@/lib/api/auth/wechat/appid"
+import { wechatLoginRequest } from "@/lib/api/auth/wechat/login"
 import { WECHAT_COLOR } from "@/lib/wechat"
 import { Center, Loader, Space, Stack, Title } from "@mantine/core"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 export async function getStaticProps(props: { locale: string }) {
   return {
@@ -30,15 +31,19 @@ async function redirectToWechat(state?: string) {
 export default function AuthWechat() {
   const { t } = useTranslation()
   const router = useRouter()
-  const [text, setText] = useState<string>()
 
   useEffect(() => {
     if (!router.isReady) return
-    const { code, state } = router.query
+    const code = Array.isArray(router.query.code)
+      ? router.query.code.at(0)
+      : router.query.code
+    const state = Array.isArray(router.query.state)
+      ? router.query.state.at(0)
+      : router.query.state
     if (code === undefined) {
-      redirectToWechat(Array.isArray(state) ? state.at(0) : state)
+      redirectToWechat(state)
     } else {
-      setText(Array.isArray(code) ? code.at(0) : code)
+      wechatLoginRequest({ code, state }).then(() => router.push("/"))
     }
   }, [router])
 
@@ -57,7 +62,6 @@ export default function AuthWechat() {
             ? t("auth.third_party.wechat.waiting")
             : t("auth.third_party.wechat.logging")}
         </Title>
-        {router.query.code && <>code={text}</>}
         <Space />
         <Center>
           <Loader color={WECHAT_COLOR} />

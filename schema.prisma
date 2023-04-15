@@ -12,17 +12,25 @@ datasource db {
 }
 
 model User {
-  id         String      @id @default(cuid())
-  name       String      @db.Text
-  email      String?     @unique @db.Text
-  credential Credential?
-  requests   Request[]
+  id            String         @id @default(cuid())
+  name          String         @db.Text
+  email         String?        @unique @db.Text
+  credential    Credential?
+  WechatAccount WechatAccount?
+  requests      Request[]
 }
 
 model Credential {
   user   User   @relation(fields: [email], references: [email])
   email  String @unique @db.Text
   passwd String @db.Text
+}
+
+model WechatAccount {
+  id     String @id @default(cuid())
+  openid String @unique @db.Text
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 }
 
 model Request {
