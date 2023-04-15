@@ -3,12 +3,10 @@ import RequestImageViewerItem from "@/components/request/viewer-item"
 import { MachinedResultObject } from "@/lib/api/request"
 import { useImage } from "@/lib/hook/image"
 import { useRequest } from "@/lib/hook/request"
-import { useUserInfo } from "@/lib/hook/user-info"
 import {
   AppShell,
   Button,
   Center,
-  Header,
   Loader,
   Stack,
   useMantineTheme,
@@ -38,7 +36,6 @@ export default function AppShellDemo() {
   const { t } = useTranslation()
   const theme = useMantineTheme()
   const router = useRouter()
-  const [userInfo, authApi] = useUserInfo()
   const [request] = useRequest(router.query.rid as string)
   const image = useImage(request?.image ?? null)
 
@@ -52,11 +49,7 @@ export default function AppShellDemo() {
               : theme.colors.gray[0],
         },
       }}
-      header={
-        <Header height={60}>
-          <AppHeader userInfo={userInfo} authApi={authApi} />
-        </Header>
-      }
+      header={<AppHeader />}
     >
       {request === undefined ? (
         <Center h={100}>

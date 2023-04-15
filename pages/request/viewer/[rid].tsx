@@ -1,12 +1,10 @@
 import AppHeader from "@/components/header"
 import RequestImageViewer from "@/components/request/viewer"
 import { useRequest } from "@/lib/hook/request"
-import { useUserInfo } from "@/lib/hook/user-info"
 import {
   AppShell,
   Button,
   Center,
-  Header,
   Loader,
   useMantineTheme,
 } from "@mantine/core"
@@ -35,7 +33,6 @@ export default function AppShellDemo() {
   const { t } = useTranslation()
   const theme = useMantineTheme()
   const router = useRouter()
-  const [userInfo, authApi] = useUserInfo()
   const [request] = useRequest(router.query.rid as string)
 
   return (
@@ -48,11 +45,7 @@ export default function AppShellDemo() {
               : theme.colors.gray[0],
         },
       }}
-      header={
-        <Header height={60}>
-          <AppHeader userInfo={userInfo} authApi={authApi} />
-        </Header>
-      }
+      header={<AppHeader />}
     >
       {request === undefined ? (
         <Center h={100}>

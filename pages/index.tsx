@@ -1,8 +1,6 @@
 import AppHeader from "@/components/header"
 import RequestInfo from "@/components/request-info"
-import { useUserInfo } from "@/lib/hook/user-info"
-import { AppShell, Header, useMantineTheme } from "@mantine/core"
-
+import { AppShell, useMantineTheme } from "@mantine/core"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export async function getStaticProps(props: { locale: string }) {
@@ -15,7 +13,6 @@ export async function getStaticProps(props: { locale: string }) {
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
-  const [userInfo, authApi] = useUserInfo()
 
   return (
     <AppShell
@@ -27,11 +24,7 @@ export default function AppShellDemo() {
               : theme.colors.gray[0],
         },
       }}
-      header={
-        <Header height={60}>
-          <AppHeader userInfo={userInfo} authApi={authApi} />
-        </Header>
-      }
+      header={<AppHeader />}
     >
       <RequestInfo />
     </AppShell>

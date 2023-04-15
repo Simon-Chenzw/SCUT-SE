@@ -2,7 +2,7 @@ import AuthenticationForm from "@/components/authentication"
 import AppHeader from "@/components/header"
 import { loginRequest } from "@/lib/api/auth/login"
 import { registerRequest } from "@/lib/api/auth/register"
-import { AppShell, Header, useMantineTheme } from "@mantine/core"
+import { AppShell, useMantineTheme } from "@mantine/core"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
 
@@ -28,11 +28,7 @@ export default function AuthPage() {
               : theme.colors.gray[0],
         },
       }}
-      header={
-        <Header height={60}>
-          <AppHeader />
-        </Header>
-      }
+      header={<AppHeader />}
     >
       <AuthenticationForm
         onRegister={async (payload) => {
