@@ -1,6 +1,5 @@
 import RequestImageViewerItem from "@/components/request/viewer-item"
 import { MachinedResultObject, RequestObject } from "@/lib/api/request"
-import { useImage } from "@/lib/hook/image"
 import { Modal } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import { useEffect, useRef, useState } from "react"
@@ -131,13 +130,16 @@ function useViewer(
 ////////////////////////////////////////////////////////////////////////////////
 
 export default function RequestImageViewer(props: {
-  image: NonNullable<RequestObject["image"]>
+  image: HTMLImageElement | undefined
   machinedResult: NonNullable<RequestObject["machinedResult"]>
 }) {
   const isMobile = useMediaQuery("(max-width: 50em)")
   const ref = useRef<HTMLCanvasElement>(null)
-  const image = useImage(props.image)
-  const [object, resetObject] = useViewer(ref, image, props.machinedResult)
+  const [object, resetObject] = useViewer(
+    ref,
+    props.image,
+    props.machinedResult
+  )
 
   return (
     <>
@@ -155,7 +157,7 @@ export default function RequestImageViewer(props: {
         fullScreen={isMobile}
         transitionProps={{ transition: "fade", duration: 200 }}
       >
-        <RequestImageViewerItem image={image} object={object} />
+        <RequestImageViewerItem image={props.image} object={object} />
       </Modal>
     </>
   )

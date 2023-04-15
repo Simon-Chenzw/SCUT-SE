@@ -43,7 +43,8 @@
         "done": "已生成"
       },
       "upload_done": "已上传图片",
-      "report_not_found": "尚未生成报告"
+      "report_not_found": "尚未生成报告",
+      "done": "生成完成"
     },
     "stage": {
       "create": "创建报告",
@@ -52,8 +53,6 @@
     },
     "action": {
       "upload_image": "上传图片",
-      "view_report": "查看报告",
-      "report_detail": "查看报告详情",
       "error_return_to_detail": "报告异常 返回详情页"
     }
   }

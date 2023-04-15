@@ -7,14 +7,14 @@ export function useRequest(
 ): [RequestObject | undefined, () => Promise<void>] {
   const [request, setRequest] = useState<RequestObject>()
 
-  const updateRequest = async () => {
+  const refreshRequest = async () => {
     const req = await requestGetRequest(rid)
     setRequest(req.data)
   }
 
   useEffect(() => {
-    updateRequest()
+    refreshRequest()
   }, [rid])
 
-  return [request, updateRequest]
+  return [request, refreshRequest]
 }

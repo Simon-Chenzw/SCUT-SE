@@ -43,7 +43,8 @@
         "done": "Report generated."
       },
       "upload_done": "Upload done.",
-      "report_not_found": "Report not generated."
+      "report_not_found": "Report not generated.",
+      "done": "Report generated."
     },
     "stage": {
       "create": "Create Request",
@@ -52,8 +53,6 @@
     },
     "action": {
       "upload_image": "Upload image",
-      "view_report": "View report",
-      "report_detail": "View report detail",
       "error_return_to_detail": "Error! Return to request infomation page"
     }
   }
