@@ -1,9 +1,10 @@
+import AuthenticationForm from "@/components/authentication"
 import AppHeader from "@/components/header"
-import RequestInfo from "@/components/request-info"
-import { useUserInfo } from "@/lib/hook/user-info"
+import { loginRequest } from "@/lib/api/auth/login"
+import { registerRequest } from "@/lib/api/auth/register"
 import { AppShell, Header, useMantineTheme } from "@mantine/core"
-
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
+import { useRouter } from "next/router"
 
 export async function getStaticProps(props: { locale: string }) {
   return {
@@ -13,9 +14,9 @@ export async function getStaticProps(props: { locale: string }) {
   }
 }
 
-export default function AppShellDemo() {
+export default function AuthPage() {
   const theme = useMantineTheme()
-  const [userInfo, authApi] = useUserInfo()
+  const router = useRouter()
 
   return (
     <AppShell
@@ -29,11 +30,20 @@ export default function AppShellDemo() {
       }}
       header={
         <Header height={60}>
-          <AppHeader userInfo={userInfo} authApi={authApi} />
+          <AppHeader />
         </Header>
       }
     >
-      <RequestInfo />
+      <AuthenticationForm
+        onRegister={async (payload) => {
+          await registerRequest(payload)
+          router.push("/")
+        }}
+        onLogin={async (payload) => {
+          await loginRequest(payload)
+          router.push("/")
+        }}
+      />
     </AppShell>
   )
 }

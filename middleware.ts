@@ -10,6 +10,7 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
+    "/",
     "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 }
@@ -17,13 +18,13 @@ export const config = {
 export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/auth")) return
 
-  request.headers
-
   const resp = await fetch(new URL("/api/auth/me", request.nextUrl.origin), {
     headers: {
       cookie: request.headers.get("cookie") || "",
     },
   })
-  const { code } = await resp.json()
-  if (code !== 0) return NextResponse.redirect(new URL("/", request.url))
+  if ((await resp.json()).code !== 0)
+    return NextResponse.redirect(
+      new URL(`/${request.nextUrl.locale}/auth`, request.url)
+    )
 }

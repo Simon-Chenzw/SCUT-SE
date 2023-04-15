@@ -5,7 +5,7 @@ import { useTranslation } from "next-i18next"
 
 export default function UserInfo(props: {
   userInfo?: MeInfo
-  onLogout: () => void
+  onLogout?: () => void
 }) {
   const { t } = useTranslation()
 

@@ -6,7 +6,7 @@ import { IconHome } from "@tabler/icons-react"
 
 export default function AppHeader(props: {
   userInfo?: MeInfo
-  authApi: UserInfoApi
+  authApi?: UserInfoApi
 }) {
   return (
     <Container
@@ -25,7 +25,7 @@ export default function AppHeader(props: {
         </ActionIcon>
       </Group>
       <Group sx={{ height: "100%" }} px={20} position="right" spacing="xs">
-        <UserInfo userInfo={props.userInfo} onLogout={props.authApi.logout} />
+        <UserInfo userInfo={props.userInfo} onLogout={props.authApi?.logout} />
       </Group>
     </Container>
   )
