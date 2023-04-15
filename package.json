@@ -37,6 +37,8 @@
     "react-i18next": "^12.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/types": "^17.4.4",
     "@prisma/nextjs-monorepo-workaround-plugin": "^4.11.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "18.15.*",

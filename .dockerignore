@@ -4,6 +4,7 @@
 .husky
 .vscode
 
+.commitlintrc.cjs
 .dockerignore
 .gitattributes
 .gitignore
