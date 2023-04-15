@@ -10,8 +10,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix --max-warnings=0 --ignore-path .gitignore .",
-    "format": "prettier --write --ignore-unknown --ignore-path .gitignore . \"!.yarn\""
+    "lint": "eslint --max-warnings=0 --ignore-path .gitignore .",
+    "format": "prettier --ignore-unknown --ignore-path .gitignore . \"!.yarn\""
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",
