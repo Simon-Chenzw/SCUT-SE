@@ -16,7 +16,7 @@ export default async function handler(
 
   const image = await prisma.image.findUnique({
     where: { id: iid },
-    include: { request: true },
+    select: { updatedAt: true, request: { select: { userId: true } } },
   })
   if (image === null)
     return res.status(400).json({
@@ -29,6 +29,26 @@ export default async function handler(
       message: "Not authorized to get the image",
     })
 
-  res.setHeader("Content-Type", image.mimeType)
-  res.send(image.blob)
+  // Check if modified, Save database resources
+  const ifModifiedSince = req.headers["if-modified-since"]
+  if (
+    ifModifiedSince !== undefined &&
+    new Date(ifModifiedSince) >= new Date(image.updatedAt.toUTCString())
+  )
+    return res.status(304).end()
+
+  // respond
+  const image_content = await prisma.image.findUnique({
+    where: { id: iid },
+    select: { mimeType: true, blob: true, updatedAt: true },
+  })
+
+  if (image_content) {
+    res.setHeader("Content-Type", image_content.mimeType)
+    res.setHeader("Last-Modified", image_content.updatedAt.toUTCString())
+    res.setHeader("Cache-Control", "private, max-age=7200")
+    res.send(image_content.blob)
+  } else {
+    res.end()
+  }
 }

@@ -44,11 +44,13 @@ model Request {
 }
 
 model Image {
-  id        String  @id @default(cuid())
-  mimeType  String  @db.Text
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @db.Timestamptz(6)
+  mimeType  String   @db.Text
   blob      Bytes
-  request   Request @relation(fields: [requestId], references: [id])
-  requestId String  @unique
+  request   Request  @relation(fields: [requestId], references: [id])
+  requestId String   @unique
 }
 
 model MachinedResult {
