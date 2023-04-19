@@ -2,6 +2,7 @@ import { Prisma } from "@/lib/prisma-client"
 
 export interface MachinedResultObject {
   area: string
+  score: number
   region: {
     x: number
     y: number

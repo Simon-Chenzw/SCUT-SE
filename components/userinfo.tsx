@@ -9,7 +9,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core"
-import { IconList } from "@tabler/icons-react"
+import { IconChartLine, IconList } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
 
@@ -54,6 +54,14 @@ export default function UserInfo() {
             variant="filled"
           >
             {t("goto.request_list")}
+          </Button>
+          <Button
+            component={Link}
+            href={`/request/chart`}
+            leftIcon={<IconChartLine />}
+            variant="filled"
+          >
+            {t("goto.request_charts")}
           </Button>
         </Stack>
       </Paper>

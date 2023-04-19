@@ -27,6 +27,7 @@
     "@tabler/icons-react": "^2.10.0",
     "argon2": "^0.30.3",
     "cookies-next": "^2.1.1",
+    "echarts": "^5.4.2",
     "i18next": "^22.4.14",
     "jsonwebtoken": "^9.0.0",
     "mantine-datatable": "^2.2.5",

@@ -2573,6 +2573,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"echarts@npm:^5.4.2":
+  version: 5.4.2
+  resolution: "echarts@npm:5.4.2"
+  dependencies:
+    tslib: 2.3.0
+    zrender: 5.4.3
+  checksum: 933c28dada362314f7c7a5fd4243b44b24f75adb233f7c87541ac9a81734cb380a9683c3f56c8e559dacfddd363879e95a96f0047e33820123cd8f5b95b60f8f
+  languageName: node
+  linkType: hard
+
 "emoji-regex@npm:^8.0.0":
   version: 8.0.0
   resolution: "emoji-regex@npm:8.0.0"
@@ -3848,6 +3858,7 @@ __metadata:
     "@yarnpkg/pnpify": ^4.0.0-rc.40
     argon2: ^0.30.3
     cookies-next: ^2.1.1
+    echarts: ^5.4.2
     eslint: ^8.34.0
     eslint-config-next: ^13.1.6
     eslint-config-prettier: ^8.6.0
@@ -6709,6 +6720,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tslib@npm:2.3.0":
+  version: 2.3.0
+  resolution: "tslib@npm:2.3.0"
+  checksum: 8869694c26e4a7b56d449662fd54a4f9ba872c889d991202c74462bd99f10e61d5bd63199566c4284c0f742277736292a969642cc7b590f98727a7cae9529122
+  languageName: node
+  linkType: hard
+
 "tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
@@ -7175,5 +7193,14 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zrender@npm:5.4.3":
+  version: 5.4.3
+  resolution: "zrender@npm:5.4.3"
+  dependencies:
+    tslib: 2.3.0
+  checksum: ae89584fbe4256217e500a74183fd5870a2bed7e7b3234cd78fcbc0a1a82da8449596b2019105927069531b567ecf94425fb171abd6cedcbf517e52fdf438722
   languageName: node
   linkType: hard
