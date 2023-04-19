@@ -4,8 +4,20 @@ import RequestImageViewer from "@/components/request/viewer"
 import RequestImageViewerItem from "@/components/request/viewer-item"
 import { useImage } from "@/lib/hook/image"
 import { useRequest } from "@/lib/hook/request"
-import { useTab } from "@/lib/hook/tab"
-import { AppShell, Card, Center, Stack, useMantineTheme } from "@mantine/core"
+import {
+  AppShell,
+  Card,
+  Center,
+  Stack,
+  Tabs,
+  useMantineTheme,
+} from "@mantine/core"
+import { useToggle } from "@mantine/hooks"
+import {
+  IconInfoHexagon,
+  IconListDetails,
+  IconPhotoSearch,
+} from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { useRouter } from "next/router"
@@ -31,16 +43,7 @@ export default function AppShellDemo() {
   const router = useRouter()
   const [request, refreshRequest] = useRequest(router.query.rid as string)
   const image = useImage(request?.image ?? null)
-
-  const [tab, setTab, tabs] = useTab([
-    ["info", t("request.tab.info")],
-    ...(request && request.image && request.machinedResult
-      ? ([
-          ["viewer", t("request.tab.viewer")],
-          ["detail", t("request.tab.detail")],
-        ] as [string, string][])
-      : []),
-  ])
+  const [tab, setTab] = useToggle(["info", "viewer", "detail"])
 
   return (
     <AppShell
@@ -52,7 +55,35 @@ export default function AppShellDemo() {
               : theme.colors.gray[0],
         },
       }}
-      header={<AppHeader {...{ tab, onTabChange: setTab, tabs }} />}
+      header={
+        <AppHeader
+          tabs={
+            <>
+              <Tabs.Tab value="info" icon={<IconInfoHexagon size="1.2rem" />}>
+                {t("request.tab.info")}
+              </Tabs.Tab>
+              {request && request.image && request.machinedResult && (
+                <>
+                  <Tabs.Tab
+                    value="viewer"
+                    icon={<IconPhotoSearch size="1.2rem" />}
+                  >
+                    {t("request.tab.viewer")}
+                  </Tabs.Tab>
+                  <Tabs.Tab
+                    value="detail"
+                    icon={<IconListDetails size="1.2rem" />}
+                  >
+                    {t("request.tab.detail")}
+                  </Tabs.Tab>
+                </>
+              )}
+            </>
+          }
+          defaultTab={"info"}
+          onTabChange={setTab}
+        />
+      }
     >
       {tab == "info" && request ? (
         <Card>

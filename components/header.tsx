@@ -14,6 +14,7 @@ import { IconHome, IconLogout } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { ReactNode, useEffect, useState } from "react"
 
 const useStyles = createStyles((theme) => {
   return {
@@ -57,18 +58,42 @@ const useStyles = createStyles((theme) => {
 })
 
 export default function AppHeader(props: {
-  tabs?: [string, string][]
-  tab?: string
+  tabs?: ReactNode
+  defaultTab?: string
   onTabChange?: (tab: string) => void
 }) {
   const { classes, theme } = useStyles()
   const { t } = useTranslation()
   const router = useRouter()
   const [userInfo, authApi] = useUserInfo()
+  const [tab, setTab] = useState<string | undefined>(props.defaultTab)
+
+  // get tab from router
+  useEffect(() => {
+    if (!router.isReady) return
+    const t = Array.isArray(router.query.t)
+      ? router.query.t.at(0)
+      : router.query.t
+    setTab(t || props.defaultTab)
+  }, [router])
+
+  // set tab in router & call props.onTabChange
+  const onTabChange = (t: string) => {
+    setTab(t)
+    if (t === props.defaultTab) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { t, ...query } = router.query
+      router.push({ query }, undefined, { shallow: true })
+    } else {
+      const query = { ...router.query, t }
+      router.push({ query }, undefined, { shallow: true })
+    }
+    if (props.onTabChange) props.onTabChange(t)
+  }
 
   return (
     <Header
-      height={props.tabs && props.tabs.length > 1 ? rem("98") : rem("60")}
+      height={props.tabs ? rem("98") : rem("60")}
       className={classes.header}
     >
       <Container fluid className={classes.mainSection}>
@@ -104,24 +129,18 @@ export default function AppHeader(props: {
           )}
         </Group>
       </Container>
-      {props.tabs && props.tabs.length > 1 && (
+      {props.tabs && (
         <Container fluid className={classes.tabSection}>
           <Tabs
-            value={props.tab}
-            onTabChange={props.onTabChange}
+            value={tab}
+            onTabChange={onTabChange}
             variant="outline"
             classNames={{
               tabsList: classes.tabsList,
               tab: classes.tab,
             }}
           >
-            <Tabs.List>
-              {props.tabs.map((v) => (
-                <Tabs.Tab value={v[0]} key={v[0]}>
-                  {v[1]}
-                </Tabs.Tab>
-              ))}
-            </Tabs.List>
+            <Tabs.List>{props.tabs}</Tabs.List>
           </Tabs>
         </Container>
       )}
