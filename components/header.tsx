@@ -12,6 +12,7 @@ import {
 } from "@mantine/core"
 import { IconHome, IconLogout } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
+import Link from "next/link"
 import { useRouter } from "next/router"
 
 const useStyles = createStyles((theme) => {
@@ -72,7 +73,12 @@ export default function AppHeader(props: {
     >
       <Container fluid className={classes.mainSection}>
         <Group position="left">
-          <ActionIcon variant="subtle" color={theme.primaryColor}>
+          <ActionIcon
+            component={Link}
+            href={`/`}
+            variant="subtle"
+            color={theme.primaryColor}
+          >
             <IconHome />
           </ActionIcon>
         </Group>
