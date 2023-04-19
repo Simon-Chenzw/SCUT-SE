@@ -1,30 +1,61 @@
-import { MeInfo } from "@/lib/api/auth/me"
-import { Button, Text } from "@mantine/core"
-import { IconLogout } from "@tabler/icons-react"
+import { useUserInfo } from "@/lib/hook/user-info"
+import {
+  Avatar,
+  Button,
+  Center,
+  Loader,
+  Paper,
+  Space,
+  Stack,
+  Text,
+} from "@mantine/core"
+import { IconList } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
+import Link from "next/link"
 
-export default function UserInfo(props: {
-  userInfo?: MeInfo
-  onLogout?: () => void
-}) {
+export default function UserInfo() {
   const { t } = useTranslation()
+  const [userInfo] = useUserInfo()
 
-  return (
-    <>
-      <Text c="blue">
-        {props.userInfo !== undefined ? props.userInfo.name : t("guest")}
-      </Text>
+  if (userInfo === undefined)
+    return (
+      <Center w={"100vw"} h={"100vh"}>
+        <Loader />
+      </Center>
+    )
+  else
+    return (
+      <Paper
+        radius="md"
+        withBorder
+        p="lg"
+        sx={(theme) => ({
+          backgroundColor:
+            theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.white,
+        })}
+      >
+        <Stack h={300}>
+          <Avatar src={undefined} size={120} radius={120} mx="auto" />
 
-      {props.userInfo && (
-        <Button
-          leftIcon={<IconLogout />}
-          variant="outline"
-          radius="md"
-          onClick={props.onLogout}
-        >
-          {t("auth.label.logout")}
-        </Button>
-      )}
-    </>
-  )
+          <Text ta="center" fz="lg" weight={500} mt="md">
+            {userInfo.name}
+          </Text>
+
+          <Text ta="center" c="dimmed" fz="sm">
+            {userInfo.email}
+          </Text>
+
+          <Space />
+
+          <Button
+            component={Link}
+            href={`/request/list`}
+            leftIcon={<IconList />}
+            variant="filled"
+          >
+            {t("goto.request_list")}
+          </Button>
+        </Stack>
+      </Paper>
+    )
 }

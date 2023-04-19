@@ -1,5 +1,5 @@
 import AppHeader from "@/components/header"
-import UserInfo from "@/components/userinfo"
+import RequestInfo from "@/components/request-info"
 import { AppShell, useMantineTheme } from "@mantine/core"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
@@ -26,7 +26,7 @@ export default function AppShellDemo() {
       }}
       header={<AppHeader />}
     >
-      <UserInfo />
+      <RequestInfo />
     </AppShell>
   )
 }
