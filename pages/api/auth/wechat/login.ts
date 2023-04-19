@@ -44,7 +44,6 @@ async function getAccessToken(code: string) {
   }).toString()
   const resp = await fetch(url)
   const data: WechatAccessTokenResponse = await resp.json()
-  console.log("access_token", data)
   return { access_token: data.access_token, openid: data.openid }
 }
 
@@ -57,7 +56,6 @@ async function getUserInfo(openid: string, access_token: string) {
   }).toString()
   const resp = await fetch(url)
   const data: WechatUserInfoResponse = await resp.json()
-  console.log("userinfo", data)
   return { openid: data.openid, nickname: data.nickname }
 }
 
