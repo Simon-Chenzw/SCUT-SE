@@ -33,5 +33,5 @@ export async function getRequestOrSetResponse(
     return null
   }
 
-  return request
+  return request as RequestObject
 }

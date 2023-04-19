@@ -1,5 +1,5 @@
 import Chart, { ReactEChartsProps } from "@/components/chart"
-import { MachinedResultObject, RequestObject } from "@/lib/api/request"
+import { RequestObject } from "@/lib/api/request"
 import { requestListRequest } from "@/lib/api/request/list"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
@@ -36,7 +36,7 @@ export default function AreaScoreChart(props: {
     const data = requests
       .filter((v): v is RequestObjectWithNonNull => v.machinedResult !== null)
       .flatMap((v) =>
-        (v.machinedResult.data as unknown as MachinedResultObject[]).map(
+        v.machinedResult.data.map(
           (vv) => [vv.area, new Date(v.createdAt), vv.score] as const
         )
       )

@@ -1,6 +1,7 @@
 import { JsonApiResponse } from "@/lib/api"
 import { isMethodRequestOrSetResponse } from "@/lib/api/helper"
 import { getRequestOrSetResponse } from "@/lib/api/helper/request"
+import { RequestObject } from "@/lib/api/request"
 import { RequestGetResponse } from "@/lib/api/request/[rid]"
 import { NextApiRequest } from "next"
 
@@ -20,6 +21,6 @@ export default async function handler(
   return res.status(200).json({
     code: 0,
     message: "ok",
-    data: request,
+    data: request as RequestObject,
   })
 }

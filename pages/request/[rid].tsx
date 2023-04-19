@@ -2,7 +2,6 @@ import AppHeader from "@/components/header"
 import RequestInfo from "@/components/request/info"
 import RequestImageViewer from "@/components/request/viewer"
 import RequestImageViewerItem from "@/components/request/viewer-item"
-import { MachinedResultObject } from "@/lib/api/request"
 import { useImage } from "@/lib/hook/image"
 import { useRequest } from "@/lib/hook/request"
 import { useTab } from "@/lib/hook/tab"
@@ -69,9 +68,7 @@ export default function AppShellDemo() {
       ) : tab == "detail" && request?.machinedResult?.data ? (
         <Center>
           <Stack>
-            {(
-              request.machinedResult.data as unknown as MachinedResultObject[]
-            ).map((obj) => (
+            {request.machinedResult.data.map((obj) => (
               <RequestImageViewerItem
                 key={obj["area"]}
                 image={image}

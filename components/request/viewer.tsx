@@ -1,5 +1,5 @@
 import RequestImageViewerItem from "@/components/request/viewer-item"
-import { MachinedResultObject, RequestObject } from "@/lib/api/request"
+import { MachinedResultDataObject, RequestObject } from "@/lib/api/request"
 import { Modal } from "@mantine/core"
 import { useMediaQuery } from "@mantine/hooks"
 import { useEffect, useRef, useState } from "react"
@@ -8,7 +8,7 @@ class ResultObject {
   constructor(
     private canvas: HTMLCanvasElement,
     private canvasCtx: CanvasRenderingContext2D,
-    public data: MachinedResultObject
+    public data: MachinedResultDataObject
   ) {
     this.deactive()
   }
@@ -56,7 +56,7 @@ class ResultObjectList {
   constructor(
     private canvas: HTMLCanvasElement,
     private canvasCtx: CanvasRenderingContext2D,
-    regions: MachinedResultObject[],
+    regions: MachinedResultDataObject[],
     onClick?: (region: ResultObject) => void
   ) {
     this.list = regions.map((v) => new ResultObject(canvas, canvasCtx, v))
@@ -95,8 +95,8 @@ function useViewer(
   ref: React.RefObject<HTMLCanvasElement>,
   image: HTMLImageElement | undefined,
   machinedResult: NonNullable<RequestObject["machinedResult"]>
-): [MachinedResultObject | undefined, () => void] {
-  const [region, setRegion] = useState<MachinedResultObject>()
+): [MachinedResultDataObject | undefined, () => void] {
+  const [region, setRegion] = useState<MachinedResultDataObject>()
   const [resultObjectList, setResultObjectList] = useState<ResultObjectList>()
 
   useEffect(() => {
@@ -110,9 +110,8 @@ function useViewer(
     canvas.height = image.height
     ctx.drawImage(image, 0, 0)
 
-    const data = machinedResult.data as unknown as MachinedResultObject[]
     setResultObjectList(
-      new ResultObjectList(canvas, ctx, data, (region) =>
+      new ResultObjectList(canvas, ctx, machinedResult.data, (region) =>
         setRegion(region.data)
       )
     )

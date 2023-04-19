@@ -1,4 +1,4 @@
-import { MachinedResultObject } from "@/lib/api/request"
+import { MachinedResultDataObject } from "@/lib/api/request"
 import {
   Card,
   Center,
@@ -12,7 +12,7 @@ import { useEffect, useRef } from "react"
 
 function RequestImageViewerItemRegion(props: {
   image: HTMLImageElement | undefined
-  object: MachinedResultObject | undefined
+  object: MachinedResultDataObject | undefined
 }) {
   const ref = useRef<HTMLCanvasElement>(null)
 
@@ -51,7 +51,7 @@ function RequestImageViewerItemRegion(props: {
 
 export default function RequestImageViewerItem(props: {
   image: HTMLImageElement | undefined
-  object: MachinedResultObject | undefined
+  object: MachinedResultDataObject | undefined
 }) {
   return (
     <Card shadow={"md"} withBorder>

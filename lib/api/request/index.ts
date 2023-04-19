@@ -1,6 +1,6 @@
 import { Prisma } from "@/lib/prisma-client"
 
-export interface MachinedResultObject {
+export interface MachinedResultDataObject {
   area: string
   score: number
   region: {
@@ -12,9 +12,17 @@ export interface MachinedResultObject {
   message: string
 }
 
-export type RequestObject = Prisma.RequestGetPayload<{
+export type RequestObjectPrisma = Prisma.RequestGetPayload<{
   include: {
     image: { select: { id: true } }
     machinedResult: true
   }
 }>
+
+export type RequestObject = RequestObjectPrisma & {
+  machinedResult:
+    | (NonNullable<RequestObjectPrisma["machinedResult"]> & {
+        data: MachinedResultDataObject[]
+      })
+    | null
+}
