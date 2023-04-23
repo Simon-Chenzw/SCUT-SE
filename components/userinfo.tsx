@@ -53,7 +53,10 @@ export default function UserInfo() {
 
           <Button
             component={Link}
-            href={`/request/list`}
+            href={{
+              pathname: "/request",
+              query: { t: "list" },
+            }}
             leftIcon={<IconList />}
             variant="filled"
           >
@@ -61,7 +64,10 @@ export default function UserInfo() {
           </Button>
           <Button
             component={Link}
-            href={`/request/chart`}
+            href={{
+              pathname: "/request",
+              query: { t: "chart" },
+            }}
             leftIcon={<IconChartLine />}
             variant="filled"
           >
