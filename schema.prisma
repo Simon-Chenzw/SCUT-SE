@@ -15,9 +15,15 @@ model User {
   id            String         @id @default(cuid())
   name          String         @db.Text
   email         String?        @unique @db.Text
+  role          Role           @default(USER)
   credential    Credential?
   WechatAccount WechatAccount?
   requests      Request[]
+}
+
+enum Role {
+  USER
+  ADMIN
 }
 
 model Credential {

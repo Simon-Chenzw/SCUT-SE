@@ -21,10 +21,6 @@ export default async function handler(
   return res.status(200).json({
     code: 0,
     message: "ok",
-    data: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-    },
+    data: user,
   })
 }
