@@ -1,15 +1,8 @@
 import AreaScoreChart from "@/components/chart/area-score"
+import ChartPageWrapper from "@/components/chart/wrapper"
 import AppHeader from "@/components/header"
 import RequestInfo from "@/components/request-info"
-import {
-  AppShell,
-  Box,
-  Center,
-  Divider,
-  Tabs,
-  Title,
-  useMantineTheme,
-} from "@mantine/core"
+import { AppShell, Tabs, useMantineTheme } from "@mantine/core"
 import { useToggle } from "@mantine/hooks"
 import { IconChartLine, IconList } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
@@ -57,18 +50,9 @@ export default function AppShellDemo() {
     >
       {tab == "list" && <RequestInfo />}
       {tab == "chart" && (
-        <>
-          <Center p="md">
-            <Title> {t("chart.area_score.title")} </Title>
-          </Center>
-
-          <Divider />
-          <Center py="md" h="70vh">
-            <Box w="100%" h="auto" mah="70vh" style={{ aspectRatio: 16 / 9 }}>
-              <AreaScoreChart />
-            </Box>
-          </Center>
-        </>
+        <ChartPageWrapper title={t("chart.area_score.title")}>
+          <AreaScoreChart />
+        </ChartPageWrapper>
       )}
     </AppShell>
   )
