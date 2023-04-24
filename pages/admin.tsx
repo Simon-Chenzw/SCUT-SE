@@ -1,5 +1,10 @@
+import UserCreateAggChart from "@/components/chart/user-create-agg"
+import ChartPageWrapper from "@/components/chart/wrapper"
 import AppHeader from "@/components/header"
-import { AppShell, Center, Loader, useMantineTheme } from "@mantine/core"
+import { AppShell, Tabs, useMantineTheme } from "@mantine/core"
+import { useToggle } from "@mantine/hooks"
+import { IconUser } from "@tabler/icons-react"
+import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
 export async function getStaticProps(props: { locale: string }) {
@@ -12,6 +17,8 @@ export async function getStaticProps(props: { locale: string }) {
 
 export default function AppShellDemo() {
   const theme = useMantineTheme()
+  const { t } = useTranslation()
+  const [tab, setTab] = useToggle(["user_create_agg"])
 
   return (
     <AppShell
@@ -23,11 +30,28 @@ export default function AppShellDemo() {
               : theme.colors.gray[0],
         },
       }}
-      header={<AppHeader />}
+      header={
+        <AppHeader
+          tabs={
+            <>
+              <Tabs.Tab
+                value="user_create_agg"
+                icon={<IconUser size="1.2rem" />}
+              >
+                {t("admin.tab.user_create_agg")}
+              </Tabs.Tab>
+            </>
+          }
+          defaultTab="user_create_agg"
+          onTabChange={setTab}
+        />
+      }
     >
-      <Center h="70vh">
-        <Loader />
-      </Center>
+      {tab == "user_create_agg" && (
+        <ChartPageWrapper title={t("chart.user_create_agg.title")}>
+          <UserCreateAggChart />
+        </ChartPageWrapper>
+      )}
     </AppShell>
   )
 }
