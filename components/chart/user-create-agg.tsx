@@ -13,7 +13,12 @@ export default function UserCreateAggChart(props: {
   useEffect(() => {
     ;(async () => {
       const resp = await userCreateAggRequest()
-      if (resp.data) setDates(resp.data.map((v) => new Date(v)).sort())
+      if (resp.data)
+        setDates(
+          resp.data
+            .map((v) => new Date(v))
+            .sort((lhs, rhs) => lhs.getTime() - rhs.getTime())
+        )
     })()
   }, [])
 
