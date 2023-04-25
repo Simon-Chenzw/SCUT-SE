@@ -36,8 +36,6 @@ export default function UserCreateAggChart(props: {
     ])
 
     setChartData(data)
-
-    console.log(chartData)
   }, [dates])
 
   return (

@@ -1,9 +1,10 @@
+import AreaScatterChart from "@/components/chart/area-scatter"
 import UserCreateAggChart from "@/components/chart/user-create-agg"
 import ChartPageWrapper from "@/components/chart/wrapper"
 import AppHeader from "@/components/header"
 import { AppShell, Tabs, useMantineTheme } from "@mantine/core"
 import { useToggle } from "@mantine/hooks"
-import { IconUser } from "@tabler/icons-react"
+import { IconUsers, IconUserSearch } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 
@@ -18,7 +19,7 @@ export async function getStaticProps(props: { locale: string }) {
 export default function AppShellDemo() {
   const theme = useMantineTheme()
   const { t } = useTranslation()
-  const [tab, setTab] = useToggle(["user_create_agg"])
+  const [tab, setTab] = useToggle(["user_create_agg", "area_scatter"])
 
   return (
     <AppShell
@@ -36,9 +37,15 @@ export default function AppShellDemo() {
             <>
               <Tabs.Tab
                 value="user_create_agg"
-                icon={<IconUser size="1.2rem" />}
+                icon={<IconUsers size="1.2rem" />}
               >
                 {t("admin.tab.user_create_agg")}
+              </Tabs.Tab>
+              <Tabs.Tab
+                value="area_scatter"
+                icon={<IconUserSearch size="1.2rem" />}
+              >
+                {t("admin.tab.area_scatter")}
               </Tabs.Tab>
             </>
           }
@@ -50,6 +57,11 @@ export default function AppShellDemo() {
       {tab == "user_create_agg" && (
         <ChartPageWrapper title={t("chart.user_create_agg.title")}>
           <UserCreateAggChart />
+        </ChartPageWrapper>
+      )}
+      {tab == "area_scatter" && (
+        <ChartPageWrapper title={t("chart.area_scatter.title")}>
+          <AreaScatterChart />
         </ChartPageWrapper>
       )}
     </AppShell>
