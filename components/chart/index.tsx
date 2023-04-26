@@ -1,4 +1,10 @@
-import { EChartsOption, getInstanceByDom, init, SetOptionOpts } from "echarts"
+import {
+  EChartsOption,
+  EChartsType,
+  getInstanceByDom,
+  init,
+  SetOptionOpts,
+} from "echarts"
 import React, { CSSProperties, useEffect, useRef } from "react"
 
 type EChartsInitOpts = Parameters<typeof init>[2]
@@ -10,6 +16,9 @@ export interface ReactEChartsProps {
   option: EChartsOption
   settings?: SetOptionOpts
   loading?: boolean
+  // Echarts Hook
+  onEchartReady?: (echart: EChartsType) => void
+  onEchartDispose?: (echart: EChartsType) => void
   // Html
   style?: CSSProperties
 }
@@ -20,6 +29,8 @@ export default function Chart({
   option,
   settings,
   loading,
+  onEchartReady,
+  onEchartDispose,
   style,
 }: ReactEChartsProps): JSX.Element {
   const chartRef = useRef<HTMLDivElement>(null)
@@ -29,11 +40,13 @@ export default function Chart({
     const ref = chartRef.current
     if (ref === null) return
     const chart = init(ref, theme, initopts)
+    if (onEchartReady) onEchartReady(chart)
 
     const resizeChart = () => chart.resize()
     window.addEventListener("resize", resizeChart)
 
     return () => {
+      if (onEchartDispose) onEchartDispose(chart)
       chart.dispose()
       window.removeEventListener("resize", resizeChart)
     }

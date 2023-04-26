@@ -1,3 +1,5 @@
+import OrganDiagram from "@/components/chart/organ-diagram"
+import ChartPageWrapper from "@/components/chart/wrapper"
 import AppHeader from "@/components/header"
 import RequestInfo from "@/components/request/info"
 import RequestImageViewer from "@/components/request/viewer"
@@ -16,6 +18,7 @@ import { useToggle } from "@mantine/hooks"
 import {
   IconInfoHexagon,
   IconListDetails,
+  IconLungs,
   IconPhotoSearch,
 } from "@tabler/icons-react"
 import { useTranslation } from "next-i18next"
@@ -43,7 +46,7 @@ export default function AppShellDemo() {
   const router = useRouter()
   const [request, refreshRequest] = useRequest(router.query.rid as string)
   const image = useImage(request?.image ?? null)
-  const [tab, setTab] = useToggle(["info", "viewer", "detail"])
+  const [tab, setTab] = useToggle(["info", "viewer", "detail", "diagram"])
 
   return (
     <AppShell
@@ -76,6 +79,9 @@ export default function AppShellDemo() {
                   >
                     {t("request.tab.detail")}
                   </Tabs.Tab>
+                  <Tabs.Tab value="diagram" icon={<IconLungs size="1.2rem" />}>
+                    {t("request.tab.diagram")}
+                  </Tabs.Tab>
                 </>
               )}
             </>
@@ -85,18 +91,20 @@ export default function AppShellDemo() {
         />
       }
     >
-      {tab == "info" && request ? (
+      {tab == "info" && request && (
         <Card>
           <RequestInfo request={request} refreshRequest={refreshRequest} />
         </Card>
-      ) : tab == "viewer" && request?.machinedResult ? (
+      )}
+      {tab == "viewer" && request?.machinedResult && (
         <Center h={"80vh"}>
           <RequestImageViewer
             image={image}
             machinedResult={request.machinedResult}
           />
         </Center>
-      ) : tab == "detail" && request?.machinedResult?.data ? (
+      )}
+      {tab == "detail" && request?.machinedResult?.data && (
         <Center>
           <Stack>
             {request.machinedResult.data.map((obj) => (
@@ -108,8 +116,11 @@ export default function AppShellDemo() {
             ))}
           </Stack>
         </Center>
-      ) : (
-        <></>
+      )}
+      {tab == "diagram" && request?.machinedResult && (
+        <ChartPageWrapper title={t("chart.organ_diagram.title")}>
+          <OrganDiagram machinedResult={request.machinedResult} />
+        </ChartPageWrapper>
       )}
     </AppShell>
   )
