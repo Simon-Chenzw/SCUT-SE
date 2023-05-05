@@ -35,7 +35,20 @@
       }
     }
   },
+  "goto": {
+    "request_list": "检查列表",
+    "request_charts": "综合图表",
+    "admin_charts": "管理员图表"
+  },
   "request": {
+    "tab": {
+      "list": "列表",
+      "chart": "图表",
+      "info": "信息",
+      "viewer": "浏览",
+      "detail": "报告",
+      "diagram": "图表"
+    },
     "status": {
       "table": {
         "no_image": "待上传",
@@ -54,6 +67,26 @@
     "action": {
       "upload_image": "上传图片",
       "error_return_to_detail": "报告异常 返回详情页"
+    }
+  },
+  "admin": {
+    "tab": {
+      "user_create_agg": "用户数",
+      "area_scatter": "区域趋势"
+    }
+  },
+  "chart": {
+    "area_score": {
+      "title": "评分趋势"
+    },
+    "organ_diagram": {
+      "title": "器官得分图表"
+    },
+    "user_create_agg": {
+      "title": "历史用户数"
+    },
+    "area_scatter": {
+      "title": "用户部位评分趋势"
     }
   }
 }

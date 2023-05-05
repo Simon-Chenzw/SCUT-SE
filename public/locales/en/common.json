@@ -35,7 +35,20 @@
       }
     }
   },
+  "goto": {
+    "request_list": "List",
+    "request_charts": "Charts",
+    "admin_charts": "Admin Charts"
+  },
   "request": {
+    "tab": {
+      "list": "List",
+      "chart": "Chart",
+      "info": "Info",
+      "viewer": "Viewer",
+      "detail": "Detail",
+      "diagram": "Diagram"
+    },
     "status": {
       "table": {
         "no_image": "Wait for upload.",
@@ -54,6 +67,26 @@
     "action": {
       "upload_image": "Upload image",
       "error_return_to_detail": "Error! Return to request infomation page"
+    }
+  },
+  "admin": {
+    "tab": {
+      "user_create_agg": "User Number",
+      "area_scatter": "Score Scatter"
+    }
+  },
+  "chart": {
+    "area_score": {
+      "title": "Area Score"
+    },
+    "organ_diagram": {
+      "title": "Organ Diagram"
+    },
+    "user_create_agg": {
+      "title": "User Number"
+    },
+    "area_scatter": {
+      "title": "Area Scatter"
     }
   }
 }
