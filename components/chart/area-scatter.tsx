@@ -46,7 +46,12 @@ export default function AreaScatterChart(props: {
         )
       )
       .reduce((data: Record<string, Serier>, [area, date, score]) => {
-        data[area] ??= { name: area, type: "scatter", data: [] }
+        data[area] ??= {
+          name: area,
+          type: "scatter",
+          symbolSize: 3,
+          data: [],
+        }
         data[area].data.push([date, score])
         return data
       }, {})
