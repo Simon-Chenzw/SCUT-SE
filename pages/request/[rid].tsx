@@ -106,7 +106,7 @@ export default function AppShellDemo() {
       )}
       {tab == "detail" && request?.machinedResult?.data && (
         <Center>
-          <Stack>
+          <Stack w="100%">
             {request.machinedResult.data.map((obj) => (
               <RequestImageViewerItem
                 key={obj["area"]}
