@@ -70,7 +70,9 @@ export default function RequestImageViewerItem(props: {
 
         <Grid.Col span={8}>
           <Container>
-            <RequestImageViewerItemRegion {...props} />
+            <Center>
+              <RequestImageViewerItemRegion {...props} />
+            </Center>
           </Container>
         </Grid.Col>
       </Grid>
