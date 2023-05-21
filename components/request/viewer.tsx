@@ -26,7 +26,7 @@ class ResultObject {
     this.canvasCtx.lineWidth =
       Math.min(this.canvas.width, this.canvas.height) / 200
     this.canvasCtx.setLineDash([20, 20])
-    this.canvasCtx.strokeStyle = "red"
+    this.canvasCtx.strokeStyle = "rgba(255, 255, 0)"
     this.canvasCtx.strokeRect(
       this.data.region.x,
       this.data.region.y,
@@ -39,7 +39,7 @@ class ResultObject {
     this.canvasCtx.lineWidth =
       Math.min(this.canvas.width, this.canvas.height) / 200
     this.canvasCtx.setLineDash([20, 20])
-    this.canvasCtx.strokeStyle = "cyan"
+    this.canvasCtx.strokeStyle = "rgba(255, 0, 0)"
     this.canvasCtx.strokeRect(
       this.data.region.x,
       this.data.region.y,
