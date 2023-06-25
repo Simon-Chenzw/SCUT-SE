@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15edb0f019cf44c4fa85dc3fee2536a2, type: 3}
+  m_Name: CommonBuff 16
+  m_EditorClassIdentifier: 
+  ItemName: "\u661F\u6218\u58EB\u5FA1\u654C\u9CDE\u94E0"
+  ItemDesc: "\n\n\n\u9632\u5FA1\u5927\u5E45\u589E\u52A0\n\n\n\n\u201C\u4EBA\u4EBA\u90FD\u8BF4T\u5F3A\n\u529B\u662F\u5DE5\u4F1A\u6700\u9AD8\n\u8363\u8A89\u201D"
+  ItemPrice: 150
+  ItemRandomWeight: 6
+  HpAdd: 0
+  HpMul: 0
+  AtkAdd: 0
+  AtkMul: 0
+  DefAdd: 15
+  DefMul: 0
+  Vulnerable: 0

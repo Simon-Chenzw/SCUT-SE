@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87b54d46d77df146b0fda04a37597b7, type: 3}
+  m_Name: CommonAttackSkill
+  m_EditorClassIdentifier: 
+  SkillName: 
+  SkillObject: {fileID: 1165847330309641993, guid: 4e04be1d96714f449af42d7b35d8798a, type: 3}

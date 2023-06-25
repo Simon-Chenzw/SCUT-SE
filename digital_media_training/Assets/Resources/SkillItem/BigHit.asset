@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c16cb4807a2ccf4aab153c88ddb0236, type: 3}
+  m_Name: BigHit
+  m_EditorClassIdentifier: 
+  ItemName: "\u738B\u8005\u4E4B\u5251"
+  ItemDesc: "\n\n\n\u5411\u524D\u65B9\u8FDB\u884C\u7F13\n\u6162\u800C\u5927\u578B\u7684\u653B\n\u51FB\n\n\n\n\u201C\u53EA\u6709\u52C7\u8005\u624D\u80FD\n\u88C5\u5907\u2026\u2026\u9A97\u4F60\u7684\u201D"
+  ItemPrice: 50
+  ItemRandomWeight: 1
+  skill: {fileID: 11400000, guid: 62755775280fc5845ad26e119231d1e1, type: 2}
