@@ -1,14 +1,12 @@
-# homework
+# SCUT SE
 
-All homework in SCUT
+All projects & experimental reports in SCUT SE
 
-大型项目归档地址：[repo](https://github.com/Simon-Chenzw/homework_project)
-
-# 声明
+## 声明
 
 本 repo 仅作为储存备份作业与报告所用，**仅供参考**，请勿搬运、抄袭。
 
-# catalogue
+## Catalogue
 
 -   大一上
 -   大一下
