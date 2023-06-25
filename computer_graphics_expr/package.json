@@ -1,0 +1,24 @@
+{
+  "name": "typescript-webpack-threejs-template",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "webpack serve",
+    "start:open": "webpack serve --open",
+    "lint": "prettier -w src && eslint . --ext .ts",
+    "build": "webpack --mode=production"
+  },
+  "dependencies": {
+    "three": "~0.125.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.1.0",
+    "prettier": "^2.4.1",
+    "ts-loader": "^8.0.17",
+    "typescript": "^4.1.5",
+    "webpack": "^5.21.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
