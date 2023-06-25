@@ -1,0 +1,107 @@
+{'enable_modelarts': 'Whether training on modelarts, default: False', 'data_url': 'Dataset url for obs', 'train_url': 'Training output url for obs', 'data_path': 'Dataset path for local', 'output_path': 'Training output path for local', 'device_target': 'Target device type', 'enable_profiling': 'Whether enable profiling while training, default: False'}
+{'air_name': 'alexnet.air',
+ 'batch_size': 32,
+ 'buffer_size': 1000,
+ 'checkpoint_file': './checkpoint/checkpoint_alexnet-30_1562.ckpt',
+ 'checkpoint_path': './checkpoint/',
+ 'checkpoint_url': '',
+ 'ckpt_file': '/cache/train/checkpoint_alexnet-30_1562.ckpt',
+ 'ckpt_path': 'checkpoint',
+ 'config_path': 'default_config.yaml',
+ 'data_path': 'DataSet/cifar-10-batches-bin',
+ 'data_url': '',
+ 'dataset_name': 'cifar10',
+ 'dataset_sink_mode': True,
+ 'device_id': 0,
+ 'device_target': 'Ascend',
+ 'enable_modelarts': False,
+ 'enable_profiling': False,
+ 'epoch_size': 30,
+ 'file_format': 'AIR',
+ 'file_name': 'alexnet',
+ 'image_height': 227,
+ 'image_width': 227,
+ 'keep_checkpoint_max': 10,
+ 'learning_rate': 0.002,
+ 'load_path': '/cache/checkpoint_path',
+ 'lr': 0.01,
+ 'model_name': 'alexnet',
+ 'momentum': 0.9,
+ 'num_classes': 10,
+ 'output_path': '/cache/train',
+ 'save_checkpoint': True,
+ 'save_checkpoint_epochs': 2,
+ 'save_checkpoint_steps': 1562,
+ 'sink_size': -1,
+ 'train_url': ''}
+Please check the above information for the configurations
+[WARNING] DEVICE(34405,fffdb27fc1e0,python):2022-06-12-10:43:58.197.428 [mindspore/ccsrc/runtime/device/ascend/kernel_select_ascend.cc:284] TagRaiseReduce] Node:[DropoutGenMask] reduce precision from int64 to int32
+[WARNING] DEVICE(34405,fffdb27fc1e0,python):2022-06-12-10:43:58.197.583 [mindspore/ccsrc/runtime/device/ascend/kernel_select_ascend.cc:284] TagRaiseReduce] Node:[DropoutGenMask] reduce precision from int64 to int32
+[WARNING] SESSION(34405,fffdb27fc1e0,python):2022-06-12-10:43:58.802.742 [mindspore/ccsrc/backend/session/ascend_session.cc:1802] SelectKernel] There are 5 node/nodes used raise precision to selected the kernel!
+[WARNING] SESSION(34405,fffdb27fc1e0,python):2022-06-12-10:43:58.802.812 [mindspore/ccsrc/backend/session/ascend_session.cc:1806] SelectKernel] There are 2 node/nodes used reduce precision to selected the kernel!
+device id: 0
+device num: 1
+rank id: 0
+job id: Local Job
+============== Starting Training ==============
+epoch: 1 step: 1562, loss is 1.9846498
+epoch time: 59273.711 ms, per step time: 37.947 ms
+epoch: 2 step: 1562, loss is 1.545666
+epoch time: 13217.954 ms, per step time: 8.462 ms
+epoch: 3 step: 1562, loss is 1.3144819
+epoch time: 13102.124 ms, per step time: 8.388 ms
+epoch: 4 step: 1562, loss is 1.1857862
+epoch time: 12871.146 ms, per step time: 8.240 ms
+epoch: 5 step: 1562, loss is 1.3507149
+epoch time: 13424.108 ms, per step time: 8.594 ms
+epoch: 6 step: 1562, loss is 0.9890949
+epoch time: 13474.811 ms, per step time: 8.627 ms
+epoch: 7 step: 1562, loss is 0.89595246
+epoch time: 13287.226 ms, per step time: 8.507 ms
+epoch: 8 step: 1562, loss is 0.62549907
+epoch time: 13018.297 ms, per step time: 8.334 ms
+epoch: 9 step: 1562, loss is 0.56706786
+epoch time: 16443.888 ms, per step time: 10.527 ms
+epoch: 10 step: 1562, loss is 0.48910826
+epoch time: 14297.294 ms, per step time: 9.153 ms
+epoch: 11 step: 1562, loss is 0.8078686
+epoch time: 14213.823 ms, per step time: 9.100 ms
+epoch: 12 step: 1562, loss is 0.22139172
+epoch time: 14454.347 ms, per step time: 9.254 ms
+epoch: 13 step: 1562, loss is 0.3509989
+epoch time: 14027.346 ms, per step time: 8.980 ms
+epoch: 14 step: 1562, loss is 0.3324229
+epoch time: 13712.976 ms, per step time: 8.779 ms
+epoch: 15 step: 1562, loss is 0.36504087
+epoch time: 13591.261 ms, per step time: 8.701 ms
+epoch: 16 step: 1562, loss is 0.8914815
+epoch time: 14126.487 ms, per step time: 9.044 ms
+epoch: 17 step: 1562, loss is 0.51160944
+epoch time: 13800.582 ms, per step time: 8.835 ms
+epoch: 18 step: 1562, loss is 0.43786758
+epoch time: 13613.915 ms, per step time: 8.716 ms
+epoch: 19 step: 1562, loss is 0.7128984
+epoch time: 14661.518 ms, per step time: 9.386 ms
+epoch: 20 step: 1562, loss is 0.3410688
+epoch time: 13443.430 ms, per step time: 8.607 ms
+epoch: 21 step: 1562, loss is 0.37032366
+epoch time: 13707.913 ms, per step time: 8.776 ms
+epoch: 22 step: 1562, loss is 0.26559362
+epoch time: 14389.960 ms, per step time: 9.213 ms
+epoch: 23 step: 1562, loss is 0.12587526
+epoch time: 13814.178 ms, per step time: 8.844 ms
+epoch: 24 step: 1562, loss is 0.42141402
+epoch time: 13728.607 ms, per step time: 8.789 ms
+epoch: 25 step: 1562, loss is 0.19359726
+epoch time: 13725.897 ms, per step time: 8.787 ms
+epoch: 26 step: 1562, loss is 0.25488698
+epoch time: 14832.035 ms, per step time: 9.496 ms
+epoch: 27 step: 1562, loss is 0.17285605
+epoch time: 13384.007 ms, per step time: 8.569 ms
+epoch: 28 step: 1562, loss is 0.07218274
+epoch time: 13361.573 ms, per step time: 8.554 ms
+epoch: 29 step: 1562, loss is 0.3076619
+epoch time: 13666.923 ms, per step time: 8.750 ms
+epoch: 30 step: 1562, loss is 0.067157105
+epoch time: 13767.782 ms, per step time: 8.814 ms
+

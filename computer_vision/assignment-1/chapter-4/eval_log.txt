@@ -1,0 +1,42 @@
+{'enable_modelarts': 'Whether training on modelarts, default: False', 'data_url': 'Dataset url for obs', 'train_url': 'Training output url for obs', 'data_path': 'Dataset path for local', 'output_path': 'Training output path for local', 'device_target': 'Target device type', 'enable_profiling': 'Whether enable profiling while training, default: False'}
+{'air_name': 'alexnet.air',
+ 'batch_size': 32,
+ 'buffer_size': 1000,
+ 'checkpoint_file': './checkpoint/checkpoint_alexnet-30_1562.ckpt',
+ 'checkpoint_path': './checkpoint/',
+ 'checkpoint_url': '',
+ 'ckpt_file': '/cache/train/checkpoint_alexnet-30_1562.ckpt',
+ 'ckpt_path': 'checkpoint/checkpoint_alexnet-21_1562.ckpt',
+ 'config_path': 'default_config.yaml',
+ 'data_path': 'DataSet/cifar-10-verify-bin',
+ 'data_url': '',
+ 'dataset_name': 'cifar10',
+ 'dataset_sink_mode': True,
+ 'device_id': 0,
+ 'device_target': 'Ascend',
+ 'enable_modelarts': False,
+ 'enable_profiling': False,
+ 'epoch_size': 30,
+ 'file_format': 'AIR',
+ 'file_name': 'alexnet',
+ 'image_height': 227,
+ 'image_width': 227,
+ 'keep_checkpoint_max': 10,
+ 'learning_rate': 0.002,
+ 'load_path': '/cache/checkpoint_path',
+ 'lr': 0.01,
+ 'model_name': 'alexnet',
+ 'momentum': 0.9,
+ 'num_classes': 10,
+ 'output_path': '/cache/train',
+ 'save_checkpoint': True,
+ 'save_checkpoint_epochs': 2,
+ 'save_checkpoint_steps': 1562,
+ 'sink_size': -1,
+ 'train_url': ''}
+Please check the above information for the configurations
+[WARNING] SESSION(67482,fffea0c131e0,python):2022-06-12-11:09:58.746.220 [mindspore/ccsrc/backend/session/ascend_session.cc:1806] SelectKernel] There are 8 node/nodes used reduce precision to selected the kernel!
+============== Starting Testing ==============
+load checkpoint from [checkpoint/checkpoint_alexnet-21_1562.ckpt].
+result : {'Accuracy': 0.8498597756410257}
+
