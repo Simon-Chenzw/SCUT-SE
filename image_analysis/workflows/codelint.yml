@@ -1,0 +1,26 @@
+name: Code Lint & Formatter
+
+on: [push, pull_request]
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run eslint
+        run: yarn lint
+
+      - name: Run ESLint
+        run: yarn format --check

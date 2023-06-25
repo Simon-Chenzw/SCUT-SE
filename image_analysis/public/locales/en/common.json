@@ -1,0 +1,92 @@
+{
+  "guest": "Guest",
+  "html": {
+    "title": "analysis of infrared images"
+  },
+  "auth": {
+    "valid": {
+      "name_too_long": "Name cannot exceed 50 characters.",
+      "email_not_valid": "Email is not valid.",
+      "password_too_short": "Password must be at least 6 characters.",
+      "password_not_match": "Password does not match."
+    },
+    "prompt": {
+      "welcome": "Analysis of Infrared Images",
+      "register": "Please register to continue:",
+      "login": "Please login to continue:",
+      "with_email": "Or continue with email",
+      "change_to_register": "Don't have an account? Register",
+      "change_to_login": "Already have an account? Login"
+    },
+    "label": {
+      "login": "Login",
+      "register": "Register",
+      "logout": "Logout",
+      "name": "Name",
+      "email": "Email",
+      "password": "Password",
+      "password_confirm": "Confirm Password"
+    },
+    "third_party": {
+      "wechat": {
+        "name": "wechat",
+        "waiting": "Waiting for WeChat ...",
+        "logging": "Logging in with WeChat ..."
+      }
+    }
+  },
+  "goto": {
+    "request_list": "List",
+    "request_charts": "Charts",
+    "admin_charts": "Admin Charts"
+  },
+  "request": {
+    "tab": {
+      "list": "List",
+      "chart": "Chart",
+      "info": "Info",
+      "viewer": "Viewer",
+      "detail": "Detail",
+      "diagram": "Diagram"
+    },
+    "status": {
+      "table": {
+        "no_image": "Wait for upload.",
+        "no_result": "Wait for report.",
+        "done": "Report generated."
+      },
+      "upload_done": "Upload done.",
+      "report_not_found": "Report not generated.",
+      "done": "Report generated."
+    },
+    "stage": {
+      "create": "Create Request",
+      "upload": "Upload Image",
+      "report": "Report Generated"
+    },
+    "action": {
+      "upload_image": "Upload image",
+      "error_return_to_detail": "Error! Return to request infomation page"
+    }
+  },
+  "admin": {
+    "tab": {
+      "user_create_agg": "User Number",
+      "area_scatter": "Score Scatter"
+    }
+  },
+  "chart": {
+    "area_score": {
+      "title": "Area Score"
+    },
+    "organ_diagram": {
+      "title": "Organ Diagram"
+    },
+    "user_create_agg": {
+      "title": "User Number"
+    },
+    "area_scatter": {
+      "title": "Area Scatter"
+    }
+  }
+}

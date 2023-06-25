@@ -1,0 +1,44 @@
+########################################
+# docker specific
+
+.github
+.husky
+.vscode
+
+.commitlintrc.cjs
+.dockerignore
+.gitattributes
+.gitignore
+.lintstagedrc.cjs
+.nvmrc
+.prettierrc.cjs
+
+CODEOWNERS
+Dockerfile
+LICENSE
+README.md
+
+
+########################################
+# from .gitignore
+
+.env
+
+# Yarn with Plug'n'Play
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Next.js
+.next
+next-env.d.ts
+
+# Cache create by prettier
+node_modules/.cache/prettier
+
+# Prisma
+lib/prisma-client

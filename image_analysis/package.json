@@ -1,0 +1,60 @@
+{
+  "name": "image_analysis",
+  "private": true,
+  "packageManager": "yarn@3.4.1",
+  "engines": {
+    "node": ">=18.x"
+  },
+  "scripts": {
+    "setup": "husky install && yarn pnpify prisma generate",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint --max-warnings=0 --ignore-path .gitignore .",
+    "format": "prettier --ignore-unknown --ignore-path .gitignore . \"!.yarn\""
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.10.5",
+    "@emotion/react": "^11.10.6",
+    "@emotion/serialize": "^1.1.1",
+    "@emotion/server": "^11.10.0",
+    "@emotion/utils": "^1.2.0",
+    "@mantine/core": "^6.0.9",
+    "@mantine/form": "^6.0.9",
+    "@mantine/hooks": "^6.0.9",
+    "@mantine/next": "^6.0.9",
+    "@prisma/client": "4.11.0",
+    "@tabler/icons-react": "^2.10.0",
+    "argon2": "^0.30.3",
+    "cookies-next": "^2.1.1",
+    "echarts": "^5.4.2",
+    "i18next": "^22.4.14",
+    "jsonwebtoken": "^9.0.0",
+    "mantine-datatable": "^2.2.5",
+    "next": "^13.1.6",
+    "next-i18next": "^13.2.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-i18next": "^12.2.0"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.1",
+    "@commitlint/types": "^17.4.4",
+    "@prisma/nextjs-monorepo-workaround-plugin": "^4.11.0",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "18.15.*",
+    "@types/react": "^18.0.28",
+    "@typescript-eslint/eslint-plugin": "^5.51.0",
+    "@typescript-eslint/parser": "^5.51.0",
+    "@yarnpkg/pnpify": "^4.0.0-rc.40",
+    "eslint": "^8.34.0",
+    "eslint-config-next": "^13.1.6",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.1.2",
+    "prettier": "^2.8.4",
+    "prisma": "4.11.0",
+    "typescript": "^4.9.5"
+  }
+}

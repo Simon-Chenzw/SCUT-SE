@@ -1,0 +1,92 @@
+{
+  "guest": "游客",
+  "html": {
+    "title": "人体红外图像分析"
+  },
+  "auth": {
+    "valid": {
+      "name_too_long": "名称最长 50 个字符",
+      "email_not_valid": "邮箱地址格式不正常",
+      "password_too_short": "密码需要至少 6 个字符",
+      "password_not_match": "密码不一致"
+    },
+    "prompt": {
+      "welcome": "人体红外图像分析",
+      "register": "请进行注册，以继续：",
+      "login": "请进行登录，以继续：",
+      "with_email": "或者 使用邮箱",
+      "change_to_register": "还没有账户? 点击注册",
+      "change_to_login": "已经有了账户? 点击登录"
+    },
+    "label": {
+      "login": "登录",
+      "register": "注册",
+      "logout": "登出",
+      "name": "名称",
+      "email": "邮箱",
+      "password": "密码",
+      "password_confirm": "重复密码"
+    },
+    "third_party": {
+      "wechat": {
+        "name": "微信",
+        "waiting": "等待中 ...",
+        "logging": "登录中 ..."
+      }
+    }
+  },
+  "goto": {
+    "request_list": "检查列表",
+    "request_charts": "综合图表",
+    "admin_charts": "管理员图表"
+  },
+  "request": {
+    "tab": {
+      "list": "列表",
+      "chart": "图表",
+      "info": "信息",
+      "viewer": "浏览",
+      "detail": "报告",
+      "diagram": "图表"
+    },
+    "status": {
+      "table": {
+        "no_image": "待上传",
+        "no_result": "等待生成",
+        "done": "已生成"
+      },
+      "upload_done": "已上传图片",
+      "report_not_found": "尚未生成报告",
+      "done": "生成完成"
+    },
+    "stage": {
+      "create": "创建报告",
+      "upload": "上传图片",
+      "report": "生成报告"
+    },
+    "action": {
+      "upload_image": "上传图片",
+      "error_return_to_detail": "报告异常 返回详情页"
+    }
+  },
+  "admin": {
+    "tab": {
+      "user_create_agg": "用户数",
+      "area_scatter": "区域趋势"
+    }
+  },
+  "chart": {
+    "area_score": {
+      "title": "评分趋势"
+    },
+    "organ_diagram": {
+      "title": "器官得分图表"
+    },
+    "user_create_agg": {
+      "title": "历史用户数"
+    },
+    "area_scatter": {
+      "title": "用户部位评分趋势"
+    }
+  }
+}
