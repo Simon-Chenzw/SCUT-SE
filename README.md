@@ -31,3 +31,4 @@ All projects & experimental reports in SCUT SE
     -   [project_management](./project_management) 软件项目管理
 -   大三下
     -   [game_engine_design](./game_engine_design) 3D游戏引擎架构设计基础
+    -   [computer_vision](./computer_vision) 计算机视觉
