@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-cn">
+
+
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.x/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+
+    <!-- <script type="text/javascript" src="iview.min.js"></script> -->
+</head>
+
+<body>
+
+    <v-app>
+        <div id="app">
+            <v-app-bar app hide-on-scroll>
+
+                <v-row>
+
+                    <v-col cols='2' class="header-icon">
+                        <v-btn icon href='/'>
+                            <v-icon>fa-home</v-icon>
+                        </v-btn>
+                    </v-col>
+
+                    <v-col cols="8" class="search-bar">
+                        <template>
+                            <v-form>
+                                <v-continer>
+                                    <v-text-field v-model="search_msg" v-on:keyup.enter="search">
+                                        <template v-slot:label>
+                                            What do you wanna know?
+                                        </template>
+                                        <v-icon slot="append" @click="search" color="blue">
+                                            fa-search
+                                        </v-icon>
+                                    </v-text-field>
+                                </v-continer>
+                            </v-form>
+                        </template>
+                    </v-col>
+
+                    <v-col cols='2' class="text-right header-icon">
+
+                        <template v-if='self_user_info'>
+
+                            <v-btn icon>
+                                <v-icon @click='turn_to_user()'>fa-user</v-icon>
+                            </v-btn>
+
+                            {{self_user_info.name}}
+
+                            <v-btn v-on:click='logout'> logout </v-btn>
+
+
+                        </template>
+
+                        <template v-else>
+
+                            <v-btn icon>
+                                <v-icon>fa-user-slash</v-icon>
+                            </v-btn>
+
+                            <v-btn href='/login.html'> login </v-btn>
+
+                        </template>
+
+                    </v-col>
+
+                </v-row>
+
+            </v-app-bar>
+        </div>
+
+        <v-main>
+            <div id="card" style="padding-top: 80px;">
+
+                <v-container fill-height fluid>
+                    <v-row justify="center" style="justify-content: center">
+
+                        <v-col cols='6'>
+                            <template>
+                                <v-card class="mx-auto">
+                                    <v-card-title>
+                                        {{question_info.title}}
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        {{question_info.desc}}
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="answer()"> 
+                                            answer_this_question
+                                            <v-btn icon>
+                                                <v-icon>{{ answer_show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                            </v-btn>
+                                        </v-btn>
+                                    </v-card-actions>
+
+                                    <v-expand-transition>
+                                        <div v-show="answer_show">
+                                            <v-container fluid>
+                                                <v-textarea v-model="answer_text" filled label="answer in here" auto-grow></v-textarea>
+                                            </v-container>
+                                            <v-btn @click="submit_answer()"> submit </v-btn>
+                                        </div>
+                                    </v-expand-transition>
+
+                                </v-card>
+
+                                <v-divider></v-divider>
+
+                                <v-card class="mx-auto" v-for="data in answer_datas">
+
+                                    <v-card-title>
+                                        {{data.answer_info.user.name}}
+                                    </v-card-title>
+
+                                    <v-card-text>
+                                        {{data.answer_info.text}}
+                                    </v-card-text>
+
+                                    <v-card-actions>
+                                        <v-btn text color="orange lighten-2" @click="agree(data.answer_info.aid)">
+                                            Agree {{data.answer_info.voteup_cnt}}
+                                        </v-btn>
+
+                                        <v-btn text color="orange lighten-2" @click="disagree(data.answer_info.aid)">
+                                            Disagree {{data.answer_info.votedown_cnt}}
+                                        </v-btn>
+
+                                        <v-spacer></v-spacer>
+
+                                        <v-btn icon @click="data.show = !data.show">
+                                            <v-icon>{{ data.show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                                        </v-btn>
+                                    </v-card-actions>
+
+                                    <v-expand-transition>
+                                        <div v-show="data.show">
+                                            <v-divider></v-divider>
+
+                                            <v-card-text v-for="comment in data.comment_info">
+                                                {{comment.user.name}} : {{comment.text}}
+                                            </v-card-text>
+
+                                            <v-divider></v-divider>
+
+                                            <v-container fluid>
+                                                <v-textarea v-model="comment_text" filled label="comment in here" auto-grow></v-textarea>
+                                            </v-container>
+                                            <v-btn @click="submit_comment(data.answer_info.aid)"> submit </v-btn>
+                                        </div>
+
+                                            
+                                    </v-expand-transition>
+
+                                </v-card>
+                            </template>
+                        </v-col>
+
+                    </v-row>
+                </v-container>
+            </div>
+        </v-main>
+
+    </v-app>
+
+
+
+
+</body>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                self_user_info: undefined,
+                text: '',
+                showSelect: true,
+                results: [],
+                search_msg: '',
+            }
+        },
+        mounted() {
+            this.user_info()
+        },
+        methods: {
+            user_info(uid) {
+                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                axios.get(url).then(
+                    (resp) => this.self_user_info = resp.data
+                ).catch(
+                    (err) => this.self_user_info = undefined
+                )
+            },
+            logout() {
+                axios.get("/api/user/logout").then(
+                    (resp) => this.user_info()
+                )
+            },
+            search() {
+                window.open('/search.html?' + this.search_msg);
+                this.$refs.search.blur()
+                console.log(this.text)
+            },
+            turn_to_user(uid) {
+                url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
+                window.open(url)
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '#card',
+        vuetify: new Vuetify(),
+        data: () => ({
+            show: false,
+            answer_show: false,
+            question_info: undefined,
+            answer_datas: [],
+            answer_num: 0,
+            answer_loaded: false,
+            dialog: false,
+            my_answer: undefined,
+            answer_text: undefined,
+            comment_text: undefined,
+        }),
+        mounted() {
+            this.init()
+            addEventListener('scroll', this.handleScroll)//监听函数
+            console.log(location)
+        },
+        methods: {
+            agree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'up',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success")
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
+            },
+            disagree(aid) {
+                url = 'api/vote/set'
+                axios.get(url, {
+                    params: {
+                        stat: 'down',
+                        aid: aid,
+                    }
+                })
+                .then(
+                    (resp) => window.alert("success") 
+                )
+                .catch(
+                    (error) => {
+                        window.alert("failed")
+                    }
+                )
+            },
+            get_question_info : async function(qid) {
+                url = "/api/question/info?qid=" + qid
+                await axios.get(url)
+                .then(
+                    (resp) => {
+                        console.log(resp.data);
+                        this.question_info = resp.data;
+                        this.show = true;
+                        // this.get_new_answer()
+                    }
+                )
+                .catch(
+                    (error) => {
+                        window.alert("question not found!");
+                    }
+                );
+            },
+            get_new_answer : async function(aid) {
+                url = aid ? "/api/answer/list?last_aid=" + (aid - 1) + "&qid=" + this.question_info.qid + "&limit=1"
+                : '/api/answer/list?' + "&qid=" + this.question_info.qid + "&limit=1"
+                console.log(url)
+                await axios.get(url)
+                .then(
+                    (resp) => {
+                        console.log(resp.data[0].aid);
+                        this.answer_num = resp.data[0].aid;
+                        url = "/api/comment/list"
+                        axios.get(url, {
+                            params: {
+                                aid: resp.data[0].aid,
+                                limit: 100
+                            }
+                        })
+                        .then(
+                            (comresp) => {
+                                console.log(comresp.data);
+                                this.answer_datas.push({
+                                    answer_info: resp.data[0],
+                                    comment_info: comresp.data,
+                                    show: false
+                                });
+                                console.log(this.answer_datas)
+                            }
+                        )
+                        .catch(
+                            (comerror) => {
+                                console.log("failed")
+                                this.answer_datas.push({
+                                    answer_info: resp.data[0],
+                                    comment_info: undefined,
+                                    show: false
+                                });
+                            }
+                        );
+                        console.log("success2");
+                        console.log(this.answer_datas);
+                    }
+                )
+                .catch(
+                    (error) => {
+                        debugger;
+                        console.log(error)
+                        console.log('failed in answer get')
+                        this.answer_loaded = true;
+                    }
+                );
+            },
+            handleScroll() {
+                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+                let scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight;
+                // console.log(scrollTop, windowHeight, scrollHeight);
+                // debugger;
+                if (!this.answer_loaded && scrollTop + windowHeight >= scrollHeight - 100) {
+                    // window.alert("end");
+                    // this.answer_datas.push({
+                    //     user: "Cat",
+                    //     answer: "I Don't know",
+                    //     show: false,
+                    //     comments: [
+                    //         {
+                    //             user: "Ailce",
+                    //             comment: "really",
+                    //         },
+                    //     ],
+                    // });
+                    this.get_new_answer(this.answer_num);
+                    const start = new Date().getTime();
+                    while (new Date().getTime() - start < 500) {}
+                    // console.log(this.datas);
+                }
+            },
+            init : async function() {
+                thisqid = ~~(location.search.slice(1))
+                console.log(thisqid)
+                await this.get_question_info(thisqid);
+                console.log(this.show,"?")
+                if (this.show) {
+                    for (i = 1; i <= 10; i++) {
+                        if (!this.answer_loaded) {
+                            await this.get_new_answer(this.answer_num);
+                            console.log(i,this.answer_num);
+                        }
+                    }    
+                }
+            },  
+            answer : async function() {
+                url = "/api/user/info"
+                axios.get(url).then(
+                    (resp) => {
+                        // await get_this_answer() TODO
+                        this.answer_show = !this.answer_show
+                    }
+                ).catch(
+                    (err) => window.alert("please login first")
+                )
+            },
+            submit_answer() {
+                url = "/api/answer/create?qid=" + this.question_info.qid
+                axios.post(url, {
+                    text: this.answer_text,
+                })
+                .then(function (resp) {
+                    window.alert("succeed")
+                    location.reload()
+                })
+                .catch(function (error) {
+                    window.alert("you have answered it!")
+                })
+                
+            },
+            submit_comment(aid) {
+                url = "/api/user/info"
+                axios.get(url).then(
+                    (resp) => {
+                        url = "/api/comment/create?aid=" + aid
+                        axios.post(url, {
+                            text: this.comment_text,
+                        })
+                        .then(function (resp) {
+                            window.alert("succeed")
+                        })
+                        .catch(function (error) {
+                            window.alert("failed")
+                        })
+                    }
+                ).catch(
+                    (err) => window.alert("please login first")
+                )
+                
+            }
+        },
+        destroyed() {
+            window.removeEventListener('scroll', this.handleScroll)
+        }
+    })
+
+
+</script>
+
+</html>

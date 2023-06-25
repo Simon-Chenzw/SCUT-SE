@@ -1,0 +1,8 @@
+pydantic[email]>=1.8
+fastapi>=0.63
+uvicorn[standard]>=0.13
+python-jose[cryptography]>=3.2
+pyjwt>=2.0
+passlib[bcrypt]>=1.7
+python-multipart>=0.0.5
+databases[mysql]>=0.4

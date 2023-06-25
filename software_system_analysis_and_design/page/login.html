@@ -1,0 +1,162 @@
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.x/css/all.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <v-app>
+            <header>
+                <v-toolbar>
+                    <v-row>
+
+                        <v-col cols='3'>
+                            <v-btn icon href='/'>
+                                <v-icon>fa-home</v-icon>
+                            </v-btn>
+                        </v-col>
+
+                        <v-col cols='9' class="text-right">
+
+                            <template v-if='self_user_info'>
+
+                                <v-btn icon>
+                                    <v-icon @click='turn_to_user()'>fa-user</v-icon>
+                                </v-btn>
+
+                                {{self_user_info.name}}
+
+                                <v-btn v-on:click='logout'> logout </v-btn>
+
+
+                            </template>
+
+                            <template v-else>
+
+                                <v-btn icon>
+                                    <v-icon>fa-user-slash</v-icon>
+                                </v-btn>
+
+                                <v-btn href='/login'> login </v-btn>
+
+                            </template>
+
+                        </v-col>
+
+                    </v-row>
+                </v-toolbar>
+            </header>
+
+            <template>
+                <v-form v-model="valid">
+                    <v-container>
+                        <v-row>
+                            <v-col cols="12">
+                                <v-text-field v-model="username" label="username" required>
+                                </v-text-field>
+                            </v-col>
+
+                            <v-col cols="12">
+                                <v-text-field v-model="password" label="password" required>
+                                </v-text-field>
+                            </v-col>
+
+                            <v-col cols="12">
+                                <v-btn v-on:click='register'> register </v-btn>
+                                <v-btn v-on:click='login'> login </v-btn>
+                            </v-col>
+
+                        </v-row>
+                    </v-container>
+                </v-form>
+            </template>
+
+        </v-app>
+    </div>
+</body>
+
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                self_user_info: undefined,
+                valid: false,
+                username: '',
+                password: '',
+            }
+        },
+        mounted() {
+            this.user_info()
+        },
+        methods: {
+            user_info(uid) {
+                url = uid ? "/api/user/info?uid=" + toString(uid) : "/api/user/info"
+                axios.get(url).then(
+                    (resp) => this.self_user_info = resp.data
+                ).catch(
+                    (err) => this.self_user_info = undefined
+                )
+            },
+            logout() {
+                axios.get("/api/user/logout").then(
+                    (resp) => this.user_info()
+                )
+            },
+            login() {
+                if (!this.valid) return
+                axios.get("/api/user/login", {
+                    params: {
+                        username: this.username,
+                        password: this.password,
+                    }
+                })
+                .then(
+                    (resp) => {
+                        this.user_info()
+                        window.alert("login successful!")
+                    }
+                )
+                .catch(
+                    (error) => {
+                        window.alert("incorrect username or password!")
+                    }
+                )
+            },
+            register() {
+                if (!this.valid) return
+                axios.post("/api/user/create", {
+                    username: this.username,
+                    password: this.password,
+                }).then(
+                    (resp) => { 
+                        this.user_info()
+                        window.alert("register successful!")
+                })
+                .catch(
+                    error => {
+                        window.alert("username has been used!")
+                    }
+                )
+            },
+            turn_to_user(uid) {
+                url = uid ? "/user-info.html?" + toString(uid) : "/user-info.html"
+                window.open(url)
+            }
+        }
+    })
+
+</script>>
+
+</html>

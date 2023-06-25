@@ -1,0 +1,26 @@
+/* header css */
+.input-search {
+  width: 40%;
+  margin: auto;
+}
+.width-20-percent {
+  width: 20%;
+}
+.img-div {
+  margin: 16vh 0 40px 0;
+  text-align: center;
+}
+.v-menu__content {
+  box-shadow: none !important;
+}
+.border-list {
+  border: 1px solid #eee !important;
+}
+.search-bar {
+  position: relative;
+  top: 15px;
+}
+.header-icon {
+  position: relative;
+  top: 5px;
+}
