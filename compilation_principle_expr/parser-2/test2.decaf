@@ -1,0 +1,11 @@
+{
+    int a; int b; int c;int min;
+	if(a)
+	{	
+		min=a;
+	}
+	while(min+a<c&&a<c||b<c)
+	{
+		a=a+1;
+	}
+}
