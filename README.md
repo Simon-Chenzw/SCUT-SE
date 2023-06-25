@@ -33,3 +33,5 @@ All projects & experimental reports in SCUT SE
     -   [game_engine_design](./game_engine_design) 3D游戏引擎架构设计基础
     -   [computer_vision](./computer_vision) 计算机视觉
     -   [digital_media_training](./digital_media_training) 数字媒体开发实训
+-   大四
+    -   [image_analysis](./image_analysis) 毕业论文 项目
